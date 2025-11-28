@@ -1,0 +1,146 @@
+Cette partie introduit les structures imbriquées et des applications plus réalistes.
+
+\subsection{Structures contenant d'autres structures}
+
+\begin{UPSTIManipulation}{Rectangle — Calcul de l'aire}
+
+  \textbf{Contexte :} Un rectangle est défini par deux points : coin supérieur gauche et coin inférieur droit.
+
+  \textbf{Structures à utiliser :}
+  \begin{lstlisting}[language=C]
+typedef struct {
+    float x;
+    float y;
+} Point;
+
+typedef struct {
+    Point coin_haut_gauche;
+    Point coin_bas_droit;
+} Rectangle;
+  \end{lstlisting}
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander les coordonnées des deux coins du rectangle
+    \item Calculer l'aire : $\text{largeur} \times \text{hauteur}$
+    \item Largeur = $|x_2 - x_1|$, Hauteur = $|y_2 - y_1|$
+    \item Afficher l'aire avec 2 décimales
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[style=console]
+Coin haut-gauche - x: 0
+Coin haut-gauche - y: 3
+Coin bas-droit - x: 4
+Coin bas-droit - y: 0
+Aire: 12.00
+  \end{lstlisting}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/rectangle_aire
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+\begin{UPSTIManipulation}{Cercle — Intersection avec un point}
+
+  \textbf{Contexte :} Vérifier si un point est à l'intérieur d'un cercle.
+
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Proposer une structure pour représenter un cercle.
+    \item Demander le centre du cercle (x, y) et son rayon
+    \item Demander les coordonnées d'un point à tester
+    \item Calculer la distance entre le point et le centre
+    \item Afficher \texttt{INTERIEUR} si distance $\le$ rayon, sinon \texttt{EXTERIEUR}
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[style=console]
+Centre du cercle - x: 0
+Centre du cercle - y: 0
+Rayon: 5
+Point a tester - x: 3
+Point a tester - y: 4
+INTERIEUR
+  \end{lstlisting}
+
+  \textbf{Note :} Distance = 5, exactement sur le cercle, donc INTERIEUR.
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/cercle_point
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+% \subsection{Application réaliste}
+
+% \begin{UPSTIManipulation}{Gestion d'étudiants — Calcul de moyenne}
+
+%   \textbf{Contexte :} Gérer une liste d'étudiants avec leurs notes.
+
+%   \textbf{Structure à utiliser :}
+%   \begin{lstlisting}[language=C]
+% typedef struct {
+%     int numero;          // Numero etudiant
+%     char nom[50];        // Nom de l'etudiant
+%     float note1;         // Premiere note
+%     float note2;         // Deuxieme note
+%     float note3;         // Troisieme note
+% } Etudiant;
+%   \end{lstlisting}
+
+%   \textbf{Cahier des charges :}
+%   \begin{itemize}
+%     \item Demander \textbf{n} ($1 \le n \le 30$) étudiants
+%     \item Pour chaque étudiant, lire : numéro, nom, 3 notes
+%     \item Pour chaque étudiant, calculer et afficher sa moyenne (2 décimales)
+%     \item Format : \texttt{Etudiant numero - nom: moyenne}
+%   \end{itemize}
+
+%   \textbf{Exemple :}
+%   \begin{lstlisting}[style=console]
+% Nombre d'etudiants: 2
+% Etudiant 0 - Numero: 12345
+% Nom: Dupont
+% Note 1: 15.5
+% Note 2: 14.0
+% Note 3: 16.5
+% Etudiant 1 - Numero: 12346
+% Nom: Martin
+% Note 1: 12.0
+% Note 2: 13.5
+% Note 3: 11.5
+
+% Moyennes:
+% Etudiant 12345 - Dupont: 15.33
+% Etudiant 12346 - Martin: 12.33
+%   \end{lstlisting}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/etudiants_moyenne
+%   \end{lstlisting}
+% \end{UPSTIManipulation}
+
+% \begin{UPSTIManipulation}{Étudiants — Classement par moyenne}
+
+%   \textbf{Contexte :} Afficher les étudiants dont la moyenne dépasse un seuil donné.
+
+%   \textbf{Cahier des charges :}
+%   \begin{itemize}
+%     \item Utiliser la même structure \texttt{Etudiant}
+%     \item Demander \textbf{n} étudiants et les lire
+%     \item Demander un \textbf{seuil} de moyenne
+%     \item Afficher les étudiants dont la moyenne est \textbf{supérieure ou égale} au seuil
+%     \item Format : \texttt{numero - nom: moyenne}
+%     \item Si aucun étudiant ne dépasse le seuil, afficher \texttt{Aucun etudiant}
+%   \end{itemize}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/etudiants_classement
+%   \end{lstlisting}
+% \end{UPSTIManipulation}
+

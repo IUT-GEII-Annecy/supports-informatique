@@ -1,0 +1,24 @@
+discipline_name: "Informatique"
+discipline_code: "INFO"
+
+# Chemins templates
+templates_base: "../../templates/base"
+templates_override: "../../templates/disciplines/informatique/overrides"
+
+# LaTeX
+latex_class: "../../latex/UPSTI_Document"
+profile: "../../latex/profiles/BUT_GEII.tex"
+
+# Paramètres par défaut
+default_author: "Équipe Informatique"
+default_institution: "IUT - Département GEII"
+
+# Types de documents supportés
+document_types:
+  - tp
+  - td
+  - cours
+  - ds
+  - dm
+  - projet
+  - activite
