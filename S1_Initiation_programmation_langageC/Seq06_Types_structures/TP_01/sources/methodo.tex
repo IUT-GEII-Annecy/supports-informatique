@@ -1,0 +1,102 @@
+
+\begin{UPSTIinfor}{Les types structurés en C}
+  Un \textbf{type structuré} (ou \texttt{struct}) permet de regrouper plusieurs données de types différents en une seule entité logique.
+
+  \textbf{Avantages :}
+  \begin{itemize}
+    \item Regrouper des données liées ensemble (cohésion)
+    \item Créer des types de données personnalisés
+    \item Améliorer la lisibilité du code
+    \item Faciliter la manipulation de données complexes
+  \end{itemize}
+
+  \textbf{Syntaxe de déclaration :}
+  \begin{lstlisting}[language=C]
+struct NomStructure {
+    type1 champ1;
+    type2 champ2;
+    // ...
+};
+  \end{lstlisting}
+
+  \textbf{Exemple concret :}
+  \begin{lstlisting}[language=C]
+struct Point {
+    float x;
+    float y;
+};
+  \end{lstlisting}
+\end{UPSTIinfor}
+
+\begin{UPSTIinfor}{Utilisation d'une structure}
+  \textbf{Création d'une variable de type structure :}
+  \begin{lstlisting}[language=C]
+struct Point p1;  // Déclare une variable p1 de type struct Point
+  \end{lstlisting}
+
+  \textbf{Accès aux champs :}
+  \begin{lstlisting}[language=C]
+p1.x = 3.5;       // Affecte 3.5 au champ x
+p1.y = 2.7;       // Affecte 2.7 au champ y
+printf("Point: (%.1f, %.1f)\n", p1.x, p1.y);
+  \end{lstlisting}
+
+  \textbf{Initialisation lors de la déclaration :}
+  \begin{lstlisting}[language=C]
+struct Point p2 = {1.0, 2.0};  // x=1.0, y=2.0
+  \end{lstlisting}
+\end{UPSTIinfor}
+
+\begin{UPSTIinfor}{Typedef : simplifier l'utilisation}
+  Le mot-clé \texttt{typedef} permet de créer un alias pour une structure, simplifiant son utilisation.
+
+  \textbf{Sans typedef :}
+  \begin{lstlisting}[language=C]
+struct Point {
+    float x;
+    float y;
+};
+struct Point p1;  // On doit écrire "struct Point"
+  \end{lstlisting}
+
+  \textbf{Avec typedef :}
+  \begin{lstlisting}[language=C]
+typedef struct {
+    float x;
+    float y;
+} Point;
+
+Point p1;  // Plus simple ! Pas besoin de "struct"
+  \end{lstlisting}
+\end{UPSTIinfor}
+
+\begin{UPSTIinfor}{Structures et fonctions}
+  Les structures peuvent être passées en paramètres et retournées par des fonctions.
+
+  \textbf{Passage par valeur (copie) :}
+  \begin{lstlisting}[language=C]
+void afficher_point(Point p) {
+    printf("(%.1f, %.1f)\n", p.x, p.y);
+}
+  \end{lstlisting}
+
+  \textbf{Passage par adresse (modification possible) :}
+  \begin{lstlisting}[language=C]
+void deplacer_point(Point *p, float dx, float dy) {
+    p->x += dx;  // Notation -> pour accéder aux champs via pointeur
+    p->y += dy;
+}
+  \end{lstlisting}
+
+  \textbf{Retour de structure :}
+  \begin{lstlisting}[language=C]
+Point creer_point(float x, float y) {
+    Point p;
+    p.x = x;
+    p.y = y;
+    return p;
+}
+  \end{lstlisting}
+\end{UPSTIinfor}
+
+\pagebreak

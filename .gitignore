@@ -1,0 +1,36 @@
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.bbl
+*.blg
+*.idx
+*.ind
+*.ilg
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+env-latex/
+venv/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Outputs (optionnel - décommenter si vous ne voulez pas versionner les PDF)
+# *.pdf
+# PDFs générés (ne pas versionner)
+*.pdf

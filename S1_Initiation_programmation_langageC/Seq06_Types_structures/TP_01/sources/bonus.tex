@@ -1,0 +1,136 @@
+Ces exercices bonus permettent d'approfondir les structures avec des applications plus complexes.
+
+\subsection{Exercices bonus}
+
+\begin{UPSTIManipulation}{Gestion de stock — Articles les plus chers}
+  \textbf{Contexte :} Un magasin souhaite identifier ses 3 articles les plus chers en stock.
+
+  \textbf{Structure à utiliser :}
+  \begin{lstlisting}[language=C]
+typedef struct {
+    int code;            // Code article
+    char nom[50];        // Nom de l'article
+    float prix;          // Prix unitaire en euros
+    int quantite;        // Quantite en stock
+} Article;
+  \end{lstlisting}
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander \textbf{n} ($3 \le n \le 50$) articles
+    \item Lire les informations de chaque article
+    \item Afficher les 3 articles ayant le \textbf{prix unitaire le plus élevé}
+    \item Les afficher par ordre décroissant de prix
+    \item Format : \texttt{code - nom: prix EUR}
+  \end{itemize}
+
+  \textbf{Indice :} Tri par sélection adapté aux structures.
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/stock_top3
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+\begin{UPSTIManipulation}{Date — Calcul du nombre de jours écoulés}
+
+  \textbf{Contexte :} Calculer le nombre de jours écoulés depuis le début de l'année pour une date donnée.
+
+  \textbf{Structure à utiliser :}
+  \begin{lstlisting}[language=C]
+typedef struct {
+    int jour;   // 1-31
+    int mois;   // 1-12
+    int annee;  // ex: 2025
+} Date;
+  \end{lstlisting}
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander une date (jour, mois, année)
+    \item Calculer le nombre de jours écoulés depuis le 1er janvier de la même année
+    \item Ne pas tenir compte des années bissextiles (tous les mois ont leur nombre réel de jours)
+    \item Afficher le résultat
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[style=console]
+Jour: 15
+Mois: 3
+Annee: 2025
+Jours ecoules: 74
+  \end{lstlisting}
+
+  \textbf{Rappel :} Janvier=31j, Février=28j, Mars=31j, Avril=30j, etc.
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/date_jours
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+\begin{UPSTIManipulation}{Jeu de cartes — Distribution}
+
+  \textbf{Contexte :} Représenter et manipuler des cartes à jouer.
+
+  \textbf{Structure à utiliser :}
+  \begin{lstlisting}[language=C]
+typedef struct {
+    int valeur;     // 1-13 (As=1, Valet=11, Dame=12, Roi=13)
+    char couleur;   // 'C'oeur, 'P'ique, 'T'refle, 'K'arreau
+} Carte;
+  \end{lstlisting}
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Créer un tableau de 52 cartes représentant un jeu complet
+    \item Afficher toutes les cartes sous la forme \texttt{valeur-couleur}
+    \item Par exemple : \texttt{1-C}, \texttt{2-C}, ..., \texttt{13-C}, \texttt{1-P}, etc.
+  \end{itemize}
+
+  \textbf{Astuce :} Utiliser deux boucles imbriquées.
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/cartes_distribution
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+\begin{UPSTIManipulation}{BONUS ULTIME — Mini base de données de contacts}
+
+  \textbf{Contexte :} Créer un système simple de gestion de contacts avec menu.
+
+  \textbf{Structure à utiliser :}
+  \begin{lstlisting}[language=C]
+typedef struct {
+    int id;
+    char nom[50];
+    char prenom[50];
+    char telephone[15];
+    char email[50];
+} Contact;
+  \end{lstlisting}
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Créer un tableau de maximum 100 contacts
+    \item Implémenter un menu avec les options :
+    \begin{enumerate}
+      \item Ajouter un contact
+      \item Afficher tous les contacts
+      \item Rechercher un contact par nom
+      \item Quitter
+    \end{enumerate}
+    \item L'ID doit être auto-incrémenté (commence à 1)
+    \item La recherche doit afficher tous les contacts dont le nom contient la chaîne recherchée
+  \end{itemize}
+
+  \textbf{Défi :} Gérer proprement l'ajout et la recherche !
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/contacts_bdd
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+\pagebreak

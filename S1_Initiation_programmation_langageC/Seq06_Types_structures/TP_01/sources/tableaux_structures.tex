@@ -1,0 +1,129 @@
+Cette partie explore l'utilisation de tableaux de structures, une combinaison puissante pour gérer des collections de données complexes.
+
+\subsection{Premiers tableaux de structures}
+
+\begin{UPSTIManipulation}{Polygone — Calculer le périmètre}
+
+  \textbf{Contexte :} Un polygone est défini par une séquence de points. On veut calculer son périmètre.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Utiliser la structure \texttt{Point} (x, y)
+    \item Demander le nombre de sommets \textbf{n} ($3 \le n \le 20$)
+    \item Lire les coordonnées de \textbf{n} points dans un tableau \texttt{Point sommets[20]}
+    \item Calculer le périmètre : somme des distances entre points consécutifs
+    \item Ne pas fermer le polygone (pas de distance entre dernier et premier point)
+    \item Afficher le périmètre avec 2 décimales
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[style=console]
+Nombre de sommets: 4
+Point 0: (0, 0)
+Point 1: (1, 0)
+Point 2: (1, 1)
+Point 3: (0, 1)
+Perimetre: 3.00
+  \end{lstlisting}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/perimetre_polygone
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+\begin{UPSTIManipulation}{Trouver le point le plus proche de l'origine}
+
+  \textbf{Contexte :} Parmi un ensemble de points, identifier celui qui est le plus proche de l'origine.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander \textbf{n} ($1 \le n \le 50$) puis lire \textbf{n} points
+    \item Trouver le point ayant la distance minimale à l'origine
+    \item Afficher l'indice de ce point (0..n-1) et sa distance à l'origine (2 décimales)
+    \item En cas d'égalité, afficher le premier trouvé
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[style=console]
+Nombre de points: 3
+Point 0: (5, 5)
+Point 1: (1, 1)
+Point 2: (2, 3)
+Point le plus proche: indice 1, distance 1.41
+  \end{lstlisting}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/point_plus_proche
+%   \end{lstlisting}
+\end{UPSTIManipulation}
+
+% \subsection{Structures plus complexes}
+
+% \begin{UPSTIManipulation}{Gestion de capteurs — Température moyenne}
+
+%   \textbf{Contexte :} Un système industriel dispose de plusieurs capteurs de température.
+
+%   \textbf{Structure à utiliser :}
+%   \begin{lstlisting}[language=C]
+% typedef struct {
+%     int id;              // Identifiant du capteur
+%     float temperature;   // Temperature en degres Celsius
+%     int actif;          // 1 si actif, 0 si inactif
+% } Capteur;
+%   \end{lstlisting}
+
+%   \textbf{Cahier des charges :}
+%   \begin{itemize}
+%     \item Demander \textbf{n} ($1 \le n \le 30$) capteurs
+%     \item Pour chaque capteur, lire : id, température, état (0 ou 1)
+%     \item Calculer et afficher la \textbf{température moyenne} des capteurs \textbf{actifs uniquement}
+%     \item Si aucun capteur actif, afficher \texttt{Aucun capteur actif}
+%     \item Afficher la moyenne avec 2 décimales
+%   \end{itemize}
+
+%   \textbf{Exemple :}
+%   \begin{lstlisting}[style=console]
+% Nombre de capteurs: 3
+% Capteur 0 - ID: 101, Temperature: 22.5, Actif (1/0): 1
+% Capteur 1 - ID: 102, Temperature: 18.0, Actif (1/0): 0
+% Capteur 2 - ID: 103, Temperature: 25.5, Actif (1/0): 1
+% Temperature moyenne: 24.00
+%   \end{lstlisting}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/capteurs_temperature
+%   \end{lstlisting}
+% \end{UPSTIManipulation}
+
+% \begin{UPSTIManipulation}{Capteurs — Identifier les alertes}
+%   \textbf{} \texttt{tp\_structures/08\_capteurs\_alertes}
+
+%   \textbf{Contexte :} Détecter les capteurs actifs dont la température dépasse un seuil.
+
+%   \textbf{Cahier des charges :}
+%   \begin{itemize}
+%     \item Utiliser la même structure \texttt{Capteur}
+%     \item Demander \textbf{n} capteurs et les lire
+%     \item Demander un \textbf{seuil} de température
+%     \item Afficher les \textbf{IDs} des capteurs actifs dont la température \textbf{dépasse strictement} le seuil
+%     \item Si aucun, afficher \texttt{Aucune alerte}
+%   \end{itemize}
+
+%   \textbf{Exemple :}
+%   \begin{lstlisting}[style=console]
+% Nombre de capteurs: 4
+% (Saisie des capteurs...)
+% Seuil: 23.0
+% Alertes: 101 103
+%   \end{lstlisting}
+
+%   \tcblower
+%   \begin{lstlisting}[language=bash]
+% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/capteurs_alertes
+%   \end{lstlisting}
+% \end{UPSTIManipulation}
+
+\pagebreak
