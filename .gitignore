@@ -31,6 +31,6 @@ Thumbs.db
 *.swo
 
 # Outputs (optionnel - décommenter si vous ne voulez pas versionner les PDF)
-# *.pdf
-# PDFs générés (ne pas versionner)
 *.pdf
+# PDFs générés (ne pas versionner)
+pdf/
