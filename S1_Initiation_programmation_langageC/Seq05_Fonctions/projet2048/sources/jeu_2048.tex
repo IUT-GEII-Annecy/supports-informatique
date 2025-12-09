@@ -4,17 +4,44 @@
 \end{center}
 On souhaite développer le célèbre jeu 2048 en C en utilisant des fonctions pour structurer le code. Le but du jeu est de faire glisser des tuiles numérotées sur une grille afin de combiner des tuiles identiques et atteindre la tuile 2048.
 
-\subsection{Représentation de la grille}
+\subsection{Représentation de la grille, passer des tableaux en paramètre}
 La grille de jeu est une matrice 4x4 d'entiers. Chaque case peut contenir un nombre (2, 4, 8, etc.) ou être vide (représentée par 0).
-Les lignes suivantes déclarent un nouveau type \texttt{Grid} consistant en un tableau à deux dimensions. Cela n'est pas indispensable mais simplifie largement le passage d'une grille en paramètre de fonction. 
+Les lignes suivantes déclarent un nouveau type \texttt{Grid} consistant en un tableau à deux dimensions. Cela n'est pas indispensable mais simplifie largement le passage d'une grille en paramètre de fonction.
 
 \begin{lstlisting}[language=C]
 #define SIZE 4
 typedef int Grid[SIZE][SIZE];
 \end{lstlisting}
 
+En résumé, déclarer une variable de type \texttt{Grid} revient à déclarer un tableau 4x4 d'entiers.
+Par exemple, la déclaration suivante crée une variable \texttt{myGrid} de type \texttt{Grid}, c'est-à-dire un tableau 4x4 d'entiers.
+
+\begin{lstlisting}[language=C]
+Grid myGrid;
+\end{lstlisting}
+
+On peut accéder aux éléments individuels de la grille en utilisant des indices de ligne et de colonne, comme dans un tableau classique :
+\begin{lstlisting}[language=C]
+myGrid[0][0] = 2; // Place le nombre 2 dans la première case de la grille
+int value = myGrid[1][2]; // Récupère la valeur de la case à la deuxième ligne, troisième colonne
+\end{lstlisting}
+
 \begin{UPSTIinfor}{Passage de tableau en paramètre}
-    Ici, à chaque fois que nous passons un paramètre de type \texttt{Grid}, il s'agit en fait d'un tableau. Lorsque l'on passe un tableau en paramètre d'une fonction, le comportement est différent que lorsque l'on passe une simple variable. En effet, \textbf{TOUTES les modifications faites au tableau à l'intérieur de la fonction se répercutent dans le contexte ayant appelé ladite fonction.} Cela vient du fait que l'on passe en fait un pointeur vers le tableau. Cette notion n'est pas déveoppée ici. 
+    Nous l'avons compris, \texttt{Grid} est un tableau. Ainsi, à chaque fois que nous passons un paramètre de type \texttt{Grid}, il s'agit en fait d'un tableau. Et lorsque l'on passe un tableau en paramètre d'une fonction, le comportement est différent que pour une simple variable. En effet, \textbf{TOUTES les modifications faites au tableau à l'intérieur de la fonction se répercutent dans le contexte ayant appelé ladite fonction.}
+
+    Par exemple, la fonction suivante initialise toutes les cases d'une grille à zéro :
+    \begin{lstlisting}[language=C]
+void initializeGrid(Grid grid) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            grid[i][j] = 0; // Modifie la grille passée en paramètre
+        }
+    }
+}
+    \end{lstlisting}
+    Si nous appelons cette fonction en lui passant une grille, toutes les cases de cette grille seront mises à zéro, même après la fin de l'exécution de la fonction.
+
+    \textit{Cela vient du fait que l'on passe en fait un pointeur vers le tableau. Cette notion n'est pas développée ici.}
 \end{UPSTIinfor}
 
 Le projet sera organisé de la façon suivante :
@@ -28,7 +55,7 @@ Le projet sera organisé de la façon suivante :
 
 \subsection{Fonctions à implémenter}
 \begin{itemize}
-    \item \textbf{Affichage d'un message de bienvenue} : Une fonction qui affiche un message de bienvenue, puis qui demande le surnom du joueur pour lui souhaiter bonne chance. 
+    \item \textbf{Affichage d'un message de bienvenue} : Une fonction qui affiche un message de bienvenue, puis qui demande le surnom du joueur pour lui souhaiter bonne chance.
     \item \textbf{Initialisation de la grille} : Une fonction pour initialiser la grille avec deux tuiles aléatoires (2 ou 4).
     \item \textbf{Affichage de la grille} : Une fonction pour afficher la grille dans la console.
     \item \textbf{Déplacement des tuiles} : Quatre fonctions pour déplacer les tuiles vers le haut, le bas, la gauche et la droite. Chaque fonction doit gérer la fusion des tuiles identiques.
@@ -38,8 +65,14 @@ Le projet sera organisé de la façon suivante :
 
 \begin{UPSTIManipulation}{Initialisation et affichage de la grille}
     \begin{enumerate}
-        \item Implémenter la fonction \texttt{string bienvenue(void)} qui affiche le message de bienvenue, demande et retourne le nom du joueur. 
+        \item Implémenter la fonction \texttt{string bienvenue(void)} qui affiche le message de bienvenue, demande et retourne le nom du joueur.
         \item Implémentez la fonction \texttt{void initGrid(Grid grid)} qui initialise la grille avec deux tuiles aléatoires.
+              \begin{itemize}
+                  \item Vous pouvez utiliser la fonction \texttt{rand()} de la bibliothèque standard \texttt{stdlib.h} pour générer des nombres aléatoires. N'oubliez pas d'initialiser le générateur de nombres aléatoires avec \texttt{srand(time(NULL));} au début de votre programme (nécessite d'inclure \texttt{time.h}).
+                  \item vous pouvez vous inspirer de la fonction proposée plus haut pour initialiser une grille.
+                  \item Assurez-vous que les deux tuiles initiales sont placées dans des positions différentes et aléatoires de la grille.
+                  \item Faire vérifier par l'enseignant.
+              \end{itemize}
         \item Implémentez la fonction \texttt{void displayGrid(const Grid grid)} qui affiche la grille dans la console.
         \item Testez ces fonctions dans le fichier \texttt{jeu\_2048.c} en initialisant une grille et en l'affichant.
         \item Compilez et exécutez le programme pour vérifier que la grille est correctement initialisée et affichée.
