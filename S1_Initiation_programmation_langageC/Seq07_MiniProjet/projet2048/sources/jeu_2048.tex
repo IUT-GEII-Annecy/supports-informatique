@@ -1,8 +1,20 @@
-\section{2048}
+\section{Présentation du projet 2048}
 \begin{center}
     \includegraphics[width=.4\textwidth]{2048.png}
 \end{center}
 On souhaite développer le célèbre jeu 2048 en C en utilisant des fonctions pour structurer le code. Le but du jeu est de faire glisser des tuiles numérotées sur une grille afin de combiner des tuiles identiques et atteindre la tuile 2048.
+
+Les règles de base du jeu sont les suivantes :
+\begin{itemize}
+    \item Le jeu se joue sur une grille 4x4.
+    \item Au début du jeu, deux tuiles (2 ou 4) sont placées aléatoirement sur la grille.
+    \item A chaque tour, le joueur déplace les tuiles dans l'une des quatre directions (haut, bas, gauche, droite). Toutes les tuiles se déplacent alors \textbf{aussi loin que possible} dans la direction choisie.
+    \item Lorsque deux tuiles \textbf{identiques} se touchent lors d'un déplacement, elles fusionnent en une seule tuile avec une valeur égale à la somme des deux tuiles.
+    \item Après chaque déplacement, une nouvelle tuile (2 ou 4) est ajoutée à une position vide de la grille.
+    \item Le jeu se termine lorsque le joueur atteint la tuile 2048 (victoire) ou lorsque la grille est pleine et qu'aucun mouvement n'est possible (défaite).
+\end{itemize}
+
+\UPSTIetape{Dans un premier temps, vous pouvez prendre 5 min pour jouer à 2048 en ligne afin de bien comprendre les règles du jeu. Par exemple, vous pouvez jouer ici : \url{https://play2048.co/}}
 
 \subsection{Représentation de la grille, passer des tableaux en paramètre}
 La grille de jeu est une matrice 4x4 d'entiers. Chaque case peut contenir un nombre (2, 4, 8, etc.) ou être vide (représentée par 0).
@@ -62,6 +74,13 @@ Le projet sera organisé de la façon suivante :
     \item \textbf{Ajout d'une nouvelle tuile} : Une fonction pour ajouter une nouvelle tuile (2 ou 4) dans une case vide après chaque déplacement.
     \item \textbf{Vérification de la fin du jeu} : Une fonction pour vérifier si le joueur a gagné (atteint la tuile 2048) ou perdu (plus de mouvements possibles).
 \end{itemize}
+
+Télécharger et décompresser le squelette du projet : 
+\begin{lstlisting}[language=bash]
+wget https://github.com/IUT-GEII-Annecy/squelettes/releases/download/branch-2025/projet_2048.zip
+unzip projet_2048.zip
+rm projet_2048.zip
+\end{lstlisting}
 
 \begin{UPSTIManipulation}{Initialisation et affichage de la grille}
     \begin{enumerate}

@@ -1,6 +1,5 @@
 \documentclass[TP, noCustomPackages]{UPSTI_Document}
-\usepackage{IUT_Annecy}
-\usepackage{logos_iut}
+\UPSTIloadProfile{BUT_GEII}
 
 % --- Git info (nécessite git et les hooks gitinfo2 activés) ---
 \usepackage{gitinfo2} % génère gitHeadInfo.gin via hooks post-commit/checkout/merge
@@ -15,12 +14,6 @@
 \newcommand{\UPSTInumero}{Mini Projet}
 \begin{document}
 
-Télécharger et décompresser le squelette du projet : 
-\begin{lstlisting}[language=bash]
-wget https://github.com/IUT-GEII-Annecy/squelettes/releases/download/branch-2025/projet_2048.zip
-unzip projet_2048.zip
-rm projet_2048.zip
-\end{lstlisting}
 
 \input{main.tex}
 
