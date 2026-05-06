@@ -1,0 +1,100 @@
+% ==================== EXERCICE 3 : TABLEAUX ====================
+
+\section{Tableaux \hfill \textit{6 points}}
+
+On souhaite mesurer la température d'un four industriel pendant 2 heures (une mesure toutes les minutes). La température sera mémorisée en degrés Celsius (valeur entière).
+
+\vspace{0.5em}
+
+\subsection{Déclaration du tableau \hfill \textit{1 point}}
+
+\UPSTIquestion
+Déclarez un tableau qui permet de mémoriser toutes les températures mesurées pendant deux heures.
+
+\espaceReponse{2cm}
+
+\subsection{Mesure et mémorisation \hfill \textit{2 points}}
+
+On possède les fonctions suivantes :
+\begin{itemize}
+    \item \texttt{void attendre(int duree)} qui effectue une pause de \texttt{duree} millisecondes
+    \item \texttt{int lireTemperature(void)} qui retourne la température instantanée du four en degrés Celsius
+\end{itemize}
+
+\UPSTIquestion
+Donner la partie de programme qui utilise votre tableau de la question 3.1 et ces fonctions et qui permet d'effectuer et de mémoriser les mesures de température pendant deux heures (une mesure toutes les minutes).
+
+\espaceReponse{5cm}
+
+\subsection{Calcul de la moyenne \hfill \textit{1 point}}
+
+\UPSTIquestion
+Donner la partie de programme qui calcule et affiche la valeur moyenne de la température.
+
+\textit{Ne refaites pas tout le programme : Indiquez les nouvelles lignes de code ci-dessous et faites une marque dans le programme 3.2 pour indiquer où insérer ces lignes de code.}
+
+\espaceReponse{4cm}
+
+\subsection{Calcul de la variation thermique \hfill \textit{1 point}}
+
+\UPSTIquestion
+Donner la partie de programme qui calcule et affiche la chaleur $Q$ fournie, entre chaque mesure, par le four à l'air qu'il contient.
+
+
+$Q = mc\Delta T$ avec $m = \SI{500}{g}$, la masse d'air dans le four, $c=1$ la capacité thermique de l'air et $\Delta T$ l'écart de température entre les deux mesures.
+
+
+\textit{Ne refaites pas tout le programme : Indiquez les nouvelles lignes de code ci-dessous et faites une marque dans le programme 3.2 pour indiquer où insérer ces lignes de code.}
+
+\espaceReponse{4cm}
+
+\subsection{Utilisation d'une fonction min \hfill \textit{1 point}}
+
+On possède une fonction \texttt{min} de prototype :
+\begin{lstlisting}
+int min(int tab[], int taille);
+\end{lstlisting}
+qui retourne la plus petite valeur contenue dans le tableau \texttt{tab[]} de taille \texttt{taille}.
+
+\UPSTIquestion
+En utilisant cette fonction, donner la partie de programme qui affiche la plus petite valeur de température de votre tableau.
+
+\textit{Ne refaites pas tout le programme : Indiquez les nouvelles lignes de code ci-dessous et faites une marque dans le programme 3.2 pour indiquer où insérer ces lignes de code.}
+
+\espaceReponse{3cm}
+
+\ifavecEspaceReponse\pagebreak\fi
+
+\section{Utilisation de structures \hfill \textit{6 points}}
+
+\subsection{Structure pour mesures multiples \hfill \textit{3 points}}
+
+On souhaite aussi mesurer et mémoriser la consommation électrique (en \si{W}) du four à chaque fois qu'on mesure la température.
+\UPSTIquestion
+Que proposez-vous pour stocker ces nouvelles informations, sachant qu'on impose de n'utiliser qu'un seul tableau ?
+\UPSTIquestion
+Donner les éventuelles déclarations et modifications à apporter au programme.
+
+\espaceReponse{4cm}
+
+\subsection{Programme complet avec structure \hfill \textit{3 points}}
+
+On possède les fonctions suivantes :
+\begin{itemize}
+    \item \texttt{void attendre(int duree)} qui effectue une pause de \texttt{duree} ms (idem question 3.2)
+    \item \texttt{int lireTemperature(void)} qui retourne la température instantanée du four en degrés Celsius (idem question 3.2)
+    \item \texttt{int lirePuissance(void)} qui retourne la consommation électrique du four (en \si{W})
+\end{itemize}
+
+\UPSTIquestion
+Donner la partie de programme qui permet d'effectuer et de mémoriser les mesures de température et de puissance pendant deux heures (mesures toutes les minutes).
+
+\espaceReponse{5cm}
+
+\UPSTIquestion
+Donner la partie de programme qui calcule et affiche l'énergie consommée par le four durant ces deux heures. 
+
+On rappelle que l'énergie est l'intégrale de la puissance ; il suffit donc de faire la somme des puissances mesurées en Watt et de multiplier par l'intervalle de temps $\Delta t$ (en heure) entre chaque mesure.
+
+
+\espaceReponse{5cm}

@@ -1,0 +1,99 @@
+% ==================== EXERCICE 3 : TABLEAUX ====================
+
+\section{Tableaux \hfill \textit{6 points}}
+
+On souhaite mesurer la vitesse instantanée d'un robot roulant pendant 1 minute (une mesure toutes les secondes). La vitesse sera mémorisée en cm/s (valeur entière).
+
+\vspace{0.5em}
+
+\subsection{Déclaration du tableau \hfill \textit{1 point}}
+
+\UPSTIquestion
+Déclarez un tableau qui permet de mémoriser toutes les vitesses mesurées pendant une minute.
+
+\espaceReponse{2cm}
+
+\subsection{Mesure et mémorisation \hfill \textit{2 points}}
+
+On possède les fonctions suivantes :
+\begin{itemize}
+    \item \texttt{void delay(int duree)} qui effectue une pause de \texttt{duree} millisecondes
+    \item \texttt{int mesureVitesse(void)} qui retourne la vitesse instantanée du robot en cm/s
+\end{itemize}
+
+\UPSTIquestion
+Donner la partie de programme qui utilise votre tableau de la question 3.1 et ces fonctions et qui permet d'effectuer et de mémoriser les mesures de vitesse pendant une minute (une mesure toutes les secondes).
+
+\espaceReponse{5cm}
+
+\subsection{Calcul de la moyenne \hfill \textit{1 point}}
+
+\UPSTIquestion
+Donner la partie de programme qui calcule et affiche la valeur moyenne de la vitesse.
+
+\textit{Ne refaites pas tout le programme : Indiquez les nouvelles lignes de code ci-dessous et faites une marque dans le programme 3.2 pour indiquer où insérer ces lignes de code.}
+
+\espaceReponse{4cm}
+
+\subsection{Calcul de l'accélération \hfill \textit{1 point}}
+ 
+\UPSTIquestion
+Donner la partie de programme qui calcule et affiche l'accélération entre chaque valeur mesurée. L'accélération étant la dérivée de la vitesse, elle sera calculée de la façon suivante pour chaque mesure de vitesse :
+
+\begin{center}
+    Accélération (en m/s²) = (vitesse$_n$ -- vitesse$_{n-1}$) / $\Delta t$ \quad où $\Delta t$ est l'intervalle de temps entre 2 mesures.
+\end{center}
+
+\textit{Ne refaites pas tout le programme : Indiquez les nouvelles lignes de code ci-dessous et faites une marque dans le programme 3.2 pour indiquer où insérer ces lignes de code.}
+
+\espaceReponse{4cm}
+
+\subsection{Utilisation d'une fonction max \hfill \textit{1 point}}
+
+On possède une fonction \texttt{max} de prototype :
+\begin{lstlisting}
+int max(int val[], int taille);
+\end{lstlisting}
+qui retourne la plus grande valeur contenue dans le tableau \texttt{val[]} de taille \texttt{taille}.
+
+\UPSTIquestion
+En utilisant cette fonction, donner la partie de programme qui affiche la plus grande valeur de vitesse de votre tableau.
+
+\textit{Ne refaites pas tout le programme : Indiquez les nouvelles lignes de code ci-dessous et faites une marque dans le programme 3.2 pour indiquer où insérer ces lignes de code.}
+
+\espaceReponse{3cm}
+
+\ifavecEspaceReponse\pagebreak\fi
+
+\section{Utilisation de structures \hfill \textit{6 points}}
+
+\subsection{Structure pour mesures multiples \hfill \textit{3 points}}
+
+On souhaite aussi mesurer et mémoriser la puissance instantanée consommée par le robot (en Watt) à chaque fois qu'on mesure la vitesse.
+\UPSTIquestion
+Que proposez-vous pour stocker ces nouvelles informations, sachant qu'on impose de n'utiliser qu'un seul tableau ?
+\UPSTIquestion 
+Donner les éventuelles déclarations et modifications à apporter au programme. 
+
+\espaceReponse{4cm}
+
+\subsection{Programme complet avec structure \hfill \textit{3 points}}
+
+On possède les fonctions suivantes :
+\begin{itemize}
+    \item \texttt{void delay(int duree)} qui effectue une pause de \texttt{ duree} ms (idem question 3.2)
+    \item \texttt{int mesureVitesse(void)} qui retourne la vitesse instantanée du robot en cm/s (idem question 3.2)
+    \item \texttt{int mesurePuissance(void)} qui retourne la puissance instantanée consommée par le robot en milliWatt
+\end{itemize}
+ 
+\UPSTIquestion
+Donner la partie de programme qui permet d'effectuer et de mémoriser les mesures de vitesse et de consommation pendant une minute (mesures toutes les secondes).
+
+\espaceReponse{5cm}
+ 
+\UPSTIquestion
+Donner la partie de programme qui calcule et affiche la consommation d'énergie (en Wh) au bout de la minute de mesure.
+
+On rappelle que l'énergie est l'intégrale de la puissance ; il suffit donc de faire la somme des puissances mesurées en Watt et de multiplier par l'intervalle de temps $\Delta t$ (en heure) entre chaque mesure.
+
+\espaceReponse{5cm}

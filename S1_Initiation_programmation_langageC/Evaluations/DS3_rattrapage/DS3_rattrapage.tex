@@ -1,0 +1,70 @@
+\documentclass[noCustomPackages, basic,ds]{UPSTI_Document}
+
+\UPSTIloadProfile{BUT_GEII}
+
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{A}
+\newcommand{\UPSTImessage}{DS3 -- Rattrapage}
+\newcommand{\UPSTItitre}{Examen de rattrapage -- Langage C}
+
+% ============================================================
+% Option : avec ou sans espace pour répondre
+% ============================================================
+% Mettre à true pour version avec espaces (réponse sur le sujet)
+% Mettre à false pour version sans espaces (réponse sur feuille séparée)
+\newif\ifavecEspaceReponse
+\avecEspaceReponsefalse  % <-- Changer en \avecEspaceReponsefalse pour version examen
+
+% Commande pour les espaces de réponse
+\newcommand{\espaceReponse}[1]{%
+  \ifavecEspaceReponse
+    \vspace{#1}%
+  \fi
+}
+
+% Commande pour le cartouche nom/prénom (masqué en mode examen)
+\newcommand{\cartoucheNom}{%
+  \ifavecEspaceReponse
+    \noindent\fbox{%
+      \begin{minipage}{.95\linewidth}
+        Nom, prénom et groupe :
+        \vspace*{.5cm}\dotfill
+        \vspace*{1mm}
+      \end{minipage}%
+    }%
+    \vspace{1em}%
+  \fi
+}
+
+\begin{document}
+
+\cartoucheNom
+
+\begin{center}
+    \textit{Durée : 55 min / Calculatrice non autorisée / 1 Fiche de synthèse manuscrite autorisée}\\
+    \textit{Beaucoup de questions peuvent être faites sans avoir fait les précédentes.}\\
+    \textit{Malus en cas de copie non soignée.}
+    \textit{Le barême est donné à titre indicatif et est susceptible d'évoluer.}
+\end{center}
+
+
+% ============================================================
+% SECTION 1 : Appels de fonctions
+% ============================================================
+\input{sources/exercice_appels_fonctions.tex}
+
+% ============================================================
+% SECTION 2 : Fonctions
+% ============================================================
+\input{sources/exercice_fonctions.tex}
+
+% ============================================================
+% SECTION 3 : Tableaux
+% ============================================================
+\input{sources/exercice_tableaux.tex}
+
+
+\end{document}
