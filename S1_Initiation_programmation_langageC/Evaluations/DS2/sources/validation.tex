@@ -1,0 +1,48 @@
+% ==================== SECTION VALIDATION ====================
+
+\element{validation}{
+    \section{Fonction de calcul sécurisée avec gestion d'erreurs}
+
+    En électronique, le calcul de la résistance d'un diviseur de tension nécessite de valider les données pour éviter des erreurs critiques.
+
+    \textbf{Rappel :} Dans un diviseur de tension, si $U_{total} = 12V$ et on veut $U_{sortie} = 5V$ avec $R_2 = 1000\Omega$, alors :
+    $$R_1 = R_2 \times \frac{U_{total} - U_{sortie}}{U_{sortie}}$$
+
+    \begin{question}{valid-1}
+        Écrire une fonction complète :
+
+        \lstinline[language=C]|float calculer_R1(float u_total, float u_sortie, float r2)|
+
+        Cette fonction doit :
+        \begin{enumerate}
+            \item \textbf{Vérifier} que toutes les valeurs sont strictement positives
+            \item \textbf{Vérifier} que $U_{sortie} < U_{total}$ (sinon le diviseur ne fonctionne pas)
+            \item \textbf{Vérifier} que $U_{sortie} \neq 0$ (division par zéro)
+            \item Si \textbf{une erreur est detectee} : retourner \lstinline[language=C]|-1.0|
+            \item Si \textbf{tout est correct} : calculer et retourner $R_1$
+        \end{enumerate}
+
+        \textbf{Écrire uniquement la fonction complète avec tous les tests de validation (pas besoin du main).}
+
+        \evaluationProfGrille{2}{13}
+    \end{question}
+
+    \begin{question}{valid-2}
+        \textbf{Question bonus}\\
+        Ecrire un programme \lstinline[language=C]|main| qui teste la fonction avec au moins \textbf{3 cas differents} :
+        \begin{itemize}
+            \item 1 cas valide qui doit réussir
+            \item 2 cas invalides qui doivent échouer
+        \end{itemize}
+
+        Pour chaque test, afficher si le calcul a réussi ou échoué.
+
+        \textbf{Exemple d'utilisation attendue :}
+
+        \lstinputlisting[language=C]{sources/codes/exemple_validation.c}
+
+        \textbf{Écrire le programme main complet (avec les \#include nécessaires).}
+
+        \evaluationProfGrille{2}{16}
+    \end{question}
+}

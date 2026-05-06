@@ -1,0 +1,59 @@
+% ==================== SECTION CONVERTISSEUR D'UNITES ====================
+
+\element{convertisseur}{
+    \section{Convertisseur d'unités électriques}
+    Un technicien souhaite créer un outil de conversion pour les unités électriques couramment utilisées en électronique.
+
+    \begin{question}{convert-1}
+        Ecrire une fonction \lstinline[language=C]|float milli_vers_unite(float valeur)| qui convertit une valeur en milliunites (mA, mV, mW...) vers l'unite de base (A, V, W...).
+
+        Par exemple : \lstinline[language=C]|milli_vers_unite(250.0)| doit retourner \lstinline[language=C]|0.25|
+
+        Ecrire egalement un petit programme \lstinline[language=C]|main| qui teste cette fonction en demandant une valeur a l'utilisateur et en affichant le resultat de la conversion.
+
+        \textbf{Pour cette question, écrire un programme complet (avec les \#include nécessaires).}
+
+        \evaluationProfGrille{2}{15}
+    \end{question}
+
+    \begin{question}{convert-2}
+        Écrire une fonction plus complète qui calcule la puissance électrique et la convertit dans l'unité demandée :
+
+        \lstinline[language=C]|float convertir_puissance(float tension, float courant, char unite)|
+
+        Cette fonction doit :
+        \begin{itemize}
+            \item Calculer la puissance : $P = U \times I$
+            \item Le paramètre \lstinline[language=C]|unite| indique l'unité de sortie souhaitée :
+        \begin{itemize}
+            \item \texttt{W} : retourner la puissance en Watts
+            \item \texttt{m} : retourner la puissance en milliwatts (mW)
+            \item \texttt{k} : retourner la puissance en kilowatts (kW)
+        \end{itemize}
+            \item Pour tout autre caractère : retourner la puissance en Watts
+        \end{itemize}
+
+        \textbf{Écrire uniquement la fonction (pas besoin du main ni des \#include).}
+
+        \evaluationProfGrille{2}{12}
+    \end{question}
+
+    \begin{question}{convert-3}
+        Écrire une fonction \lstinline[language=C]|void afficher_table_conversion(float puissance_w)| qui affiche la table de conversion complète d'une valeur de puissance donnée en Watts.
+
+        La fonction doit afficher les conversions principales depuis les Mégawatts (MW) jusqu'aux milliwatts (mW). Un exemple d'affichage pour une puissance de 1500 W est donné ci-dessous :
+        \lstinputlisting[style=console]{sources/codes/exemple-conversion.txt}
+
+
+        \textbf{Consignes importantes :}
+        \begin{itemize}
+            \item Utiliser une boucle pour générer les conversions
+            \item Formater l'affichage avec 6 décimales
+            \item La puissance en Watts est toujours la référence et la puissance de 10 doit être indiquée comme dans l'exemple
+        \end{itemize}
+
+        \textbf{Écrire uniquement la fonction (pas besoin du main ni des \#include).}
+
+        \evaluationProfGrille{2}{12}
+    \end{question}
+}

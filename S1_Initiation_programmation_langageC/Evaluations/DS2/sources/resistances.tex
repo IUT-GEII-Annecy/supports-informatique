@@ -1,0 +1,42 @@
+% ==================== SECTION RESISTANCES ====================
+
+\element{resistances}{
+    \begin{question}{resist-1}
+        En supposant que toutes les variables sont correctement déclarées, en considérant le programme ci-dessous : compléter le tableau donnant les résistances équivalentes calculées par le programme.
+
+        \begin{minipage}{.55\textwidth}
+            \lstinputlisting{sources/codes/resistances.c}
+        \end{minipage}\hfill
+        \begin{minipage}{.4\textwidth}
+            {
+                \Large
+                \begin{tabular}{|l|c|}
+                    \hline
+                    \textbf{Calcul} & \textbf{Résultat ($\Omega$)} \\\hline
+                    Série R1+R2 &  \\\hline
+                    Parallèle R1//R2 &  \\\hline
+                    Série R1+R2+R3 &  \\\hline
+                    Parallèle R1//R2//R3 &  \\\hline
+                \end{tabular}
+            }
+        \end{minipage}
+
+        \evaluationProf
+    \end{question}
+
+    \begin{question}{resist-2}
+        Analyser le code de ce programme en apportant une critique de son organisation et de sa structure.
+
+        \textit{Indices : répétitions, modularité, réutilisabilité...}
+
+        \evaluationProfGrille{2}{4}
+    \end{question}
+
+    \begin{question}{resist-3}
+        Proposer une refactorisation du code en créant au minimum deux fonctions appropriées pour améliorer la structure du programme.
+jkljkljklj
+        \textbf{Écrire uniquement les prototypes et les définitions des fonctions (pas besoin de réécrire le main complet).}
+
+        \evaluationProfGrille{2}{1}
+    \end{question}
+}

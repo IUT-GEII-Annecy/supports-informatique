@@ -1,0 +1,89 @@
+\documentclass[QCM, noCustomPackages, basic]{UPSTI_Document}
+
+
+\UPSTIloadProfile{BUT_GEII}
+
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+\def\photodir{photos}
+
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{0}
+\newcommand{\UPSTImessage}{DS2 - Fonctions}
+\newcommand{\UPSTItitre}{Les fonctions en langage C}
+
+\newcommand{\sujetA}{
+\exemplaire{3}{%
+\noindent\champnom{\fbox{
+    \begin{minipage}{.9\linewidth}
+        Nom, prénom et groupe :
+
+        \vspace*{.5cm}\dotfill
+        \vspace*{1mm}
+    \end{minipage}
+}}
+
+\renewcommand{\UPSTImessage}{Sujet A}
+\renewcommand{\UPSTInumeroVersion}{A}
+\UPSTIbuildPage
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+\section{Préambule - Questions de cours}
+\restituegroupe[1]{syntaxe}
+\restituegroupe[1]{appel}
+\restituegroupe[1]{portee}
+\restituegroupe[1]{prediction}
+
+\pagebreak
+
+\section{Calcul de grandeurs électriques}
+\restituegroupe[1]{loi-ohm}
+
+\pagebreak
+
+\restituegroupe{convertisseur}
+
+% \pagebreak
+
+% \section{Questions avancées}
+% \restituegroupe{optimisation}
+% \restituegroupe{validation}
+
+\AMCcleardoublepage
+}
+}
+
+
+
+
+
+\begin{document}
+
+
+\vspace{1em}
+
+\begin{center}
+    \textit{Aucun document autorisé, Sans calculatrice, Durée : 55min}\\
+    \textit{Si vous constatez une erreur dans le document, indiquez les suppositions que vous faites pour répondre à la question.}
+    \textit{Chaque question indique si vous devez fournir un code complet ou un extrait.}
+\end{center}
+
+\setdefaultgroupmode{withoutreplacement}
+\input{sources/qcm_fonctions.tex}
+\input{sources/loi_ohm.tex}
+\input{sources/convertisseur.tex}
+\input{sources/optimisation.tex}
+\input{sources/validation.tex}
+
+\def\AMCformQuestion#1{{\sc Question #1 :}}
+
+% Génération des 3 sujets différents
+\AMCrandomseed{1237893}
+%\sujetA
+
+
+\sujetA
+\end{document}

@@ -1,0 +1,27 @@
+% ==================== SECTION OPTIMISATION ====================
+
+\element{optimisation}{
+    \section{Analyse et optimisation de code}
+
+    Un étudiant a écrit le programme suivant pour calculer la consommation électrique journalière d'appareils :
+
+    \lstinputlisting[language=C]{sources/codes/conso_electrique.c}
+
+    \begin{question}{optim-1}
+        Identifier au moins \textbf{3 problèmes} dans l'organisation de ce code (répétitions, constantes magiques, modularité...).
+
+        \evaluationProfGrille{2}{4}
+    \end{question}
+
+    \begin{question}{optim-2}
+        Proposer une \textbf{refactorisation complète} en créant :
+        \begin{itemize}
+            \item Une ou plusieurs fonctions appropriées avec leurs prototypes
+            \item Un main simplifié utilisant ces fonctions
+        \end{itemize}
+
+        \textbf{Critères d'évaluation :} réduction des répétitions, paramètres bien choisis, code réutilisable.
+
+        \evaluationProfGrille{2}{20}
+    \end{question}
+}

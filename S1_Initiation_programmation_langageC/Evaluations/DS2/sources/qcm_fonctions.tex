@@ -1,0 +1,190 @@
+% ==================== SECTION PREAMBULE - QCM ====================
+
+% ========== A) SYNTAXE ET PROTOTYPES ==========
+
+\element{syntaxe}{
+    \begin{question}{prototype-1}
+        Quel est le prototype correct d'une fonction qui prend deux entiers en paramètres et retourne un entier ?
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|int calcul(int a, int b);|}
+                \mauvaise{\lstinline[language=C]|calcul(int a, int b);|}
+                \mauvaise{\lstinline[language=C]|int calcul(a, b);|}
+                \mauvaise{\lstinline[language=C]|void calcul(int a, int b);|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+% \element{syntaxe}{
+%     \begin{question}{prototype-2}
+%         Quelle distinction existe entre une fonction \lstinline[language=C]|void| et une fonction qui retourne un type ?
+%         \begin{multicols}{2}
+%             \begin{reponses}
+%                 \bonne{Une fonction \lstinline[language=C]|void| ne retourne pas de valeur}
+%                 \mauvaise{Une fonction \lstinline[language=C]|void| ne prend pas de parametre}
+%                 \mauvaise{Une fonction \lstinline[language=C]|void| ne peut pas etre appelee}
+%                 \mauvaise{Une fonction \lstinline[language=C]|void| est toujours recursive}
+%             \end{reponses}
+%         \end{multicols}
+%     \end{question}
+% }
+
+% \element{syntaxe}{
+%     \begin{question}{return-1}
+%         Que se passe-t-il si on oublie le \lstinline[language=C]|return| dans une fonction qui doit retourner un entier ?
+%         \begin{multicols}{2}
+%             \begin{reponses}
+%                 \bonne{Le comportement est indéfini, la valeur retournée est imprévisible}
+%                 \mauvaise{La fonction retourne automatiquement 0}
+%                 \mauvaise{Le compilateur génère une erreur qui empêche la compilation}
+%                 \mauvaise{La fonction retourne NULL}
+%             \end{reponses}
+%         \end{multicols}
+%     \end{question}
+% }
+
+% ========== B) APPELS ET PASSAGES DE PARAMETRES ==========
+
+\element{appel}{
+    \begin{question}{appel-1}
+        Soit la fonction \lstinline[language=C]|float diviser(float a, float b)|. Quel appel est correct ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|float x = diviser(10.0, 2.0);|}
+                \mauvaise{\lstinline[language=C]|diviser(10.0, 2.0) = x;|}
+                \mauvaise{\lstinline[language=C]|float x = diviser(b:2.0, a:10.0);|}
+                \mauvaise{\lstinline[language=C]|x = diviser();|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{appel}{
+    \begin{question}{appel-2}
+        Soit la fonction suivante. Qu'affichera le programme ?
+        \lstinputlisting[language=C]{sources/codes/appel.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{12}
+                \mauvaise{7}
+                \mauvaise{3}
+                \mauvaise{4}
+                \mauvaise{0}
+                \mauvaise{Erreur}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{appel}{
+    \begin{question}{ordre-param}
+        Dans l'appel \lstinline[language=C]|calculer(a, b, c)|, l'ordre des parametres :
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{Doit correspondre à l'ordre défini dans le prototype}
+                \mauvaise{Peut être modifié librement}
+                \mauvaise{N'a pas d'importance si les types sont identiques}
+                \mauvaise{Est automatiquement trié par le compilateur}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+% ========== C) PORTEE DES VARIABLES ==========
+
+% \element{portee}{
+%     \begin{question}{portee-1}
+%         Une variable déclarée à l'intérieur d'une fonction :
+%         \begin{multicols}{2}
+%             \begin{reponses}
+%                 \bonne{Est locale et n'existe que dans cette fonction}
+%                 \mauvaise{Est accessible depuis toutes les autres fonctions}
+%                 \mauvaise{Est automatiquement globale}
+%                 \mauvaise{Doit être obligatoirement passée en paramètre}
+%             \end{reponses}
+%         \end{multicols}
+%     \end{question}
+% }
+
+\element{portee}{
+    \begin{question}{portee-2}
+        Soit le code ci-dessous. Qu'affichera le programme ?
+        \lstinputlisting{sources/codes/portee-variable.c}
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{Dans la fonction: 1\newline Dans le main: 10}
+                \mauvaise{Dans la fonction: 11\newline Dans le main: 11}
+                \mauvaise{Dans la fonction: 1\newline Dans le main: 1}
+                \mauvaise{Dans la fonction: 10\newline Dans le main: 10}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+% \element{portee}{
+%     \begin{question}{globale-vs-locale}
+%         Quelle affirmation est vraie concernant les variables globales ?
+%         \begin{multicols}{2}
+%             \begin{reponses}
+%                 \bonne{Elles sont accessibles depuis toutes les fonctions du programme}
+%                 \mauvaise{Elles ne peuvent pas être modifiées}
+%                 \mauvaise{Elles sont automatiquement constantes}
+%                 \mauvaise{Elles sont supprimées après chaque appel de fonction}
+%             \end{reponses}
+%         \end{multicols}
+%     \end{question}
+% }
+
+% ========== D) PREDICTIONS DE CODE ==========
+
+\element{prediction}{
+    \begin{question}{prediction-1}
+        Soit le code ci-dessous. Qu'affichera le programme ?
+        \lstinputlisting{sources/codes/prediction-fonction-1.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{13}
+                \mauvaise{8}
+                \mauvaise{10}
+                \mauvaise{5}
+                \mauvaise{16}
+                \mauvaise{Erreur}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{prediction}{
+    \begin{question}{prediction-2}
+        Soit le code ci-dessous. Qu'affichera le programme ?
+        \lstinputlisting{sources/codes/prediction-fonction-2.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{10}
+                \mauvaise{0}
+                \mauvaise{2}
+                \mauvaise{5}
+                \mauvaise{8}
+                \mauvaise{Erreur}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{prediction}{
+    \begin{question}{prediction-3}
+        Soit le code ci-dessous. Qu'affichera le programme ?
+        \lstinputlisting{sources/codes/prediction-fonction-3.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{7}
+                \mauvaise{14}
+                \mauvaise{0}
+                \mauvaise{2}
+                \mauvaise{21}
+                \mauvaise{Erreur}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
