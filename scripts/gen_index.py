@@ -4,6 +4,8 @@
 Usage: gen_index.py OUT_DIR built_doc1.tex built_doc2.tex ... -- failed_doc1.tex ...
 """
 import html
+import re
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -14,36 +16,99 @@ sep = args.index("--") if "--" in args else len(args)
 built = [a for a in args[1:sep] if a]
 failed = [a for a in args[sep + 1:] if a]
 
+PDF_ICON = """<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="pdf-icon">
+<path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M14 2v4h4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+<text x="12" y="16.5" font-size="6.2" font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle" fill="currentColor">PDF</text>
+</svg>"""
+
+
 def top_level(doc_path: str) -> str:
-    parts = Path(doc_path).parts
-    # ex: ('.', 'S1_Initiation_programmation_langageC', 'Seq01_Hello-world', 'tp01-hello-world.tex')
-    parts = [p for p in parts if p != "."]
+    parts = [p for p in Path(doc_path).parts if p != "."]
+    # ex: ('S1_Initiation_programmation_langageC', 'Seq01_Hello-world', 'tp01-hello-world', 'foo.tex')
     return parts[1] if len(parts) > 2 else parts[0]
 
-groups = defaultdict(list)
+
+def category(doc_path: str) -> str:
+    """Classe un document en Cours / TD / TP à partir du nom de son dossier."""
+    name = Path(doc_path).parent.name.lower()
+    if name.startswith("td"):
+        return "TD"
+    if name.startswith("tp"):
+        return "TP"
+    if re.match(r"^c\d", name):
+        return "Cours"
+    return "Autre"
+
+
+def version_date(doc_path: str) -> str:
+    """Date du dernier commit touchant le dossier du document (fenêtre limitée
+    par le fetch-depth du checkout ; vide si hors fenêtre)."""
+    try:
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%ad", "--date=short", "--", str(Path(doc_path).parent)],
+            capture_output=True, text=True, timeout=5,
+        )
+        return out.stdout.strip()
+    except Exception:
+        return ""
+
+
+rows = defaultdict(lambda: defaultdict(list))  # rows[séquence][catégorie] = [(label, rel_pdf, date), ...]
+autres = defaultdict(list)
+
 for doc in built:
     p = Path(doc)
-    pdf_rel = p.with_suffix(".pdf")
-    # chemin relatif dans _site, sans le "./" initial
-    rel = str(pdf_rel).removeprefix("./")
-    groups[top_level(doc)].append((p.parent.name, rel))
+    rel = str(p.with_suffix(".pdf")).removeprefix("./")
+    seq = top_level(doc)
+    cat = category(doc)
+    label = p.parent.name
+    date = version_date(doc)
+    if cat == "Autre":
+        autres[seq].append((label, rel, date))
+    else:
+        rows[seq][cat].append((label, rel, date))
 
-for g in groups.values():
-    g.sort()
 
-sections_html = []
-for section in sorted(groups):
+def cell_html(entries):
+    if not entries:
+        return '<span class="empty">—</span>'
+    parts = []
+    for label, rel, date in sorted(entries):
+        date_html = f'<span class="date">{html.escape(date)}</span>' if date else ""
+        parts.append(
+            f'<a class="pdf-link" href="{html.escape(rel)}">{PDF_ICON}'
+            f'<span class="label">{html.escape(label)}</span></a>{date_html}'
+        )
+    return "<br>".join(parts)
+
+
+table_rows = []
+for seq in sorted(rows):
+    cours = cell_html(rows[seq].get("Cours", []))
+    td = cell_html(rows[seq].get("TD", []))
+    tp = cell_html(rows[seq].get("TP", []))
+    table_rows.append(f"""
+      <tr>
+        <th scope="row">{html.escape(seq)}</th>
+        <td>{cours}</td>
+        <td>{td}</td>
+        <td>{tp}</td>
+      </tr>""")
+
+autres_html = ""
+if autres:
     items = "\n".join(
-        f'      <li><a href="{html.escape(rel)}">{html.escape(name)}</a></li>'
-        for name, rel in groups[section]
+        f'      <li>{cell_html([e])} <span class="seq-tag">({html.escape(seq)})</span></li>'
+        for seq in sorted(autres) for e in autres[seq]
     )
-    sections_html.append(f"""
+    autres_html = f"""
     <section>
-      <h2>{html.escape(section)}</h2>
-      <ul>
+      <h2>Autres documents</h2>
+      <ul class="autres-list">
 {items}
       </ul>
-    </section>""")
+    </section>"""
 
 failed_html = ""
 if failed:
@@ -63,22 +128,86 @@ page = f"""<!doctype html>
 <title>Supports Informatique - BUT GEII</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body {{ font-family: system-ui, sans-serif; max-width: 60rem; margin: 2rem auto; padding: 0 1rem; }}
+  :root {{
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #666666;
+    --border: #dddddd;
+    --row-alt: #f7f7f8;
+    --link: #b3121b;
+    --link-hover: #7c0c12;
+    --empty: #cccccc;
+    --failed-fg: #a33333;
+  }}
+  @media (prefers-color-scheme: dark) {{
+    :root:not([data-theme="light"]) {{
+      --bg: #14161a;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --border: #33363c;
+      --row-alt: #1b1e23;
+      --link: #ff8a80;
+      --link-hover: #ffb3ab;
+      --empty: #4a4d53;
+      --failed-fg: #ff8a80;
+    }}
+  }}
+  :root[data-theme="dark"] {{
+    --bg: #14161a;
+    --fg: #e8e8e8;
+    --muted: #9a9a9a;
+    --border: #33363c;
+    --row-alt: #1b1e23;
+    --link: #ff8a80;
+    --link-hover: #ffb3ab;
+    --empty: #4a4d53;
+    --failed-fg: #ff8a80;
+  }}
+  body {{
+    font-family: system-ui, sans-serif;
+    max-width: 60rem;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    background: var(--bg);
+    color: var(--fg);
+  }}
   h1 {{ margin-bottom: 0.2rem; }}
-  .subtitle {{ color: #555; margin-top: 0; }}
+  .subtitle {{ color: var(--muted); margin-top: 0; }}
+  .table-wrap {{ overflow-x: auto; }}
+  table {{ border-collapse: collapse; width: 100%; margin-bottom: 2rem; }}
+  caption {{ caption-side: top; text-align: left; font-weight: 600; margin-bottom: 0.5rem; }}
+  th, td {{ border: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; vertical-align: top; }}
+  thead th {{ background: var(--row-alt); }}
+  tbody th {{ white-space: nowrap; }}
+  tbody tr:nth-child(even) {{ background: var(--row-alt); }}
+  .pdf-link {{ display: inline-flex; align-items: center; gap: 0.35rem; color: var(--link); text-decoration: none; }}
+  .pdf-link:hover {{ color: var(--link-hover); text-decoration: underline; }}
+  .pdf-icon {{ flex: none; }}
+  .date {{ display: block; margin: 0.1rem 0 0.4rem 1.5rem; color: var(--muted); font-size: 0.8em; }}
+  .empty {{ color: var(--empty); }}
   section {{ margin-bottom: 1.5rem; }}
-  h2 {{ border-bottom: 1px solid #ddd; padding-bottom: 0.2rem; }}
-  ul {{ column-width: 18rem; }}
-  li {{ margin: 0.2rem 0; break-inside: avoid; }}
-  .failed {{ color: #888; }}
-  .failed h2 {{ color: #a33; }}
-  footer {{ margin-top: 2rem; color: #888; font-size: 0.85em; }}
+  h2 {{ border-bottom: 1px solid var(--border); padding-bottom: 0.2rem; }}
+  .autres-list li {{ margin: 0.3rem 0; }}
+  .seq-tag {{ color: var(--muted); font-size: 0.85em; }}
+  .failed {{ color: var(--muted); }}
+  .failed h2 {{ color: var(--failed-fg); }}
+  footer {{ margin-top: 2rem; color: var(--muted); font-size: 0.85em; }}
 </style>
 </head>
 <body>
   <h1>Supports Informatique - BUT GEII</h1>
   <p class="subtitle">PDF générés automatiquement depuis les sources LaTeX. Les évaluations (DS, contrôles) ne sont pas publiées ici.</p>
-{''.join(sections_html)}
+  <div class="table-wrap">
+    <table>
+      <caption>Séquences</caption>
+      <thead>
+        <tr><th scope="col">Séquence</th><th scope="col">Cours</th><th scope="col">TD</th><th scope="col">TP</th></tr>
+      </thead>
+      <tbody>{''.join(table_rows)}
+      </tbody>
+    </table>
+  </div>
+{autres_html}
 {failed_html}
   <footer>Généré automatiquement par GitHub Actions.</footer>
 </body>
