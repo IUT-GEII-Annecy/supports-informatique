@@ -1,0 +1,65 @@
+name: Compile et publie les PDF
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout supports-informatique
+        uses: actions/checkout@v4
+
+      - name: Checkout du package LaTeX UPSTI (privé)
+        uses: actions/checkout@v4
+        with:
+          repository: GeoffreyV/UPSTI
+          ssh-key: ${{ secrets.UPSTI_DEPLOY_KEY }}
+          path: _upsti-src
+
+      - name: Installer UPSTI dans l'arborescence TEXMF personnelle
+        run: |
+          mkdir -p "$HOME/texmf/tex/latex"
+          cp -r _upsti-src "$HOME/texmf/tex/latex/UPSTI"
+          rm -rf _upsti-src
+
+      # texlive-full couvre tous les packages utilisés par UPSTI et les
+      # documents du cours (currfile, doclicense, fontawesome, gitinfo2,
+      # babel-french, cm-super...). Plus long à installer qu'une sélection
+      # ciblée, mais évite les échecs "package manquant" à chaque nouveau
+      # document.
+      - name: Installer TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends texlive-full latexmk
+          texhash "$HOME/texmf"
+
+      - name: Compiler les documents publiables
+        run: bash scripts/build_pdfs.sh _site
+
+      - name: Upload de l'artefact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

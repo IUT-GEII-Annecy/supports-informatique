@@ -34,3 +34,10 @@ Thumbs.db
 *.pdf
 # PDFs générés (ne pas versionner)
 pdf/
+
+# Projets AMC (auto-multiple-choice) : contiennent scans de copies et
+# données étudiants réelles, ne doivent jamais être versionnés.
+*.amc
+
+# Sortie locale du build de site (générée par scripts/build_pdfs.sh / CI)
+_site/

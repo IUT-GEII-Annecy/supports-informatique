@@ -1,0 +1,86 @@
+#!/bin/bash
+# Compile tous les documents "publiables" du repo en PDF et prépare le
+# contenu du site (_site/) pour publication sur GitHub Pages.
+#
+# Exclusions volontaires (ne doivent jamais finir sur le site public) :
+#   - tout chemin contenant /Evaluations/
+#   - tout chemin contenant un segment ctrl1 (contrôles continus)
+#   - tout document dont la classe a l'option "evaluation"
+#     (ex: \documentclass[TP,evaluation]{UPSTI_Document}, génère des
+#     feuilles de suivi potentiellement nominatives)
+#
+# Usage: ./scripts/build_pdfs.sh [dossier_de_sortie]
+# Doit être lancé depuis la racine du repo.
+
+set -u
+
+OUT_DIR="${1:-_site}"
+FAILED=()
+BUILT=()
+
+rm -rf "$OUT_DIR"
+mkdir -p "$OUT_DIR"
+
+# Liste des documents racine (contiennent \documentclass), hors exclusions.
+# Convention : tout fichier/dossier dont un composant de chemin contient
+# ".eval" (ex: ctrl1.eval/, types_structures.eval.tex) est une évaluation
+# et n'est jamais publié, où qu'il se trouve. Le dossier Evaluations/ reste
+# exclu dans son ensemble par ailleurs.
+mapfile -t DOCS < <(
+  grep -rl '^\\documentclass' --include='*.tex' . 2>/dev/null \
+    | grep -v '/Evaluations/' \
+    | grep -v '\.eval' \
+    | sort
+)
+
+echo "→ ${#DOCS[@]} document(s) à compiler"
+
+for doc in "${DOCS[@]}"; do
+  dir=$(dirname "$doc")
+  base=$(basename "$doc" .tex)
+  echo "----------------------------------------"
+  echo "Compilation: $doc"
+
+  # Pas de -halt-on-error : on force latexmk à aller jusqu'au bout même en
+  # cas d'erreur récupérable (ex: commande non définie mais non bloquante),
+  # comme le ferait un \scrollmode. Un document publié avec un défaut mineur
+  # vaut mieux qu'un document absent.
+  # NB: latexmk -f pousse jusqu'au bout malgré des erreurs récupérables
+  # (macro non définie, référence non résolue...) et son code de sortie
+  # reste souvent 1 même quand un PDF complet a bien été produit. On juge
+  # donc le succès sur la présence du PDF, pas sur le code de sortie.
+  ( cd "$dir" && latexmk -pdf -interaction=nonstopmode -f -g "$base.tex" ) \
+    > /tmp/build_${base}.log 2>&1
+
+  pdf_path="$dir/$base.pdf"
+  if [ -f "$pdf_path" ]; then
+    dest="$OUT_DIR/$dir"
+    mkdir -p "$dest"
+    cp "$pdf_path" "$dest/$base.pdf"
+    BUILT+=("$doc")
+    echo "OK"
+  else
+    FAILED+=("$doc")
+    echo "ÉCHEC (voir /tmp/build_${base}.log)"
+    tail -n 30 "/tmp/build_${base}.log"
+  fi
+done
+
+echo "========================================"
+echo "Réussis : ${#BUILT[@]}"
+echo "Échoués : ${#FAILED[@]}"
+for f in "${FAILED[@]:-}"; do
+  [ -n "$f" ] && echo "  - $f"
+done
+
+# Génère l'index HTML du site
+python3 "$(dirname "$0")/gen_index.py" "$OUT_DIR" "${BUILT[@]:-}" -- "${FAILED[@]:-}"
+
+# Code de sortie: on ne fait jamais échouer le job pour un document cassé
+# (best-effort : on publie ce qui compile). On échoue seulement si RIEN
+# n'a compilé, signe d'un problème d'environnement plus large.
+if [ "${#BUILT[@]}" -eq 0 ]; then
+  echo "Aucun document compilé, échec du job."
+  exit 1
+fi
+exit 0
