@@ -17,6 +17,7 @@ set -u
 OUT_DIR="${1:-_site}"
 FAILED=()
 BUILT=()
+CORRIGES=()
 
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
@@ -59,6 +60,32 @@ for doc in "${DOCS[@]}"; do
     cp "$pdf_path" "$dest/$base.pdf"
     BUILT+=("$doc")
     echo "OK"
+
+    # Correction : publiée uniquement si un marqueur .corrige a été déposé
+    # dans le dossier du document (git add .corrige && git commit && git push).
+    # Utilise le mécanisme UPSTI \ChoixDeVersion{P} (voir docs UPSTI), injecté
+    # sans modifier le document original.
+    if [ -f "$dir/.corrige" ]; then
+      echo "  → marqueur .corrige trouvé, compilation de la version corrigée"
+      wrapper="$dir/${base}__corrige.tex"
+      printf '\\def\\ChoixDeVersion{P}\n\\input{%s.tex}\n' "$base" > "$wrapper"
+
+      ( cd "$dir" && latexmk -pdf -interaction=nonstopmode -f -g "${base}__corrige.tex" ) \
+        > "/tmp/build_${base}__corrige.log" 2>&1
+
+      corrige_pdf="$dir/${base}__corrige.pdf"
+      if [ -f "$corrige_pdf" ]; then
+        cp "$corrige_pdf" "$dest/${base}__corrige.pdf"
+        CORRIGES+=("$doc")
+        echo "  → corrigé OK"
+      else
+        echo "  → ÉCHEC corrigé (voir /tmp/build_${base}__corrige.log)"
+        tail -n 30 "/tmp/build_${base}__corrige.log"
+      fi
+
+      # Nettoyage : le wrapper est un artefact de build, jamais commité.
+      rm -f "$wrapper" "$dir/${base}__corrige."{aux,log,out,fdb_latexmk,fls,synctex.gz,pdf}
+    fi
   else
     FAILED+=("$doc")
     echo "ÉCHEC (voir /tmp/build_${base}.log)"
@@ -73,8 +100,10 @@ for f in "${FAILED[@]:-}"; do
   [ -n "$f" ] && echo "  - $f"
 done
 
+echo "Corrigés publiés : ${#CORRIGES[@]}"
+
 # Génère l'index HTML du site
-python3 "$(dirname "$0")/gen_index.py" "$OUT_DIR" "${BUILT[@]:-}" -- "${FAILED[@]:-}"
+python3 "$(dirname "$0")/gen_index.py" "$OUT_DIR" "${BUILT[@]:-}" -- "${FAILED[@]:-}" -- "${CORRIGES[@]:-}"
 
 # Code de sortie: on ne fait jamais échouer le job pour un document cassé
 # (best-effort : on publie ce qui compile). On échoue seulement si RIEN

@@ -41,3 +41,7 @@ pdf/
 
 # Sortie locale du build de site (générée par scripts/build_pdfs.sh / CI)
 _site/
+
+# Wrapper temporaire généré par build_pdfs.sh pour compiler la version
+# corrigée (\ChoixDeVersion{P}) ; nettoyé automatiquement, filet de sécurité.
+*__corrige.tex

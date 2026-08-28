@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Génère _site/index.html à partir de la liste des documents compilés/échoués.
 
-Usage: gen_index.py OUT_DIR built_doc1.tex built_doc2.tex ... -- failed_doc1.tex ...
+Usage: gen_index.py OUT_DIR built1.tex ... -- failed1.tex ... -- corrige1.tex ...
+(corrige* = sous-ensemble de built* pour lequel un PDF __corrige a aussi été produit)
 """
 import html
 import re
@@ -12,9 +13,12 @@ from pathlib import Path
 
 args = sys.argv[1:]
 out_dir = Path(args[0])
-sep = args.index("--") if "--" in args else len(args)
-built = [a for a in args[1:sep] if a]
-failed = [a for a in args[sep + 1:] if a]
+seps = [i for i, a in enumerate(args) if a == "--"]
+sep1 = seps[0] if len(seps) > 0 else len(args)
+sep2 = seps[1] if len(seps) > 1 else len(args)
+built = [a for a in args[1:sep1] if a]
+failed = [a for a in args[sep1 + 1:sep2] if a]
+corriges = set(a for a in args[sep2 + 1:] if a)
 
 PDF_ICON = """<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="pdf-icon">
 <path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -69,6 +73,10 @@ for doc in built:
     else:
         rows[seq][cat].append((label, rel, date))
 
+    if doc in corriges:
+        corrige_rel = str(p.parent / f"{p.stem}__corrige.pdf").removeprefix("./")
+        rows[seq]["Correction"].append((f"{label} (corrigé)", corrige_rel, date))
+
 
 def cell_html(entries):
     if not entries:
@@ -88,12 +96,14 @@ for seq in sorted(rows):
     cours = cell_html(rows[seq].get("Cours", []))
     td = cell_html(rows[seq].get("TD", []))
     tp = cell_html(rows[seq].get("TP", []))
+    correction = cell_html(rows[seq].get("Correction", []))
     table_rows.append(f"""
       <tr>
         <th scope="row">{html.escape(seq)}</th>
         <td>{cours}</td>
         <td>{td}</td>
         <td>{tp}</td>
+        <td>{correction}</td>
       </tr>""")
 
 autres_html = ""
@@ -201,7 +211,7 @@ page = f"""<!doctype html>
     <table>
       <caption>Séquences</caption>
       <thead>
-        <tr><th scope="col">Séquence</th><th scope="col">Cours</th><th scope="col">TD</th><th scope="col">TP</th></tr>
+        <tr><th scope="col">Séquence</th><th scope="col">Cours</th><th scope="col">TD</th><th scope="col">TP</th><th scope="col">Correction</th></tr>
       </thead>
       <tbody>{''.join(table_rows)}
       </tbody>
@@ -216,4 +226,4 @@ page = f"""<!doctype html>
 
 out_dir.mkdir(parents=True, exist_ok=True)
 (out_dir / "index.html").write_text(page, encoding="utf-8")
-print(f"index.html généré ({len(built)} document(s), {len(failed)} échec(s))")
+print(f"index.html généré ({len(built)} document(s), {len(failed)} échec(s), {len(corriges)} corrigé(s))")
