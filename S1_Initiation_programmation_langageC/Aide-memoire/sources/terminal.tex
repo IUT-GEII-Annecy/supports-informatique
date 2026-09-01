@@ -1,0 +1,67 @@
+\section{Aide-mémoire Terminal -- CS50 / GEII}
+
+Ce document résume les \textbf{commandes essentielles du terminal}.
+À utiliser dans l’environnement CS50 ou Linux.
+Rappel : le terminal exécute les commandes \textbf{ligne par ligne}.
+La casse est importante (\texttt{MAJ} ≠ \texttt{min}).
+\hrule
+\subsection{Commandes principales}
+
+\begin{center}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Commande                 & Signification                                        & Exemple                         \\
+		\hline
+		\texttt{ls}              & Liste les fichiers et dossiers du répertoire courant & \texttt{ls}                     \\
+		\texttt{pwd}             & Affiche le chemin du dossier actuel                  & \texttt{pwd}                    \\
+		\texttt{cd <dossier>}    & Change de dossier (aller dans)                       & \texttt{cd Documents}           \\
+		\texttt{cd ..}           & Remonte d’un dossier                                 & \texttt{cd ..}                  \\
+		\texttt{mkdir <nom>}     & Crée un nouveau dossier                              & \texttt{mkdir TP1}              \\
+		\texttt{touch <fichier>} & Crée un fichier vide                                 & \texttt{touch test.c}           \\
+		\texttt{cp <src> <dst>}  & Copie un fichier                                     & \texttt{cp test.c sauvegarde.c} \\
+		\texttt{mv <src> <dst>}  & Déplace ou renomme un fichier                        & \texttt{mv test.c main.c}       \\
+		\texttt{rm <fichier>}    & Supprime un fichier                                  & \texttt{rm test.c}              \\
+		\texttt{rmdir <dossier>} & Supprime un dossier vide                             & \texttt{rmdir ancienTP}         \\
+		\texttt{clear}           & Efface l’écran du terminal                           & \texttt{clear}                  \\
+		\hline
+	\end{tabular}
+\end{center}
+\hrule
+\subsection{Commandes liées au C et CS50}
+
+\begin{center}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Commande                     & Signification                      & Exemple                                      \\
+		\hline
+		\texttt{code <fichier>}      & Ouvre un fichier dans l’éditeur    & \texttt{code hello.c}                        \\
+		\texttt{make <fichier>}      & Compile le programme               & \texttt{make hello}                          \\
+		\texttt{./<programme>}       & Exécute le programme compilé       & \texttt{./hello}                             \\
+		\texttt{help50 <commande>}   & Explique une erreur de compilation & \texttt{help50 make hello}                   \\
+		\texttt{debug50 <programme>} & Lance le débogueur visuel          & \texttt{debug50 ./hello}                     \\
+		\texttt{style50 <fichier>}   & Vérifie la mise en forme du code   & \texttt{style50 hello.c}                     \\
+		\texttt{check50 <adresse>}   & Vérifie automatiquement l’exercice & \texttt{check50 cs50/problems/2025/x/hello}  \\
+		\texttt{submit50 <adresse>}  & Envoie l’exercice                  & \texttt{submit50 cs50/problems/2025/x/hello} \\
+		\hline
+	\end{tabular}
+\end{center}
+\hrule
+\subsection{Astuces pratiques}
+
+\begin{center}
+	\begin{tabular}{|l|l|}
+		\hline
+		Astuce                   & Explication                                        \\
+		\hline
+		\texttt{↑} et \texttt{↓} & Refaire défiler les commandes déjà tapées          \\
+		\texttt{Tab}             & Complète automatiquement un nom de fichier/dossier \\
+		\texttt{Ctrl + C}        & Arrête un programme en cours                       \\
+		\texttt{Ctrl + L}        & Efface l’écran (comme \texttt{clear})              \\
+		\texttt{exit}            & Ferme le terminal                                  \\
+		\texttt{Ctrl + Maj + C}  & Copie la sélection vers le presse-papier           \\
+		\texttt{Maj + Inser}     & Colle le contenu du presse-papier                  \\
+		\hline
+	\end{tabular}
+\end{center}
+\hrule
+\textbf{Conseil} : testez chaque commande plusieurs fois pour l’apprendre !
