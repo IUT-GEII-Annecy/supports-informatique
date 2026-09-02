@@ -1,0 +1,165 @@
+\section{Exercices d'application}
+
+Les exercices suivants ne demandent pas d'écrire de programme : il s'agit de \textbf{lire} et d'\textbf{analyser} des extraits de code déjà écrits, en s'appuyant sur ce qui vient d'être vu sur les structures conditionnelles et les opérateurs.
+
+\begin{UPSTIexercice}{Repérer une structure conditionnelle simple}
+	Le code suivant permet d'afficher un message en fonction d'une température.
+
+	\begin{lstlisting}[language=c, numbers=left]
+int temperature = 18;
+if (temperature < 20)
+{
+    printf("Il fait froid\n");
+}
+else
+{
+    printf("Il fait bon\n");
+}
+	\end{lstlisting}
+
+	\UPSTIquestion{Quelle est la variable utilisée dans ce programme ? Quelle est sa valeur initiale ?}
+	\UPSTIquestion{Sur quelle ligne se trouve la condition testée par la structure conditionnelle ? Recopier cette condition.}
+	\UPSTIquestion{Encadrer les blocs exécutés respectivement lorsque la condtion est vérifiée et lorsqu'elle ne l'est pas.}
+	\UPSTIquestion{Quel message sera affiché à l'écran lors de l'exécution de ce programme ? Justifier la réponse.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Repérer une chaîne de conditions}
+	Le code suivant affiche une mention en fonction d'une note.
+
+	\begin{lstlisting}[language=c, numbers=left]
+int note = 12;
+if (note >= 16)
+{
+    printf("Mention Tres Bien\n");
+}
+else if (note >= 14)
+{
+    printf("Mention Bien\n");
+}
+else if (note >= 10)
+{
+    printf("Admis\n");
+}
+else
+{
+    printf("Ajourne\n");
+}
+	\end{lstlisting}
+
+	\UPSTIquestion{Combien de blocs conditionnels (\texttt{if}, \texttt{else if}, \texttt{else}) composent cette structure ? Indiquer le numéro de ligne où commence chacun d'eux.}
+	\UPSTIquestion{Recopier la condition testée à la ligne 6.}
+	\UPSTIquestion{Si \texttt{note} vaut 15, quel message sera affiché ? Justifier en précisant quelle est la première condition vérifiée par le programme.}
+	\UPSTIquestion{Pourquoi le programme n'affiche-t-il jamais deux messages à la suite, même si plusieurs conditions pourraient être vraies en même temps ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Repérer les opérateurs de comparaison et logiques}
+	Le code suivant détermine si une personne peut conduire, seule ou accompagnée, en fonction de son âge et de la possession du permis.
+
+	\begin{lstlisting}[language=c, numbers=left]
+int age = 20;
+int permis = 1;
+if ((age >= 18) && (permis == 1))
+{
+    printf("Peut conduire seul\n");
+}
+else if ((age >= 16) || (permis == 1))
+{
+    printf("Peut conduire accompagne\n");
+}
+else
+{
+    printf("Ne peut pas conduire\n");
+}
+	\end{lstlisting}
+
+	\UPSTIquestion{Compléter le tableau de repérage suivant pour les lignes 3 et 7.}
+
+	\begin{center}
+		\begin{tabular}{|c|l|l|l|}
+			\hline
+			Ligne & Opérateur(s) de comparaison & Opérateur logique & Variables utilisées \\
+			\hline
+			3     &                             &                    &                      \\
+			\hline
+			7     &                             &                    &                      \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\UPSTIquestion{Quelle message sera affiché à l'écran en prenant en compte les valeurs initiales de \texttt{age} et \texttt{permis} ? Justifier la réponse.}
+	\UPSTIquestion{Quelle est la différence entre l'opérateur \texttt{\&\&} utilisé à la ligne 3 et l'opérateur \texttt{||} utilisé à la ligne 7 ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Repérer le piège affectation / comparaison}
+	Le code suivant contient une erreur classique, déjà évoquée dans le cours.
+
+	\begin{lstlisting}[language=c, numbers=left]
+int x = 5;
+if (x = 10)
+{
+    printf("x vaut 10\n");
+}
+else
+{
+    printf("x ne vaut pas 10\n");
+}
+	\end{lstlisting}
+
+	\UPSTIquestion{Sur quelle ligne se situe l'erreur ? Quel symbole a été utilisé par erreur, et quel symbole aurait dû être utilisé à sa place ?}
+	\UPSTIquestion{En C, toute valeur entière non nulle est considérée comme vraie dans une condition. En déduire quel message sera affiché par ce programme, tel qu'il est écrit.}
+	\UPSTIquestion{Quelle est la valeur de \texttt{x} après l'exécution de la ligne 2, à cause de cette erreur ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Repérer des conditions imbriquées}
+	Le code suivant vérifie si une personne peut accéder à un manège, en fonction de sa taille et de son âge.
+
+	\begin{lstlisting}[language=c, numbers=left]
+int taille = 145;
+int age = 11;
+if (taille >= 140)
+{
+    if (age >= 12)
+    {
+        printf("Acces autorise, seul\n");
+    }
+    else
+    {
+        printf("Acces autorise, accompagne\n");
+    }
+}
+else
+{
+    printf("Acces refuse\n");
+}
+	\end{lstlisting}
+
+	\UPSTIquestion{Ce code contient une structure conditionnelle \og imbriquée \fg{} (un \texttt{if} à l'intérieur d'un autre \texttt{if}). Indiquer les numéros de ligne où commence et où se termine le \texttt{if} \textbf{extérieur}, puis ceux du \texttt{if} \textbf{intérieur}.}
+	\UPSTIquestion{Le \texttt{if} des lignes 5 à 8 n'est-il évalué que si une certaine condition est vraie ? Laquelle, et à quelle ligne se trouve-t-elle ?}
+	\UPSTIquestion{Avec les valeurs données (\texttt{taille = 145}, \texttt{age = 11}), quel message sera affiché ? Détailler le cheminement dans les différentes conditions.}
+	\UPSTIquestion{Proposer, sans utiliser de \texttt{if} imbriqué, une condition unique équivalente (avec un opérateur logique) pour obtenir le message \emph{"Acces autorise, seul"}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Suite de \texttt{if} indépendants et priorité des opérateurs}
+	Le code suivant classe un article selon son stock et son prix.
+
+	\begin{lstlisting}[language=c, numbers=left]
+int stock = 0;
+float prix = 12.5;
+if (stock == 0)
+{
+    printf("Rupture de stock\n");
+}
+if (stock > 0 && prix < 10 || stock > 100)
+{
+    printf("Bonne affaire\n");
+}
+if (stock > 0)
+{
+    printf("Disponible\n");
+}
+	\end{lstlisting}
+
+	\UPSTIquestion{À la différence des exercices précédents, ce code n'utilise aucun \texttt{else if}. Quelle est la conséquence sur le nombre de messages qui peuvent s'afficher lors d'une même exécution ?}
+	\UPSTIquestion{En C, l'opérateur \texttt{\&\&} est prioritaire sur l'opérateur \texttt{||} (comme la multiplication l'est sur l'addition). Réécrire la condition de la ligne 6 en ajoutant des parenthèses qui rendent cette priorité explicite.}
+	\UPSTIquestion{Avec \texttt{stock = 0} et \texttt{prix = 12.5}, évaluer une à une les trois conditions (lignes 3, 6 et 10) par \emph{vrai} ou \emph{faux}, puis lister exactement les messages affichés par le programme, dans l'ordre.}
+	\UPSTIquestion{Un développeur affirme que remplacer les trois \texttt{if} par un unique \texttt{if} / \texttt{else if} / \texttt{else if} ne changerait rien au résultat, quelles que soient les valeurs de \texttt{stock} et \texttt{prix}. A-t-il raison ? Justifier à l'aide d'un exemple.}
+\end{UPSTIexercice}

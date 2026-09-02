@@ -1,12 +1,19 @@
 \section{Types et Variables}
-\begin{UPSTIinfor}{Encore une histoire de binaire}
+\paragraph{Encore une histoire de binaire}
 	On l'a vu, toutes les données sont représentées sous forme binaire (des 1 et des 0). C'est aussi le cas pour les variables que l'on utilisera.
 	Or, l'ordinateur doit pouvoir déterminer s'il faut interpréter le mot binaire de cette variable comme un nombre, une lettre, une couleur ou autre.
 	Il donc faut préciser à quel type est associé chacune des variables que l'on déclare.
-\end{UPSTIinfor}
 
 \subsection{Les types de données en C}
+\begin{UPSTIinfor}{Type de données}
+	Definition : Un type de données définit la nature d'une variable et la manière dont sera interprétée la suite de bits qui la représente.
 
+	Cela signifie que le même mot binaire peut représenter des choses différentes selon le type de la variable. Par exemple, le mot binaire \texttt{01000001} peut représenter :
+	\begin{itemize}
+		\item le nombre entier 65 si la variable est de type \texttt{int}
+		\item le caractère 'A' si la variable est de type \texttt{char}
+	\end{itemize}
+\end{UPSTIinfor}
 Chaque variable a un type précis :
 \begin{center}
 	\begin{tabular}{|l|l|l|}
@@ -66,13 +73,13 @@ int main(void)
 		\hline
 	\end{tabular}
 \end{center}
-\begin{UPSTIinfor}{Exemple}
+\begin{UPSTIexemples}{Affichage d'un nombre}
 	\begin{lstlisting}[language=c]
 float pi = 3.14159;
 printf("Pi = %.2f\n", pi);
 \end{lstlisting}
 	Affiche : \texttt{Pi = 3.14}
-\end{UPSTIinfor}
+\end{UPSTIexemples}
 
 
 \subsubsection{Imprécision des flottants}
@@ -88,6 +95,6 @@ Affiche par exemple :
 0.10000000149011611938
 \end{lstlisting}
 
-\begin{UPSTIinfor}{Conseil}
+\begin{UPSTIinfor}{Limiter l'affichage des décimales}
 	Toujours limiter l’affichage des décimales avec \texttt{\%.2f}, \texttt{\%.3f}, etc.
 \end{UPSTIinfor}

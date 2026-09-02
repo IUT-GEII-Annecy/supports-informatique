@@ -1,15 +1,27 @@
 
-\section{Quelques opérateurs mathématiques}
+\section{Les opérateurs et fonctions usuelles}
 
 En C, on dispose d’opérateurs de base pour manipuler des nombres.
 Pour des calculs plus avancés (racines, puissances, arrondis…), il existe la bibliothèque standard \texttt{math.h}.
 Elle fournit de nombreuses fonctions que l’on peut appeler dans nos programmes.
 \subsection{Opérateurs}
-
-\begin{center}
+\begin{UPSTIinfor}{Opérateurs}
+	En informatique, un opérateur est un symbole qui indique à l’ordinateur d’effectuer une opération sur une ou plusieurs valeurs. Les principaux types d’opérateurs sont :
+	\begin{itemize}
+		\item les opérateurs arithmétiques : \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%}
+		\item les opérateurs de comparaison : \texttt{==}, \texttt{!=}, \texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}  \textbf{(cf Section~\ref{sec:operateur-comparaison})} 
+		\item les opérateurs logiques : \texttt{!}, \texttt{\&\&}, \texttt{||}
+		\item les opérateurs d’affectation : \texttt{=}, \texttt{+=}, \texttt{-=}, \texttt{*=}, \texttt{/=}, \texttt{\%=}
+		\item les opérateurs d’incrémentation et de décrémentation : \texttt{++}, \texttt{--}
+		\item les opérateurs de bits : \texttt{\&}, \texttt{|}, \texttt{\^}, \texttt{<<}, \texttt{>>}
+		\item les opérateurs de condition : \texttt{?:}
+	\end{itemize}
+\end{UPSTIinfor}
+\begin{minipage}{0.4\textwidth}
+	\begin{center}
 	\begin{tabular}{|l|l|}
 		\hline
-		Symbole     & Opération                             \\
+		Opérateur   & Opération                             \\
 		\hline
 		\texttt{+}  & addition                              \\
 		\texttt{-}  & soustraction                          \\
@@ -19,13 +31,18 @@ Elle fournit de nombreuses fonctions que l’on peut appeler dans nos programmes
 		\hline
 	\end{tabular}
 \end{center}
-\begin{lstlisting}[language=c]
+\end{minipage}
+\hfill
+\begin{minipage}{0.55\textwidth}	
+	Exemple d'utilisation de la division. 
+	\begin{lstlisting}[language=c]
 int a = 7;
 int b = 2;
 printf("a / b = %i\n", a / b); // !! Affiche 3 !!
 printf("a %% b = %i\n", a % b);
-\end{lstlisting}
-
+	\end{lstlisting}
+\end{minipage}
+	
 \begin{UPSTIwarning}{Attention}
 	La division entre entiers \textbf{supprime la partie décimale}.
 \end{UPSTIwarning}

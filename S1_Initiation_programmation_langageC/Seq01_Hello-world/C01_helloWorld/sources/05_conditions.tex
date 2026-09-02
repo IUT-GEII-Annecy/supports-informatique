@@ -3,9 +3,22 @@
 
 En C, les conditions permettent d'exécuter certaines parties du programme uniquement si des critères sont vérifiés.
 
-\subsection{Structure générale : if / else}
+\subsection{Structure conditionnelle if / else}
+\begin{UPSTIinfor}{Structure conditionnelle}
+	Une structure conditionnelle permet d'exécuter une partie du programme uniquement si une condition est vérifiée. Dans le cas contraire, une autre partie du programme peut être exécutée ou le programme peut continuer son exécution normalement. 
+	On peut avoir une succesion de conditions, chacune étant testée à son tour si la précédente n'est pas vérifiée. Le programme cesse d'évaluer les conditions dès qu'une condition est vérifiée.
 
+	Une structure conditionnelle est composée de :
+	\begin{itemize}
+		\item une condition (une expression qui peut être vraie ou fausse)
+		\item un bloc de code à exécuter si la condition est vraie
+		\item éventuellement d'autres conditions à tester si la condition précédente est fausse
+		\item éventuellement un bloc de code à exécuter si toutes les conditions sont fausses
+	\end{itemize}
+	
+\end{UPSTIinfor}
 
+En langage C, la structure conditionnelle est écrite de la manière suivante :
 
 \begin{lstlisting}[language=c]
 if (<condition1>) // Si la condition 1 est vraie
@@ -22,6 +35,23 @@ else // Sinon, dans tous les autres cas
 }
 \end{lstlisting}
 
+Exemple d'utilisation de la structure conditionnelle
+	\begin{lstlisting}[language=c]
+int x = 5;
+if (x > 0)
+{
+	printf("x est positif\n");	
+}
+else if (x < 0)
+{
+	printf("x est négatif\n");
+}
+else
+{
+	printf("x vaut zéro\n");
+}
+	\end{lstlisting}
+
 La structure \texttt{if} peut prendre plusieurs formes :
 
 \begin{itemize}
@@ -32,6 +62,7 @@ La structure \texttt{if} peut prendre plusieurs formes :
 
 On peut placer autant de \texttt{else if} que l'on veut à la suite.
 \subsection{Opérateurs de comparaison}
+\label{sec:operateur-comparaison}
 
 Les comparaisons sont faites à l'aide des opérateurs suivants :
 
@@ -64,6 +95,7 @@ On peut combiner plusieurs conditions avec les opérateurs logiques :
 		\hline
 		\texttt{\&\&} & ET logique & \texttt{(x > 0 \&\& y < 20)}  & vrai \\
 		\texttt{||}   & OU logique & \texttt{(x < 0 || y > 100)}   & vrai \\
+		\texttt{!}    & NON logique & \texttt{!(x == 5)}             & faux \\
 		\hline
 	\end{tabular}
 \end{center}
@@ -79,21 +111,3 @@ if ((x < 0) || (x > 100))
 }
 \end{lstlisting}
 
-\subsection{Un exemple simple}
-
-Si \texttt{x} est une variable entière, le code suivant vérifie si \texttt{x} est positif, négatif ou nul.
-
-\begin{lstlisting}[language=c]
-if (x > 0)
-{
-    printf("x est positif\n");
-}
-else if (x < 0)
-{
-    printf("x est négatif\n");
-}
-else
-{
-    printf("x vaut zéro\n");
-}
-\end{lstlisting}

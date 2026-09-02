@@ -2,12 +2,15 @@
 \section{Introduction à l’informatique}
 \subsection{Objectifs généraux}
 
-L'objectif de ce module est, avant tout, d'apporter des compétences de réflexion pour la résolution de problèmes. En effet, écrire un code informatique, c'est d'abord écrire un algorithme qui répond à une problématique.
+L'objectif de ce module est, avant tout, d'apporter des compétences de réflexion pour la résolution de problèmes. 
+Ecrire un code informatique, c'est d'abord écrire un algorithme qui répond à une problématique. Par exemple : "Retrouver le numéro de Jean-Michel dans l'annuaire" ou "Calculer le nombre de personnes dans une salle".
 
 Durant ce module, nous verrons le langage C car il est suffisamment bas niveau pour illustrer le fonctionnement des systèmes informatiques. C'est, par ailleurs, le langage utilisé pour développer les systèmes embarqués.
 
 
 \subsection{Systèmes de comptage}
+Commençons par un détour par les systèmes de comptage. 
+
 \subsubsection{Le système unaire}
 
 Quand on compte sur nos doigts, on utilise un système \textbf{unaire} (base 1) :
@@ -15,6 +18,27 @@ Quand on compte sur nos doigts, on utilise un système \textbf{unaire} (base 1) 
 	\item Chaque doigt levé représente une unité.
 	\item Exemple : 3 doigts levés = le nombre 3.
 \end{itemize}
+
+\subsubsection{Le système décimal}
+Le système \textbf{décimal} (base 10) est celui que nous utilisons tous les jours. Il est basé sur 10 chiffres : 0, 1, 2, 3, 4, 5, 6, 7, 8 et 9. Chaque chiffre a un \textbf{poids} qui correspond à une puissance de 10 :	
+Le chiffre le plus à droite a un poids de $10^0$, le suivant à gauche a un poids de $10^1$, puis $10^2$, etc.
+\begin{UPSTIexemples}{Tableau de poids des chiffres -- Rappel de primaire}
+	\begin{center}
+		\begin{tabular}{|l|l|l|l|l|}
+			\hline
+			\makecell[tl]{$10^{3}$         \\ 1000} & \makecell[tl]{$10^{2}$\\  100} & \makecell[tl]{$10^{1}$\\ 10} & \makecell[tl]{$10^{0}$ \\1} \\
+			\hline
+			1 & 2 & 3 & 4 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\texttt{1234} = 1*1000 + 2*100 + 3*10 + 4*1 = \textbf{1234}
+\end{UPSTIexemples}
+
+\paragraph{Une histoire de transistors}
+Puisque les ordinateurs utilisent des transistors pour stocker les informations, ils ne peuvent utiliser que deux états : allumé ou éteint. Toute information est donc codée en binaire, c'est-à-dire avec des 0 et des 1. 
+
+Quelques notions auxquelles on ne pense plus tant nous les utilisons tous les jours : 
 
 \subsubsection{Le système binaire}
 
@@ -24,7 +48,7 @@ En binaire, chaque chiffre (appelé \textbf{bit}) peut prendre deux valeurs :
 	\item \texttt{1} → actif, allumé, vrai
 \end{itemize}
 
-\begin{UPSTIinfor}{Exemple des ampoules}
+\begin{UPSTIexemples}{Compter avec des ampoules}
 	Si on a \textbf{3 ampoules} qui peuvent être allumées (1) ou éteintes (0) :
 	\begin{itemize}
 		\item \texttt{000} = 0
@@ -35,10 +59,22 @@ En binaire, chaque chiffre (appelé \textbf{bit}) peut prendre deux valeurs :
 	\end{itemize}
 
 	Avec 3 ampoules, on peut donc compter de 0 à 7.
-\end{UPSTIinfor}
 
-\begin{UPSTIinfor}{A retenir : Le binaire en informatique}
-	Tous les systèmes informatiques utilisent le binare pour encoder toutes les informations
+	Sous la même forme que précédemment, le tableau en binaire pour le mot \texttt{010} est le suivant :
+	\begin{center}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\makecell[tl]{$2^{2}$         \\ 4} & \makecell[tl]{$2^{1}$\\  2} & \makecell[tl]{$2^{0}$ \\1} \\
+			\hline
+			0 & 1 & 0 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\texttt{010} = 0*4 + 1*2 + 0*1 = \textbf{2}
+\end{UPSTIexemples}
+
+\begin{UPSTIinfor}{Le binaire en informatique}
+	Tous les systèmes informatiques utilisent le binaire pour encoder toutes les informations
 	Les données sont stoquée grâce à des \textbf{transistors} qui se comportent comme de minuscules interrupteurs.
 \end{UPSTIinfor}
 
@@ -48,7 +84,7 @@ Historiquement, les données étaient envoyées par groupes de 8 bits sur les bu
 Ces groupes ont été appelés des \texttt{octet} (\texttt{oct} pour "huit" et \texttt{et} pour "petit").
 C'est depuis devenu une unité de mesure de la taille des données (octet, kilo-octet, Mega-octet, etc.).
 
-\begin{UPSTIinfor}{A retenir : Un octet (byte)}
+\begin{UPSTIinfor}{Un octet (byte)}
 	Un octet est un groupe de huit bits. Il peut représenter 256 valeurs différentes (de 0 à 255).
 	\begin{itemize}
 		\item Exemple :
@@ -71,7 +107,7 @@ Chaque bit a un \textbf{poids} qui correspond à une puissance de 2 :
 		\hline
 	\end{tabular}
 \end{center}
-\begin{UPSTIinfor}{Exemple}
+\begin{UPSTIexemples}{Exemple}
 	\begin{center}
 		\begin{tabular}{|l|l|l|l|l|l|l|l|}
 			\hline
@@ -82,7 +118,7 @@ Chaque bit a un \textbf{poids} qui correspond à une puissance de 2 :
 		\end{tabular}
 	\end{center}
 	\texttt{01001001} = 64 + 8 + 1 = \textbf{73}
-\end{UPSTIinfor}
+\end{UPSTIexemples}
 
 \subsection{Représentation de l’information}
 Pour résumer : un système informatique n'a qu'une seule façon d'encoder une information : le binaire.
@@ -156,19 +192,21 @@ Ce problème peut être très simple (ex : \textit{Compter le nombre d'étudiant
 \end{itemize}
 
 \begin{UPSTIinfor}{Algorithme de recherche dichotomique}
-	1  Prendre l'annuaire
-	2  Ouvrir l'annuaire au milieu
-	3  Chercher la personne dans la page
-	4  \textit{Si} la personne se trouve dans la page
-	5      Appeler la personne
-	6  \textit{Sinon, si} la personne se trouve plus tôt dans l'annuaire (alphabétiquement)
-	7      Ouvrir le livre au milieu de la partie gauche
-	8      Retourner à l'étape 3
-	9  \textit{Sinon, si} la personne se trouve plus tard dans l'annuaire (alphabétiquement)
-	10     Ouvrir le livre au milieu de la partie droite
-	11     Retourner à l'étape 3
-	12 \textit{Sinon}
-	13     Quitter \textit{(La personne n'a pas été trouvée dans l'annuaire)}
+	\begin{enumerate}
+		\item Prendre l'annuaire
+		\item Ouvrir l'annuaire au milieu
+		\item Chercher la personne dans la page
+		\item \textit{Si} la personne se trouve dans la page
+		\item     Appeler la personne
+		\item \textit{Sinon, si} la personne se trouve plus tôt dans l'annuaire (alphabétiquement)
+		\item     Ouvrir le livre au milieu de la partie gauche
+		\item     Retourner à l'étape 3
+		\item \textit{Sinon, si} la personne se trouve plus tard dans l'annuaire (alphabétiquement)
+		\item     Ouvrir le livre au milieu de la partie droite
+		\item     Retourner à l'étape 3
+		\item \textit{Sinon}
+		\item     Quitter \textit{(La personne n'a pas été trouvée dans l'annuaire)}
+	\end{enumerate}
 \end{UPSTIinfor}
 
 C’est un \textbf{algorithme efficace} : au lieu de parcourir chaque nom un par un, on élimine la moitié des candidats à chaque étape.
