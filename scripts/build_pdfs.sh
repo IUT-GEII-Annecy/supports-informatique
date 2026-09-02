@@ -59,7 +59,47 @@ for doc in "${DOCS[@]}"; do
   if [ -f "$pdf_path" ]; then
     dest="$OUT_DIR/$dir"
     mkdir -p "$dest"
-    cp "$pdf_path" "$dest/$base.pdf"
+
+    # Détermine un nom de sortie basé sur les variables LaTeX du document
+    # (\sequence et \UPSTInumero), et non sur le nom des dossiers : le nom
+    # de fichier reste correct même si l'arborescence est réorganisée.
+    out_base="$base"
+
+    # \sequence est défini dans le preamble.tex le plus proche du document
+    # (celui-ci, sinon on remonte les dossiers parents).
+    seqnum=""
+    search_dir="$dir"
+    for _ in 1 2 3 4; do
+      match=$(grep -horE '\\newcommand\{\\sequence\}\{[0-9]+\}' "$search_dir"/*.tex 2>/dev/null \
+        | head -n1 | grep -oE '[0-9]+')
+      if [ -n "$match" ]; then
+        seqnum="$match"
+        break
+      fi
+      [ "$search_dir" = "." ] && break
+      search_dir=$(dirname "$search_dir")
+    done
+
+    # Le numéro (TD/TP/C) est le suffixe numérique de \UPSTInumero, ex :
+    # \newcommand{\UPSTInumero}{\sequence.2} -> 2
+    numnum=$(grep -horE '\\newcommand\{\\UPSTInumero\}\{[^}]*\}' "$doc" 2>/dev/null \
+      | head -n1 | grep -oE '[0-9]+' | tail -n1)
+
+    # Type de document d'après \documentclass[TYPE, ...]{UPSTI_Document}
+    type=""
+    case "$(grep -oE '^\\documentclass\[[a-zA-Z]+' "$doc" 2>/dev/null | head -n1)" in
+      *TP) type="TP" ;;
+      *td|*TD) type="TD" ;;
+      *cours) type="C" ;;
+      *QCM) type="QCM" ;;
+    esac
+
+    if [ -n "$seqnum" ] && [ -n "$numnum" ] && [ -n "$type" ]; then
+      out_base="${type}_$(printf "%02d" "$seqnum")-$(printf "%02d" "$numnum")_${base}"
+    fi
+    out_name="$out_base.pdf"
+
+    cp "$pdf_path" "$dest/$out_name"
     BUILT+=("$doc")
     echo "OK"
 
@@ -77,7 +117,8 @@ for doc in "${DOCS[@]}"; do
 
       corrige_pdf="$dir/${base}__corrige.pdf"
       if [ -f "$corrige_pdf" ]; then
-        cp "$corrige_pdf" "$dest/${base}__corrige.pdf"
+        corrige_out_name="${out_base}__corrige.pdf"
+        cp "$corrige_pdf" "$dest/$corrige_out_name"
         CORRIGES+=("$doc")
         echo "  → corrigé OK"
       else
