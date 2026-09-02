@@ -100,7 +100,7 @@ for doc in "${DOCS[@]}"; do
     out_name="$out_base.pdf"
 
     cp "$pdf_path" "$dest/$out_name"
-    BUILT+=("$doc")
+    BUILT+=("$doc"$'\t'"$dir/$out_name")
     echo "OK"
 
     # Correction : publiée uniquement si un marqueur .corrige a été déposé
@@ -119,7 +119,7 @@ for doc in "${DOCS[@]}"; do
       if [ -f "$corrige_pdf" ]; then
         corrige_out_name="${out_base}__corrige.pdf"
         cp "$corrige_pdf" "$dest/$corrige_out_name"
-        CORRIGES+=("$doc")
+        CORRIGES+=("$doc"$'\t'"$dir/$corrige_out_name")
         echo "  → corrigé OK"
       else
         echo "  → ÉCHEC corrigé (voir /tmp/build_${base}__corrige.log)"

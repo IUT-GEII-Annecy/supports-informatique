@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """Génère _site/index.html à partir de la liste des documents compilés/échoués.
 
-Usage: gen_index.py OUT_DIR built1.tex ... -- failed1.tex ... -- corrige1.tex ...
+Usage: gen_index.py OUT_DIR "doc1.tex<TAB>rel1.pdf" ... -- failed1.tex ... -- "doc1.tex<TAB>corrige_rel1.pdf" ...
 (corrige* = sous-ensemble de built* pour lequel un PDF __corrige a aussi été produit)
+
+Chaque entrée built/corrige est "chemin_tex<TAB>chemin_pdf_reel" : le nom du
+PDF (potentiellement basé sur \\sequence/\\UPSTInumero, voir build_pdfs.sh)
+est décidé une seule fois côté bash puis transmis ici, jamais recalculé.
 """
 import html
 import re
@@ -16,9 +20,14 @@ out_dir = Path(args[0])
 seps = [i for i, a in enumerate(args) if a == "--"]
 sep1 = seps[0] if len(seps) > 0 else len(args)
 sep2 = seps[1] if len(seps) > 1 else len(args)
-built = [a for a in args[1:sep1] if a]
+def split_pair(entry):
+    doc, _, rel = entry.partition("\t")
+    return doc, rel.removeprefix("./")
+
+
+built = [split_pair(a) for a in args[1:sep1] if a]
 failed = [a for a in args[sep1 + 1:sep2] if a]
-corriges = set(a for a in args[sep2 + 1:] if a)
+corriges = dict(split_pair(a) for a in args[sep2 + 1:] if a)
 
 PDF_ICON = """<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="pdf-icon">
 <path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -61,9 +70,8 @@ def version_date(doc_path: str) -> str:
 rows = defaultdict(lambda: defaultdict(list))  # rows[séquence][catégorie] = [(label, rel_pdf, date), ...]
 autres = defaultdict(list)
 
-for doc in built:
+for doc, rel in built:
     p = Path(doc)
-    rel = str(p.with_suffix(".pdf")).removeprefix("./")
     seq = top_level(doc)
     cat = category(doc)
     label = p.parent.name
@@ -74,8 +82,7 @@ for doc in built:
         rows[seq][cat].append((label, rel, date))
 
     if doc in corriges:
-        corrige_rel = str(p.parent / f"{p.stem}__corrige.pdf").removeprefix("./")
-        rows[seq]["Correction"].append((f"{label} (corrigé)", corrige_rel, date))
+        rows[seq]["Correction"].append((f"{label} (corrigé)", corriges[doc], date))
 
 
 def cell_html(entries):
