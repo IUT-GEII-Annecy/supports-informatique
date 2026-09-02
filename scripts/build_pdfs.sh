@@ -31,6 +31,8 @@ mapfile -t DOCS < <(
   grep -rl '^\\documentclass' --include='*.tex' . 2>/dev/null \
     | grep -v '/Evaluations/' \
     | grep -v '\.eval' \
+    | grep -v '\.hide' \
+    | grep -v '\.old' \
     | sort
 )
 
