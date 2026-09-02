@@ -1,228 +1,390 @@
 \section{Niveau 1}
-\subsection{Variables}
-\begin{UPSTIexercice}{Informations personnelles}
-    On souhaite stocker des informations simples concernant un étudiant :
-    \begin{itemize}
-        \item Son prénom
-        \item Son âge
-        \item Sa taille (en mètres)
-    \end{itemize}
-    \UPSTIquestion{Pour chaque variable, proposer un type de données adapté et justifier le choix.}
-    \UPSTIquestion{Écrire les lignes de \textbf{déclaration} de ces variables (sans initialisation).}
-    \UPSTIquestion{Ecrire des lignes \textbf{d'initialisation} cohérentes pour un étudiant fictif.}
-\end{UPSTIexercice}
 
-\begin{UPSTIprofOnlyEnv}%
-    \begin{UPSTIcorrectionP}{Informations personnelles}
-        \begin{lstlisting}[language=c]
-string prenom;
-int age;
-float taille;
-prenom = "John";
-age = 20;
-taille = 1.74;
-        \end{lstlisting}
-    \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
+\subsection{Les variables : une case mémoire nommée}
 
-\begin{UPSTIexercice}{Affectations successives}
-    On considère le programme suivant :
+\begin{UPSTIexemples}[La variable : une case étiquetée]
+    Une variable, c'est comme une variable Scratch : une \textbf{case mémoire}, portant une \textbf{étiquette} (son nom) et contenant une \textbf{valeur} qui peut changer au cours du programme. En C, cette case a en plus un \textbf{type} fixé une fois pour toutes, qui indique la nature de ce qu'elle contient.
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Étiquette (nom)} & \textbf{Type}  & \textbf{Contenu (valeur)} \\
+            \hline
+            \texttt{nbEleves}        & \texttt{int}   & \texttt{24}               \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    En C, cette case se crée et se remplit ainsi :
     \begin{lstlisting}[language=C]
-int x = 2;
-int y = 5;
-int z;
-z = x + y;
-y = z - 1;
-x = y + z + x;
+int nbEleves;   // declaration : on cree la case, de type int
+nbEleves = 24;  // affectation : on range 24 dans la case
+
+// ou, en une seule ligne (declaration + initialisation) :
+int nbEleves = 24;
     \end{lstlisting}
-    \UPSTIquestion{Donner les valeurs finales de \verb|x|, \verb|y| et \verb|z|.}
+\end{UPSTIexemples}
+
+\begin{UPSTIexercice}{Repérer les variables}
+    On considère le programme suivant, qui affiche des informations sur un capteur de température.
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main(void)
+{
+    int numeroCapteur = 12;
+    char etat = 'M';
+    float temperature;
+    temperature = 21.5;
+    numeroCapteur = numeroCapteur + 1;
+
+    printf("Capteur %i, etat %c, temperature %.1f\n", numeroCapteur, etat, temperature);
+}
+    \end{lstlisting}
+    \UPSTIquestion{\textbf{Entourer} toutes les lignes où une variable est \textbf{déclarée}.}
+    \UPSTIquestion{\textbf{Souligner} toutes les lignes où une variable est \textbf{affectée} (reçoit une valeur).}
+    \UPSTIquestion{Compléter le tableau ci-dessous avec le type de chaque variable et sa valeur juste avant l'appel à \texttt{printf}.}
+
+    \begin{center}
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Nom de la variable} & \textbf{Type} & \textbf{Valeur avant le \texttt{printf}} \\
+            \hline
+             &  &  \\[0.6cm]
+            \hline
+             &  &  \\[0.6cm]
+            \hline
+             &  &  \\[0.6cm]
+            \hline
+        \end{tabular}
+    \end{center}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
-    \begin{UPSTIcorrectionP}{Affectations successives}
-        \begin{lstlisting}[language=C]
-// Etapes de calcul :
-int x = 2;      // x = 2
-int y = 5;      // y = 5
-int z;          // z = ?
-z = x + y;      // z = 2 + 5 = 7
-y = z - 1;      // y = 7 - 1 = 6
-x = y + z + x;  // x = 6 + 7 + 2 = 15
+    \begin{UPSTIcorrectionP}{Repérer les variables}
+        Les déclarations sont les lignes \texttt{int numeroCapteur = 12;}, \texttt{char etat = 'M';} et \texttt{float temperature;} (cette dernière est une déclaration sans initialisation).
 
-// Valeurs finales :
-x = 15;
-y = 6;
-z = 7;
+        Les affectations sont les lignes \texttt{temperature = 21.5;} et \texttt{numeroCapteur = numeroCapteur + 1;} (cette dernière lit l'ancienne valeur de \texttt{numeroCapteur} pour calculer la nouvelle).
+
+        \begin{center}
+            \begin{tabular}{|l|l|l|}
+                \hline
+                \textbf{Nom}      & \textbf{Type}   & \textbf{Valeur avant le \texttt{printf}} \\
+                \hline
+                numeroCapteur     & int             & 13                                       \\
+                \hline
+                etat              & char            & 'M'                                      \\
+                \hline
+                temperature       & float           & 21.5                                     \\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Trace d'exécution : la caisse d'un distributeur}
+    Un distributeur de boissons exécute les lignes suivantes lorsqu'un client insère des pièces.
+    \begin{lstlisting}[language=C]
+int credit = 0;
+int prix = 90;
+int monnaie;
+
+credit = credit + 50;   // (1) le client insere 50 centimes
+credit = credit + 50;   // (2) le client insere encore 50 centimes
+monnaie = credit - prix; // (3)
+credit = 0;              // (4) la machine rend la monnaie, le credit repart a 0
+    \end{lstlisting}
+    \UPSTIquestion{Compléter le tableau de trace ci-dessous : pour chaque ligne numérotée, indiquer la valeur de chaque variable \textbf{juste après} l'exécution de cette ligne.}
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \textbf{Ligne} & \texttt{credit} & \texttt{prix} & \texttt{monnaie} \\
+            \hline
+            avant (1)      & 0               & 90            & ?                \\
+            \hline
+            (1)            &                 &               &                  \\[0.5cm]
+            \hline
+            (2)            &                 &               &                  \\[0.5cm]
+            \hline
+            (3)            &                 &               &                  \\[0.5cm]
+            \hline
+            (4)            &                 &               &                  \\[0.5cm]
+            \hline
+        \end{tabular}
+    \end{center}
+    \UPSTIquestion{Quelle est la valeur finale de \texttt{monnaie} ? A-t-elle changé après la ligne (4) ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Trace d'exécution : la caisse d'un distributeur}
+        \begin{center}
+            \begin{tabular}{|c|c|c|c|}
+                \hline
+                \textbf{Ligne} & \texttt{credit} & \texttt{prix} & \texttt{monnaie} \\
+                \hline
+                avant (1)      & 0               & 90            & (indéfinie)      \\
+                \hline
+                (1)            & 50              & 90            & (indéfinie)      \\
+                \hline
+                (2)            & 100             & 90            & (indéfinie)      \\
+                \hline
+                (3)            & 100             & 90            & 10               \\
+                \hline
+                (4)            & 0               & 90            & 10               \\
+                \hline
+            \end{tabular}
+        \end{center}
+        \texttt{monnaie} vaut \textbf{10} et ne change plus après la ligne (3) : la ligne (4) ne modifie que \texttt{credit}, chaque variable étant une case indépendante des autres.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Choisir le bon type}
+    On souhaite programmer un petit boîtier de supervision qui doit stocker les informations suivantes :
+    \begin{itemize}
+        \item le nombre de capteurs actuellement connectés au boîtier ;
+        \item la tension mesurée aux bornes d'une LED (en volts) ;
+        \item l'état d'un interrupteur (ouvert ou fermé) ;
+        \item la référence d'un composant, du type \texttt{"R220"} ;
+        \item la lettre correspondant à la gamme du boîtier (\texttt{'A'}, \texttt{'B'} ou \texttt{'C'}).
+    \end{itemize}
+    \UPSTIquestion{Pour chaque information, indiquer le type C le plus adapté parmi \texttt{int}, \texttt{float}, \texttt{char}, \texttt{string} et \texttt{bool}, et justifier brièvement.}
+    \UPSTIquestion{Écrire, pour chacune, une ligne de déclaration avec une initialisation cohérente.}
+
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Choisir le bon type}
+        \begin{lstlisting}[language=C]
+// Nombre de capteurs connectes : un compte, toujours entier
+int nbCapteurs = 4;
+
+// Tension aux bornes d'une LED : une grandeur mesuree, avec decimales
+float tension = 1.8;
+
+// Etat d'un interrupteur : deux possibilites seulement -> booleen
+bool interrupteurFerme = true;
+
+// Reference d'un composant : du texte
+string reference = "R220";
+
+// Gamme du boitier : un seul caractere
+char gamme = 'B';
         \end{lstlisting}
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}
 
 
-\begin{UPSTIexercice}{Types adaptés}
-    On considère les informations suivantes :
-    \begin{itemize}
-        \item Nombre d'étudiants d'une promo
-        \item Température extérieure
-        \item Numéro de salle
-        \item Prix d'un sandwich
-    \end{itemize}
-
-    \UPSTIquestion{Pour chacune, donner le type le plus approprié et la déclaration de la variable.}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-    \begin{UPSTIcorrectionP}{Types adaptés}
-        \begin{lstlisting}[language=C]
-// Nombre d'etudiants d'une promo : entier naturel
-int nb_etudiants;
-
-// Temperature exterieure : reel
-float temperature;
-
-// Numero de salle : souvent alphanumerique -> texte
-string numero_salle;
-
-// Prix d'un sandwich : reel en euros, préférer le double pour la précision (cf Niveau 3)
-// (Remarque : on peut aussi stocker en centimes avec un int)
-double prix_sandwich;\end{lstlisting}
-    \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-
-\begin{UPSTIexercice}{Prédire l'affichage (entier vs réel)}
+\begin{UPSTIexercice}{Prédire l'affichage}
     On exécute le programme suivant.
     \begin{lstlisting}[language=C]
-int a = 7, b = 2;
-float x = 7, y = 2;
-printf("A:%d\n", a / b);
-printf("B:%f\n", x / y);
-printf("C:%f\n", a / (float)b);
-printf("D:%d\n", a % b);
-\end{lstlisting}
+int nb = 8;
+float tension = 3.3;
+char gamme = 'B';
 
-    \UPSTIquestion{Si ce n'est pas déjà fait, lire l'encart sur la division, page~\pageref{info:division}}
-    \UPSTIquestion{Prédire l'affichage généré par les lignes ci-dessus.}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-    \begin{UPSTIcorrectionP}{Prédire l'affichage (entier vs réel)}
-        \begin{itemize}
-            \item a / b est une division entière (entiers) : 7/2 = 3
-            \item x / y est une division réelle (flottants) : 7.0/2.0 = 3.5
-            \item a / (float)b force une division réelle (cast) : 3.5
-            \item a \% b est le reste de la division euclidienne : 7 \% 2 = 1
-        \end{itemize}
-        Affichage attendu :
-        \begin{lstlisting}[language=bash]
-A:3
-B:3.500000
-C:3.500000
-D:1
-\end{lstlisting}
-    \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-
-
-\subsection{Conditions}
-
-\begin{UPSTIexercice}{Majorité (partie 1)}
-    On veut afficher \og Majeur \fg{} si \verb|age >= 18|, sinon \og Mineur \fg{}.
-    \UPSTIquestion{Décrire la logique en français ou pseudo-code avec un \texttt{if/else}. Donner deux exemples d'entrées et la sortie attendue.}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-    \begin{UPSTIcorrectionP}{Majorité (partie 1)}
-        \begin{lstlisting}[language=C]
-// Pseudo-code :
-// si age >= 18 alors afficher "Majeur"
-// sinon afficher "Mineur"
-
-// Traduction C (extrait) :
-if (age >= 18)
-{
-    printf("Majeur\n");
-}
-else
-{
-    printf("Mineur\n");
-}
-
-// Exemples :
-// age = 17 -> "Mineur"
-// age = 21 -> "Majeur"
-        \end{lstlisting}
-    \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-
-\begin{UPSTIexercice}{Qui est le plus grand ?}
-    On souhaite écrire un programme qui affiche lequel de deux nombres \verb|a| et \verb|b| est le plus grand. S'ils sont égaux, le programme le dira.
-    \UPSTIquestion{Proposer les lignes de codes qui, pour deux entiers \verb|a| et \verb|b|, affichent le plus grand ou s'ils sont égaux.}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-    \begin{UPSTIcorrectionP}{Qui est le plus grand ?}
-        \begin{lstlisting}[language=C]
-if (a > b)
-{
-    printf("a est plus grand (%d)\n", a);
-}
-else if (b > a)
-{
-    printf("b est plus grand (%d)\n", b);
-}
-else
-{
-    printf("a et b sont egaux (%d)\n", a);
-}
-        \end{lstlisting}
-    \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-
-\begin{UPSTIexercice}{Nombre mystère (logique)}
-    On considère un programme dont deux variables ont été déclarées : \verb|nombre_mystere| et \verb|nombre_joueur|. Le nombre mystère n'est pas connu du joueur. Il doit le deviner en tentant des valeurs au hasard.
-    \begin{lstlisting}
-int nombre_mystere = 7; 
-int nombre_joueur = get_int("Deviner le nombre mystere : ");
+printf("Nombre de capteurs : %i\n", nb);
+printf("Tension mesuree : %.1f V\n", tension);
+printf("Gamme : %c\n", gamme);
+printf("Tension precise : %.4f V\n", tension);
     \end{lstlisting}
-    On veut écrire \textbf{bravo} si l'utilisateur à trouvé le nombre, \textbf{Raté} sinon.
-    \UPSTIquestion{Ecrire un pseudo-code décrivant la logique à implémenter}
-    \UPSTIquestion{Traduire ces lignes en langage C}
-    \UPSTIquestion{Réécrire le programme pour afficher si le nombre proposé est \textbf{Trop petit} et \textbf{Trop grand}.}
+    \UPSTIquestion{Prédire, ligne par ligne, ce qui s'affiche dans la console.}
+    \UPSTIquestion{La dernière ligne affiche \texttt{tension} avec 4 décimales. Le résultat sera-t-il exactement \texttt{3.3000} ? Justifier en une phrase à l'aide du cours sur l'imprécision des flottants.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
-    \begin{UPSTIcorrectionP}{Nombre mystère (logique)}
+    \begin{UPSTIcorrectionP}{Prédire l'affichage}
+        Affichage attendu :
+        \begin{lstlisting}[language=bash,style=console]
+Nombre de capteurs : 8
+Tension mesuree : 3.3 V
+Gamme : B
+Tension precise : 3.3000
+        \end{lstlisting}
+        En toute rigueur, un \texttt{float} ne peut pas représenter \texttt{3.3} de façon exacte en binaire : la valeur réellement stockée est une approximation très proche de 3.3 (par exemple \texttt{3.29999995...}). Avec seulement 4 décimales affichées, l'arrondi masque cette imprécision et on obtient bien \texttt{3.3000} à l'affichage ; mais avec davantage de décimales (\texttt{\%.10f} par exemple), l'imprécision deviendrait visible, comme dans le cours.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Les structures conditionnelles : un aiguillage}
+
+\begin{UPSTIexemples}[Un aiguillage simple]
+    Une structure conditionnelle fonctionne comme un aiguillage : selon la valeur d'une condition (vraie ou fausse), le programme n'exécute \textbf{qu'un seul} des blocs proposés, jamais plusieurs, jamais aucun (s'il y a un \texttt{SINON}).
+
+    On surveille une variable booléenne \texttt{alarme}. Si elle vaut vrai, on doit afficher \og Evacuation \fg{}, sinon \og RAS \fg.
+
+    \noindent
+    \begin{minipage}[t]{0.48\linewidth}
+        \textbf{Pseudo-code}
+        \begin{verbatim}
+SI alarme == vrai ALORS
+    AFFICHER "Evacuation"
+SINON
+    AFFICHER "RAS"
+FIN SI
+        \end{verbatim}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.48\linewidth}
+        \textbf{C}
         \begin{lstlisting}[language=C]
-// 1) Pseudo-code :
-// si nombre_joueur == nombre_mystere afficher "Bravo"
-// sinon afficher "Rate"
-
-// 2) Traduction C (version simple) :
-if (nombre_joueur == nombre_mystere)
+if (alarme)
 {
-    printf("Bravo\n");
+  printf("Evacuation\n");
 }
 else
 {
-    printf("Rate\n");
-}
-
-// 3) Variante avec "Trop petit" / "Trop grand" :
-if (nombre_joueur == nombre_mystere)
-{
-    printf("Bravo\n");
-}
-else if (nombre_joueur < nombre_mystere)
-{
-    printf("Trop petit\n");
-}
-else
-{
-    printf("Trop grand\n");
+  printf("RAS\n");
 }
         \end{lstlisting}
+    \end{minipage}
+
+    \textbf{Trace pour \texttt{alarme = faux} :} la condition \texttt{alarme == vrai} est fausse, donc c'est le bloc \texttt{SINON} qui s'exécute : le programme affiche \og RAS \fg. Le bloc \texttt{ALORS} n'est jamais atteint.
+\end{UPSTIexemples}
+
+\begin{UPSTIexercice}{Repérer les blocs}
+    On considère le programme suivant, qui classe une note sur 20.
+    \begin{lstlisting}[language=C]
+int note = 14;
+
+if (note < 8)
+{
+    printf("Insuffisant\n");
+}
+else if (note < 12)
+{
+    printf("Passable\n");
+}
+else
+{
+    printf("Satisfaisant\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{\textbf{Entourer} chacune des conditions testées (il y en a deux).}
+    \UPSTIquestion{\textbf{Souligner} d'un trait chaque bloc de code associé à une branche (il y en a trois), en utilisant une couleur différente par bloc si possible.}
+    \UPSTIquestion{Ces trois blocs sont-ils \textbf{mutuellement exclusifs}, c'est-à-dire qu'un seul peut s'exécuter pour une valeur de \texttt{note} donnée ? Justifier.}
+    \UPSTIquestion{Pour \texttt{note = 14}, numéroter dans l'ordre où elles sont réellement évaluées les étapes suivantes : \emph{test de \texttt{note < 8}}, \emph{test de \texttt{note < 12}}, \emph{affichage de \og Satisfaisant \fg}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Repérer les blocs}
+        Les deux conditions sont \texttt{note < 8} et \texttt{note < 12}. Les trois blocs sont ceux qui affichent respectivement \og Insuffisant \fg, \og Passable \fg{} et \og Satisfaisant \fg.
+
+        Oui, les trois blocs sont mutuellement exclusifs : la structure \texttt{if / else if / else} garantit qu'un seul bloc s'exécute, car dès qu'une condition est vraie, les suivantes ne sont même plus testées.
+
+        Pour \texttt{note = 14} : (1) test de \texttt{note < 8} $\to$ faux ; (2) test de \texttt{note < 12} $\to$ faux ; (3) aucune condition n'étant vraie, c'est le bloc \texttt{else} qui s'exécute directement, sans nouveau test : affichage de \og Satisfaisant \fg.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Feu tricolore simplifié (exercice guidé)}
+    On modélise un feu piéton par une variable \texttt{couleur} qui vaut \texttt{'R'} (rouge) ou \texttt{'V'} (vert). On veut afficher \og Attendre \fg{} si le feu est rouge, \og Traverser \fg{} sinon.
+
+    \UPSTIquestion{Compléter les pointillés du pseudo-code ci-dessous.}
+    \begin{verbatim}
+SI couleur == ......... ALORS
+    AFFICHER .....................
+SINON
+    AFFICHER .....................
+FIN SI
+    \end{verbatim}
+    \UPSTIquestion{Compléter les pointillés du code C ci-dessous, qui doit produire le même résultat.}
+    \begin{lstlisting}[language=C]
+if (couleur == .........)
+{
+    printf(".....................\n");
+}
+else
+{
+    printf(".....................\n");
+}
+    \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Feu tricolore simplifié (exercice guidé)}
+        \begin{verbatim}
+SI couleur == 'R' ALORS
+    AFFICHER "Attendre"
+SINON
+    AFFICHER "Traverser"
+FIN SI
+        \end{verbatim}
+        \begin{lstlisting}[language=C]
+if (couleur == 'R')
+{
+    printf("Attendre\n");
+}
+else
+{
+    printf("Traverser\n");
+}
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Chauffage automatique (exercice autonome)}
+    Un radiateur programmable doit afficher \og Chauffage ON \fg{} si la température mesurée \texttt{temperature} est strictement inférieure à \texttt{19.0}, et \og Chauffage OFF \fg{} sinon.
+    \UPSTIquestion{Écrire, entièrement seul, le pseudo-code correspondant.}
+
+    \UPSTIquestion{Traduire ce pseudo-code en langage C.}
+
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Chauffage automatique (exercice autonome)}
+        \begin{verbatim}
+SI temperature < 19.0 ALORS
+    AFFICHER "Chauffage ON"
+SINON
+    AFFICHER "Chauffage OFF"
+FIN SI
+        \end{verbatim}
+        \begin{lstlisting}[language=C]
+if (temperature < 19.0)
+{
+    printf("Chauffage ON\n");
+}
+else
+{
+    printf("Chauffage OFF\n");
+}
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Traduire du C vers le pseudo-code}
+    On considère le programme suivant, qui affiche un message selon le niveau d'une batterie (\texttt{niveau}, en pourcentage).
+    \begin{lstlisting}[language=C]
+if (niveau < 15)
+{
+    printf("Batterie faible\n");
+}
+else if (niveau < 90)
+{
+    printf("Batterie en charge normale\n");
+}
+else
+{
+    printf("Batterie pleine\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{Traduire ce programme en pseudo-code, en utilisant les mots-clés \texttt{SI}, \texttt{SINON SI}, \texttt{SINON}, \texttt{FIN SI} et \texttt{AFFICHER}.}
+
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Traduire du C vers le pseudo-code}
+        \begin{verbatim}
+SI niveau < 15 ALORS
+    AFFICHER "Batterie faible"
+SINON SI niveau < 90 ALORS
+    AFFICHER "Batterie en charge normale"
+SINON
+    AFFICHER "Batterie pleine"
+FIN SI
+        \end{verbatim}
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}

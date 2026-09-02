@@ -1,151 +1,360 @@
 \section{Niveau 3}
 
-\begin{UPSTIinfor}{Les nombres flottants en C}
-En langage C, il existe deux types principaux pour représenter des nombres à virgule :
-\begin{description}
-    \item[\textbf{float} :] type virgule flottante simple précision (32 bits).  
-    Il permet de représenter environ 7 chiffres significatifs avec une plage de valeurs allant de \(10^{-38}\) à \(10^{38}\).  
-    C’est rapide et économique en mémoire, mais moins précis.
-
-    \item[\textbf{double} :] type virgule flottante double précision (64 bits).  
-    Il permet de représenter environ 15 à 16 chiffres significatifs avec une plage beaucoup plus large (\(10^{-308}\) à \(10^{308}\)).  
-    Il est plus précis mais consomme deux fois plus de mémoire.
-\end{description}
-\textbf{Attention :} les nombres flottants ne sont qu’une approximation des réels. Certaines opérations ne donnent pas toujours le résultat attendu exactement, à cause des limites de la représentation binaire.
-\begin{itemize}
-    \item Exemple avec \texttt{float} : \verb|1.0f/3| donnera une valeur approchée de 0.333333.  
-    \item Exemple avec \texttt{double} : \verb|1.0/3| donnera une valeur plus précise, par exemple 0.3333333333333333.  
-    \item Exemple de limite : la somme de \verb|0.1+0.1+0.1| peut afficher 0.30000000000000004.
-\end{itemize}
+\begin{UPSTIinfor}{Imbriquer ou enchaîner}
+    Deux structures conditionnelles sont dites \textbf{enchaînées} lorsqu'elles se succèdent au même niveau, avec \texttt{else if} :
+    \begin{lstlisting}[language=C]
+if (cond1) { ... }
+else if (cond2) { ... }
+else { ... }
+    \end{lstlisting}
+    Elles sont dites \textbf{imbriquées} (ou \og nichées \fg) lorsqu'un \texttt{if} complet se trouve \textbf{à l'intérieur} du bloc d'un autre \texttt{if} :
+    \begin{lstlisting}[language=C]
+if (cond1)
+{
+    if (cond2) { ... }
+    else { ... }
+}
+else
+{
+    ...
+}
+    \end{lstlisting}
+    Dans ce second cas, \texttt{cond2} n'est testée que si \texttt{cond1} est déjà vraie : les deux conditions ne sont pas au même \og niveau \fg.
 \end{UPSTIinfor}
 
-\subsection{Traces, erreurs et structures}
+\subsection{Imbrication, ordre et bornes}
 
-\begin{UPSTIexercice}{Exécution pas à pas}
-Analyser l'exécution suivante pas à pas :
-\begin{lstlisting}[language=C]
-int a = 5, b = 10, c = 0;
-c = a + b;     // 1
-b = c - a;     // 2
-a = a + 1;     // 3
-c = a + b + c; // 4
-\end{lstlisting}
-\UPSTIquestion{Donner les valeurs finales de \verb|a|, \verb|b| et \verb|c|.}
-\end{UPSTIexercice}
+\begin{UPSTIexercice}{Imbriqué ou enchaîné : deux écritures pour classer un nombre}
+    On veut classer un entier \texttt{x} en trois catégories : \og Négatif \fg{} (\texttt{x < 0}), \og Petit positif \fg{} (\texttt{0 <= x < 10}), \og Grand positif \fg{} (\texttt{x >= 10}). Deux versions sont proposées.
 
-\begin{UPSTIprofOnlyEnv}
-  \begin{UPSTIcorrectionP}{Exécution pas à pas}
-    Étapes : $c=15$, $b=10$, $a=6$, puis $c=6+10+15=31$.  
-    \textbf{Final :} $a=6$, $b=10$, $c=31$.
-  \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-\begin{UPSTIexercice}{Précision et débordements}
-\UPSTIquestion{Expliquer ce qui peut arriver pour \verb|int x = 2000000000 + 2000000000;|. Donner un exemple d'impact réel.}
-\UPSTIquestion{Comparer \verb|float| vs \verb|double| pour accumuler des montants (somme de 1/10 répété 100 fois).}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-  \begin{UPSTIcorrectionP}{Précision et débordements}
-    \textbf{Débordement :} la somme dépasse \texttt{INT\_MAX} (32 bits). En C, le dépassement d’entier \emph{signé} est \textit{indéfini} (comportements possibles : wrap-around, valeur erronée, optimisations trompeuses). Impact : compteurs, minuteries, totaux financiers qui « bouclent ».  \\
-    Exemple : La fusée arianne 5 s’est autodétruite en 1996 à cause d’un dépassement d’entier dans le calcul de la trajectoire.\\
-    \textbf{Accumulation :} additionner $0.1$ $100$ fois n’aboutit pas exactement à $10$. En \texttt{float}, l’erreur relative est notable (affiche souvent $9.999999$ ou $10.000001$) ; en \texttt{double}, l’erreur est bien plus faible. Pour des montants, préférer \texttt{double} (voire des entiers en centimes).
-  \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-\begin{UPSTIexercice}{Prédire l'affichage (mélange et cast)}
-\begin{lstlisting}[language=C]
-int i = 7, j = 3;
-float u = 7, v = 3;
-i = i + j/2;        // division entière
-u = u / v;          // division réelle
-printf("A:%d\n", i);
-printf("B:%f\n", u);
-printf("C:%f\n", (float)i / j);
-printf("D:%d\n", (i * j) % 5);
-\end{lstlisting}
-\UPSTIquestion{Prédire chaque ligne d'affichage et expliquer l'effet du cast et de la division entière sur \verb|i|.}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-  \begin{UPSTIcorrectionP}{Prédire l'affichage (mélange et cast)}
-    \textbf{A:} $j/2$ est entier ($3/2=1$), donc $i=7+1=8$ $\Rightarrow$ \texttt{A:8}.  
-    \textbf{B:} $u/v$ réel $=7/3\approx2{,}333333$ $\Rightarrow$ \texttt{B:2.333333}.  
-    \textbf{C:} $(\text{float})i/j=8/3\approx2{,}666667$ $\Rightarrow$ \texttt{C:2.666667}.  
-    \textbf{D:} $(i\cdot j)\%5=(8\cdot3)\%5=24\%5=4$ $\Rightarrow$ \texttt{D:4}.  
-    Effet : la division entière réduit $j/2$ à $1$ (pas de décimales) ; le \textit{cast} force une division réelle.
-  \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-\subsection{Imbrications et logique avancée}
-
-\begin{UPSTIexercice}{Écrire ses propres conditions}
-    On dispose de drapeaux \verb|badgeOK|, \verb|tenueOK|, \verb|formationOK|, \verb|isResponsable|.\\
-    Règles d'accès : 
-    \begin{itemize}
-        \item Les responsables sont autorisés quelque soit leur tenue, l'état de leur badge ou de leur formation. 
-        \item Les autres seront autorisés s'ils sont en possession d'un badge et soit qu'ils ont passé une formation, soit qu'ils possèdent une tenue de sécurité
-    \end{itemize}
-\UPSTIquestion{Écrire l'expression booléenne correspondante.}
-\end{UPSTIexercice}
-
-\begin{UPSTIprofOnlyEnv}
-  \begin{UPSTIcorrectionP}{Écrire ses propres conditions}
-\begin{lstlisting}[language=C]
-if ( isResponsable || (badgeOK && (formationOK || tenueOK)) ) {
-    /* accès accordé */
-} else {
-    /* accès refusé */
+    \noindent
+    \begin{minipage}[t]{0.48\linewidth}
+        \textbf{Version A (imbriquée)}
+        \begin{lstlisting}[language=C]
+if (x >= 0)
+{
+    if (x < 10)
+    {
+        printf("Petit positif\n");
+    }
+    else
+    {
+        printf("Grand positif\n");
+    }
 }
-\end{lstlisting}
-  \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
+else
+{
+    printf("Negatif\n");
+}
+        \end{lstlisting}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.48\linewidth}
+        \textbf{Version B (enchaînée)}
+        \begin{lstlisting}[language=C]
+if (x >= 0 && x < 10)
+{
+    printf("Petit positif\n");
+}
+else if (x >= 10)
+{
+    printf("Grand positif\n");
+}
+else
+{
+    printf("Negatif\n");
+}
+        \end{lstlisting}
+    \end{minipage}
 
-\begin{UPSTIexercice}{Majorité avancée (partie 3)}
-Une billetterie donne un tarif réduit si l'âge de la personne est un multiple de 10. Le tarif sera majoré pour les plus de 60 ans.
-\UPSTIquestion{Proposer une structure \texttt{if/else if/else} lisible.}
+    \UPSTIquestion{Dans la version A, \textbf{entourer} le \texttt{if} imbriqué (celui qui se trouve à l'intérieur d'un autre bloc).}
+    \UPSTIquestion{Tracer l'exécution des deux versions pour \texttt{x = -3}, \texttt{x = 4} et \texttt{x = 15}. Affichent-elles le même résultat dans les trois cas ?}
+    \UPSTIquestion{Dans la version A, le test \texttt{x < 10} n'apparaît que dans le cas où \texttt{x >= 0} est déjà vrai. Pourquoi la version B doit-elle, elle, écrire explicitement \texttt{x >= 0 \&\& x < 10} et ne peut-elle pas se contenter de \texttt{x < 10} ?}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
-  \begin{UPSTIcorrectionP}{Majorité avancée (partie 3)}
-    Hypothèse claire : la majoration $>$\,$60$ \textbf{prime} sur la réduction « multiple de 10 ».
-\begin{lstlisting}[language=C]
-if (age > 60) {
-    printf("Tarif majore\n");
-} else if (age % 10 == 0) {
-    printf("Tarif reduit\n");
-} else {
+    \begin{UPSTIcorrectionP}{Imbriqué ou enchaîné : deux écritures pour classer un nombre}
+        Le \texttt{if (x < 10) ... else ...} imbriqué dans la version A est celui qui se trouve à l'intérieur du bloc du premier \texttt{if}.
+
+        Trace :
+        \begin{itemize}
+            \item \texttt{x = -3} : A $\to$ \texttt{x >= 0} faux $\to$ \og Negatif \fg. B $\to$ première condition fausse, \texttt{x >= 10} fausse $\to$ \og Negatif \fg. \textbf{Même résultat.}
+            \item \texttt{x = 4} : A $\to$ \texttt{x >= 0} vrai, \texttt{x < 10} vrai $\to$ \og Petit positif \fg. B $\to$ \texttt{x >= 0 \&\& x < 10} vrai $\to$ \og Petit positif \fg. \textbf{Même résultat.}
+            \item \texttt{x = 15} : A $\to$ \texttt{x >= 0} vrai, \texttt{x < 10} faux $\to$ \og Grand positif \fg. B $\to$ première condition fausse (15 n'est pas $<$10), \texttt{x >= 10} vrai $\to$ \og Grand positif \fg. \textbf{Même résultat.}
+        \end{itemize}
+        Les deux versions sont donc équivalentes.
+
+        Dans la version A, le test interne \texttt{x < 10} hérite implicitement du fait que l'on est déjà dans le cas \texttt{x >= 0} : c'est la structure du code (l'imbrication) qui porte cette information. Dans la version B, les deux tests sont au même niveau, indépendants l'un de l'autre : rien ne garantit qu'on est passé par une vérification de \texttt{x >= 0} avant de tester \texttt{x < 10}. Il faut donc \textbf{répéter explicitement} la condition \texttt{x >= 0} dans le \texttt{\&\&} pour obtenir le même comportement.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{À la limite}
+    Une billetterie applique la règle suivante : \og le tarif enfant s'applique aux personnes dont l'âge est inférieur ou égal à 12 ans \fg. Un développeur a écrit :
+    \begin{lstlisting}[language=C]
+if (age < 12)
+{
+    printf("Tarif enfant\n");
+}
+else
+{
     printf("Tarif normal\n");
 }
-\end{lstlisting}
-  \end{UPSTIcorrectionP}
-\end{UPSTIprofOnlyEnv}
-
-\begin{UPSTIexercice}{Court-circuit et sécurité}
-Analyser les deux versions suivantes :\\
-\begin{minipage}{.49\linewidth}
-\begin{lstlisting}[language=C]
-if ( i / j > 2 && j != 0 ) {
-    printf("OK\n");
-}
-\end{lstlisting}
-\end{minipage}
-\begin{minipage}{.49\linewidth}
-\begin{lstlisting}[language=C]
-if ( (j != 0) && (i / j > 2) ) {
-    printf("OK\n");
-}
-\end{lstlisting}
-\end{minipage}
-\UPSTIquestion{Quelle différence y a-t-il entre ces deux versions ?}
-\UPSTIquestion{Laquelle vous semble la plus efficace et pourquoi ? Justifier votre réponse et donner un exemple.}
+    \end{lstlisting}
+    \UPSTIquestion{Tracer l'exécution de ce code pour \texttt{age = 11}, \texttt{age = 12} et \texttt{age = 13}.}
+    \UPSTIquestion{Ce code respecte-t-il exactement la règle énoncée ? Justifier en identifiant précisément la valeur d'âge pour laquelle le résultat n'est pas celui attendu.}
+    \UPSTIquestion{Corriger le code.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
-  \begin{UPSTIcorrectionP}{Court-circuit et sécurité}
-    Avec l’opérateur \texttt{\&\&}, l’évaluation est \textbf{court-circuitée} de gauche à droite.  \\
-    \textbf{À gauche la division :} la première version peut diviser par zéro si \texttt{j==0} (dangereux/UB).  \\
-    \textbf{À gauche le test de zéro :} la seconde est \textbf{sûre} : si \texttt{j==0}, la division n’est pas évaluée. \\ 
-    \textbf{Efficacité :} la seconde évite une division inutile quand \texttt{j==0} (et protège contre l’erreur). \\Exemple : \texttt{i=10, j=0} — 1\iere{} version: erreur potentielle ; 2\ieme{}: pas de division.
-  \end{UPSTIcorrectionP}
+    \begin{UPSTIcorrectionP}{À la limite}
+        \texttt{age = 11} : \texttt{11 < 12} vrai $\to$ \og Tarif enfant \fg{} (conforme).
+        \texttt{age = 12} : \texttt{12 < 12} \textbf{faux} $\to$ \og Tarif normal \fg.
+        \texttt{age = 13} : \texttt{13 < 12} faux $\to$ \og Tarif normal \fg{} (conforme).
+
+        Le code ne respecte \textbf{pas} exactement la règle : pour \texttt{age = 12}, la règle demande \og Tarif enfant \fg{} (12 ans \textbf{inclus}), mais le code, avec un \texttt{<} strict, affiche \og Tarif normal \fg. C'est une erreur classique \og d'un cran \fg{} (\emph{off-by-one}) à la frontière.
+
+        Correction :
+        \begin{lstlisting}[language=C]
+if (age <= 12)
+{
+    printf("Tarif enfant\n");
+}
+else
+{
+    printf("Tarif normal\n");
+}
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Une branche qu'on n'atteindra jamais}
+    Un radar routier affiche un message selon la vitesse mesurée \texttt{vitesse} (en km/h) :
+    \begin{lstlisting}[language=C]
+if (vitesse >= 0)
+{
+    printf("Vitesse normale\n");
+}
+else if (vitesse > 130)
+{
+    printf("Exces de vitesse\n");
+}
+else
+{
+    printf("Vitesse negative (capteur en panne)\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{Tracer l'exécution pour \texttt{vitesse = 150}. Le message \og Exces de vitesse \fg{} s'affiche-t-il ?}
+    \UPSTIquestion{Une des trois branches de ce code ne s'exécutera \textbf{jamais}, quelle que soit la valeur de \texttt{vitesse}. Laquelle, et pourquoi ?}
+    \UPSTIquestion{Corriger l'ordre des conditions pour que le programme se comporte comme voulu (excès de vitesse au-delà de 130, vitesse normale entre 0 et 130 inclus, capteur en panne en dessous de 0).}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Une branche qu'on n'atteindra jamais}
+        Pour \texttt{vitesse = 150} : \texttt{vitesse >= 0} est vraie $\to$ on affiche directement \og Vitesse normale \fg. Le \texttt{else if (vitesse > 130)} n'est même pas testé.
+
+        La branche \og Exces de vitesse \fg{} est \textbf{inatteignable} : toute valeur qui vérifie \texttt{vitesse > 130} vérifie \emph{aussi} \texttt{vitesse >= 0} (puisque 130 $>$ 0). La première condition, trop large, \og capture \fg{} systématiquement les cas visés par la seconde, qui n'est donc jamais testée.
+
+        Correction : il faut tester la condition la plus restrictive en premier.
+        \begin{lstlisting}[language=C]
+if (vitesse > 130)
+{
+    printf("Exces de vitesse\n");
+}
+else if (vitesse >= 0)
+{
+    printf("Vitesse normale\n");
+}
+else
+{
+    printf("Vitesse negative (capteur en panne)\n");
+}
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Équivalences et pièges logiques}
+
+\begin{UPSTIexercice}{Deux écritures, un seul résultat ?}
+    On considère deux entiers \texttt{a} et \texttt{b}, et les trois expressions booléennes suivantes :
+    \begin{itemize}
+        \item E1 : \lstinline[language=C]{!(a > 0 && b > 0)}
+        \item E2 : \lstinline[language=C]{!(a > 0) || !(b > 0)}
+        \item E3 : \lstinline[language=C]{!(a > 0) && !(b > 0)}
+    \end{itemize}
+    \UPSTIquestion{Compléter le tableau ci-dessous pour les quatre couples de valeurs indiqués.}
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            \texttt{a} & \texttt{b} & \texttt{a > 0} & \texttt{b > 0} & E1, E2, E3 (vrai/faux) \\
+            \hline
+            5          & 3          &                &                &                        \\[0.5cm]
+            \hline
+            5          & -3         &                &                &                        \\[0.5cm]
+            \hline
+            -5         & 3          &                &                &                        \\[0.5cm]
+            \hline
+            -5         & -3         &                &                &                        \\[0.5cm]
+            \hline
+        \end{tabular}
+    \end{center}
+    \UPSTIquestion{Laquelle de E2 ou E3 est réellement \textbf{équivalente} à E1 pour tous les couples \texttt{(a, b)}, pas seulement ceux du tableau ? Justifier sans recalculer, en raisonnant sur le sens de chaque expression.}
+    \UPSTIquestion{À quelle expression plus simple l'expression restante (celle qui n'est \textbf{pas} équivalente à E1) correspond-elle ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Deux écritures, un seul résultat ?}
+        \begin{center}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|}
+                \hline
+                \texttt{a} & \texttt{b} & \texttt{a>0} & \texttt{b>0} & E1 & E2 & E3 \\
+                \hline
+                5          & 3          & V            & V            & F  & F  & F  \\
+                \hline
+                5          & -3         & V            & F            & V  & V  & F  \\
+                \hline
+                -5         & 3          & F            & V            & V  & V  & F  \\
+                \hline
+                -5         & -3         & F            & F            & V  & V  & V  \\
+                \hline
+            \end{tabular}
+        \end{center}
+
+        E1 et E2 sont \textbf{équivalentes} sur les quatre lignes, et le sont en réalité pour \textbf{tout} couple \texttt{(a, b)} : \og il est faux que les deux soient positifs \fg{} (E1) revient exactement à dire \og l'un au moins des deux n'est pas positif \fg{} (E2). Nier un \og ET \fg{} revient à \og OU \fg{} des négations : dès qu'une des deux conditions d'origine est fausse, la négation du \texttt{ET} devient vraie, et c'est justement ce que teste le \texttt{OU} des négations.
+
+        E3 correspond en réalité à \lstinline[language=C]{!(a > 0 || b > 0)} (\og aucun des deux n'est positif \fg), ce qui est une affirmation plus forte que E1 (\og au moins un des deux n'est pas positif \fg) : E3 est vraie uniquement quand les deux sont non positifs à la fois, comme le montre la dernière ligne du tableau.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Ça compile, mais est-ce juste ?}
+    On exécute le programme suivant, qui a compilé sans aucune erreur ni avertissement.
+    \begin{lstlisting}[language=C]
+int x = 3;
+
+if (x = 5)
+{
+    printf("x vaut 5\n");
+}
+else
+{
+    printf("x ne vaut pas 5\n");
+}
+
+printf("Valeur finale de x : %d\n", x);
+    \end{lstlisting}
+    \UPSTIquestion{Quel est l'opérateur utilisé dans \texttt{if (x = 5)} ? Est-ce une comparaison ou une affectation ?}
+    \UPSTIquestion{Donner la valeur de \texttt{x} juste après l'exécution de la ligne \texttt{if (x = 5)}, puis la valeur utilisée par le \texttt{if} pour choisir sa branche.}
+    \UPSTIquestion{Prédire, ligne par ligne, tout ce que ce programme affiche.}
+    \UPSTIquestion{Ce programme se comporte-t-il comme si son auteur avait voulu \emph{tester} si \texttt{x} valait 5 ? Corriger l'erreur.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Ça compile, mais est-ce juste ?}
+        \texttt{x = 5} est une \textbf{affectation} (un seul signe \texttt{=}), pas une comparaison : elle range 5 dans \texttt{x}, puis toute l'expression \texttt{(x = 5)} \og vaut \fg{} la valeur affectée, ici 5.
+
+        Après cette ligne, \texttt{x} vaut \textbf{5}. Le \texttt{if} regarde ensuite la valeur de l'expression, c'est-à-dire \textbf{5}. En C, toute valeur non nulle est considérée comme vraie : le \texttt{if} prend donc systématiquement la branche du \texttt{if}, \textbf{quelle qu'ait été la valeur initiale de \texttt{x}}.
+
+        Affichage :
+        \begin{lstlisting}[language=bash,style=console]
+x vaut 5
+Valeur finale de x : 5
+        \end{lstlisting}
+
+        Non : le code \textbf{compile et s'exécute}, mais il ne teste jamais réellement si \texttt{x} valait 5 avant cette ligne --- il l'y force. C'est un exemple de code syntaxiquement correct mais logiquement faux (voir aussi la mise en garde du cours sur \texttt{=} et \texttt{==}). Correction :
+        \begin{lstlisting}[language=C]
+if (x == 5)
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Synthèse}
+
+\begin{UPSTIexercice}{Tarification d'un parking (exercice de synthèse)}
+    On souhaite programmer l'affichage du tarif d'un parking, à partir de deux informations : le type de véhicule (\texttt{char type}, valant \texttt{'M'} pour moto ou \texttt{'V'} pour voiture) et la durée de stationnement en minutes (\texttt{int dureeMinutes}).
+
+    Règles à respecter :
+    \begin{itemize}
+        \item Pour une \textbf{moto} : gratuit si \texttt{dureeMinutes <= 15} ; tarif de \texttt{2} sinon.
+        \item Pour une \textbf{voiture} : gratuit si \texttt{dureeMinutes <= 15} ; tarif de \texttt{3} si \texttt{dureeMinutes} est compris entre 16 et 60 minutes (bornes incluses) ; tarif de \texttt{6} au-delà de 60 minutes.
+        \item Si \texttt{type} ne vaut ni \texttt{'M'} ni \texttt{'V'}, afficher \og Type de vehicule inconnu \fg.
+    \end{itemize}
+    On affichera uniquement \texttt{"Tarif : "} suivi du montant (par exemple \texttt{"Tarif : 3"}), ou le message d'erreur.
+
+    \UPSTIquestion{Écrire le pseudo-code complet de ce programme. Vous devrez nécessairement \textbf{imbriquer} une structure conditionnelle à l'intérieur d'une autre.}
+
+    \UPSTIquestion{Traduire ce pseudo-code en langage C.}
+
+    \UPSTIquestion{Aurait-on pu écrire ce programme en n'utilisant \textbf{que} des conditions enchaînées (\texttt{else if}), sans aucune imbrication, en combinant les tests avec \texttt{\&\&} ? Si oui, écrire la condition correspondant au tarif de \texttt{3} pour une voiture. Quelle version vous semble la plus lisible ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Tarification d'un parking (exercice de synthèse)}
+        Pseudo-code :
+        \begin{verbatim}
+SI type == 'M' ALORS
+    SI dureeMinutes <= 15 ALORS
+        AFFICHER "Tarif : 0"
+    SINON
+        AFFICHER "Tarif : 2"
+    FIN SI
+SINON SI type == 'V' ALORS
+    SI dureeMinutes <= 15 ALORS
+        AFFICHER "Tarif : 0"
+    SINON SI dureeMinutes <= 60 ALORS
+        AFFICHER "Tarif : 3"
+    SINON
+        AFFICHER "Tarif : 6"
+    FIN SI
+SINON
+    AFFICHER "Type de vehicule inconnu"
+FIN SI
+        \end{verbatim}
+
+        Traduction en C :
+        \begin{lstlisting}[language=C]
+if (type == 'M')
+{
+    if (dureeMinutes <= 15)
+    {
+        printf("Tarif : 0\n");
+    }
+    else
+    {
+        printf("Tarif : 2\n");
+    }
+}
+else if (type == 'V')
+{
+    if (dureeMinutes <= 15)
+    {
+        printf("Tarif : 0\n");
+    }
+    else if (dureeMinutes <= 60)
+    {
+        printf("Tarif : 3\n");
+    }
+    else
+    {
+        printf("Tarif : 6\n");
+    }
+}
+else
+{
+    printf("Type de vehicule inconnu\n");
+}
+        \end{lstlisting}
+
+        Oui, c'est possible sans imbrication, à condition de répéter le test sur \texttt{type} dans chaque condition, exactement comme dans l'exercice \og Imbriqué ou enchaîné \fg. La condition du tarif de 3 pour une voiture deviendrait :
+        \begin{lstlisting}[language=C]
+else if (type == 'V' && dureeMinutes > 15 && dureeMinutes <= 60)
+{
+    printf("Tarif : 3\n");
+}
+        \end{lstlisting}
+        La version imbriquée est ici plus lisible : elle regroupe naturellement toutes les règles propres à un même type de véhicule sous un seul test de \texttt{type}, évitant de le répéter dans chaque condition et réduisant le risque d'erreur si l'on doit modifier une règle plus tard.
+    \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}

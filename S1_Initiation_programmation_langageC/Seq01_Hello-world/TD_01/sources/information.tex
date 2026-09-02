@@ -1,18 +1,78 @@
-\begin{UPSTIinfor}{La division en langage C}
-    \label{info:division}
-    En langage C, l'opérateur division ne se comporte pas de la même façon selon les types de données.
+\begin{UPSTIinfor}{Notation utilisée dans ce TD : le pseudo-code}
+    \label{info:pseudocode}
+    Avant d'écrire du code C, il est utile de décrire \textbf{l'idée} d'un programme avec une notation plus proche du français, indépendante de tout langage. C'est ce qu'on appelle du \textbf{pseudo-code}. Il joue le même rôle que les blocs de Scratch : décrire un enchaînement d'actions et des choix, sans se soucier de la syntaxe exacte d'un langage donné.
+
+    Dans ce TD, on utilisera les conventions suivantes.
+
     \begin{description}
-        \item[Si les deux variables sont des \textbf{entiers} : ] La division est une division euclidienne (division entière). Le résultat de l'opération est donc un ENTIER qui ne contient que le quotient de la division.
-              \begin{itemize}
-                  \item Exemple : \verb|5/2| retournera la valeur \verb|2|
-              \end{itemize}
-        \item[Si une des deux variables est flotante (float ou double) : ] La division est une division à virgule et le résultat sera donc un nombre à virgule.
-              \begin{itemize}
-                  \item Exemple : \verb|5/2.0| retournera la valeur \verb|2.5|
-              \end{itemize}
+        \item[Affectation :] \verb|variable <- expression| se lit \og la variable prend la valeur de l'expression \fg{}. C'est l'équivalent du bloc Scratch \og mettre \texttt{variable} à ... \fg{}.
+        \item[Structure conditionnelle :]
+            \begin{verbatim}
+SI condition ALORS
+    instruction(s)
+SINON SI condition ALORS
+    instruction(s)
+SINON
+    instruction(s)
+FIN SI
+            \end{verbatim}
+            C'est l'équivalent de l'empilement de blocs Scratch \og si ... alors ... sinon \fg.
+              Les blocs \texttt{SINON SI} et \texttt{SINON} sont facultatifs, tout comme en C.
+        \item[Comparateurs :] on garde les mêmes symboles qu'en C : \verb|==|, \verb|!=|, \verb|<|, \verb|>|, \verb|<=|, \verb|>=|.
+        \item[Opérateurs logiques :] on les écrit en toutes lettres, pour ne pas les confondre avec ceux du C : \textbf{ET}, \textbf{OU}, \textbf{NON}. (\texttt{ET} correspond à \texttt{\&\&}, \texttt{OU} à \texttt{||}.)
+        \item[Affichage :] \verb|AFFICHER "un texte"| ou \verb|AFFICHER variable| (équivalent d'un \texttt{printf}).
     \end{description}
+
+    \textbf{À retenir :} le pseudo-code décrit \emph{ce que fait} le programme ; le C décrit \emph{comment} l'écrire pour que l'ordinateur l'exécute. Un même pseudo-code peut se traduire en C de plusieurs façons correctes.
 \end{UPSTIinfor}
 
-\begin{UPSTIinfor}{L'opérateur modulo \% -- Le reste de la division euclidienne}
-L'opérateur modulo \% retourne le reste de la division euclidienne. \\Par exemple : \lstinline[language=c]{5%2} donnera 1, car 5 = 2*2 + 1.
-\end{UPSTIinfor}
+\begin{UPSTIexemples}[Une même idée en trois écritures]
+    \label{ex:trois-ecritures}
+    Voici comment la même idée --- \og retenir un score, puis dire si la partie est gagnée \fg{} --- s'exprime dans les trois notations que l'on utilisera.
+
+    \bigskip
+    \noindent
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Scratch}                                & \textbf{Pseudo-code}       & \textbf{C}             \\
+        \hline
+        bloc \og mettre \texttt{score} à \texttt{0} \fg{} & \verb|score <- 0|         & \verb|int score = 0;| \\
+        \hline
+    \end{tabular}
+
+    \bigskip
+    \noindent
+    Et pour le choix \og si le score dépasse 10, la partie est gagnée, sinon elle est perdue \fg{}, obtenu en empilant des blocs \og si ... alors ... sinon \fg{} en Scratch :
+
+    \medskip
+    \noindent
+    \begin{minipage}[t]{0.32\linewidth}
+        \textbf{Pseudo-code}
+        \begin{verbatim}
+SI score > 10
+ALORS
+  AFFICHER "Gagne"
+SINON
+  AFFICHER "Perdu"
+FIN SI
+        \end{verbatim}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.32\linewidth}
+        \textbf{C}
+        \begin{lstlisting}[language=C]
+if (score > 10)
+{
+  printf("Gagne\n");
+}
+else
+{
+  printf("Perdu\n");
+}
+        \end{lstlisting}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.32\linewidth}
+        \textbf{Scratch (description)}
+
+        Bloc \og si \texttt{score} $>$ \texttt{10} alors \fg{} contenant un bloc \og dire "Gagne" \fg, avec une branche \og sinon \fg{} contenant un bloc \og dire "Perdu" \fg.
+    \end{minipage}
+\end{UPSTIexemples}
