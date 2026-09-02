@@ -74,7 +74,11 @@ for doc, rel in built:
     p = Path(doc)
     seq = top_level(doc)
     cat = category(doc)
-    label = p.parent.name
+    # Le libellé affiché reprend le nom réel du PDF (celui décidé par
+    # build_pdfs.sh à partir de \sequence/\UPSTInumero), pas le nom du
+    # dossier : sinon la page affiche encore l'ancien intitulé alors que
+    # le fichier téléchargé, lui, a le bon nom.
+    label = Path(rel).stem
     date = version_date(doc)
     if cat == "Autre":
         autres[seq].append((label, rel, date))
