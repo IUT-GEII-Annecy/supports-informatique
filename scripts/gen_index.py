@@ -217,10 +217,10 @@ page = f"""<!doctype html>
 </head>
 <body>
   <h1>Supports Informatique - BUT GEII</h1>
-  <p class="subtitle">PDF générés automatiquement depuis les sources LaTeX. Les évaluations (DS, contrôles) ne sont pas publiées ici.</p>
+  <p class="subtitle">Tous les supports de cours, td et tp pour le cours d'informatique Semestre 1 - GEII IUT Annecy</p>
   <div class="table-wrap">
     <table>
-      <caption>Séquences</caption>
+      <caption>Tableau des supports</caption>
       <thead>
         <tr><th scope="col">Séquence</th><th scope="col">Cours</th><th scope="col">TD</th><th scope="col">TP</th><th scope="col">Correction</th></tr>
       </thead>
