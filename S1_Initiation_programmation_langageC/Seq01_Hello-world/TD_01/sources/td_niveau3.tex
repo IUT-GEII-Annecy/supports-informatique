@@ -279,14 +279,16 @@ if (x == 5)
     Règles à respecter :
     \begin{itemize}
         \item Pour une \textbf{moto} : gratuit si \texttt{dureeMinutes <= 15} ; tarif de \texttt{2} sinon.
-        \item Pour une \textbf{voiture} : gratuit si \texttt{dureeMinutes <= 15} ; tarif de \texttt{3} si \texttt{dureeMinutes} est compris entre 16 et 60 minutes (bornes incluses) ; tarif de \texttt{6} au-delà de 60 minutes.
+        \item Pour une \textbf{voiture} : gratuit si \texttt{dureeMinutes <= 15} ; tarif de \texttt{3} si \texttt{dureeMinutes} est compris entre 16 et 60 minutes (bornes incluses) ; au-delà de 60 minutes, tarif de \texttt{6}, majoré de \texttt{1} par tranche entière de 30 minutes supplémentaires (par exemple, 90 minutes coûtent \texttt{7}, 100 minutes coûtent aussi \texttt{7} car la tranche de 30 minutes n'est pas complète, et 120 minutes coûtent \texttt{8}).
         \item Si \texttt{type} ne vaut ni \texttt{'M'} ni \texttt{'V'}, afficher \og Type de vehicule inconnu \fg.
     \end{itemize}
     On affichera uniquement \texttt{"Tarif : "} suivi du montant (par exemple \texttt{"Tarif : 3"}), ou le message d'erreur.
 
     \UPSTIquestion{Écrire le pseudo-code complet de ce programme. Vous devrez nécessairement \textbf{imbriquer} une structure conditionnelle à l'intérieur d'une autre.}
 
-    \UPSTIquestion{Traduire ce pseudo-code en langage C.}
+    \UPSTIquestion{Traduire ce pseudo-code en langage C. Pour la dernière tranche de la voiture, on pourra introduire une variable intermédiaire, par exemple \texttt{tranches}, calculée avec l'opérateur \texttt{/}.}
+
+    \UPSTIquestion{Vérifier, par le calcul, que votre programme donne bien un tarif de \texttt{6} pour \texttt{dureeMinutes = 89} et de \texttt{7} pour \texttt{dureeMinutes = 90}. Pourquoi une seule minute d'écart change-t-elle le résultat ?}
 
     \UPSTIquestion{Aurait-on pu écrire ce programme en n'utilisant \textbf{que} des conditions enchaînées (\texttt{else if}), sans aucune imbrication, en combinant les tests avec \texttt{\&\&} ? Si oui, écrire la condition correspondant au tarif de \texttt{3} pour une voiture. Quelle version vous semble la plus lisible ?}
 \end{UPSTIexercice}
@@ -307,7 +309,8 @@ SINON SI type == 'V' ALORS
     SINON SI dureeMinutes <= 60 ALORS
         AFFICHER "Tarif : 3"
     SINON
-        AFFICHER "Tarif : 6"
+        tranches <- (dureeMinutes - 60) / 30
+        AFFICHER "Tarif : " , 6 + tranches
     FIN SI
 SINON
     AFFICHER "Type de vehicule inconnu"
@@ -339,7 +342,8 @@ else if (type == 'V')
     }
     else
     {
-        printf("Tarif : 6\n");
+        int tranches = (dureeMinutes - 60) / 30;
+        printf("Tarif : %d\n", 6 + tranches);
     }
 }
 else
@@ -347,6 +351,8 @@ else
     printf("Type de vehicule inconnu\n");
 }
         \end{lstlisting}
+
+        Vérification : pour \texttt{dureeMinutes = 89}, \texttt{(89 - 60) / 30 = 29 / 30 = 0} (division entière, la tranche n'est pas complète) $\to$ tarif $= 6 + 0 = \boxed{6}$. Pour \texttt{dureeMinutes = 90}, \texttt{(90 - 60) / 30 = 30 / 30 = 1} $\to$ tarif $= 6 + 1 = \boxed{7}$. Une seule minute d'écart fait basculer \texttt{tranches} de \texttt{0} à \texttt{1} parce que la division entière tronque : en dessous de 30 minutes pleines au-delà de la première heure, la tranche supplémentaire n'est simplement pas comptée.
 
         Oui, c'est possible sans imbrication, à condition de répéter le test sur \texttt{type} dans chaque condition, exactement comme dans l'exercice \og Imbriqué ou enchaîné \fg. La condition du tarif de 3 pour une voiture deviendrait :
         \begin{lstlisting}[language=C]
@@ -356,5 +362,97 @@ else if (type == 'V' && dureeMinutes > 15 && dureeMinutes <= 60)
 }
         \end{lstlisting}
         La version imbriquée est ici plus lisible : elle regroupe naturellement toutes les règles propres à un même type de véhicule sous un seul test de \texttt{type}, évitant de le répéter dans chaque condition et réduisant le risque d'erreur si l'on doit modifier une règle plus tard.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Exercice de conception}
+
+\begin{UPSTIexercice}{Supervision d'une ligne de production}
+    Un boîtier de supervision doit rendre compte de l'état d'une ligne de production. Trois informations sont déjà disponibles dans le programme, saisies par ailleurs : l'état de la machine (\texttt{char etatMachine}, valant \texttt{'M'} en marche ou \texttt{'A'} à l'arrêt), le nombre de pièces produites depuis le début du poste (\texttt{int piecesProduites}) et, parmi elles, le nombre de pièces détectées défectueuses (\texttt{int piecesDefectueuses}).
+
+    \begin{UPSTICahierDesCharges}{1}
+        \begin{itemize}
+            \item Si la machine est à l'arrêt, le boîtier se contente de l'indiquer, sans effectuer aucun calcul.
+            \item Si elle tourne, l'opérateur doit connaître le taux de pièces défectueuses parmi les pièces produites, exprimé en pourcentage entier.
+            \item Un taux supérieur à 5 doit être mis en évidence comme une alerte qualité, car il s'agit d'un seuil critique pour la maintenance préventive.
+        \end{itemize}
+    \end{UPSTICahierDesCharges}
+
+    \UPSTIquestion{Avant d'écrire quoi que ce soit : d'après ce cahier des charges, combien de structures conditionnelles sont nécessaires, et sont-elles imbriquées ou enchaînées ? Justifier sans écrire de code.}
+    \UPSTIquestion{Écrire le pseudo-code répondant à ce cahier des charges. Le calcul du taux (un pourcentage entier) utilisera une division entière ; on veillera à multiplier par 100 \textbf{avant} de diviser, pour ne pas perdre le résultat dans la troncature.}
+    \UPSTIquestion{Traduire ce pseudo-code en langage C.}
+
+    \begin{UPSTICahierDesCharges}{2}
+        \begin{itemize}
+            \item Reprendre le cahier des charges de niveau 1.
+            \item Au tout début d'un poste, \texttt{piecesProduites} peut valoir \texttt{0}. Le calcul du taux ne doit alors surtout pas être effectué : le boîtier affiche à la place \og Aucune piece produite \fg.
+        \end{itemize}
+    \end{UPSTICahierDesCharges}
+
+    \UPSTIquestion{Pourquoi le cahier des charges de niveau 1, appliqué tel quel avec \texttt{piecesProduites = 0}, poserait-il un problème ?}
+    \UPSTIquestion{Modifier votre programme en C pour respecter le niveau 2.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Supervision d'une ligne de production}
+        Le cahier des charges décrit en réalité \textbf{deux} décisions successives, donc deux structures conditionnelles \textbf{imbriquées} : d'abord \og la machine tourne-t-elle ? \fg{} (sinon, rien d'autre n'a de sens à calculer), puis, seulement si elle tourne, \og le taux dépasse-t-il 5 ? \fg. La seconde question n'a de sens que dans la branche où la première a répondu \og oui \fg{} : c'est la définition même de l'imbrication.
+
+        Pseudo-code (niveau 1) :
+        \begin{verbatim}
+SI etatMachine == 'A' ALORS
+    AFFICHER "Machine a l'arret"
+SINON
+    taux <- (piecesDefectueuses * 100) / piecesProduites
+    AFFICHER "Taux de rebut : " , taux
+    SI taux > 5 ALORS
+        AFFICHER "Alerte qualite"
+    FIN SI
+FIN SI
+        \end{verbatim}
+
+        Traduction en C (niveau 1) :
+        \begin{lstlisting}[language=C]
+if (etatMachine == 'A')
+{
+    printf("Machine a l'arret\n");
+}
+else
+{
+    int taux = piecesDefectueuses * 100 / piecesProduites;
+    printf("Taux de rebut : %d\n", taux);
+    if (taux > 5)
+    {
+        printf("Alerte qualite\n");
+    }
+}
+        \end{lstlisting}
+
+        On calcule bien \texttt{(piecesDefectueuses * 100) / piecesProduites}, dans cet ordre : \texttt{*} et \texttt{/} ont la même priorité et s'évaluent de gauche à droite. Multiplier par 100 en dernier, comme dans \texttt{piecesDefectueuses / piecesProduites * 100}, tronquerait le résultat à \texttt{0} avant la multiplication, dans presque tous les cas.
+
+        Avec \texttt{piecesProduites = 0}, ce calcul de taux est invalide : une division entière par zéro est un comportement indéfini en C.
+
+        Programme respectant le niveau 2 :
+        \begin{lstlisting}[language=C]
+if (etatMachine == 'A')
+{
+    printf("Machine a l'arret\n");
+}
+else if (piecesProduites == 0)
+{
+    printf("Aucune piece produite\n");
+}
+else
+{
+    int taux = piecesDefectueuses * 100 / piecesProduites;
+    printf("Taux de rebut : %d\n", taux);
+    if (taux > 5)
+    {
+        printf("Alerte qualite\n");
+    }
+}
+        \end{lstlisting}
+
+        À noter, en revenant à la première question : les deux formes coexistent désormais dans le même programme. Les trois cas \og machine à l'arrêt \fg, \og aucune pièce produite \fg{} et \og calcul du taux \fg{} sont \textbf{enchaînés} (\texttt{if / else if / else}) : ils s'excluent mutuellement, un seul doit s'exécuter. L'alerte qualité, elle, reste \textbf{imbriquée} dans le dernier bloc, car elle n'a de sens qu'une fois le taux calculé. Le choix ne relève pas du goût : il découle de la question \og ce test a-t-il un sens indépendamment des autres, ou seulement à l'intérieur de l'un d'eux ? \fg.
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}

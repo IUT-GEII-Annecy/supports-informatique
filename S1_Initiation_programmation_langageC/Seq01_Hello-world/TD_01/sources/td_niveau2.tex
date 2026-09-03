@@ -91,6 +91,38 @@
 \end{UPSTIprofOnlyEnv}
 
 
+\subsection{Modulo, division et conditions}
+
+\begin{UPSTIexercice}{Multiples et conditions}
+    Sur une chaîne de production, on veut déclencher un contrôle qualité approfondi toutes les 4 pièces produites. Le nombre de pièces déjà produites est stocké dans \texttt{int numPiece}.
+    \UPSTIquestion{Que vaut \texttt{numPiece \% 4} lorsque \texttt{numPiece} est un multiple de 4 ? Et lorsqu'il ne l'est pas ?}
+    \UPSTIquestion{Écrire, en C, la condition qui est vraie exactement lorsque \texttt{numPiece} est un multiple de 4.}
+    \UPSTIquestion{Pour \texttt{numPiece} valant successivement 1, 2, 3, 4, 5, 6, 7, 8, indiquer pour lesquelles un contrôle est déclenché.}
+    \UPSTIquestion{Écrire le code C complet qui affiche \og Controle qualite \fg{} lorsqu'un contrôle doit être déclenché, et qui ne fait rien sinon.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Multiples et conditions}
+        \texttt{numPiece \% 4} vaut \texttt{0} lorsque \texttt{numPiece} est un multiple de 4, et vaut \texttt{1}, \texttt{2} ou \texttt{3} sinon.
+
+        Condition : \lstinline[language=C]{(numPiece % 4 == 0)}.
+
+        Un contrôle est déclenché pour \texttt{numPiece = 4} et \texttt{numPiece = 8} uniquement (les multiples de 4 dans la liste).
+
+        \begin{lstlisting}[language=C]
+if (numPiece % 4 == 0)
+{
+    printf("Controle qualite\n");
+}
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\begin{UPSTIwarning}{Le modulo ne s'utilise qu'avec des entiers}
+    L'opérateur \texttt{\%} n'est défini, en C, qu'entre deux entiers. Écrire \lstinline[language=C]{p % 1.0}, où \texttt{p} est un \texttt{float}, ne compile pas : le compilateur refuse un \texttt{\%} sur des valeurs flottantes. Pour tester si une mesure flottante (une pression, une tension...) respecte un pas régulier, il faut donc passer par autre chose qu'un simple \texttt{\%} --- par exemple ramener le problème à des entiers, ou comparer un écart à une tolérance.
+\end{UPSTIwarning}
+
+
 \subsection{Enchaînements à plusieurs branches}
 
 \begin{UPSTIexercice}{Classer une résistance par bande de valeurs}

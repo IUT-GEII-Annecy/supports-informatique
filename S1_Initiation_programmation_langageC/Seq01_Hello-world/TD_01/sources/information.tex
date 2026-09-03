@@ -26,7 +26,7 @@ FIN SI
     \textbf{À retenir :} le pseudo-code décrit \emph{ce que fait} le programme ; le C décrit \emph{comment} l'écrire pour que l'ordinateur l'exécute. Un même pseudo-code peut se traduire en C de plusieurs façons correctes.
 \end{UPSTIinfor}
 
-\begin{UPSTIexemples}[Une même idée en trois écritures]
+\begin{UPSTIexemples}[Une même idée en trois écritures]{}
     \label{ex:trois-ecritures}
     Voici comment la même idée --- \og retenir un score, puis dire si la partie est gagnée \fg{} --- s'exprime dans les trois notations que l'on utilisera.
 
@@ -76,3 +76,19 @@ else
         Bloc \og si \texttt{score} $>$ \texttt{10} alors \fg{} contenant un bloc \og dire "Gagne" \fg, avec une branche \og sinon \fg{} contenant un bloc \og dire "Perdu" \fg.
     \end{minipage}
 \end{UPSTIexemples}
+
+\begin{UPSTIinfor}{La division en langage C}
+    \label{info:division}
+    En C, l'opérateur \texttt{/} ne se comporte pas de la même façon selon le type des deux valeurs qu'il divise.
+    \begin{description}
+        \item[Si les deux opérandes sont des \textbf{entiers} :] la division est une \textbf{division entière} (division euclidienne) : le résultat ne conserve que le quotient, la partie décimale est perdue. Par exemple, \verb|17 / 5| vaut \verb|3| (et non \texttt{3,4}).
+        \item[Si l'un des deux opérandes est \textbf{flottant} (\texttt{float} ou \texttt{double}) :] la division est une division réelle. Par exemple, \verb|17.0 / 5| vaut \verb|3.4|.
+    \end{description}
+\end{UPSTIinfor}
+
+\begin{UPSTIinfor}{Le modulo \% : le reste de la division euclidienne}
+    \label{info:modulo}
+    L'opérateur \texttt{\%} renvoie le \textbf{reste} de la division entière entre deux entiers. Par exemple, \verb|17 % 5| vaut \verb|2|, car $17 = 3\times5+2$.
+
+    \textbf{Attention :} \texttt{\%} ne s'utilise qu'entre \textbf{entiers} ; on ne peut pas l'utiliser directement avec un \texttt{float} ou un \texttt{double}.
+\end{UPSTIinfor}

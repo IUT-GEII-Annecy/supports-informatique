@@ -2,7 +2,7 @@
 
 \subsection{Les variables : une case mémoire nommée}
 
-\begin{UPSTIexemples}[La variable : une case étiquetée]
+\begin{UPSTIexemples}[La variable : une case étiquetée]{}
     Une variable, c'est comme une variable Scratch : une \textbf{case mémoire}, portant une \textbf{étiquette} (son nom) et contenant une \textbf{valeur} qui peut changer au cours du programme. En C, cette case a en plus un \textbf{type} fixé une fois pour toutes, qui indique la nature de ce qu'elle contient.
 
     \begin{center}
@@ -84,59 +84,77 @@ int main(void)
 
 
 \begin{UPSTIexercice}{Trace d'exécution : la caisse d'un distributeur}
-    Un distributeur de boissons exécute les lignes suivantes lorsqu'un client insère des pièces.
+    Un distributeur de boissons exécute les lignes suivantes lorsqu'un client insère des pièces. Il ne rend la monnaie qu'avec des pièces de 10 centimes, et affiche à part ce qu'il ne peut pas rendre avec ce type de pièce.
     \begin{lstlisting}[language=C]
 int credit = 0;
-int prix = 90;
+int prix = 85;
 int monnaie;
+int nbPieces10;
+int centimesRestants;
 
-credit = credit + 50;   // (1) le client insere 50 centimes
-credit = credit + 50;   // (2) le client insere encore 50 centimes
-monnaie = credit - prix; // (3)
-credit = 0;              // (4) la machine rend la monnaie, le credit repart a 0
+credit = credit + 50;            // (1) le client insere 50 centimes
+credit = credit + 50;            // (2) le client insere encore 50 centimes
+monnaie = credit - prix;         // (3)
+nbPieces10 = monnaie / 10;       // (4) nombre de pieces de 10 centimes a rendre
+centimesRestants = monnaie % 10; // (5) ce qui ne peut pas etre rendu en pieces de 10
+credit = 0;                      // (6) la machine rend la monnaie, le credit repart a 0
     \end{lstlisting}
+    \UPSTIquestion{Rappeler ce que calculent, en général, les opérateurs \texttt{/} et \texttt{\%} entre deux entiers (voir les encarts page~\pageref{info:division} et page~\pageref{info:modulo}).}
     \UPSTIquestion{Compléter le tableau de trace ci-dessous : pour chaque ligne numérotée, indiquer la valeur de chaque variable \textbf{juste après} l'exécution de cette ligne.}
 
     \begin{center}
-        \begin{tabular}{|c|c|c|c|}
+        \begin{tabular}{|c|c|c|c|c|}
             \hline
-            \textbf{Ligne} & \texttt{credit} & \texttt{prix} & \texttt{monnaie} \\
+            \textbf{Ligne} & \texttt{credit} & \texttt{monnaie} & \texttt{nbPieces10} & \texttt{centimesRestants} \\
             \hline
-            avant (1)      & 0               & 90            & ?                \\
+            avant (1)      & 0               & ?                & ?                   & ?                         \\
             \hline
-            (1)            &                 &               &                  \\[0.5cm]
+            (1)            &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (2)            &                 &               &                  \\[0.5cm]
+            (2)            &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (3)            &                 &               &                  \\[0.5cm]
+            (3)            &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (4)            &                 &               &                  \\[0.5cm]
+            (4)            &                 &                  &                     &                           \\[0.5cm]
+            \hline
+            (5)            &                 &                  &                     &                           \\[0.5cm]
+            \hline
+            (6)            &                 &                  &                     &                           \\[0.5cm]
             \hline
         \end{tabular}
     \end{center}
-    \UPSTIquestion{Quelle est la valeur finale de \texttt{monnaie} ? A-t-elle changé après la ligne (4) ?}
+    \UPSTIquestion{Combien de pièces de 10 centimes le distributeur rend-il au client, et quel montant, en centimes, ne peut-il pas rendre avec ce type de pièce ?}
+    \UPSTIquestion{\texttt{nbPieces10} et \texttt{centimesRestants} changent-ils de valeur après la ligne (6) ? Justifier.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
     \begin{UPSTIcorrectionP}{Trace d'exécution : la caisse d'un distributeur}
+        Entre deux entiers, \texttt{/} calcule le quotient de la division euclidienne (la partie décimale est perdue), et \texttt{\%} calcule le reste de cette même division.
+
         \begin{center}
-            \begin{tabular}{|c|c|c|c|}
+            \begin{tabular}{|c|c|c|c|c|}
                 \hline
-                \textbf{Ligne} & \texttt{credit} & \texttt{prix} & \texttt{monnaie} \\
+                \textbf{Ligne} & \texttt{credit} & \texttt{monnaie}  & \texttt{nbPieces10} & \texttt{centimesRestants} \\
                 \hline
-                avant (1)      & 0               & 90            & (indéfinie)      \\
+                avant (1)      & 0               & (indéfinie)       & (indéfinie)         & (indéfinie)               \\
                 \hline
-                (1)            & 50              & 90            & (indéfinie)      \\
+                (1)            & 50              & (indéfinie)       & (indéfinie)         & (indéfinie)               \\
                 \hline
-                (2)            & 100             & 90            & (indéfinie)      \\
+                (2)            & 100             & (indéfinie)       & (indéfinie)         & (indéfinie)               \\
                 \hline
-                (3)            & 100             & 90            & 10               \\
+                (3)            & 100             & 15                & (indéfinie)         & (indéfinie)               \\
                 \hline
-                (4)            & 0               & 90            & 10               \\
+                (4)            & 100             & 15                & 1                   & (indéfinie)               \\
+                \hline
+                (5)            & 100             & 15                & 1                   & 5                         \\
+                \hline
+                (6)            & 0               & 15                & 1                   & 5                         \\
                 \hline
             \end{tabular}
         \end{center}
-        \texttt{monnaie} vaut \textbf{10} et ne change plus après la ligne (3) : la ligne (4) ne modifie que \texttt{credit}, chaque variable étant une case indépendante des autres.
+        Le distributeur rend \textbf{1 pièce de 10 centimes}, et il lui reste \textbf{5 centimes} qu'il ne peut pas rendre avec ce type de pièce (\texttt{15 = 1 $\times$ 10 + 5}).
+
+        \texttt{nbPieces10} et \texttt{centimesRestants} ne changent pas après la ligne (6) : cette ligne ne modifie que \texttt{credit}, chaque variable étant une case mémoire indépendante des autres.
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}
 
@@ -209,7 +227,7 @@ Tension precise : 3.3000
 
 \subsection{Les structures conditionnelles : un aiguillage}
 
-\begin{UPSTIexemples}[Un aiguillage simple]
+\begin{UPSTIexemples}[Un aiguillage simple]{}
     Une structure conditionnelle fonctionne comme un aiguillage : selon la valeur d'une condition (vraie ou fausse), le programme n'exécute \textbf{qu'un seul} des blocs proposés, jamais plusieurs, jamais aucun (s'il y a un \texttt{SINON}).
 
     On surveille une variable booléenne \texttt{alarme}. Si elle vaut vrai, on doit afficher \og Evacuation \fg{}, sinon \og RAS \fg.
