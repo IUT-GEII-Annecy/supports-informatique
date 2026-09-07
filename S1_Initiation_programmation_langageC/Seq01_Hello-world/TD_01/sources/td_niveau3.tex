@@ -68,7 +68,6 @@ else
 
     \UPSTIquestion{Dans la version A, \textbf{entourer} le \texttt{if} imbriqué (celui qui se trouve à l'intérieur d'un autre bloc).}
     \UPSTIquestion{Tracer l'exécution des deux versions pour \texttt{x = -3}, \texttt{x = 4} et \texttt{x = 15}. Affichent-elles le même résultat dans les trois cas ?}
-    \UPSTIquestion{Dans la version A, le test \texttt{x < 10} n'apparaît que dans le cas où \texttt{x >= 0} est déjà vrai. Pourquoi la version B doit-elle, elle, écrire explicitement \texttt{x >= 0 \&\& x < 10} et ne peut-elle pas se contenter de \texttt{x < 10} ?}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
@@ -373,14 +372,14 @@ else if (type == 'V' && dureeMinutes > 15 && dureeMinutes <= 60)
 
     \begin{UPSTICahierDesCharges}{1}
         \begin{itemize}
-            \item Si la machine est à l'arrêt, le boîtier se contente de l'indiquer, sans effectuer aucun calcul.
-            \item Si elle tourne, l'opérateur doit connaître le taux de pièces défectueuses parmi les pièces produites, exprimé en pourcentage entier.
+            \item A l'arrêt, le boîtier se contente de l'indiquer, sans effectuer aucun calcul.
+            \item En marche, l'opérateur doit connaître le taux de pièces défectueuses parmi les pièces produites, exprimé en pourcentage entier.
             \item Un taux supérieur à 5 doit être mis en évidence comme une alerte qualité, car il s'agit d'un seuil critique pour la maintenance préventive.
         \end{itemize}
     \end{UPSTICahierDesCharges}
 
-    \UPSTIquestion{Avant d'écrire quoi que ce soit : d'après ce cahier des charges, combien de structures conditionnelles sont nécessaires, et sont-elles imbriquées ou enchaînées ? Justifier sans écrire de code.}
-    \UPSTIquestion{Écrire le pseudo-code répondant à ce cahier des charges. Le calcul du taux (un pourcentage entier) utilisera une division entière ; on veillera à multiplier par 100 \textbf{avant} de diviser, pour ne pas perdre le résultat dans la troncature.}
+    \UPSTIquestion{Avant d'écrire quoi que ce soit : d'après ce cahier des charges, combien de structures conditionnelles sont nécessaires, et sont-elles imbriquées ou enchaînées ?}
+    \UPSTIquestion{Écrire le pseudo-code répondant à ce cahier des charges. Le calcul du taux utilisera une division entière ; on veillera à multiplier par 100 \textbf{avant} de diviser, pour ne pas perdre le résultat dans la troncature.}
     \UPSTIquestion{Traduire ce pseudo-code en langage C.}
 
     \begin{UPSTICahierDesCharges}{2}

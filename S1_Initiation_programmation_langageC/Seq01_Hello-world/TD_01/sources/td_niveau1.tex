@@ -3,7 +3,7 @@
 \subsection{Les variables : une case mémoire nommée}
 
 \begin{UPSTIexemples}[La variable : une case étiquetée]{}
-    Une variable, c'est comme une variable Scratch : une \textbf{case mémoire}, portant une \textbf{étiquette} (son nom) et contenant une \textbf{valeur} qui peut changer au cours du programme. En C, cette case a en plus un \textbf{type} fixé une fois pour toutes, qui indique la nature de ce qu'elle contient.
+    Une variable, comme une variable Scratch, c'est une \textbf{case mémoire}, portant une \textbf{étiquette} (son nom) et contenant une \textbf{valeur} qui peut changer au cours du programme. En C, cette case a en plus un \textbf{type} fixé une fois pour toutes, qui indique la nature de ce qu'elle contient.
 
     \begin{center}
         \begin{tabular}{|c|c|c|}
@@ -109,22 +109,21 @@ credit = 0;                      // (6) la machine rend la monnaie, le credit re
             \hline
             avant (1)      & 0               & ?                & ?                   & ?                         \\
             \hline
-            (1)            &                 &                  &                     &                           \\[0.5cm]
+            (1) (ligne 5)  &               & ?                & ?                   & ?                         \\[0.5cm]
             \hline
-            (2)            &                 &                  &                     &                           \\[0.5cm]
+            (2) (ligne 6)  &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (3)            &                 &                  &                     &                           \\[0.5cm]
+            (3) (ligne 7)  &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (4)            &                 &                  &                     &                           \\[0.5cm]
+            (4) (ligne 8)  &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (5)            &                 &                  &                     &                           \\[0.5cm]
+            (5) (ligne 9)  &                 &                  &                     &                           \\[0.5cm]
             \hline
-            (6)            &                 &                  &                     &                           \\[0.5cm]
+            (6) (ligne 10) &                 &                  &                     &                           \\[0.5cm]
             \hline
         \end{tabular}
     \end{center}
     \UPSTIquestion{Combien de pièces de 10 centimes le distributeur rend-il au client, et quel montant, en centimes, ne peut-il pas rendre avec ce type de pièce ?}
-    \UPSTIquestion{\texttt{nbPieces10} et \texttt{centimesRestants} changent-ils de valeur après la ligne (6) ? Justifier.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
@@ -168,7 +167,7 @@ credit = 0;                      // (6) la machine rend la monnaie, le credit re
         \item la référence d'un composant, du type \texttt{"R220"} ;
         \item la lettre correspondant à la gamme du boîtier (\texttt{'A'}, \texttt{'B'} ou \texttt{'C'}).
     \end{itemize}
-    \UPSTIquestion{Pour chaque information, indiquer le type C le plus adapté parmi \texttt{int}, \texttt{float}, \texttt{char}, \texttt{string} et \texttt{bool}, et justifier brièvement.}
+    %\UPSTIquestion{Pour chaque information, indiquer le type C le plus adapté parmi \texttt{int}, \texttt{float}, \texttt{char}, \texttt{string} et \texttt{bool}, et justifier brièvement.}
     \UPSTIquestion{Écrire, pour chacune, une ligne de déclaration avec une initialisation cohérente.}
 
 \end{UPSTIexercice}
@@ -389,7 +388,7 @@ else
     printf("Batterie pleine\n");
 }
     \end{lstlisting}
-    \UPSTIquestion{Traduire ce programme en pseudo-code, en utilisant les mots-clés \texttt{SI}, \texttt{SINON SI}, \texttt{SINON}, \texttt{FIN SI} et \texttt{AFFICHER}.}
+    \UPSTIquestion{Traduire ce programme en pseudo-code (avec \texttt{SI}, \texttt{SINON SI}, \texttt{SINON}, \texttt{FIN SI} et \texttt{AFFICHER}).}
 
 \end{UPSTIexercice}
 
