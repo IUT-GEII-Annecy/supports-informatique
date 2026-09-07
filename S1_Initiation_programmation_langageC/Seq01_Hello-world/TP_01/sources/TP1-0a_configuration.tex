@@ -50,26 +50,34 @@
 
 En bas de la fenêtre de vsCode, vous trouverez un terminal. C'est un outil qui vous permet d'interagir avec votre système d'exploitation en utilisant des commandes textuelles.
 
-\begin{UPSTIinfor}{Liste des commandes utiles}
+\subsubsection{Liste des commandes utiles}
 	Voici quelques commandes de base que vous utiliserez fréquemment :
-	\begin{itemize}
-		\item \texttt{clear} : nettoie l'affichage dans le terminal
-	\end{itemize}
 	Les éléments entre chevrons <>, sont à remplacer en fonction du contexte
-	\begin{itemize}
-		\item \texttt{cd <nom\_du\_dossier>} : change le répertoire courant pour \texttt{<nom\_du\_dossier>}.
-		      \begin{itemize}
-			      \item \texttt{cd ..} permet de remonter dans le dossier parent
-		      \end{itemize}
-		\item \texttt{code <nom\_du\_fichier>} permet d'ouvrir le fichier \texttt{<nom\_du\_fichier>} en le créant si besoin
-		\item \texttt{cp <source> <destination>} : copie un fichier ou dossier de \texttt{<source>} à \texttt{<destination>}.
-		\item \texttt{ls} : liste les fichiers et dossiers dans le répertoire courant.
-		\item \texttt{mv <source> <destination>} : déplace ou renomme un fichier ou dossier de \texttt{<source>} à \texttt{<destination>}.
-		\item \texttt{mkdir <nom\_du\_dossier>} : crée un nouveau dossier nommé \texttt{<nom\_du\_dossier>}.
-		\item \texttt{rm <nom\_du\_fichier>} : supprime le fichier nommé \texttt{<nom\_du\_fichier>}.
-		\item \texttt{rmdir <nom\_du\_dossier>} : supprime un dossier nommé \texttt{<nom\_du\_dossier>} (le dossier doit être vide).
-	\end{itemize}
-\end{UPSTIinfor}
+	\begin{center}
+		\begin{tabular}{|l|p{0.6\linewidth}|}
+			\hline
+			\textbf{Commande}                                        & \textbf{Effet}                                                                                                       \\
+			\hline
+			{\textbf{clear}}                                               & Nettoie l'affichage dans le terminal    \\                                                                             \\ 
+			{\textbf{cd} <nom\_du\_dossier>}                            & Change le répertoire courant pour \texttt{<nom\_du\_dossier>}. \newline \texttt{cd ..} permet de remonter dans le dossier parent \\
+			\hline
+			{\textbf{code} <nom\_du\_fichier>}                          & Ouvre le fichier \texttt{<nom\_du\_fichier>} en le créant si besoin                                                  \\
+			\hline
+			{\textbf{cp} <source> <destination>}                        & Copie un fichier ou dossier de \texttt{<source>} à \texttt{<destination>}                                           \\
+			\hline
+			{\textbf{ls}}                                               & Liste les fichiers et dossiers dans le répertoire courant                                                           \\
+			\hline
+			{\textbf{mv} <source> <destination>}                        & Déplace ou renomme un fichier ou dossier de \texttt{<source>} à \texttt{<destination>}                              \\
+			\hline
+			{\textbf{mkdir} <nom\_du\_dossier>}                         & Crée un nouveau dossier nommé \texttt{<nom\_du\_dossier>}                                                            \\
+			\hline
+			{\textbf{rm} <nom\_du\_fichier>}                            & Supprime le fichier nommé \texttt{<nom\_du\_fichier>}                                                                \\
+			\hline
+			{\textbf{rmdir} <nom\_du\_dossier>}                         & Supprime un dossier nommé \texttt{<nom\_du\_dossier>} (le dossier doit être vide)                                    \\
+			\hline
+		\end{tabular}
+	\end{center}
+
 
 \begin{UPSTIinfor}{L'autocomplétion dans le terminal}
 	Bien souvent, le terminal peut deviner ce que vous voulez faire à partir du début de la commande, à l'aide de la touche \texttt{Tab}.
@@ -120,10 +128,11 @@ rm -r monPremierdossier
 
 \subsection{Téléchargement du dossier de TP}
 
-Prêts ? Allons-y ! Récupérons les fichiers pour commencer à coder !
+Les commandes suivantes permettent de télécharger le dossier de TP1, de le décompresser et de naviguer dans le dossier \texttt{0\_hello}.
+
+\lstinputlisting[language=bash, style=console]{console/qiLs8ysmvZjWn8MoMIZMel1wZ.txt}
 
 \begin{UPSTIManipulation}{Premières commandes dans le terminal}
-	\lstinputlisting[language=bash, style=console]{console/qiLs8ysmvZjWn8MoMIZMel1wZ.txt}
 	\begin{itemize}
 		\item[$\Box$] Télécharger les fichiers du tp1 :
 		      \begin{itemize}
