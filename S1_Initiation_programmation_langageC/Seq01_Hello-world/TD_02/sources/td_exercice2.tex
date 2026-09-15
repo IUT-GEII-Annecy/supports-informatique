@@ -1,0 +1,102 @@
+\section{Exercice 2 --- Traduire, et savoir quand ne pas traduire}
+
+\begin{UPSTIexercice}{De \texttt{if}/\texttt{else if} vers \texttt{switch} : type de connecteur}
+    Un boîtier de supervision identifie le type de connecteur branché grâce à un entier \texttt{codeConnecteur} (lu sur une broche de détection). Le programme suivant affiche le nom du connecteur correspondant.
+    \begin{lstlisting}[language=c]
+int codeConnecteur = 3;
+
+if (codeConnecteur == 1)
+{
+    printf("RJ45\n");
+}
+else if (codeConnecteur == 2)
+{
+    printf("USB\n");
+}
+else if (codeConnecteur == 3 || codeConnecteur == 4)
+{
+    printf("Video (HDMI ou VGA)\n");
+}
+else
+{
+    printf("Connecteur inconnu\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{Rappeler la condition, vue dans l'encart de rappel, qu'une expression doit respecter pour pouvoir être testée par un \texttt{switch}. Vérifier que \texttt{codeConnecteur} la respecte ici.}
+    \UPSTIquestion{Traduire ce programme en une structure \texttt{switch} \textbf{strictement équivalente} (même affichage pour toute valeur de \texttt{codeConnecteur}). On veillera en particulier à traduire correctement la condition \texttt{codeConnecteur == 3 || codeConnecteur == 4} à l'aide d'un fall-through volontaire.}
+    \UPSTIquestion{Ce \texttt{switch} est-il plus lisible que la cascade de \texttt{if}/\texttt{else if} d'origine ? Justifier en une phrase.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{De \texttt{if}/\texttt{else if} vers \texttt{switch} : type de connecteur}
+        \texttt{codeConnecteur} est un \texttt{int} : c'est un type entier, autorisé dans un \texttt{switch}. De plus, toutes les comparaisons de la cascade sont des \textbf{égalités} avec des \textbf{constantes} (\texttt{1}, \texttt{2}, \texttt{3}, \texttt{4}), et portent toutes sur la \textbf{même variable} : la traduction est donc possible.
+
+        \begin{lstlisting}[language=c]
+switch (codeConnecteur)
+{
+    case 1:
+        printf("RJ45\n");
+        break;
+    case 2:
+        printf("USB\n");
+        break;
+    case 3:
+    case 4:
+        printf("Video (HDMI ou VGA)\n");
+        break;
+    default:
+        printf("Connecteur inconnu\n");
+        break;
+}
+        \end{lstlisting}
+        Le \texttt{case 3:} vide, suivi immédiatement de \texttt{case 4:}, traduit exactement le \texttt{||} de la condition d'origine : les deux valeurs déclenchent le même bloc, par fall-through volontaire.
+
+        Oui, ce \texttt{switch} est plus lisible ici : on voit immédiatement, d'un coup d'œil, toutes les valeurs possibles de \texttt{codeConnecteur} et le traitement associé à chacune, sans avoir à relire plusieurs conditions répétant à chaque fois le nom de la variable.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Quand \texttt{switch} ne convient pas : mention d'une note}
+    On souhaite maintenant traduire en \texttt{switch} le programme suivant, qui affiche la mention obtenue à partir d'une note sur 20 (\texttt{note}, de type \texttt{float}).
+    \begin{lstlisting}[language=c]
+float note = 13.5;
+
+if (note < 10.0)
+{
+    printf("Ajourne\n");
+}
+else if (note < 12.0)
+{
+    printf("Passable\n");
+}
+else if (note < 14.0)
+{
+    printf("Assez bien\n");
+}
+else if (note < 16.0)
+{
+    printf("Bien\n");
+}
+else
+{
+    printf("Tres bien\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{Un camarade propose de remplacer directement chaque \texttt{else if (note < X)} par un \texttt{case X:}. Expliquer, à l'aide de \textbf{deux arguments distincts} tirés de l'encart de rappel, pourquoi cette traduction est \textbf{impossible} en C standard.}
+    \UPSTIquestion{Plus généralement, à quoi reconnaît-on, \textbf{avant même d'essayer de traduire}, qu'une cascade de \texttt{if}/\texttt{else if} \textbf{ne pourra pas} se traduire en \texttt{switch} ? (On distinguera ce cas de celui de l'exercice précédent.)}
+    \UPSTIquestion{Ce programme doit-il rester écrit avec \texttt{if}/\texttt{else if}/\texttt{else}, ou existe-t-il un moyen \textbf{correct} de le réécrire avec un \texttt{switch} ? Si oui, proposer une piste (sans nécessairement l'écrire en entier) ; si non, justifier.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Quand \texttt{switch} ne convient pas : mention d'une note}
+        Cette traduction est impossible pour deux raisons indépendantes, chacune suffisant à elle seule à l'interdire~:
+        \begin{itemize}
+            \item \texttt{note} est de type \texttt{float} : un \texttt{switch} ne peut tester qu'une expression de type entier (ou assimilé), jamais un \texttt{float} ou un \texttt{double}.
+            \item même si \texttt{note} était un entier, les tests \texttt{note < 10}, \texttt{note < 12}, etc. sont des comparaisons d'\textbf{intervalle}, pas des tests d'\textbf{égalité} à une constante précise : un \texttt{case} ne peut être suivi que d'une valeur unique (\texttt{case 10:}), jamais d'une condition comme \og inférieur à \fg.
+        \end{itemize}
+
+        On reconnaît qu'une cascade \texttt{if}/\texttt{else if} n'est pas traduisible en \texttt{switch} dès qu'au moins l'une de ces situations se présente~: un opérateur de comparaison autre que \texttt{==} (\texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}) apparaît dans une condition, la variable testée n'est pas de type entier/caractère/énumération, ou bien les différentes conditions ne portent pas toutes sur la \textbf{même} variable. Cela contraste avec l'exercice précédent, où toutes les conditions étaient des égalités (\texttt{==}, éventuellement combinées par \texttt{||}) sur la même variable entière \texttt{codeConnecteur}.
+
+        Le programme doit bien rester écrit avec \texttt{if}/\texttt{else if}/\texttt{else} : une classification par intervalles continus sur une grandeur réelle n'a pas d'équivalent direct en \texttt{switch}. Une piste existe néanmoins pour \textbf{contourner} la limitation, au prix d'une perte de précision~: calculer un \texttt{int palier}, par exemple \texttt{palier = (int)(note / 2)}, qui regrouperait les notes par tranches de 2 points, puis faire un \texttt{switch (palier)}. Mais cette piste change la façon de découper les tranches (elle ne correspond plus exactement aux seuils 10/12/14/16 de l'énoncé) : ce n'est pas une traduction fidèle, seulement une réécriture différente du problème. En toute rigueur, pour respecter exactement les seuils demandés, \texttt{if}/\texttt{else if} reste la structure adaptée.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}

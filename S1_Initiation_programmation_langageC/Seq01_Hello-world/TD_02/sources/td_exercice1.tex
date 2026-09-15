@@ -1,0 +1,112 @@
+\section{Exercice 1 --- Lire et prédire}
+
+\begin{UPSTIexercice}{Un \texttt{switch} bien construit}
+    On exécute le programme suivant, avec \texttt{niveau = 2}.
+    \begin{lstlisting}[language=c]
+int niveau = 2;
+
+switch (niveau)
+{
+    case 1:
+        printf("Debutant\n");
+        break;
+    case 2:
+        printf("Intermediaire\n");
+        break;
+    case 3:
+        printf("Expert\n");
+        break;
+    default:
+        printf("Niveau inconnu\n");
+        break;
+}
+printf("Fin du programme\n");
+    \end{lstlisting}
+    \UPSTIquestion{Prédire, ligne par ligne, ce qui s'affiche dans la console.}
+    \UPSTIquestion{Le \texttt{case 3} et le \texttt{default} sont-ils exécutés ? Justifier en une phrase à partir du rôle du mot-clé \texttt{break}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Un \texttt{switch} bien construit}
+        Affichage attendu~:
+        \begin{lstlisting}[language=bash,style=console]
+Intermediaire
+Fin du programme
+        \end{lstlisting}
+        \texttt{niveau} vaut \texttt{2} : seul le \texttt{case 2} correspond, il affiche \og Intermediaire \fg{}, puis le \texttt{break} interrompt immédiatement le \texttt{switch}. Ni \texttt{case 3} ni \texttt{default} ne sont exécutés, car un \texttt{switch} ne teste qu'un seul \texttt{case} correspondant (grâce au \texttt{break}) avant de poursuivre après l'accolade fermante.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Piège n°1 : le \texttt{break} oublié}
+    On exécute le programme suivant, avec \texttt{jour = 3}.
+    \begin{lstlisting}[language=c]
+int jour = 3;
+
+switch (jour)
+{
+    case 1:
+        printf("Lundi\n");
+    case 2:
+        printf("Mardi\n");
+    case 3:
+        printf("Mercredi\n");
+    case 4:
+        printf("Jeudi\n");
+        break;
+    case 5:
+        printf("Vendredi\n");
+        break;
+}
+    \end{lstlisting}
+    \UPSTIquestion{Prédire ce qui s'affiche dans la console. \textbf{Attention}, ce programme comporte un piège classique.}
+    \UPSTIquestion{Nommer ce comportement, et expliquer en une phrase pourquoi il se produit.}
+    \UPSTIquestion{Réécrire uniquement les lignes nécessaires (ajout de mots-clés) pour que ce programme n'affiche \textbf{que} \og Mercredi \fg{} lorsque \texttt{jour = 3}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Piège n°1 : le \texttt{break} oublié}
+        Affichage attendu~:
+        \begin{lstlisting}[language=bash,style=console]
+Mercredi
+Jeudi
+        \end{lstlisting}
+        \texttt{jour} vaut \texttt{3} : le \texttt{case 3} correspond et affiche \og Mercredi \fg. Comme il n'y a \textbf{pas de \texttt{break}} à la fin de ce \texttt{case}, l'exécution \textbf{continue} dans le \texttt{case} suivant (\texttt{case 4}), qui affiche \og Jeudi \fg, jusqu'à rencontrer le premier \texttt{break}. Ce comportement s'appelle le \textbf{fall-through} : en l'absence de \texttt{break}, un \texttt{switch} ne s'arrête pas à la fin d'un \texttt{case}, il \og tombe \fg dans les suivants.
+
+        Pour n'afficher que \og Mercredi \fg, il suffit d'ajouter un \texttt{break;} juste après la ligne \texttt{printf("Mercredi\textbackslash n");} du \texttt{case 3}.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Piège n°2 : fall-through volontaire et \texttt{default} mal placé}
+    On exécute le programme suivant. On rappelle qu'un jour est \og ouvré \fg s'il n'est ni samedi ni dimanche. La variable \texttt{jour} vaut \texttt{6} (1 = lundi, ..., 7 = dimanche).
+    \begin{lstlisting}[language=c]
+int jour = 6;
+
+switch (jour)
+{
+    default:
+        printf("Jour ouvre\n");
+        break;
+    case 6:
+    case 7:
+        printf("Week-end\n");
+        break;
+}
+    \end{lstlisting}
+    \UPSTIquestion{Ce programme affiche-t-il \og Jour ouvre \fg{} ou \og Week-end \fg{} ? Justifier, en expliquant pourquoi la \textbf{position} du \texttt{default} dans le code (ici en premier) ne change rien au résultat.}
+    \UPSTIquestion{Les lignes \texttt{case 6:} et \texttt{case 7:} se suivent, \textbf{sans instruction ni \texttt{break} entre elles}. S'agit-il ici d'un oubli, comme à l'exercice précédent, ou d'une utilisation volontaire du fall-through ? Justifier.}
+    \UPSTIquestion{Que se passerait-il si l'on retirait le \texttt{break;} qui suit \texttt{default:} ? Pour quelle(s) valeur(s) de \texttt{jour} cela changerait-il l'affichage ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Piège n°2 : fall-through volontaire et \texttt{default} mal placé}
+        Affichage obtenu~: \texttt{Week-end}.
+
+        Le \texttt{switch} compare \texttt{jour} à \textbf{chaque} \texttt{case}, dans l'ordre du code, et non le \texttt{default} en premier systématiquement : \texttt{default} n'est retenu que si \textbf{aucun} \texttt{case} ne correspond à la valeur testée. Ici, \texttt{jour = 6} correspond au \texttt{case 6}, donc c'est ce bloc (partagé avec \texttt{case 7} par fall-through) qui s'exécute, quelle que soit la position du \texttt{default} dans le fichier.
+
+        Il s'agit bien ici d'un fall-through \textbf{volontaire} : les deux \texttt{case} (\texttt{6} et \texttt{7}) sont \textbf{vides}, c'est-à-dire qu'aucune instruction ne les sépare. Cette écriture est une façon standard de dire \og pour \texttt{jour} valant \texttt{6} \textbf{ou} \texttt{7}, exécuter le même bloc \fg, sans dupliquer le code. On la distingue d'un oubli (exercice précédent) au fait qu'elle est cohérente avec l'intention du programme et ne casse pas la logique attendue.
+
+        Si l'on retirait le \texttt{break;} après \texttt{default:}, alors pour toute valeur de \texttt{jour} \textbf{ne correspondant à aucun \texttt{case}} (c'est-à-dire différente de \texttt{6} et \texttt{7}), l'exécution du bloc \texttt{default} \og tomberait \fg ensuite dans le bloc \texttt{case 6}/\texttt{case 7} et afficherait \textbf{en plus} \og Week-end \fg{} après \og Jour ouvre \fg. Ce changement ne concernerait donc que les jours 1 à 5 (les jours ouvrés) --- pour \texttt{jour = 6} ou \texttt{7}, l'affichage resterait inchangé, car ces valeurs ne passent jamais par le \texttt{default}.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}

@@ -1,0 +1,28 @@
+\begin{UPSTIinfor}{Rappel : la structure \texttt{switch case}}
+    \label{info:switch}
+    La structure \texttt{switch} permet de choisir, parmi plusieurs blocs de code, celui qui correspond à la valeur d'une expression, testée par égalité stricte.
+
+    \begin{lstlisting}[language=c]
+switch (expression) {
+    case valeur1:
+        // code execute si expression == valeur1
+        break;
+    case valeur2:
+        // code execute si expression == valeur2
+        break;
+    default:
+        // code execute si aucune valeur ne correspond
+}
+    \end{lstlisting}
+
+    \begin{itemize}
+        \item \texttt{expression} est évaluée \textbf{une seule fois}, puis comparée successivement à chaque valeur de \texttt{case}.
+        \item \texttt{expression} doit être d'un type \textbf{entier} ou assimilé (\texttt{int}, \texttt{char}, une énumération) : \textbf{on ne peut pas tester un \texttt{float} ou un \texttt{double}} dans un \texttt{switch}.
+        \item Chaque \texttt{case} doit être suivi d'une \textbf{constante} entière (ou d'un caractère, ou d'une constante d'énumération), jamais d'une variable, d'un intervalle (\texttt{case 1..5} n'existe pas en C standard) ou d'une expression contenant une comparaison.
+        \item Le mot-clé \texttt{break} interrompt l'exécution du \texttt{switch} dès qu'il est rencontré. \textbf{Sans \texttt{break}}, l'exécution \textbf{continue} dans le \texttt{case} suivant, quelle que soit sa valeur : c'est ce qu'on appelle le \textbf{fall-through} (\og passage à travers \fg).
+        \item Le fall-through n'est pas toujours une erreur : il peut être utilisé \textbf{volontairement} pour regrouper plusieurs valeurs sur un même traitement, en enchaînant des \texttt{case} vides.
+        \item Le bloc \texttt{default} est facultatif. Il n'a \textbf{pas besoin d'être placé en dernier} : le \texttt{switch} teste les \texttt{case} dans l'ordre du code, et \texttt{default} n'est choisi que si aucune valeur ne correspond, où qu'il soit écrit. En pratique, on le place presque toujours en dernier, par lisibilité --- et surtout, s'il n'est pas en dernier, il lui faut son propre \texttt{break} pour ne pas \og tomber \fg dans le \texttt{case} suivant.
+    \end{itemize}
+
+    \textbf{À retenir :} \texttt{switch} n'est qu'une autre écriture pour une suite de tests d'\textbf{égalité} sur la \textbf{même variable entière}. Dès qu'un test porte sur un intervalle (\texttt{note < 10}), sur plusieurs variables différentes, ou sur un \texttt{float}, il faut revenir à \texttt{if} / \texttt{else if} / \texttt{else}.
+\end{UPSTIinfor}
