@@ -1,4 +1,4 @@
-\documentclass[td, noCustomPackages]{UPSTI_Document}
+\documentclass[TP, noCustomPackages, basic]{UPSTI_Document}
 \usepackage{IUT_Annecy}
 \usepackage{logos_iut}
 
@@ -10,17 +10,12 @@
 \input{../preamble.tex}
 \input{../../preamble_module.tex}
 
-\documentVersion{E}
-\newcommand{\UPSTItitre}{Switch case}
-\newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
-\newcommand{\UPSTInumero}{\sequence.2}
-\begin{document}
 
-% Test : mise en page classique (sans cadre) pour les activités
-% (UPSTIexercice, UPSTIcorrectionP, etc.) de ce document, plutôt que le
-% cadre coloré (tcolorbox) par défaut. Revenir au cadre avec
-% \UPSTIactiviteStyleCadre si le test n'est pas concluant.
-\UPSTIactiviteStyleClassique
+\documentVersion{E}
+\newcommand{\UPSTItitre}{Exercice de synthèse : Distributeur de boissons}
+\newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
+\newcommand{\UPSTInumero}{\sequence.3}
+\begin{document}
 
 \input{main.tex}
 

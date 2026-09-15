@@ -1,0 +1,121 @@
+
+\section{Exercice de synthèse : Distributeur de boissons}
+On souhaite écrire un programme simulant un petit distributeur automatique de boissons. Cet exercice réutilise les notions du TP1 (variables, saisies \texttt{get\_string}/\texttt{get\_int}/\texttt{get\_float}, opérateurs arithmétiques, gestion d'erreurs) ainsi que la structure \texttt{switch case} vue au TP précédent.
+
+\textbf{Durée estimée :} 30 min
+
+	Tout d'abord, téléchargez le squelette du TP :
+	\begin{lstlisting}[language=bash,style=console]
+wget https://github.com/IUT-GEII-Annecy/squelettes/releases/download/branch-2026/distributeur.zip
+\end{lstlisting}
+
+\subsection{Niveau 1 : Choix de la boisson}
+
+\begin{UPSTIManipulation}{Distributeur de boissons}
+	Le programme doit :
+	\begin{enumerate}
+		\item Demander le \textbf{nom} de l'utilisateur (\texttt{get\_string}) et l'accueillir : \texttt{Bonjour, <nom> !}
+		\item Afficher le menu suivant :
+		      \begin{center}
+			      \begin{tabular}{|l|l|}
+				      \hline
+				      Numéro & Boisson (prix)   \\
+				      \hline
+				      1      & Café (0.80 €)    \\
+				      2      & Thé (0.70 €)     \\
+				      3      & Chocolat (1.00 €) \\
+				      4      & Eau (0.50 €)     \\
+				      \hline
+			      \end{tabular}
+		      \end{center}
+		\item Demander le \textbf{numéro de boisson} choisi (\texttt{get\_int}).\\
+		      \textbf{Attention :} Le choix de la boisson doit être géré par un \texttt{switch case}. Structure \texttt{if} interdite.
+		\item Demander le \textbf{montant inséré} par l'utilisateur, en euros (\texttt{get\_float}).
+		\item Afficher \texttt{Voici votre <boisson>.} puis \texttt{Monnaie rendue : <montant\_rendu> euros} (avec \texttt{<montant\_rendu>} = montant inséré moins le prix de la boisson, affiché avec deux décimales).\\
+		      \textit{On suppose pour ce niveau que le numéro de boisson et le montant inséré sont toujours corrects.}
+	\end{enumerate}
+
+	Exemple d'exécution :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez votre nom :
+Alex
+Bonjour, Alex !
+1 - Cafe (0.80 euros)
+2 - The (0.70 euros)
+3 - Chocolat (1.00 euros)
+4 - Eau (0.50 euros)
+Entrez le numero de la boisson :
+1
+Entrez le montant insere (en euros) :
+1.00
+Voici votre cafe.
+Monnaie rendue : 0.20 euros
+	\end{lstlisting}
+
+	\tcblower
+	\begin{lstlisting}[language=bash]
+check50 iut-geii-annecy/exercices/2026/info1/tp2/distributeur/niveau1
+	\end{lstlisting}
+\end{UPSTIManipulation}
+
+\subsection{Niveau 2 : Gestion des erreurs}
+
+\begin{UPSTIManipulation}{Distributeur de boissons -- Gestion des erreurs}
+	Reprendre le programme du \textbf{Niveau 1}. Ajouter, avec des structures \texttt{if} (autorisées pour cette partie), la vérification suivante \textbf{avant} d'afficher le résultat de l'achat :
+	\begin{itemize}
+		\item Si le numéro de boisson n'est pas compris entre 1 et 4 : afficher \texttt{ERREUR : Boisson invalide} et terminer.
+		\item Sinon, si le montant inséré est strictement inférieur au prix de la boisson : afficher \texttt{ERREUR : Montant insuffisant} et terminer.
+		\item Sinon : comportement du Niveau 1 (achat + monnaie rendue).
+	\end{itemize}
+
+	Exemples d'exécution :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez votre nom :
+Sam
+Bonjour, Sam !
+1 - Cafe (0.80 euros)
+2 - The (0.70 euros)
+3 - Chocolat (1.00 euros)
+4 - Eau (0.50 euros)
+Entrez le numero de la boisson :
+2
+Entrez le montant insere (en euros) :
+0.50
+ERREUR : Montant insuffisant
+	\end{lstlisting}
+	\begin{lstlisting}[language=bash,style=console]
+Entrez votre nom :
+Sam
+Bonjour, Sam !
+1 - Cafe (0.80 euros)
+2 - The (0.70 euros)
+3 - Chocolat (1.00 euros)
+4 - Eau (0.50 euros)
+Entrez le numero de la boisson :
+9
+Entrez le montant insere (en euros) :
+5.00
+ERREUR : Boisson invalide
+	\end{lstlisting}
+
+	\tcblower
+	\begin{lstlisting}[language=bash]
+check50 iut-geii-annecy/exercices/2026/info1/tp2/distributeur/niveau2
+	\end{lstlisting}
+\end{UPSTIManipulation}
+
+\section{Conclusion (A faire même si vous n'avez pas fini)}
+
+\begin{UPSTIManipulation}{A rendre}
+	\begin{itemize}
+		\item[$\Box$] Placer vous dans le dossier tp2
+		\item[$\Box$] Exécuter la commande suivante pour soummettre votre TP, pour en permettre le suivi.
+		      \begin{lstlisting}[language=bash,style=console]
+submit50 iut-geii-annecy/exercices/2026/info1/tp2/rendu
+\end{lstlisting}
+	\end{itemize}
+\end{UPSTIManipulation}
+
+\begin{UPSTIinfor}{Félicitations !}
+	Vous venez de terminer cet exercice de synthèse. Vous savez désormais choisir entre \texttt{if} et \texttt{switch} selon la situation, et combiner ces structures avec les notions vues au TP précédent.
+\end{UPSTIinfor}

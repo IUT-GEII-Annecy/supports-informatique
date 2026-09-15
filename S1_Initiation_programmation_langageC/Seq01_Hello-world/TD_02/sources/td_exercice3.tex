@@ -1,0 +1,53 @@
+\begin{UPSTIexercice}{Trimestre correspondant à un mois}
+    On souhaite écrire un programme qui affiche le trimestre correspondant à un mois donné. Voici le cahier des charges :
+    \begin{itemize}
+        \item Le mois est stocké dans une variable \texttt{int mois} (compris normalement entre \texttt{1} et \texttt{12}).
+        \item Si \texttt{mois} vaut \texttt{1}, \texttt{2} ou \texttt{3}, afficher \texttt{Trimestre 1}.
+        \item Si \texttt{mois} vaut \texttt{4}, \texttt{5} ou \texttt{6}, afficher \texttt{Trimestre 2}.
+        \item Si \texttt{mois} vaut \texttt{7}, \texttt{8} ou \texttt{9}, afficher \texttt{Trimestre 3}.
+        \item Si \texttt{mois} vaut \texttt{10}, \texttt{11} ou \texttt{12}, afficher \texttt{Trimestre 4}.
+        \item Pour toute autre valeur de \texttt{mois}, afficher \texttt{Mois invalide}.
+        \item \textbf{Contrainte de rédaction :} chacun des cinq messages ci-dessus (\texttt{printf}) ne doit apparaître \textbf{qu'une seule fois} dans le code du programme.
+    \end{itemize}
+    \UPSTIquestion{Écrire, en langage C, la structure \texttt{switch} correspondant à ce cahier des charges, en respectant la contrainte de rédaction. On testera le programme avec \texttt{mois = 8}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Trimestre correspondant à un mois}
+        \begin{lstlisting}[language=c]
+int mois = 8;
+
+switch (mois)
+{
+    case 1:
+    case 2:
+    case 3:
+        printf("Trimestre 1\n");
+        break;
+    case 4:
+    case 5:
+    case 6:
+        printf("Trimestre 2\n");
+        break;
+    case 7:
+    case 8:
+    case 9:
+        printf("Trimestre 3\n");
+        break;
+    case 10:
+    case 11:
+    case 12:
+        printf("Trimestre 4\n");
+        break;
+    default:
+        printf("Mois invalide\n");
+        break;
+}
+        \end{lstlisting}
+        Avec \texttt{mois = 8}, l'affichage obtenu est~: \texttt{Trimestre 3}.
+
+        Point de rigueur essentiel~: la contrainte \og chaque \texttt{printf} qu'une seule fois \fg{} interdit d'écrire, par exemple, \texttt{case 1:}, \texttt{case 2:} et \texttt{case 3:} chacun suivi de sa propre copie de \texttt{printf("Trimestre 1\textbackslash n"); break;}. La seule façon de regrouper trois \texttt{case} sur un même bloc, en C, est le \textbf{fall-through} : plusieurs \texttt{case} \textbf{vides} (sans instruction entre eux) qui \og tombent \fg{} ensemble dans le même bloc d'instructions. L'énoncé ne nommait pas cette technique, mais la contrainte de rédaction la rendait obligatoire.
+
+        Non, la contrainte ne visait pas spécifiquement \texttt{switch} : une cascade \texttt{if}/\texttt{else if} peut tout aussi bien respecter la règle \og un seul \texttt{printf} par message \fg{}, en combinant les conditions avec \texttt{||} (par exemple \texttt{if (mois == 1 || mois == 2 || mois == 3))}. Le fall-through est \textbf{l'équivalent}, côté \texttt{switch}, du \texttt{||} côté \texttt{if} : les deux techniques répondent à la même contrainte, chacune dans la syntaxe de sa propre structure.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
