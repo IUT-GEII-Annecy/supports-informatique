@@ -1,0 +1,293 @@
+% Contenu partagé des trous T1 à T13 pour le CM "Boucles en C".
+%
+% Utilisé À LA FOIS par sources/boucles.tex + sources/synthese.tex (poly
+% étudiant / corrigé, \documentVersion{E} ou {P}) ET par trame_seance.hide.tex
+% (trame enseignant, toujours en \documentVersion{P}) : toute modification
+% d'un trou se fait ici et se répercute automatiquement dans les deux.
+%
+% Rendu :
+%  - Version P (\UPSTIidVersionDocumentDef = 1) : la réponse s'affiche en
+%    rouge (via \UPSTIcorrection), suivie des variantes/erreurs fréquentes
+%    dans un encadré "Correction".
+%  - Version E (\UPSTIidVersionDocumentDef = 2) : la réponse est remplacée
+%    par un quadrillage (\UPSTIquadrillage), pas de texte.
+%  - Version publique éventuelle : traitée comme la version E (quadrillage),
+%    par sécurité.
+
+\newcommand{\Trou}[5]{%
+	% #1 = hauteur du quadrillage en cm (version E)
+	% #2 = Titre de la question (affiché dans toutes les versions)
+	% #3 = énoncé de la question (affiché dans toutes les versions)
+	% #4 = réponse attendue (affichée en rouge, version P uniquement)
+	% #5 = variantes acceptables / erreurs fréquentes (version P uniquement, peut être vide)
+	\begin{UPSTIactivite}[][#2]
+	#3\par
+	\ifnumequal{1}{\UPSTIidVersionDocumentDef}{%
+		\UPSTIcorrection[1]{#4}\par
+		\ifblank{#5}{}{%
+			\begin{UPSTIcorrectionBoxSimple}#5\end{UPSTIcorrectionBoxSimple}%
+		}%
+	}{%
+		\begin{center}
+			\UPSTIquadrillage{#1}[16]%
+		\end{center}
+	}%
+	\end{UPSTIactivite}%
+}
+
+% Trou "compact" pour une cellule de tableau : réponse en rouge en version P,
+% cellule vide en version E (pas de quadrillage, la grille du tableau suffit).
+\newcommand{\TrouCell}[1]{%
+	\ifnumequal{1}{\UPSTIidVersionDocumentDef}{%
+		\UPSTIcorrection[1]{#1}%
+	}{}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T1 --- T-choix (conceptuel, aucune structure C nommée : posé avant while/for)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouPourquoiUneBoucle}{%
+	\Trou{2.5}{Pourquoi une boucle ?}{%
+		Imaginons le même programme, avec 1000 mesures à afficher. Quel problème voyez-vous ?
+	}{%
+		On devra modifier 1000 lignes identiques, ce qui est fastidieux et source d'erreurs.%
+		En général, dès qu'un code se répète, il faut se demander s'il n'y a pas un moyen de le factoriser (boucle, fonction, etc.).%
+	}{%
+		Erreur fréquente à anticiper : une réponse du type « parce que c'est plus court à écrire » sans mentionner la maintenabilité (modifier une seule ligne plutôt que $n$ copies) ni le fait que $n$ peut être très grand ou inconnu à l'avance. Ne pas encore mentionner \texttt{while}/\texttt{for} à ce stade : la trame introduit \texttt{while} juste après ce trou.%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T2 --- T-trace (table d'exécution de C2)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TableTraceCDeux}{%
+\begin{center}
+\begin{tabular}{|c|c||c|}
+\hline
+\textbf{i} & \textbf{\texttt{i <= 3} ?} & \textbf{affichage} \\
+\hline
+1 & vrai & Mesure 1 : ok \\
+\hline
+2 & \TrouCell{vrai} & \TrouCell{Mesure 2 : ok} \\
+\hline
+\TrouCell{3} & \TrouCell{vrai} & \TrouCell{Mesure 3 : ok} \\
+\hline
+\TrouCell{4} & \TrouCell{faux} & \TrouCell{(sortie de boucle)} \\
+\hline
+\end{tabular}
+\end{center}%
+}
+\newcommand{\TrouDeuxCorrection}{%
+	\ifnumequal{1}{\UPSTIidVersionDocumentDef}{%
+		\begin{UPSTIcorrectionBoxSimple}
+		Erreur fréquente : oublier que la ligne où la condition devient fausse ne produit \emph{aucun} affichage (le corps ne s'exécute pas ce tour-là). Bien faire dire à voix haute « on teste, puis seulement si c'est vrai on entre dans le bloc ».
+		\end{UPSTIcorrectionBoxSimple}%
+	}{}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T3 --- T-invariant (terminaison de C2)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouConditionArret}{%
+	\Trou{1}{Condition d'arrêt}{%
+		Complétez la table d'exécution : 
+
+		\TableTraceCDeux
+		\TrouDeuxCorrection
+
+		Que se passerait-il si on retirait la ligne \texttt{i++} du code C2 ?%
+	}{%
+		Le compteur \texttt{i} resterait à 1, donc la condition \texttt{i <= 3} resterait toujours vraie, et le programme ne s'arrêterait jamais (boucle infinie).%
+	}{%
+		Poser la question : à l'inverse, que se passerait-il si la condition était \texttt{i > 0} ? (réponse : le programme s'arrêterait immédiatement, le bloc ne s'exécuterait jamais). L'idée est de faire comprendre que la condition d'arrêt doit être exactement celle qui correspond à l'arrêt voulu.%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T4 --- T-faille (accumulateur sans mise à jour, C3-bug)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouQuatre}{%
+	\Trou{2.5}{Erreur volontaire}{%
+		\textbf{T4.} L'enseignant tape une variante de C3 \textbf{sans} la ligne \texttt{total = total + mesure;} (oubli volontaire). \emph{Avant} de lancer l'exécution : ce code échoue quand... ? Et une fois exécuté : quel est le diagnostic ?%
+	}{%
+		Ce code échoue quand \texttt{total} ne change jamais : il reste à 0, donc \texttt{total < 100} reste vraie indéfiniment. Diagnostic une fois exécuté : boucle infinie (le programme ne rend jamais la main) ; il faut interrompre le programme (Ctrl+C) et relire chaque ligne du corps de boucle pour vérifier que l'état testé par la condition est bien modifié.%
+	}{%
+		Ce défaut est typique d'un code « qui a l'air juste » : la syntaxe est correcte, la boucle compile sans avertissement, mais elle ne termine jamais. C'est exactement le genre d'erreur silencieuse dangereuse sur une carte embarquée (Arduino, semestre 2) : pas de terminal pour faire Ctrl+C, le système reste bloqué.%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T5 --- T-bornes (comptage d'itérations for)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouCinq}{%
+	\Trou{2}{Comptage d'itérations}{%
+		Pour chaque entête de boucle \texttt{for} suivants, combien de fois le corps de la boucle s'exécute-t-il ?%
+		\begin{itemize}
+			\item \texttt{for (int i = 0; i <= n; i++)}
+			\item \texttt{for (int i = 0; i < n; i++)}
+		\end{itemize} %
+	}{%
+		\texttt{i <= n} : le corps s'exécute $n+1$ fois (pour $i = 0, 1, \dots, n$). \texttt{i < n} : le corps s'exécute $n$ fois (pour $i = 0, 1, \dots, n-1$).%
+	}{%
+		C'est \textbf{l'erreur de décalage d'un} (\emph{off-by-one}), la plus fréquente sur les boucles comptées. Faire vérifier sur un petit $n$ concret (par exemple $n=3$) en écrivant la liste des valeurs de $i$ au tableau plutôt qu'en calculant de tête.%
+	}%
+}
+
+\newcommand{\TrouSommeFor}{
+		\Trou{5}{Calcul d'une somme}{
+			Ecrire une boucle \texttt{for} qui effectue la somme de 100 mesures différentes.
+		}{
+		}{}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T6 --- T-faille (débordement uint8_t, C5-bug)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouSix}{%
+	\Trou{2.5}{Débordement uint8\_t}{%
+		\textbf{T6.} L'enseignant tape et exécute \texttt{for (uint8\_t i = 0; i < n; i++)} avec \texttt{n = 300}. Que se passe-t-il ? Pourquoi ?%
+	}{%
+		Que se passe-t-il : la boucle ne s'arrête jamais (boucle infinie). Pourquoi : \texttt{uint8\_t} ne peut représenter que des valeurs de 0 à 255 ; quand \texttt{i} atteint 255 et qu'on fait \texttt{i++}, la valeur revient à 0 par débordement (\emph{overflow}), donc \texttt{i < 300} reste toujours vraie.%
+	}{%
+		Lien direct avec le semestre 2 (Arduino) : les types entiers y sont souvent restreints (8 bits) pour économiser la mémoire, et ce type de dépassement silencieux -- le code compile sans avertissement (borne \texttt{n} dans une variable, pas un littéral) -- provoque des blocages difficiles à diagnostiquer sur cible. Variante acceptable de réponse : « i ne peut jamais dépasser 255, donc n'atteint jamais 300 ».%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T7 --- T-trace (table d'exécution imbriquée de C5, estompée)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TableTraceCCinq}{%
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{i} & \textbf{j} & \textbf{affichage} \\
+\hline
+0 & 0 & i=0 j=0 \\
+\hline
+\TrouCell{0} & \TrouCell{1} & \TrouCell{i=0 j=1} \\
+\hline
+\TrouCell{1} & \TrouCell{0} & \TrouCell{i=1 j=0} \\
+\hline
+\TrouCell{1} & \TrouCell{1} & \TrouCell{i=1 j=1} \\
+\hline
+\end{tabular}
+\end{center}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T8 --- T-init (valeur initiale du maximum dans C7)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouHuit}{%
+	\Trou{2.5}{Valeur initiale du maximum}{%
+		\textbf{T8.} Dans C7, quelle valeur initiale donner à \texttt{max}, et pourquoi ?%
+	}{%
+		Valeur initiale : la première mesure lue (\texttt{mesure}). Pourquoi : initialiser \texttt{max} à 0 ferait une hypothèse arbitraire sur les données (si toutes les mesures valides étaient négatives, 0 ne correspondrait à aucune mesure réelle et fausserait le résultat). Initialiser avec un premier élément \emph{effectivement mesuré} évite cette hypothèse.%
+	}{%
+		C'est le piège classique du patron « recherche de maximum » : initialiser à 0 « parce que c'est neutre » est une erreur si les données peuvent être toutes négatives ou toutes inférieures à 0. La bonne pratique est de toujours initialiser avec un premier élément réel de la série. Erreur fréquente à anticiper : des étudiants proposeront \texttt{max = 0}, qu'il faut confronter à un contre-exemple (mesures $-5, -3, -8$).%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T9 --- T-choix (while/do-while pour lecture jusqu'à sentinelle)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouNeuf}{%
+	\Trou{2.5}{Boucle pour lecture jusqu'à sentinelle}{%
+		\textbf{T9.} Pour le problème « lire des mesures jusqu'à une valeur négative », quelle boucle utiliser, et pourquoi ?%
+	}{%
+		\texttt{while}, précédée d'une première lecture avant la boucle (ou un \texttt{do...while} restructuré), parce que le nombre de mesures n'est pas connu à l'avance, et il faut lire une première valeur \emph{avant} de savoir si l'on doit continuer -- c'est le patron dit de « lecture anticipée ».%
+	}{%
+		Variante acceptable : proposer une réécriture avec \texttt{do...while} en testant la sentinelle en fin de bloc et en excluant la dernière valeur (négative) du calcul de max avec un \texttt{if}. Insister sur le fait qu'ici, contrairement à C6, la valeur qui arrête la boucle (la sentinelle) ne doit \textbf{pas} être utilisée dans le calcul du maximum : c'est un cas limite à vérifier.%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T10 --- T-contrat allégé (spécification informelle de C7)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouDix}{%
+	\Trou{3}{Spécification du programme C7}{%
+		\textbf{T10.} Spécifiez le programme C7 : que doit-il faire ? Quand s'arrête-t-il ? Que se passe-t-il dans le cas limite où aucune mesure valide n'est saisie (sentinelle dès la première saisie) ?%
+	}{%
+		Ce programme doit lire une série de mesures entières saisies au clavier et afficher la plus grande d'entre elles. Il s'arrête quand l'utilisateur saisit une valeur strictement négative. Cas limite (sentinelle dès la première saisie) : le programme affiche la sentinelle elle-même comme « maximum », ce qui est incorrect ; un programme robuste devrait le signaler plutôt que d'afficher un résultat trompeur (hors sujet de ce CM, mais à garder en tête).%
+	}{%
+		Le trou sur le comportement hors domaine (cas limite) est prioritaire : c'est celui que les étudiants oublient spontanément.%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T11 --- T-invariant (tableau récapitulatif des 3 boucles)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TableRecapBoucles}{%
+\begin{center}
+\begin{tabular}{|p{2.2cm}|p{3.3cm}|p{8cm}|}
+\hline
+\textbf{Boucle} & \textbf{Test de la condition} & \textbf{Quand l'utiliser} \\
+\hline
+\texttt{for} & avant chaque tour & \TrouCell{nombre d'itérations connu à l'avance (compteur)} \\[1cm]
+\hline
+\texttt{while} & avant chaque tour & \TrouCell{nombre d'itérations inconnu à l'avance, le bloc peut ne jamais s'exécuter} \\[1cm]
+\hline
+\texttt{do...while} & après chaque tour & \TrouCell{on a besoin d'exécuter le bloc au moins une fois avant de pouvoir tester (ex. lecture avant de savoir si on doit s'arrêter)} \\[1cm]
+\hline
+\end{tabular}
+\end{center}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T12 --- T-tests (table de tests sur C7)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TableTestsCSept}{%
+\begin{center}
+\begin{tabular}{|p{4cm}|p{4cm}|p{5cm}|}
+\hline
+\textbf{Entrée (mesures saisies)} & \textbf{Sortie attendue} & \textbf{Ce que ce cas vérifie} \\
+\hline
+5, 12, 3, puis $-1$ & Maximum : 12 & cas nominal \\
+\hline
+7, puis $-1$ & \TrouCell{Maximum : 7} & \TrouCell{une seule mesure valide (initialisation correcte de max)} \\
+\hline
+\TrouCell{$-1$ (sentinelle dès la première saisie)} & \TrouCell{Maximum : $-1$ (résultat trompeur, cas limite non géré)} & \TrouCell{cas limite : aucune mesure valide} \\
+\hline
+\end{tabular}
+\end{center}%
+}
+\newcommand{\TrouDouzeCorrection}{%
+	\ifnumequal{1}{\UPSTIidVersionDocumentDef}{%
+		\begin{UPSTIcorrectionBoxSimple}
+		Les sorties de ce tableau ont été vérifiées par compilation et exécution réelles du code C7 (\texttt{gcc -Wall -Wextra}, aucun avertissement). Erreur fréquente : proposer pour la deuxième ligne un cas qui ne teste rien de nouveau par rapport au cas nominal (par exemple deux mesures) -- rappeler qu'une table de tests doit couvrir des situations \emph{différentes}, pas répéter le même raisonnement.
+		\end{UPSTIcorrectionBoxSimple}%
+	}{}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% T13 --- T-choix (transfert : clignotement de LED n fois)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouTreize}{%
+	\Trou{2}{Clignotement de LED}{%
+		Un microcontrôleur doit faire clignoter une LED exactement $n$ fois, $n$ étant fixé au début du programme. Quelle boucle utiliser, et pourquoi ?%
+	}{%
+		\texttt{for}, parce que le nombre de clignotements est connu avant que la boucle ne commence, exactement comme pour l'affichage de C1/C2 : c'est le patron « compteur ».%
+	}{}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Grille de vérification d'une boucle (synthèse finale, hors numérotation Tn)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TrouGrilleVerification}{%
+	\ifnumequal{1}{\UPSTIidVersionDocumentDef}{%
+		\begin{itemize}
+			\item Initialisation : \UPSTIcorrection[1]{la ou les variables utilisées dans la condition ont-elles une valeur cohérente avant le premier test ?}
+			\item Condition d'arrêt : \UPSTIcorrection[1]{la condition correspond-elle exactement à ce qui doit arrêter la boucle, sans décalage d'un (\texttt{<} vs \texttt{<=}) ?}
+			\item Terminaison : \UPSTIcorrection[1]{qu'est-ce qui, à chaque tour, rapproche l'état du programme de la condition d'arrêt ? (Sans cela : boucle infinie.)}
+			\item Cas limites : \UPSTIcorrection[1]{que se passe-t-il si la boucle s'exécute zéro fois ? une seule fois ? Le résultat reste-t-il correct ?}
+			\item Types : \UPSTIcorrection[1]{les types des variables de la boucle peuvent-ils déborder (ex. compteur \texttt{uint8\_t}) au vu du nombre de tours prévu ?}
+		\end{itemize}%
+	}{%
+		\begin{itemize}
+			\item Initialisation : \UPSTIquadrillage{1}[13]
+			\item Condition d'arrêt : \UPSTIquadrillage{1}[13]
+			\item Terminaison : \UPSTIquadrillage{1}[13]
+			\item Cas limites : \UPSTIquadrillage{1}[13]
+			\item Types : \UPSTIquadrillage{1}[13]
+		\end{itemize}%
+	}%
+}

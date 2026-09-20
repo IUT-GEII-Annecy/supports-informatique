@@ -1,0 +1,308 @@
+\documentclass[cours, noCustomPackages]{UPSTI_Document}
+\usepackage{IUT_Annecy}
+\usepackage{logos_iut}
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+% Document interne enseignant, jamais publié (nom de fichier contenant
+% ".hide" -> exclu par scripts/build_pdfs.sh). Toujours en version P : c'est
+% un document 100% enseignant qui doit montrer directement le contenu réel de
+% chaque trou (question + réponse + variantes/erreurs), pas juste son numéro.
+\documentVersion{P}
+\newcommand{\UPSTInumeroVersion}{trame interne}
+\newcommand{\UPSTInumero}{\sequence.1-trame}
+
+\begin{document}
+
+\section*{Trame de séance --- CM Boucles en C (1h, BUT1 GEII)}
+
+Numérotation des trous (T1--T13) et des étapes de code (C1--C7) identique à
+celle du poly étudiant / corrigé (\texttt{C02\_bouclesFonctions.tex}). Le
+contenu de chaque trou affiché ci-dessous provient de
+\texttt{sources/trous\_boucles.tex}, partagé avec le poly : toute mise à jour
+d'un trou s'y fait une seule fois.
+
+Chaîne visée : comprendre $\to$ spécifier $\to$ (décomposer) $\to$ concevoir
+$\to$ implémenter $\to$ tester $\to$ déboguer. Prérequis supposés acquis :
+variables, types de base, opérateurs, \texttt{if}/\texttt{else},
+\texttt{printf}/\texttt{scanf}. Aucune fonction n'est abordée (CM séparé,
+autre séquence).
+
+\input{sources/trous_boucles.tex}
+
+\subsection*{Étape 1 --- Pourquoi une boucle ? (0--7 min, 7 min)}
+
+\textbf{Objectif} : faire émerger le besoin de répétition avant toute
+syntaxe. \textbf{Chaîne} : comprendre $\to$ spécifier.
+
+\textbf{À taper/montrer (C1)} :
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+int main(void) {
+    printf("Mesure 1 : ok\n");
+    printf("Mesure 2 : ok\n");
+    printf("Mesure 3 : ok\n");
+    return 0;
+}
+\end{lstlisting}
+Ne pas le taper lentement : l'objectif est de montrer la limite du
+copier-coller, pas la syntaxe.
+
+\textbf{Points clés à l'oral} : une boucle répète un bloc sans le recopier ;
+les 3 structures du C (\texttt{while}, \texttt{for}, \texttt{do...while})
+seront vues dans cet ordre.
+
+\textbf{Question à la salle} : « et si c'était 1000 mesures ? » --- réponse
+attendue : il faut une structure de répétition.
+
+\textbf{Trou} : montrer C1 $\to$ les étudiants complètent T1 $\to$ mise en
+commun orale immédiate (pas d'exécution de code à ce stade).
+
+\TrouUn
+
+\subsection*{Étape 2 --- La boucle \texttt{while} (7--20 min, 13 min)}
+
+\textbf{Objectif} : comprendre le cycle test $\to$ exécution $\to$ mise à
+jour ; notion de terminaison. \textbf{Chaîne} : concevoir $\to$ implémenter
+$\to$ tester.
+
+\textbf{À taper (C2, compteur)} :
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+int main(void) {
+    int i = 1;
+    while (i <= 3) {
+        printf("Mesure %d : ok\n", i);
+        i++;
+    }
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Ordre des actions} :
+\begin{enumerate}
+	\item Taper C2, \textbf{ne pas exécuter}.
+	\item Les étudiants complètent T2 (table de trace) et T3 (terminaison).
+	\item Mise en commun au tableau (recopier la table remplie).
+	\item Exécuter C2 $\to$ confronter à la table.
+\end{enumerate}
+
+\TableTraceCDeux
+\TrouDeuxCorrection
+
+\TrouTrois
+
+\textbf{À taper (C3, accumulateur)} :
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+int main(void) {
+    int mesure;
+    int total = 0;
+    while (total < 100) {
+        printf("Entrez une mesure : ");
+        scanf("%d", &mesure);
+        total = total + mesure;
+    }
+    printf("Total atteint : %d\n", total);
+    return 0;
+}
+\end{lstlisting}
+
+\textbf{Erreur volontaire} : taper en direct la même variante \textbf{sans}
+la ligne \texttt{total = total + mesure;}. Avant d'exécuter, les étudiants
+complètent T4 (prédiction). Exécuter $\to$ boucle infinie $\to$ Ctrl+C $\to$
+diagnostic en live (relire le corps de boucle, chercher ce qui ne change
+jamais). Lien embarqué à signaler : sur Arduino, pas de Ctrl+C possible, la
+carte reste bloquée.
+
+\TrouQuatre
+
+\subsection*{Étape 3 --- La boucle \texttt{for} (20--33 min, 13 min)}
+
+\textbf{Objectif} : voir le \texttt{for} comme un \texttt{while} structuré ;
+maîtriser les bornes (\texttt{<} vs \texttt{<=}). \textbf{Chaîne} :
+implémenter $\to$ tester $\to$ déboguer.
+
+\textbf{À taper (C4)} : réécriture de C2 en \texttt{for} (transition rapide,
+pas de trou ici, comparer oralement à C2).
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+int main(void) {
+    for (int i = 1; i <= 3; i++) {
+        printf("Mesure %d : ok\n", i);
+    }
+    return 0;
+}
+\end{lstlisting}
+
+Poser la question T5 (comptage d'itérations) à l'oral/au tableau, sans coder
+--- 2 à 3 minutes, puis mise en commun.
+
+\TrouCinq
+
+\textbf{À taper (C5, boucle imbriquée)} :
+\begin{lstlisting}[language=c]
+for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 2; j++) {
+        printf("i=%d j=%d\n", i, j);
+    }
+}
+\end{lstlisting}
+Taper, ne pas exécuter $\to$ les étudiants complètent T7 (trace, plus légère
+que T2, estompage progressif) $\to$ exécuter $\to$ confronter.
+
+\TableTraceCCinq
+
+\textbf{Erreur volontaire (embarqué)} : taper en direct la variante suivante
+et l'exécuter.
+\begin{lstlisting}[language=c]
+#include <stdint.h>
+#include <stdio.h>
+int main(void) {
+    int n = 300;
+    for (uint8_t i = 0; i < n; i++) {
+        printf("%d\n", i);
+    }
+    return 0;
+}
+\end{lstlisting}
+Avant exécution, les étudiants complètent T6 (prédiction + pourquoi).
+Exécuter $\to$ boucle infinie visible (répétition 0..255..0..) $\to$
+diagnostic : débordement d'entier non signalé par le compilateur (la borne
+est dans une variable \texttt{n}, pas un littéral, donc pas d'avertissement
+\texttt{-Wtype-limits}).
+
+\TrouSix
+
+\subsection*{Étape 4 --- \texttt{do...while} et recherche avec sortie anticipée (33--48 min, 15 min)}
+
+\textbf{Objectif} : savoir choisir \texttt{do...while} quand une exécution
+garantie est nécessaire ; construire le patron recherche de maximum +
+sentinelle. \textbf{Chaîne} : spécifier $\to$ concevoir $\to$ implémenter
+$\to$ tester.
+
+\textbf{À taper (C6)} :
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+int main(void) {
+    int n;
+    do {
+        printf("Entrez un nombre positif : ");
+        scanf("%d", &n);
+    } while (n < 0);
+    printf("Merci, n = %d\n", n);
+    return 0;
+}
+\end{lstlisting}
+Taper, expliquer, exécuter une fois pour montrer le comportement « au moins
+une fois ».
+
+Poser la question T9 (choix de structure) \textbf{avant} de taper C7, mise en
+commun avant de coder, pour que le choix guide l'écriture.
+
+\TrouNeuf
+
+\textbf{À taper (C7, recherche de maximum avec sentinelle)} :
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+int main(void) {
+    int mesure;
+    int max;
+
+    printf("Entrez une mesure (negative pour arreter) : ");
+    scanf("%d", &mesure);
+    max = mesure;
+
+    while (mesure >= 0) {
+        if (mesure > max) {
+            max = mesure;
+        }
+        printf("Entrez une mesure (negative pour arreter) : ");
+        scanf("%d", &mesure);
+    }
+    printf("Maximum : %d\n", max);
+    return 0;
+}
+\end{lstlisting}
+S'arrêter juste avant d'écrire la ligne \texttt{max = mesure;} $\to$ les
+étudiants complètent T8 (valeur initiale + justification) avant que
+l'enseignant ne l'écrive à l'écran. Terminer de taper C7, exécuter sur un jeu
+de données simple (ex. 5, 12, 3, puis $-1$).
+
+\TrouHuit
+
+Une fois C7 terminé et exécuté, les étudiants complètent T10 (spécification
+informelle, y compris le cas limite).
+
+\TrouDix
+
+\subsection*{Étape 5 --- Synthèse et fiche de révision (48--58 min, 10 min)}
+
+\textbf{Objectif} : consolider les 3 patrons de boucle et une grille
+d'auto-vérification. \textbf{Chaîne} : déboguer / vérifier (retour sur
+l'ensemble de la chaîne). Pas de nouveau code tapé : retour sur C2--C7 déjà
+tapés.
+
+T11 (tableau récapitulatif) : remplissage individuel puis mise en commun
+rapide au tableau.
+
+\TableRecapBoucles
+
+T12 (table de tests sur C7, cas nominal donné, cas à compléter : une seule
+mesure, sentinelle immédiate) :
+
+\TableTestsCSept
+\TrouDouzeCorrection
+
+T13 (question de transfert, orale si le temps manque, sinon écrite) :
+
+\TrouTreize
+
+Grille de vérification finale (fiche de révision) :
+
+\TrouGrilleVerification
+
+\subsection*{Marge (58--60 min + tampon)}
+
+\begin{itemize}
+	\item Si retard accumulé : couper C5 (boucle imbriquée) et T7, les
+	mentionner oralement sans les taper ; T13 devient uniquement orale, sans
+	trace écrite au poly.
+	\item Si de l'avance : détailler davantage la variante \texttt{do...while}
+	de C7 (mentionnée dans la correction de T9) en la tapant réellement, à
+	titre d'ouverture.
+\end{itemize}
+
+\subsection*{Récapitulatif}
+
+\begin{center}
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Étape} & \textbf{Durée} & \textbf{Cumulé} & \textbf{Trous} \\
+\hline
+1. Pourquoi une boucle & 7 min & 0:07 & T1 \\
+\hline
+2. \texttt{while} & 13 min & 0:20 & T2, T3, T4 \\
+\hline
+3. \texttt{for} & 13 min & 0:33 & T5, T6, T7 \\
+\hline
+4. \texttt{do...while} + recherche & 15 min & 0:48 & T8, T9, T10 \\
+\hline
+5. Synthèse & 10 min & 0:58 & T11, T12, T13 \\
+\hline
+Marge & 2 min & 1:00 & --- \\
+\hline
+\end{tabular}
+\end{center}
+
+13 trous, typologie variée : T-choix (T1, T9, T13), T-trace (T2, T7),
+T-invariant (T3, T11), T-faille (T4, T6), T-bornes (T5), T-init (T8),
+T-contrat allégé (T10), T-tests (T12). Aucune fonction abordée.
+
+\textbf{Sorties vérifiées} : les sorties de programme utilisées ci-dessus et
+dans le corrigé ont été vérifiées par compilation et exécution réelles avec
+\texttt{gcc -Wall -Wextra -std=c99} (C1--C7, y compris les deux variantes
+fautives C3-bug et C5-bug, qui compilent sans avertissement --- c'est le
+point pédagogique : leur défaut est sémantique, pas syntaxique).
+
+\end{document}

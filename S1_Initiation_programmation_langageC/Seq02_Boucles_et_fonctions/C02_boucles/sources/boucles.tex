@@ -1,0 +1,296 @@
+
+\input{sources/trous_boucles.tex}
+
+\section{Les boucles en C}
+
+\UPSTIremarque[Un air de déjà-vu avec Scratch]{
+  Vous avez probablement déjà manipulé des boucles sans le savoir, en Scratch :
+  \begin{itemize}
+    \item le bloc \textbf{« répéter \dots{} fois »} correspond à la boucle \texttt{for} ;
+    \item le bloc \textbf{« répéter jusqu'à \dots{} »} correspond à la boucle \texttt{while} (à la condition inversée près : Scratch dit \emph{jusqu'à}, le C dit \emph{tant que}) ;
+    \item le bloc \textbf{« répéter indéfiniment »} combiné à un test qui déclenche un \textbf{« stop »} correspond à une boucle contrôlée par une condition interne.
+  \end{itemize}
+  On écrit la même idée avec du texte plutôt qu'avec des blocs à emboîter.
+}
+
+\subsection{Pourquoi une boucle ?}
+
+Un programme doit afficher les 3 premières mesures d'un capteur.
+
+\begin{lstlisting}[language=c,caption={affichage de 3 mesures},label=codeC1]
+#include <stdio.h>
+int main(void) {
+    printf("Mesure 1 : ok\n");
+    printf("Mesure 2 : ok\n");
+    printf("Mesure 3 : ok\n");
+    return 0;
+}
+\end{lstlisting}
+
+\TrouPourquoiUneBoucle
+
+Une boucle est une structure de contrôle qui permet de répéter un bloc d'instructions plusieurs fois, tant qu'une condition est vraie.
+
+Le C propose trois structures pour cela : \texttt{while}, \texttt{for} et \texttt{do...while}.
+
+\subsection{La boucle \texttt{while}}
+
+\begin{UPSTIinfor}{Structure d'une boucle \texttt{while} }
+  \texttt{while} signifie \og tant que \fg{}.
+
+  Une boulce \texttt{while} est une boucle dont le bloc associé est répété \textbf{tant que} une condition est vraie. Cette condition est testée \textbf{avant} chaque tour de boucle.
+  \begin{lstlisting}[language=c,caption={Structure d'une boucle \texttt{while}},label=codeWhile]
+while (/* condition */) {
+    // bloc d'instructions à répéter
+}
+  \end{lstlisting}
+  Si la condition est fausse dès le premier test, le bloc peut ne s'exécuter \textbf{zéro fois}.
+\end{UPSTIinfor}
+
+\subsubsection{Un code insistant}
+Une boucle \texttt{while} est plus adaptée lorsque l'on ne connait pas le nombre d'itération à l'avance. Par exemple lorsque l'on veut que l'utilisateur entre une réponse en particulier.  Testons le code suivant qui ne s'arrêtera que lorsque l'utilisateur répondra correctement :
+\begin{lstlisting}[caption={Exemple de boucle while : 42!}]
+#include <stdio.h>
+#include <cs50.h>
+int main(void) {
+    int reponse = 0;
+    while (reponse != 42) {
+        reponse = get_int("Quelle est la réponse à la grande question de l'univers ?");
+    }
+    printf("Merci. Au revoir. \n");
+    return 0;
+}
+\end{lstlisting}
+
+Notons qu'il est impossible de déterminer à l'avance combien de fois le corps de la boucle sera exécuté. Cela dépend entièrement de l'exécution (en l'occurence de l'utilisateur). C'est le cas d'usage le plus courant des boucle \texttt{while}.
+
+Notons également que la structure est similaire à la structure conditionnelle, avec la condition entre parenthèse puis le corps entre accolades.
+
+\subsubsection{Un compteur dans une boucle \texttt{while}}
+Le code~\ref{codeC1} peut être \textit{refactorisé} en utilisant une boucle \texttt{while} et un compteur :
+\begin{lstlisting}[language=c,label=mesures-while,caption={Affichage de mesures avec \texttt{while}}]
+#include <stdio.h>
+int main(void) {
+    int i = 1;
+    while (i <= 3) {
+        printf("Mesure %d : ok\n", i);
+        i++;
+        }
+    return 0;
+}
+\end{lstlisting}
+
+Ici, la variable \texttt{i} est utilisée comme un compteur. C'est classique en langage C. Les variables servant de compteur sont habituellement nommées \texttt{i}, \texttt{j} et \texttt{k}, dans cet ordre de préférence.
+
+Pour la boucle précédente, on connait le nombre d'itération à l'avance : 3. Nous verrons plus bas que la boucle \texttt{for} est particulièrement adaptée à ce genre de situations.
+
+\TrouConditionArret
+
+\subsubsection{Calculer une somme avec une boucle \texttt{while}}
+\begin{UPSTIinfor}{Calcul d'une somme avec \texttt{while}}
+  Pour calculer la somme de plusieurs mesures avec une boucle \texttt{while}, on peut suivre les étapes suivantes :
+  \begin{minipage}{0.45\textwidth}
+    \begin{enumerate}
+      \item \textbf{Initialisation} du total à 0.
+      \item \textbf{Boucle} sur le nombre d'échantillons.
+      \item \textbf{Mise à jour} du total à \textbf{chaque itération}.
+      \item \textbf{Utilisation} du total à la fin.
+    \end{enumerate}
+  \end{minipage}\hfill%
+  \begin{minipage}{0.5\textwidth}
+    \ifnum\UPSTIidVersionDocumentDef=1
+        \begin{lstlisting}[language=c,caption={Calcul d'une somme}]
+#include <stdio.h>
+int main(void) {
+    int mesure;
+    int total = 0;              // Initialisation
+    int i = 0;
+    while (i < 10) {            // Boucle
+        mesure = get_int("Entrez une mesure : ");
+        total = total + mesure;  // Mise à jour
+        i++;
+    }
+    printf("Total : %d\n", total);// Utilisation
+    return 0;
+}
+\end{lstlisting}%
+    \else
+\begin{lstlisting}[language=c,numbers=none]
+#include <cs50.h>
+#include <stdio.h>
+int main(void) {
+    int mesure;
+    int total;
+    int i;
+        \end{lstlisting}%
+    \begin{center}
+      \UPSTIquadrillage{3}[6]
+    \end{center}
+        \begin{lstlisting}[language=c,numbers=none,caption={Calcul d'une somme}]
+    return 0;
+}
+\end{lstlisting}%
+    \fi
+  \end{minipage}
+\end{UPSTIinfor}
+
+\subsection{La boucle \texttt{for}}
+Un deuxième type de boucles très utilisé est la boucle \texttt{for}. Elle est particulièrement adaptée lorsque l'on connait le nombre d'itérations avant l'exécution de la boucle.
+
+Cette boucle contient dans son entête :
+\begin{description}
+  \item[Initialisation :] Commande exécutée une seule fois
+  \item[Condition] vérifiée avant chaque tour de boucle
+  \item[mise à jour :] Commande exécutée après chaque tour de boucle.
+\end{description}
+
+\begin{UPSTIinfor}{Structure d'une boucle \texttt{for} (A retenir !)}
+  \begin{minipage}{.48\textwidth}
+        \begin{lstlisting}[language=c, caption={Structure d'une boucle \texttt{for}}]
+for (initialisation; condition; mise_a_jour) {
+    // bloc d'instructions a repeter
+}
+\end{lstlisting}
+  \end{minipage}\hfill
+  \begin{minipage}{.48\textwidth}
+    \begin{lstlisting}[language=c, caption={Exemple de boucle \texttt{for}}]
+        for (int i=0; i<n; i++) {
+            printf("Itération numéro %i", i);
+            }
+        \end{lstlisting}
+  \end{minipage}
+\end{UPSTIinfor}
+
+\begin{UPSTIinfor}{On utilise \texttt{for} ou \texttt{while}}
+  On peut toujours écrire le même programme avec \texttt{for} ou \texttt{while}. La boucle \texttt{for} est adaptée quand le nombre d'itérations est connu à l'avance ; \texttt{while} est plus flexible pour une condition qui dépend d'un événement.
+\end{UPSTIinfor}
+\subsubsection{Un compteur avec une boucle \texttt{for}}
+Le code~\ref{codeC1} devient alors, avec une boucle \texttt{for} :
+    \begin{lstlisting}[language=c,caption={Comtage de mesures avec une boucle \texttt{for>}}]
+#include <stdio.h>
+int main(void) {
+    for (int i = 1; i <= 3; i++) {
+        printf("Mesure %i : ok\n", i);
+    }
+    return 0;
+}
+\end{lstlisting}
+\begin{UPSTIactivite}[][Comptage d'itérations]
+  Pour chacun des deux entêtes de boucle suivants, combien de fois le corps de la boucle sera-t-il exécuté ?\\
+
+  \begin{minipage}{.48\textwidth}
+\texttt{for(int i = 0; i < n ; i++)}
+\UPSTIquadrillage{1}[8]
+  \end{minipage}\hfill
+  \begin{minipage}{.48\textwidth}
+\texttt{for(int i = 0; i <= n ; i++)}
+\UPSTIquadrillage{1}[8]
+  \end{minipage}
+\end{UPSTIactivite}
+\subsubsection{Une somme avec une boucle \texttt{for}}
+\TrouSommeFor
+
+\subsubsection{Boucle imbriquée}
+Il sera souvent utile d'imbriquer deux boucles \texttt{for},%
+par exemple pour parcourir un tableau de données ou toutes données%
+stockée dans une structure à deux dimensions. Une syntaxe classique%
+est la suivante :
+
+\begin{lstlisting}[language=c]
+for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 2; j++) {
+        printf("i=%d j=%d\n", i, j);
+    }
+}
+\end{lstlisting}
+
+Compléter le tableau ci-dessous (notez que pour chaque tour de la boucle externe, la boucle interne recommence entièrement) :
+
+\TableTraceCCinq
+
+% \begin{lstlisting}[language=c]
+% #include <stdint.h>
+% #include <stdio.h>
+% int main(void) {
+%     int n = 300;
+%     for (uint8_t i = 0; i < n; i++) {
+%         printf("%d\n", i);
+%     }
+%     return 0;
+% }
+% \end{lstlisting}
+
+% \TrouSix
+
+\subsection*{Des boucles qui ne s'exécutent pas}
+Notez que la boucle suivante ne s'exécutera \textbf{jamais}. %
+En effet, la condition d'entrée n'est jamais vérifiée car, lors du premier test,%
+\texttt{n} ne respecte pas la condition d'entrée dans la boucle.
+\begin{lstlisting}[caption={Boucle while qui ne s'exécutera jamais.}]
+int n = 0;
+while(n < 0){
+    n = get_int("Entrez un nombre positif");
+}
+printf("Merci, n vaut %i \n", n);
+\end{lstlisting}
+
+\subsection{La boucle \texttt{do...while}}
+
+\begin{UPSTIinfor}{Structure d'une boucle \texttt{do...while}}
+  \begin{lstlisting}[language=c]
+do {
+    // bloc d'instructions a repeter
+} while (condition);
+\end{lstlisting}
+\end{UPSTIinfor}
+
+\begin{UPSTIwarning}{Exécutée au moins une fois}
+  Contrairement à \texttt{while} et \texttt{for}, le bloc d'un \texttt{do...while} s'exécute \textbf{toujours au moins une fois} : la condition n'est testée qu'\textbf{après} la première exécution.
+\end{UPSTIwarning}
+
+Exemple :
+
+\begin{lstlisting}[language=c, caption={Validation de saisie}]
+#include <stdio.h>
+#include <cs50.h>
+int main(void) {
+    int n;
+    do {
+        n = get_int("Entrez un nombre positif");
+    } while (n < 0);
+    printf("Merci, n = %d\n", n);
+    return 0;
+}
+\end{lstlisting}
+
+% \subsubsection{Code C7 --- recherche de maximum avec sentinelle}
+
+% On saisit des mesures jusqu'à ce que l'utilisateur entre une valeur négative (la \textbf{sentinelle}), et on affiche la plus grande mesure saisie.
+
+% \begin{lstlisting}[language=c]
+% #include <stdio.h>
+% int main(void) {
+%     int mesure;
+%     int max;
+
+%     printf("Entrez une mesure (negative pour arreter) : ");
+%     scanf("%d", &mesure);
+%     max = mesure;
+
+%     while (mesure >= 0) {
+%         if (mesure > max) {
+%             max = mesure;
+%         }
+%         printf("Entrez une mesure (negative pour arreter) : ");
+%         scanf("%d", &mesure);
+%     }
+%     printf("Maximum : %d\n", max);
+%     return 0;
+% }
+% \end{lstlisting}
+
+% \TrouNeuf
+
+% \TrouHuit
+
+% \TrouDix

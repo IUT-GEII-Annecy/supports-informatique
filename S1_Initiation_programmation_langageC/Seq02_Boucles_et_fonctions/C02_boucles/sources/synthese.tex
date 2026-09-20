@@ -1,0 +1,31 @@
+
+\section{Synthèse --- fiche de révision}
+
+\subsection{Les trois boucles}
+
+Complétez la colonne \og quand l'utiliser \fg{}.
+
+\TableRecapBoucles
+
+%\subsection{Table de tests --- reprise de C7 (recherche de maximum)}
+
+% \textbf{T12.} Table ci-dessous à compléter.
+
+% \TableTestsCSept
+% \TrouDouzeCorrection
+
+\subsection{Quelle boucle utiliser ?}
+
+\TrouTreize 
+
+\subsection{Grille de vérification d'une boucle}
+
+Avant de considérer qu'une boucle est correcte, posez-vous systématiquement ces questions :
+
+\begin{description}
+  \item [Initialisation] : La ou les variables utilisées dans la condition ont-elles une valeur cohérente avant le premier test ?
+  \item [Condition d'arrêt] : La condition correspond-elle exactement à ce qui doit arrêter la boucle, sans décalage d'un (\texttt{<} vs \texttt{<=}) ?
+  \item [Terminaison] : Le programme se rapproche-t-il de sa condition d'arrêt d'une répétition à l'autre ?
+  \item [Cas limites] : Que se passe-t-il si la boucle s'exécute zéro fois ? une seule fois ? Le résultat reste-t-il correct ?
+  \item [Types] : Les types des variables de la boucle peuvent-ils déborder (ex. compteur \texttt{uint8\_t}) au vu du nombre de tours prévu ?
+\end{description}%
