@@ -9,10 +9,10 @@
 %   git info # ou copier les hooks fournis par le package
 \input{../preamble.tex}
 \input{../../preamble_module.tex}
-
 \documentVersion{E}
 \newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
 \newcommand{\UPSTInumero}{\sequence.1}
+\renewcommand{\thesection}{Partie \arabic{section}}
 \begin{document}
 
 \input{main.tex}

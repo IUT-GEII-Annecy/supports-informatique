@@ -1,10 +1,10 @@
 
 \section{Nos premières boucles While, For et Do...While}
 
-\subsection{La boucle While - Miauler n fois}
+%\subsection{La boucle While - Miauler n fois}
 
-\begin{UPSTIManipulation}{Un chat qui miaule}
-	Le programme \texttt{miauler.c} contient le code suivant, qui fait miauler un chat 3 fois :
+\begin{UPSTIexercice}{Boucle while : Un chat qui miaule}
+	Le programme \texttt{miauler.c} contient le code suivant, qui fait miauler un chat 3 fois :
 	\begin{lstlisting}[language=c]
 #include <stdio.h>
 int main(void) {
@@ -16,22 +16,18 @@ int main(void) {
     return 0;
 }
 \end{lstlisting}
-	\begin{itemize}
-		\item[$\Box$] Tester le programme miauler.c
-		\item[$\Box$] Modifier le programme pour qu'il miaule 5 fois.
-		\item[$\Box$] Modifier le programme pour qu'il miaule \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
-	\end{itemize}
-	\hrule
-	check50 IUT-GEII-Annecy/squelettes/branch-2025/tp3/animaux/while
-\end{UPSTIManipulation}
+	\UPSTIetape Tester le programme miauler.c
+	\UPSTIetape Modifier le programme pour qu'il miaule 5 fois.
+	\UPSTIetape Modifier le programme pour qu'il miaule \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
+\end{UPSTIexercice}
 
 
-\subsection{La boucle For - Aboyer n fois}
+%\subsection{La boucle For - Aboyer n fois}
 
-\begin{UPSTIManipulation}{Un chien qui aboie}
-	Le programme \texttt{aboyer.c} contient le code suivant, qui fait aboyer un chien 3 fois :
+\begin{UPSTIexercice}{Boucle for : Un chien qui aboie}
+	Le programme \texttt{aboyer.c} contient le code suivant, qui fait aboyer un chien 3 fois :
 	\begin{lstlisting}[language=c]
-#include <stdio.h>   
+#include <stdio.h>
 int main(void) {
     for (int i = 0; i < 3; i++) {
         printf("Ouaf !\n");
@@ -39,20 +35,16 @@ int main(void) {
     return 0;
 }
 \end{lstlisting}
-	\begin{itemize}
-		\item[$\Box$] Tester le programme aboyer.c
-		\item[$\Box$] Modifier le programme pour qu'il aboie 5 fois.
-		\item[$\Box$] Modifier le programme pour qu'il aboie \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
-	\end{itemize}
-	\hrule
-	check50 IUT-GEII-Annecy/squelettes/branch-2025/tp3/animaux/for
-\end{UPSTIManipulation}
+	\UPSTIetape Tester le programme aboyer.c
+	\UPSTIetape Modifier le programme pour qu'il aboie 5 fois.
+	\UPSTIetape Modifier le programme pour qu'il aboie \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
+\end{UPSTIexercice}
 
 
-\subsection{La boucle Do...While - Chanter n fois}
+%\subsection{La boucle Do...While - Chanter n fois}
 
-\begin{UPSTIManipulation}{Un oiseau qui chante}
-	Le programme \texttt{chanter.c} contient le code suivant, qui fait chanter un oiseau 3 fois :
+\begin{UPSTIexercice}{Boucle do...while Un oiseau qui chante}
+	Le programme \texttt{chanter.c} contient le code suivant, qui fait chanter un oiseau 3 fois :
 	\begin{lstlisting}[language=c]
 #include <stdio.h>
 int main(void) {
@@ -64,15 +56,14 @@ int main(void) {
     return 0;
 }
 \end{lstlisting}
-	\begin{itemize}
-		\item[$\Box$] Tester le programme chanter.c
-		\item[$\Box$] Modifier le programme pour qu'il chante 5 fois.
-		\item[$\Box$] Modifier le programme pour qu'il chante \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
-	\end{itemize}
-	\hrule
-	check50 IUT-GEII-Annecy/squelettes/branch-2025/tp3/animaux/do_while
-\end{UPSTIManipulation}
+	\UPSTIetape Tester le programme chanter.c
+	\UPSTIetape Modifier le programme pour qu'il chante 5 fois.
+	\UPSTIetape Modifier le programme pour qu'il chante \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
+\end{UPSTIexercice}
 
-Question : Rappeler le principe de chaque boucle et, pour chacune, dire quand elle est le plus adaptée.
-Question : Tester chacun des trois programmes avec n = 0. Que constatez-vous ?
-Question : Quelle boucle choisiriez-vous pour faire répéter une action un nombre inconnu de fois, mais au moins une fois ? Pourquoi ?
+\subsection*{Liste des checks disponibles}
+\begin{lstlisting}[language=bash,style=console]
+check50 IUT-GEII-Annecy/squelettes/branch-2025/tp3/animaux/while
+check50 IUT-GEII-Annecy/squelettes/branch-2025/tp3/animaux/for
+check50 IUT-GEII-Annecy/squelettes/branch-2025/tp3/animaux/do_while
+\end{lstlisting}
