@@ -1,0 +1,275 @@
+\section{Pourquoi découper un programme en fonctions ?}
+
+Jusqu'à présent, tous nos programmes tenaient dans la fonction \texttt{main}. Dès qu'un programme grossit un peu, cela pose plusieurs problèmes :
+\begin{itemize}
+  \item du code très long est difficile à relire et à corriger ;
+  \item si un même calcul est utilisé à plusieurs endroits, on le recopie (et on risque une erreur de copier-coller, ou d'oublier une mise à jour à un des endroits) ;
+  \item il est difficile de tester un morceau de calcul isolément.
+\end{itemize}
+
+\UPSTIremarque[Un air de déjà-vu avec Scratch]{
+  En Scratch, vous avez déjà rencontré les blocs personnalisés (\emph{« Créer un bloc »}), qui permettent de nommer une suite d'instructions pour la réutiliser ailleurs dans le programme, éventuellement avec des paramètres. Une fonction en C, c'est exactement la même idée : un bloc d'instructions que l'on nomme, qui peut recevoir des informations en entrée, et qui peut renvoyer un résultat.
+}
+
+Une \textbf{fonction} est un sous-programme nommé, qui réalise une tâche précise. Elle peut recevoir des données en entrée (les \textbf{paramètres}) et peut renvoyer un résultat (la \textbf{valeur de retour}).
+
+\subsection{Un exemple pour commencer}
+
+Un programme doit convertir plusieurs durées, données en minutes, en heures et minutes. Sans fonction, on pourrait écrire :
+
+\begin{lstlisting}[language=c,caption={Conversion sans fonction},label=codeSansFonction]
+#include <stdio.h>
+int main(void) {
+    int duree1 = 125;
+    printf("%d min = %dh%02dmin\n", duree1, duree1 / 60, duree1 % 60);
+
+    int duree2 = 47;
+    printf("%d min = %dh%02dmin\n", duree2, duree2 / 60, duree2 % 60);
+
+    return 0;
+}
+\end{lstlisting}
+
+Le calcul \texttt{duree / 60} et \texttt{duree \% 60} est recopié à chaque fois. On peut isoler ce calcul dans une fonction :
+
+\begin{lstlisting}[language=c,caption={Conversion avec une fonction},label=codeAvecFonction]
+#include <stdio.h>
+
+void afficher_duree(int minutes) {
+    printf("%d min = %dh%02dmin\n", minutes, minutes / 60, minutes % 60);
+}
+
+int main(void) {
+    afficher_duree(125);
+    afficher_duree(47);
+    return 0;
+}
+\end{lstlisting}
+
+Le programme est plus court, plus lisible, et si l'on souhaite modifier le format d'affichage, il suffit de le faire à un seul endroit.
+
+\section{Anatomie d'une fonction en C}
+
+\begin{UPSTIinfor}{Structure d'une fonction (A retenir !)}
+  \begin{lstlisting}[language=c,caption={Structure générale d'une fonction}]
+type_de_retour nom_fonction(type1 param1, type2 param2) {
+    // corps de la fonction : instructions
+    return valeur; // C'est le résultat de la fonction, qui pourra-t-être utilisé dans le code appelant.
+}
+\end{lstlisting}
+  \begin{description}
+    \item[type de retour :] type de la valeur renvoyée par la fonction (\texttt{int}, \texttt{float}, \texttt{void} s'il n'y a rien à renvoyer, \dots{}) ;
+    \item[nom de la fonction :] identifiant qui permet d'appeler la fonction ;
+    \item[paramètres :] variables reçues en entrée, entre parenthèses, séparées par des virgules (il peut ne pas y en avoir) ;
+    \item[corps :] bloc d'instructions entre accolades, exécuté lors de l'appel ;
+    \item[Le mot-clef \texttt{return} :] instruction qui renvoie une valeur et termine immédiatement l'exécution de la fonction.
+  \end{description}
+\end{UPSTIinfor}
+
+On représente souvent une fonction comme une \textbf{boîte} recevant des entrées et produisant une sortie :
+\begin{center}
+  \UPSTIquadrillage{2}
+\end{center}
+
+\subsection{Le prototype}
+
+Avant de pouvoir appeler une fonction, le compilateur doit connaître son \textbf{prototype} : son type de retour, son nom et le type de ses paramètres. On place généralement les prototypes avant la fonction \texttt{main}, et on définit le corps des fonctions après.
+
+\begin{UPSTIinfor}{Prototype d'une fonction}
+  Le prototype reprend uniquement l'entête de la fonction, \textbf{suivi d'un point-virgule} :
+  \begin{lstlisting}[language=c,caption={Exemple de prototype}]
+type_de_retour nom_fonction(type1 param1, type2 param2);
+\end{lstlisting}
+\end{UPSTIinfor}
+
+\begin{UPSTIactivite}[][Prototype et corps]
+On souhaite écrire une fonction qui calcule l'aire d'un rectangle à partir de sa largeur et de sa longueur (deux entiers), et qui renvoie cette aire (un entier).
+
+\UPSTIquestion{Donner le prototype de cette fonction.}
+\UPSTIquadrillage{0.5}
+\UPSTIquestion{Donner le corps de cette fonction.}
+\UPSTIquadrillage{4}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Prototype et corps}
+\begin{lstlisting}[language=c,caption={Correction}]
+int aire_rectangle(int largeur, int longueur);
+
+int aire_rectangle(int largeur, int longueur) {
+    return largeur * longueur;
+}
+\end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\subsection{Appeler une fonction}
+
+Le protype \textbf{déclare} la fonction puis la \textbf{définition} dicte son comportement. Une fois ces deux étapes effectuées, nous pouvons alors utiliser la fonction créée dans tout notre code. Cela peut être depuis le \texttt{main} ou depuis une autre fonction. 
+
+\begin{UPSTIinfor}{Appeler une fonction}
+  \textbf{Appeler une fonction}, c'est s'en servir dans une ligne de code. Pour cela, on écrit le nom de la fonction suivi, entre parenthèses, des valeurs à donner à ses paramètres, dans l'ordre du prototype et avec des types compatibles. Enfin, si cette fonction \textit{renvoie une valeur (return)}, on peut récupérer cette valeur pour la stocker dans une variable ou l'utiliser directement. En fait, l'appel de la fonction \textbf{vaut} la valeur de retour de la fonction. On peut donc l'utiliser exactement comme n'importe quelle autre valeur de ce type -- la stocker dans une variable, l'afficher, l'utiliser dans un calcul ou dans une condition.
+\end{UPSTIinfor}
+  
+  \begin{lstlisting}[language=c,caption={Différentes façons d'utiliser le résultat de \texttt{aire\_rectangle}}]
+#include <stdio.h>
+\\ Prototype de la fonction (Déclaration) : 
+int aire_rectangle(int largeur, int longueur);
+
+int main(void) {
+    int a;
+    // Utilisation pour affecter la valeur de l'aire à a
+    a = aire_rectangle(3, 4);
+    printf("Aire : %d\n", a);
+
+    // Utilisation directe dans une autre fonction
+    printf("Aire directe : %d\n", aire_rectangle(5, 2));
+
+    // Utilisation dans une condition : 
+    if (aire_rectangle(2, 2) > 3) {
+        printf("Grande aire\n");
+    }
+
+    return 0;
+}
+
+// Définition de la fonction
+int aire_rectangle(int largeur, int longueur) {
+    return largeur * longueur;
+}
+\end{lstlisting}
+
+\begin{UPSTIinfor}{Le résultat d'un appel est une valeur comme les autres}
+  \texttt{aire\_rectangle(3, 4)} \textbf{est} un entier, au même titre que \texttt{7} ou que le contenu d'une variable \texttt{int}. On peut donc l'affecter (\texttt{int a = aire\_rectangle(3, 4);}), le combiner dans un calcul (\texttt{aire\_rectangle(3, 4) + 1}), l'afficher directement, ou le tester dans un \texttt{if}.
+\end{UPSTIinfor}
+
+\begin{UPSTIactivite}[][Appeler \texttt{aire\_rectangle}]
+On réutilise la fonction \texttt{aire\_rectangle} de l'activité précédente.
+
+\UPSTIquestion{Écrire les lignes d'un programme qui calculent l'aire d'un rectangle de largeur 3 et de longueur 4, et l'aire d'un rectangle de largeur 5 et de longueur 2, puis affiche laquelle des deux aires est la plus grande.}
+\UPSTIquadrillage{3}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Appeler \texttt{aire\_rectangle}}
+\begin{lstlisting}[language=c,caption={Correction}]
+int main(void) {
+    int aire1 = aire_rectangle(3, 4);
+    int aire2 = aire_rectangle(5, 2);
+
+    if (aire1 > aire2) {
+        printf("Le premier rectangle a la plus grande aire (%d)\n", aire1);
+    } else {
+        printf("Le second rectangle a la plus grande aire (%d)\n", aire2);
+    }
+
+    return 0;
+}
+\end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\section{Fonctions avec ou sans valeur de retour}
+
+Beaucoup (la majorité) de fonctions effectuent des opérations en vue de \textit{renvoyer} un résultat. Le mot-clef \texttt{return} sert alors à retourner ce résultat vers la fonction appelante. Cependant, il existe également des fonctions qui ne renvoie pas de résultat. On peut citer en exemples : \textit{Affichage d'une valeur} ou l'\textit{Initialisation d'un système}.
+
+Lorsqu'elle ne retourne pas de valeur, le \textit{type de retour} est alors \texttt{void}. 
+
+\begin{UPSTIinfor}{Fonctions \texttt{void}}
+  Une fonction de type \texttt{void} ne renvoie aucune valeur. Le mot clef \texttt{return} sert alors uniquement à terminer la fonction et non à renvoyer une valeur. 
+\end{UPSTIinfor}
+
+\begin{UPSTIwarning}{Ne pas confondre \texttt{void} et absence de paramètre}
+  \texttt{void} peut apparaître à deux endroits différents, avec deux sens différents :
+  \begin{itemize}
+    \item devant le nom de la fonction : \texttt{void nom(...)} signifie que la fonction \textbf{ne renvoie rien} ;
+    \item à la place des paramètres : \texttt{int main(void)} signifie que la fonction \textbf{ne reçoit aucun paramètre}.
+  \end{itemize}
+\end{UPSTIwarning}
+
+Reprenons \texttt{aire\_rectangle} : plutôt que de calculer l'aire puis de l'afficher séparément à chaque fois, on peut écrire une fonction \texttt{void} qui fait les deux d'un coup, en réutilisant \texttt{aire\_rectangle} :
+
+\begin{lstlisting}[language=c,caption={Une fonction \texttt{void} qui réutilise \texttt{aire\_rectangle}}]
+void afficher_aire(int largeur, int longueur) {
+    int aire = aire_rectangle(largeur, longueur);
+    printf("Aire du rectangle %dx%d : %d\n", largeur, longueur, aire);
+    return; // Fin de l'exécution de la fonction sans valeur retournée.
+}
+\end{lstlisting}
+
+\texttt{afficher\_aire} ne renvoie rien (elle affiche directement) : c'est pour cela qu'elle est déclarée \texttt{void}, et qu'elle ne contient pas de \texttt{return valeur;}. Notons qu'elle utilise la fonction \texttt{aire\_rectangle} qui lui renvoie la valeur de l'aire. \texttt{afficher\_aire} stocke alors cette valeur dans la variable \texttt{aire} avant de l'utiliser dans l'affichage. 
+
+\begin{UPSTIactivite}[][Avec ou sans retour ?]
+On souhaite manipuler des températures.
+\UPSTIquestion{Écrire une fonction \texttt{float celsius\_vers\_fahrenheit(float celsius)} qui renvoie la température convertie, sachant que $F = C \times 9/5 + 32$.}
+\UPSTIquadrillage{2}
+\UPSTIquestion{Écrire une fonction \texttt{void afficher\_fahrenheit(float celsius)} qui affiche la phrase \texttt{"X degres Celsius valent Y degres Fahrenheit"}, en réutilisant la fonction précédente.}
+\UPSTIquadrillage{2}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Avec ou sans retour ?}
+\begin{lstlisting}[language=c,caption={Correction}]
+float celsius_vers_fahrenheit(float celsius) {
+    return celsius * 9.0 / 5.0 + 32.0;
+}
+
+void afficher_fahrenheit(float celsius) {
+    float f = celsius_vers_fahrenheit(celsius);
+    printf("%.1f degres Celsius valent %.1f degres Fahrenheit\n", celsius, f);
+}
+\end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\section{Portée des variables}
+\subsection{Variables locales}
+
+\begin{UPSTIinfor}{Variables locales}
+  Une variable déclarée à l'intérieur d'une fonction (y compris dans ses paramètres) est une \textbf{variable locale} : elle n'existe que pendant l'exécution de cette fonction, et elle est invisible depuis les autres fonctions, y compris depuis \texttt{main}.
+
+  Plus généralement, \textbf{Toute variable n'existe que dans le bloc dans lequel elle est définie.} 
+  C'est à dire entre l'accolade ouvrante précédent sa déclaration et jusqu'à l'accolade fermante correspondant. 
+\end{UPSTIinfor}
+
+\begin{lstlisting}[language=c,caption={Deux variables locales du même nom, sans conflit}]
+int carre(int x) {
+    int resultat = x * x;
+    return resultat;
+}
+
+int cube(int x) {
+    int resultat = x * x * x;
+    return resultat;
+}
+\end{lstlisting}
+
+Les deux variables \texttt{resultat} n'ont rien à voir l'une avec l'autre : chacune n'existe que le temps de l'exécution de sa propre fonction. C'est ce qui permet d'écrire des fonctions indépendamment les unes des autres sans se soucier des noms de variables utilisés ailleurs.
+
+\begin{UPSTIwarning}{Une variable locale ne survit pas à l'appel}
+  Une fois qu'une fonction a terminé son exécution (après le \texttt{return}, ou après la dernière instruction pour une fonction \texttt{void}), ses variables locales disparaissent. Il est donc impossible d'accéder, depuis \texttt{main}, à une variable déclarée à l'intérieur d'une autre fonction.
+
+  Aussi, sa valeur aura disparu au prochain appel de cette fonction et elle ne pourra donc pas être réutilisé. 
+\end{UPSTIwarning}
+\subsection{Passage par valeur}
+Les paramètres d'une fonction sont eux-mêmes des variables locales à cette fonction. Lors de l'appel, ce n'est pas la variable de l'appelant qui est transmise, mais \textbf{une copie de sa valeur} : le paramètre reçoit cette copie, dans sa propre case mémoire. On dit que les paramètres sont \textbf{passés par valeur}.
+
+\begin{UPSTIwarning}{Passage par valeur : modifier un paramètre ne modifie pas l'appelant}
+  Puisque le paramètre n'est qu'une copie, le modifier à l'intérieur de la fonction ne change en rien la variable qui a servi à l'appel : les deux sont des cases mémoire différentes, qui n'ont plus aucun lien une fois la copie faite.
+
+\begin{lstlisting}[language=c,caption={Modifier un paramètre ne modifie pas la variable de l'appelant}]
+void doubler(int n) {
+    n = n * 2;
+    printf("Dans doubler, n vaut %d\n", n);
+}
+
+int main(void) {
+    int x = 5;
+    doubler(x);
+    printf("Dans main, x vaut toujours %d\n", x);
+    return 0;
+}
+\end{lstlisting}
+
+  Ce programme affiche \texttt{Dans doubler, n vaut 10}, puis \texttt{Dans main, x vaut toujours 5} : \texttt{x} n'a jamais été modifiée, seule la copie \texttt{n} l'a été.
+\end{UPSTIwarning}

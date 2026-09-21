@@ -1,0 +1,127 @@
+\section{Séparer déclaration et définition : les fichiers d'en-tête}
+
+\subsection{Le problème}
+
+Quand un programme grossit, il devient impossible (et peu pratique) de tout écrire dans un seul fichier \texttt{.c}. On souhaite pouvoir :
+\begin{itemize}
+  \item regrouper des fonctions qui vont ensemble dans leur propre fichier (par exemple, toutes les fonctions de conversion de température) ;
+  \item réutiliser ces fonctions dans plusieurs programmes différents, sans recopier leur code ;
+  \item permettre à un autre fichier \texttt{.c} d'utiliser ces fonctions sans avoir à en connaître le détail d'implémentation.
+\end{itemize}
+
+Pour cela, le C sépare deux choses :
+\begin{description}
+  \item[la déclaration] (le prototype) : \emph{ce que fait} la fonction (son nom, ses paramètres, son type de retour), placée dans un fichier d'en-tête \texttt{.h} ;
+  \item[la définition] (le corps) : \emph{comment} elle le fait, placée dans un fichier source \texttt{.c}.
+\end{description}
+
+\begin{UPSTIinfor}{Rôle d'un fichier d'en-tête (A retenir !)}
+  Un fichier \texttt{.h} contient uniquement les \textbf{prototypes} des fonctions (et éventuellement des constantes, des types). Il ne contient \textbf{pas} le corps des fonctions. Il sert de « carte de visite » : il décrit ce qu'un fichier \texttt{.c} propose, sans en dévoiler le contenu.
+\end{UPSTIinfor}
+
+\subsection{Exemple : un mini-module de géométrie}
+
+On souhaite regrouper des fonctions de calcul géométrique dans un module réutilisable, composé de deux fichiers.
+
+\begin{lstlisting}[language=c,caption={\texttt{geometrie.h} : les déclarations}]
+#ifndef GEOMETRIE_H
+#define GEOMETRIE_H
+
+float aire_disque(float rayon);
+float aire_triangle(float base, float hauteur);
+
+#endif
+\end{lstlisting}
+
+\begin{lstlisting}[language=c,caption={\texttt{geometrie.c} : les définitions}]
+#include "geometrie.h"
+
+float aire_disque(float rayon) {
+    return 3.14159 * rayon * rayon;
+}
+
+float aire_triangle(float base, float hauteur) {
+    return base * hauteur / 2.0;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=c,caption={\texttt{main.c} : utilisation du module}]
+#include <stdio.h>
+#include "geometrie.h"
+
+int main(void) {
+    printf("Aire du disque : %.2f\n", aire_disque(2.0));
+    printf("Aire du triangle : %.2f\n", aire_triangle(4.0, 3.0));
+    return 0;
+}
+\end{lstlisting}
+
+Le fichier \texttt{main.c} peut utiliser \texttt{aire\_disque} et \texttt{aire\_triangle} sans jamais avoir vu leur corps : il lui suffit de connaître leur prototype, fourni par \texttt{geometrie.h}.
+
+\begin{UPSTIwarning}{\texttt{\#include <...>} ou  \texttt{\#include "..."} ?}
+  \begin{itemize}
+    \item \texttt{\#include <stdio.h>} : chevrons, pour une bibliothèque \textbf{standard} du langage (fournie par le compilateur).
+    \item \texttt{\#include "geometrie.h"} : guillemets, pour un fichier d'en-tête \textbf{du projet}, situé (en général) dans le même dossier que le fichier source.
+  \end{itemize}
+\end{UPSTIwarning}
+
+\subsection{La protection contre les inclusions multiples}
+
+Si un fichier d'en-tête est inclus deux fois dans le même programme (ce qui arrive facilement quand plusieurs fichiers \texttt{.c} incluent le même \texttt{.h}), le compilateur verrait deux fois les mêmes prototypes, ce qui provoque des erreurs de compilation.
+
+\begin{UPSTIinfor}{Le garde d'inclusion (\emph{include guard})}
+  On protège chaque fichier \texttt{.h} avec les trois lignes suivantes :
+  \begin{lstlisting}[language=c,caption={Garde d'inclusion}]
+#ifndef GEOMETRIE_H   // si GEOMETRIE_H n'est pas deja defini
+#define GEOMETRIE_H   // on le definit (pour la prochaine fois)
+
+// ... contenu du fichier .h ...
+
+#endif                // fin de la protection
+  \end{lstlisting}
+  À la première inclusion, \texttt{GEOMETRIE\_H} est défini et le contenu est lu normalement. À une éventuelle deuxième inclusion, \texttt{GEOMETRIE\_H} est déjà défini : le contenu entre \texttt{\#ifndef} et \texttt{\#endif} est ignoré.
+
+  Une alternative, plus courte mais moins portable, consiste à écrire simplement \texttt{\#pragma once} en première ligne du fichier \texttt{.h}.
+\end{UPSTIinfor}
+
+\begin{UPSTIactivite}[][Écrire un fichier d'en-tête]
+On souhaite créer un module \texttt{conversions} regroupant deux fonctions : \texttt{float km\_vers\_miles(float km)} et \texttt{float miles\_vers\_km(float miles)}.
+
+\UPSTIquestion{Écrire le contenu du fichier \texttt{conversions.h}, avec sa protection contre les inclusions multiples.}
+\UPSTIquadrillage{3}
+\UPSTIquestion{Quelle ligne faut-il ajouter en tête de \texttt{conversions.c} pour qu'il ait accès à ses propres prototypes ?}
+\UPSTIquadrillage{1}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Écrire un fichier d'en-tête}
+\begin{lstlisting}[language=c,caption={\texttt{conversions.h}}]
+#ifndef CONVERSIONS_H
+#define CONVERSIONS_H
+
+float km_vers_miles(float km);
+float miles_vers_km(float miles);
+
+#endif
+\end{lstlisting}
+Il faut ajouter \texttt{\#include "conversions.h"} en tête de \texttt{conversions.c} : cela permet au compilateur de vérifier que les fonctions définies correspondent bien aux prototypes annoncés.
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\subsection{Compiler plusieurs fichiers \texttt{.c} ensemble}
+
+Un programme peut être réparti sur plusieurs fichiers \texttt{.c}, chacun avec son fichier \texttt{.h} associé. Il faut alors indiquer au compilateur \textbf{tous} les fichiers \texttt{.c} à compiler ensemble :
+
+\begin{lstlisting}[language=bash,caption={Compilation de plusieurs fichiers sources}]
+gcc main.c geometrie.c -o programme
+\end{lstlisting}
+
+\begin{UPSTIinfor}{Ce qu'il faut retenir sur les fichiers d'en-tête}
+  \begin{itemize}
+    \item Un \texttt{.h} contient des \textbf{prototypes} (déclarations), un \texttt{.c} contient le \textbf{corps} des fonctions (définitions).
+    \item On protège chaque \texttt{.h} avec un garde d'inclusion (\texttt{\#ifndef}/\texttt{\#define}/\texttt{\#endif} ou \texttt{\#pragma once}).
+    \item Tous les fichiers \texttt{.c} utilisés par un programme doivent être passés au compilateur en même temps.
+  \end{itemize}
+\end{UPSTIinfor}
+
+Pour des projets plus gros, comportant de nombreux fichiers, on utilise en général un outil qui automatise cette compilation (un \texttt{Makefile}, par exemple) : ce sera vu plus tard.

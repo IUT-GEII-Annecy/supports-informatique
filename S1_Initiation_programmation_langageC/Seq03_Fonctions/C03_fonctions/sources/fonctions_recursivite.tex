@@ -1,0 +1,114 @@
+\section{Pour aller plus loin : La récursivité}
+
+\subsection{Une fonction qui s'appelle elle-même}
+
+Rien n'empêche une fonction d'appeler... elle-même, dans son propre corps. On parle alors de \textbf{fonction récursive}.
+
+\begin{lstlisting}[language=c,caption={Un compte à rebours},label=codeCompteARebours]
+void compte_a_rebours(int n) {
+    if (n > 0) {
+        printf("%d... ", n);
+        compte_a_rebours(n - 1);
+    } else {
+        printf("Décollage !\n");
+    }
+}
+\end{lstlisting}
+
+\begin{UPSTIactivite}[][Suivre l'exécution]
+On appelle \texttt{compte\_a\_rebours(3)}.
+\UPSTIquestion{Quelle valeur de \texttt{n} est utilisée à chaque appel successif ?}
+\UPSTIquestion{Quel est l'affichage produit ?}
+\UPSTIquestion{Que se passerait-il si la fonction s'appelait toujours elle-même, sans jamais passer par le \texttt{else} ?}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Suivre l'exécution}
+Les appels successifs utilisent \texttt{n = 3}, puis \texttt{n = 2}, puis \texttt{n = 1}, puis \texttt{n = 0}.
+
+Affichage : \texttt{3... 2... 1... Décollage !}
+
+Si la fonction s'appelait toujours elle-même sans condition d'arrêt, elle ne s'arrêterait jamais : c'est une \textbf{récursion infinie}, qui finit par planter le programme (dépassement de la pile d'appels).
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\begin{UPSTIwarning}{Toujours prévoir un cas d'arrêt}
+  Une fonction récursive doit \textbf{toujours} comporter :
+  \begin{itemize}
+    \item un ou plusieurs \textbf{cas de base} : des situations simples où la fonction répond directement, sans se rappeler elle-même ;
+    \item un \textbf{cas récursif} : la fonction se rappelle elle-même avec des paramètres qui se rapprochent du cas de base.
+  \end{itemize}
+  Sans cas de base atteignable, les appels s'enchaînent indéfiniment.
+\end{UPSTIwarning}
+
+\begin{UPSTIinfor}{Méthode pour construire une fonction récursive (A retenir !)}
+  \begin{enumerate}
+    \item Identifier le \textbf{cas de base} : la version la plus simple du problème, dont la réponse est immédiate.
+    \item Identifier le \textbf{cas récursif} : comment résoudre le problème à partir d'un problème \emph{plus petit} du même type, déjà résolu par un appel récursif.
+    \item Vérifier que chaque appel récursif se rapproche bien du cas de base.
+  \end{enumerate}
+\end{UPSTIinfor}
+
+\UPSTIremarque[Un air de déjà-vu avec les poupées russes]{
+  Une fonction récursive ressemble à une poupée russe : pour ouvrir la plus grande poupée, il faut d'abord savoir ouvrir la poupée qu'elle contient, un peu plus petite, et ainsi de suite... jusqu'à la plus petite poupée, qui ne s'ouvre plus (le cas de base).
+}
+
+\subsection{Un exemple classique : la somme des $n$ premiers entiers}
+
+On souhaite calculer $1 + 2 + \dots{} + n$.
+
+\begin{itemize}
+  \item \textbf{Cas de base :} la somme des 0 premiers entiers vaut 0.
+  \item \textbf{Cas récursif :} la somme des $n$ premiers entiers vaut $n$ plus la somme des $(n-1)$ premiers entiers.
+\end{itemize}
+
+\begin{UPSTIactivite}[][Une somme récursive]
+\UPSTIquestion{Écrire une fonction \texttt{int somme(int n)} qui calcule cette somme de manière récursive.}
+\UPSTIquestion{Cette même fonction pourrait aussi être écrite avec une boucle \texttt{for}. Quelle version vous semble la plus lisible ici ?}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Une somme récursive}
+\begin{lstlisting}[language=c,caption={Correction}]
+int somme(int n) {
+    if (n == 0) {
+        return 0;              // cas de base
+    } else {
+        return n + somme(n - 1); // cas recursif
+    }
+}
+\end{lstlisting}
+Les deux versions sont valables ; la version avec une boucle \texttt{for} est souvent plus naturelle pour un simple cumul, mais l'écriture récursive prépare à des problèmes où la version itérative est bien moins évidente (parcours d'arbres, de labyrinthes, \dots{}).
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\subsection{Récursivité et paramètres qui changent}
+
+\begin{UPSTIwarning}{Chaque appel récursif a ses propres variables}
+  Lors d'un appel récursif, une \textbf{nouvelle} copie des variables locales et des paramètres est créée pour cet appel. Modifier une variable locale dans un appel ne modifie pas la variable de même nom d'un autre appel : chaque appel de la fonction possède son propre jeu de variables, indépendant des autres.
+\end{UPSTIwarning}
+
+\begin{UPSTIactivite}[][Conversion récursive]
+On souhaite écrire une fonction qui affiche, chiffre par chiffre, les chiffres d'un entier positif $n$ écrit en base 10 (par exemple, pour $n=4205$, elle affiche \texttt{4 2 0 5}).
+
+Indication : le dernier chiffre de $n$ est \texttt{n \% 10}, et le reste du nombre (privé de son dernier chiffre) est \texttt{n / 10}.
+
+\UPSTIquestion{Quel est le cas de base le plus naturel ici (le nombre le plus simple à afficher) ?}
+\UPSTIquestion{Écrire une fonction \texttt{void afficher\_chiffres(int n)} récursive qui affiche les chiffres de $n$ dans l'ordre, séparés par un espace.}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Conversion récursive}
+Le cas de base le plus naturel est un nombre à un seul chiffre ($n < 10$) : on l'affiche directement.
+\begin{lstlisting}[language=c,caption={Correction}]
+void afficher_chiffres(int n) {
+    if (n < 10) {
+        printf("%d ", n);          // cas de base
+    } else {
+        afficher_chiffres(n / 10); // cas recursif : tous les chiffres sauf le dernier
+        printf("%d ", n % 10);     // puis le dernier chiffre
+    }
+}
+\end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}

@@ -1,0 +1,21 @@
+
+\section{Réutiliser une fonction dans une autre}
+
+Une fonction peut en appeler une autre, déjà écrite. C'est même l'un des grands intérêts des fonctions : construire des outils simples, puis les combiner pour résoudre des problèmes plus complexes, sans jamais réécrire deux fois le même calcul.
+\begin{UPSTIactivite}[][Combiner des fonctions]
+On dispose d'une fonction \texttt{float perimetre\_cercle(float rayon)} qui renvoie le périmètre d'un cercle ($P = 2 \pi r$).
+
+\UPSTIquestion{Écrire une fonction \texttt{float perimetre\_couronne(float rayon\_interne, float rayon\_externe)} qui renvoie le périmètre total d'une couronne (la somme des deux périmètres de cercle), en réutilisant \texttt{perimetre\_cercle}.}
+\UPSTIquestion{Quel est l'intérêt d'écrire \texttt{perimetre\_couronne} de cette manière plutôt que de recalculer les deux périmètres directement ?}
+\end{UPSTIactivite}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{Combiner des fonctions}
+\begin{lstlisting}[language=c,caption={Correction}]
+float perimetre_couronne(float rayon_interne, float rayon_externe) {
+    return perimetre_cercle(rayon_interne) + perimetre_cercle(rayon_externe);
+}
+\end{lstlisting}
+On évite de recopier la formule $2 \pi r$ deux fois : si l'on découvre une erreur dans le calcul du périmètre d'un cercle, il suffit de la corriger dans \texttt{perimetre\_cercle}, et la correction profite automatiquement à \texttt{perimetre\_couronne}.
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
