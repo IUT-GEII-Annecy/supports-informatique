@@ -1,0 +1,236 @@
+% \begin{UPSTIinfor}{Rappel : le pseudo-code}
+%     Comme au TD précédent, on décrira parfois l'idée d'un programme en \textbf{pseudo-code}, indépendamment du C : \verb|variable <- expression| pour une affectation, \verb|SI ... ALORS ... SINON ... FIN SI| pour un aiguillage, \verb|AFFICHER ...| pour un affichage. On y ajoute ici la notation pour une répétition :
+%     \begin{verbatim}
+% TANT QUE condition FAIRE
+%     instruction(s)
+% FIN TANT QUE
+%     \end{verbatim}
+%     qui se lit \og tant que la condition est vraie, on répète les instructions \fg, et qui est l'équivalent du bloc Scratch \og répéter jusqu'à... \fg{} (à la condition inversée près).
+% \end{UPSTIinfor}
+
+\begin{UPSTIinfor}{Trace d'une boucle \texttt{while}}
+    Tracer l'exécution d'une boucle, c'est noter, tour par tour, la valeur de chaque variable et le résultat du test de la condition, jusqu'à ce que la boucle s'arrête.
+    \begin{lstlisting}[language=C]
+int i = 0;
+while (i < 3)
+{
+    printf("Tour %d\n", i);
+    i = i + 1;
+}
+\end{lstlisting}
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Avant le test} & \texttt{i < 3} ? & \textbf{Affiché, puis \texttt{i} devient} \\
+            \hline
+            i = 0 & vrai & \og Tour 0\fg, i = 1 \\
+            \hline
+            i = 1 & vrai & \og Tour 1\fg, i = 2 \\
+            \hline
+            i = 2 & vrai & \og Tour 2\fg, i = 3 \\
+            \hline
+            i = 3 & faux & (rien, la boucle s'arrête) \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{UPSTIinfor}
+
+\section{Revoir les bases des boucles.}
+\begin{UPSTIexercice}{Trace d'une boucle \texttt{while}}
+    On exécute le code suivant.
+    \begin{lstlisting}[language=C]
+int compteur = 5;
+while (compteur > 0)
+{
+    printf("Reste %d\n", compteur);
+    compteur = compteur - 2;
+}
+printf("Fin, compteur = %d\n", compteur);
+\end{lstlisting}
+    \UPSTIquestion{Compléter le tableau de trace ci-dessous, ligne par tour de boucle, jusqu'à la sortie de la boucle.}
+
+    \begin{center}
+        \begin{tabular}{|c|c|p{4cm}|}
+            \hline
+            \textbf{Valeur de \texttt{compteur} avant le test} & \textbf{\texttt{compteur > 0} ?} & \textbf{Affiché} \\
+            \hline
+             & & \\[0.3cm]
+            \hline
+             & & \\[0.3cm]
+            \hline
+             & & \\[0.3cm]
+            \hline
+             & & \\[0.3cm]
+            \hline
+        \end{tabular}
+    \end{center}
+    \UPSTIquestion{Quelle est la dernière ligne affichée par le programme (après la sortie de la boucle) ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Trace d'une boucle \texttt{while}}
+        \begin{center}
+            \begin{tabular}{|c|c|c|}
+                \hline
+                \textbf{\texttt{compteur} avant le test} & \textbf{\texttt{compteur > 0} ?} & \textbf{Affiché} \\
+                \hline
+                5 & vrai & \og Reste 5\fg, compteur devient 3 \\
+                \hline
+                3 & vrai & \og Reste 3\fg, compteur devient 1 \\
+                \hline
+                1 & vrai & \og Reste 1\fg, compteur devient -1 \\
+                \hline
+                -1 & faux & (rien, sortie de boucle) \\
+                \hline
+            \end{tabular}
+        \end{center}
+        Dernière ligne affichée : \texttt{Fin, compteur = -1}. Le compteur passe directement de 1 à -1 sans jamais valoir exactement 0 : la condition d'arrêt \texttt{compteur > 0} n'a pas besoin que \texttt{compteur} atteigne 0 pile pour devenir fausse.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIwarning}{La boucle infinie}
+    Une boucle \texttt{while} dont la condition reste \textbf{toujours vraie} ne s'arrête jamais : c'est une \textbf{boucle infinie}. C'est presque toujours une erreur, le plus souvent parce que l'on a oublié de faire évoluer, à l'intérieur de la boucle, la variable testée par la condition.
+\end{UPSTIwarning}
+
+\begin{UPSTIexercice}{Trouver et corriger une boucle infinie}
+    Le code suivant devrait afficher les nombres de 0 à 4, mais il ne s'arrête jamais lorsqu'on l'exécute.
+    \begin{lstlisting}[language=C]
+int i = 0;
+while (i < 5)
+{
+    printf("%d\n", i);
+}
+\end{lstlisting}
+    \UPSTIquestion{Expliquer précisément pourquoi ce code ne s'arrête jamais : que vaut \texttt{i} à chaque tour de boucle ?}
+    \UPSTIquestion{Corriger le code pour qu'il affiche bien les nombres de 0 à 4 puis s'arrête.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Trouver et corriger une boucle infinie}
+        La variable \texttt{i} vaut \texttt{0} à chaque tour de boucle : rien, dans le corps de la boucle, ne modifie \texttt{i}. La condition \texttt{i < 5} reste donc toujours vraie, et la boucle ne s'arrête jamais.
+        \begin{lstlisting}[language=C]
+int i = 0;
+while (i < 5)
+{
+    printf("%d\n", i);
+    i = i + 1;
+}
+\end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+
+\begin{UPSTIexercice}{Repérer les trois parties d'un \texttt{for}}
+    On considère le code suivant.
+    \begin{lstlisting}[language=C]
+for (int compteurPieces = 1; compteurPieces <= 6; compteurPieces = compteurPieces + 1)
+{
+    printf("Piece numero %d fabriquee\n", compteurPieces);
+}
+\end{lstlisting}
+    \UPSTIquestion{\textbf{Entourer} l'\textbf{initialisation}, \textbf{souligner} la \textbf{condition} et \textbf{encadrer} la \textbf{mise à jour} dans l'en-tête du \texttt{for} (les trois parties séparées par des \texttt{;}).}
+    \UPSTIquestion{Combien de fois le bloc d'instructions est-il exécuté ? Justifier en indiquant la première et la dernière valeur prise par \texttt{compteurPieces}.}
+    \UPSTIquestion{Réécrire ce même programme avec une boucle \texttt{while}, en faisant apparaître explicitement, comme dans le \texttt{for}, l'initialisation avant la boucle et la mise à jour dans le corps de la boucle.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Repérer les trois parties d'un \texttt{for}}
+        Initialisation : \texttt{int compteurPieces = 1}. Condition : \texttt{compteurPieces <= 6}. Mise à jour : \texttt{compteurPieces = compteurPieces + 1}.
+
+        Le bloc s'exécute \textbf{6 fois}, pour \texttt{compteurPieces} valant successivement 1, 2, 3, 4, 5, 6 (la boucle s'arrête dès que \texttt{compteurPieces} vaut 7, car la condition devient fausse).
+
+        \begin{lstlisting}[language=C]
+int compteurPieces = 1;
+while (compteurPieces <= 6)
+{
+    printf("Piece numero %d fabriquee\n", compteurPieces);
+    compteurPieces = compteurPieces + 1;
+}
+\end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Prédire l'affichage d'un \texttt{for}}
+    On exécute le programme suivant.
+    \begin{lstlisting}[language=C]
+for (int i = 10; i > 0; i = i - 3)
+{
+    printf("i = %d\n", i);
+}
+printf("Boucle terminee\n");
+\end{lstlisting}
+    \UPSTIquestion{Prédire, ligne par ligne, tout ce que ce programme affiche.}
+    \UPSTIquestion{Quelle est la toute dernière valeur de \texttt{i} pour laquelle le bloc de la boucle s'exécute encore ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Prédire l'affichage d'un \texttt{for}}
+        \begin{lstlisting}[language=bash,style=console]
+i = 10
+i = 7
+i = 4
+i = 1
+Boucle terminee
+\end{lstlisting}
+        La dernière valeur pour laquelle le bloc s'exécute est \texttt{i = 1} (car \texttt{1 > 0} est vrai) ; ensuite \texttt{i} devient \texttt{-2}, et \texttt{-2 > 0} est faux, donc la boucle s'arrête sans afficher \texttt{i = -2}.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIwarning}{Le piège du \og un cran \fg{} (off-by-one)}
+    Utiliser \texttt{<} au lieu de \texttt{<=} (ou inversement) dans la condition d'une boucle est l'une des erreurs les plus fréquentes en programmation : elle ne provoque \textbf{aucune erreur de compilation}, mais fait exécuter la boucle une fois de trop, ou une fois de moins, que prévu.
+\end{UPSTIwarning}
+
+\begin{UPSTIexercice}{Un cran de trop, ou de trop peu}
+    On veut afficher exactement les nombres de 1 à 5 (bornes incluses). Un étudiant propose le code suivant :
+    \begin{lstlisting}[language=C]
+for (int i = 1; i < 5; i = i + 1)
+{
+    printf("%d\n", i);
+}
+\end{lstlisting}
+    \UPSTIquestion{Ce code affiche-t-il bien les nombres de 1 à 5 ? Sinon, préciser.}
+    \UPSTIquestion{Corriger le code.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Un cran de trop, ou de trop peu}
+        Ce code affiche seulement \texttt{1, 2, 3, 4} : le nombre \texttt{5} \textbf{manque}, car la condition \texttt{i < 5} devient fausse dès que \texttt{i} atteint 5, avant même l'exécution du bloc pour cette valeur.
+        \begin{lstlisting}[language=C]
+for (int i = 1; i <= 5; i = i + 1)
+{
+    printf("%d\n", i);
+}
+\end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Traduire un \texttt{while} en \texttt{for}}
+    On considère le code suivant, qui affiche une jauge de charge de batterie par paliers de 20\%.
+    \begin{lstlisting}[language=C]
+int charge = 0;
+while (charge <= 100)
+{
+    printf("Charge : %d %%\n", charge);
+    charge = charge + 20;
+}
+\end{lstlisting}
+    \UPSTIquestion{Identifier, dans ce code, ce qui correspond à l'\textbf{initialisation}, la \textbf{condition} et à la \textbf{mise à jour} d'une boucle \texttt{for}.}
+    \UPSTIquestion{Réécrire ce programme en utilisant une boucle \texttt{for} unique, produisant exactement le même affichage.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Traduire un \texttt{while} en \texttt{for}}
+        Initialisation : \texttt{charge = 0} (avant la boucle). Condition : \texttt{charge <= 100}. Mise à jour : \texttt{charge = charge + 20} (à la fin du corps de la boucle).
+        \begin{lstlisting}[language=C]
+for (int charge = 0; charge <= 100; charge = charge + 20)
+{
+    printf("Charge : %d %%\n", charge);
+}
+\end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}

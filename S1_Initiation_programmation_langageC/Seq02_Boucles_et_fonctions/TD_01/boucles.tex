@@ -10,9 +10,15 @@
 \input{../preamble.tex}
 \input{../../preamble_module.tex}
 
+\renewcommand{\thesection}{Partie \arabic{section}}
+
 \documentVersion{E}
 \newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
 \newcommand{\UPSTInumero}{\sequence.1}
+\UPSTIactiviteStyleClassique
+\UPSTIquestionStyleSimple
+\UPSTIquestionActiviteNumeroLocal
+% \newcommand{\UPSTItitre}{Exercices sur les structures de répétitions (boucles)}
 \begin{document}
 
 \input{main.tex}

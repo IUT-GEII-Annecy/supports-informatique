@@ -1,0 +1,116 @@
+\section{Les boucles imbirquées}
+
+\begin{UPSTIexercice}{Trace d'une boucle imbriquée}
+    On exécute un programme contenant les lignes suivantes : 
+    \begin{lstlisting}[language=C]
+for (int ligne = 1; ligne <= 2; ligne = ligne + 1)
+{
+    for (int colonne = 1; colonne <= 3; colonne = colonne + 1)
+    {
+        printf("(%d,%d) ", ligne, colonne);
+    }
+    printf("\n");
+}
+\end{lstlisting}
+    \UPSTIquestion{Compléter le tableau de trace ci-dessous, en indiquant, pour chaque passage dans le bloc le plus interne, la valeur de \texttt{ligne}, celle de \texttt{colonne}, et ce qui est affiché.}
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \textbf{Passage n°} & \texttt{ligne} & \texttt{colonne} & \textbf{Affiché} \\
+            \hline
+            1 & & & \\[0.3cm]
+            \hline
+            2 & & & \\[0.3cm]
+            \hline
+            3 & & & \\[0.3cm]
+            \hline
+            4 & & & \\[0.3cm]
+            \hline
+            5 & & & \\[0.3cm]
+            \hline
+            6 & & & \\[0.3cm]
+            \hline
+        \end{tabular}
+    \end{center}
+    \UPSTIquestion{Combien de fois le \texttt{printf("\textbackslash n")} (celui qui n'est \textbf{pas} imbriqué dans la boucle \texttt{colonne}) est-il exécuté au total ? Justifier.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Trace d'une boucle imbriquée}
+        \begin{center}
+            \begin{tabular}{|c|c|c|c|}
+                \hline
+                \textbf{Passage n°} & \texttt{ligne} & \texttt{colonne} & \textbf{Affiché} \\
+                \hline
+                1 & 1 & 1 & \texttt{(1,1) } \\
+                \hline
+                2 & 1 & 2 & \texttt{(1,2) } \\
+                \hline
+                3 & 1 & 3 & \texttt{(1,3) } \\
+                \hline
+                4 & 2 & 1 & \texttt{(2,1) } \\
+                \hline
+                5 & 2 & 2 & \texttt{(2,2) } \\
+                \hline
+                6 & 2 & 3 & \texttt{(2,3) } \\
+                \hline
+            \end{tabular}
+        \end{center}
+        Le \texttt{printf("\textbackslash n")} externe s'exécute \textbf{2 fois} : une fois par tour de la boucle \texttt{ligne}, une fois que la boucle interne \texttt{colonne} est entièrement terminée pour cette ligne.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\section{\texttt{do...while} : au moins une fois}
+
+\begin{UPSTIinfor}{Rappel : la particularité du \texttt{do...while}}
+    Une boucle \texttt{do...while} teste sa condition \textbf{après} avoir exécuté le bloc : celui-ci s'exécute donc toujours \textbf{au moins une fois}, même si la condition est fausse dès le départ. C'est la seule différence de fond avec un \texttt{while}, où la condition est testée \textbf{avant} toute exécution du bloc.
+\end{UPSTIinfor}
+
+\begin{UPSTIexercice}{\texttt{while} contre \texttt{do...while} : quand ça se voit}
+    On considère les deux programmes suivants, tous deux exécutés avec \texttt{stock} valant initialement \texttt{0}.
+    \noindent\\
+    \begin{minipage}[t]{0.48\linewidth}
+        \textbf{Programme A}
+        \begin{lstlisting}[language=C]
+int stock = 0;
+while (stock > 0)
+{
+    printf("Stock : %d\n", stock);
+    stock = stock - 1;
+}
+printf("Fin A\n");
+        \end{lstlisting}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.48\linewidth}
+        \textbf{Programme B}
+        \begin{lstlisting}[language=C]
+int stock = 0;
+do
+{
+    printf("Stock : %d\n", stock);
+    stock = stock - 1;
+} while (stock > 0);
+printf("Fin B\n");
+        \end{lstlisting}
+    \end{minipage}
+    \UPSTIquestion{Prédire tout ce qu'affiche le programme A.}
+    \UPSTIquestion{Prédire tout ce qu'affiche le programme B.}
+    \UPSTIquestion{Expliquer les éventuelles différences.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{\texttt{while} contre \texttt{do...while} : quand ça se voit}
+        Programme A : la condition \texttt{stock > 0} est testée \textbf{avant} tout passage dans le bloc ; avec \texttt{stock = 0}, elle est fausse immédiatement, donc le bloc ne s'exécute jamais. Affichage : \texttt{Fin A}.
+
+        Programme B : le bloc s'exécute une première fois \textbf{avant} tout test. Affichage :
+        \begin{lstlisting}[language=bash,style=console]
+Stock : 0
+Fin B
+        \end{lstlisting}
+        (après ce premier passage, \texttt{stock} devient \texttt{-1}, et \texttt{-1 > 0} est faux, donc la boucle s'arrête.)
+
+        Les deux programmes n'affichent \textbf{pas} la même chose : avec une condition initialement fausse, le \texttt{do...while} exécute quand même une fois son bloc, contrairement au \texttt{while}. C'est exactement le cas où la différence entre les deux structures devient visible.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}

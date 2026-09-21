@@ -1,0 +1,91 @@
+\section{Exercice de conception}
+
+\begin{UPSTIexercice}{Alarme de dépassement de seuil}
+    On simule la surveillance d'une grandeur mesurée périodiquement par un capteur (une nouvelle mesure est saisie à chaque tour de boucle).
+
+    \textbf{Cahier des charges.} Le programme doit se comporter ainsi :
+    \begin{itemize}
+        \item Le programme demande à l'utilisateur de saisir successivement des mesures, une par une.
+        \item La saisie s'arrête dès que l'utilisateur entre la valeur \texttt{-999} (valeur sentinelle, qui ne représente pas une mesure réelle).
+        \item Si une mesure dépasse strictement 50, le programme affiche un message d'alerte.
+        \item Lorsque la saisie est terminée, le programme affiche le nombre total de mesures qui ont déclenché une alerte.
+    \end{itemize}
+
+    \UPSTIquestion{Proposer un \textbf{pseudo-code} pour ce programme.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Alarme de dépassement de seuil}
+        \begin{verbatim}
+total_depassements <- 0
+AFFICHER "Mesure (-999 pour arreter) : "
+LIRE mesure
+
+TANT QUE mesure != -999 FAIRE
+    SI mesure > 50 ALORS
+        AFFICHER "ALERTE : depassement de seuil"
+        total_depassements <- total_depassements + 1
+    FIN SI
+    AFFICHER "Mesure (-999 pour arreter) : "
+    LIRE mesure
+FIN TANT QUE
+
+AFFICHER "Nombre de depassements : ", total_depassements
+        \end{verbatim}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+\begin{UPSTIexercice}{Régulation d'un chauffage par hystérésis}
+    On simule la régulation tout-ou-rien d'un chauffage d'appoint, asservi à une température mesurée périodiquement par un capteur (une nouvelle mesure est saisie à chaque tour de boucle).
+
+    \textbf{Cahier des charges.} Le programme doit se comporter ainsi :
+    \begin{itemize}
+        \item Le programme demande à l'utilisateur de saisir successivement des températures mesurées (des nombres, en °C), une par une.
+        \item La saisie s'arrête dès que l'utilisateur entre la valeur \texttt{-999} (valeur sentinelle, qui ne représente pas une température réelle).
+        \item Le chauffage possède un état : \textbf{allumé} ou \textbf{éteint}. Avant la première mesure, il est éteint.
+        \item Si la température mesurée est \textbf{strictement inférieure à 18}, le chauffage doit être allumé (s'il ne l'était pas déjà).
+        \item Si la température mesurée est \textbf{strictement supérieure à 20}, le chauffage doit être éteint (s'il ne l'était pas déjà).
+        \item Si la température mesurée est comprise entre 18 et 20 (bornes incluses), le chauffage \textbf{garde l'état qu'il avait} avant cette mesure : il ne doit pas changer d'état dans cette zone.
+        \item Après chaque mesure, le programme affiche la température lue ainsi que le nouvel état du chauffage.
+        \item Lorsque la saisie est terminée, le programme affiche le nombre total de fois où le chauffage a changé d'état (d'allumé à éteint, ou d'éteint à allumé) au cours de la simulation.
+    \end{itemize}
+
+    \UPSTIquestion{Proposer un \textbf{pseudo-code} pour ce programme.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Régulation d'un chauffage par hystérésis}
+        La difficulté de conception ne vient pas de la boucle (arrêt sur sentinelle \texttt{-999}, comme dans l'exercice précédent), mais du fait que la décision « allumer ou éteindre » ne dépend pas \textbf{seulement} de la température qui vient d'être lue : elle dépend aussi de l'état \textbf{précédent} du chauffage, qu'il faut donc conserver d'une itération à l'autre. La zone intermédiaire \([18, 20]\) ne doit \textbf{rien changer} : un piège classique est d'écrire un \texttt{SI}/\texttt{SINON} à deux branches qui, sans le vouloir, force une décision (allumé ou éteint) même dans cette zone -- il faut bien une structure à trois cas, dont un qui ne fait rien à l'état.
+
+        \begin{verbatim}
+chauffage_allume <- FAUX
+nombre_changements <- 0
+
+AFFICHER "Temperature (-999 pour arreter) : "
+LIRE temperature
+
+TANT QUE temperature != -999 FAIRE
+    SI temperature < 18 ALORS
+        nouvel_etat <- VRAI
+    SINON SI temperature > 20 ALORS
+        nouvel_etat <- FAUX
+    SINON
+        nouvel_etat <- chauffage_allume  % zone morte : aucun changement
+    FIN SI
+
+    SI nouvel_etat != chauffage_allume ALORS
+        nombre_changements <- nombre_changements + 1
+    FIN SI
+    chauffage_allume <- nouvel_etat
+
+    AFFICHER "Temperature : ", temperature, " -> chauffage ", chauffage_allume
+    AFFICHER "Temperature (-999 pour arreter) : "
+    LIRE temperature
+FIN TANT QUE
+
+AFFICHER "Nombre de changements d'etat : ", nombre_changements
+        \end{verbatim}
+
+        \textbf{Pourquoi deux seuils plutôt qu'un seul ?} Avec un seuil unique (par exemple : allumer si $< 19$, éteindre si $> 19$), une température qui oscille tout près de 19°C ferait changer d'état le chauffage à chaque mesure -- ce qu'on appelle le \textbf{pompage}. C'est pour l'éviter que les systèmes de régulation tout-ou-rien utilisent une \textbf{bande morte} (ici, l'intervalle \([18, 20]\)) entre le seuil de mise en marche et le seuil d'arrêt : c'est le principe de l'\textbf{hystérésis}, que vous retrouverez en automatisme.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
