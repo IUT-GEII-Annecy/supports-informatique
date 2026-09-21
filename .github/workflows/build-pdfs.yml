@@ -8,4 +8,11 @@ on:
 jobs:
   publish:
     uses: IUT-GEII-Annecy/ci-latex-upsti/.github/workflows/build-pdfs.yml@main
+    with:
+      site-title: "Supports Informatique - BUT GEII"
+      site-subtitle: "Tous les supports de cours, td et tp pour le cours d'informatique Semestre 1 - GEII IUT Annecy"
+      group-label: "Séquence"
+      classify-mode: folder
+      exclude-patterns: |
+        /Evaluations/
     secrets: inherit

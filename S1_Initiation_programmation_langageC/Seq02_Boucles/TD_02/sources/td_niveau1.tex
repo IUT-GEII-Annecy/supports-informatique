@@ -1,0 +1,124 @@
+\section{Niveau 1}
+
+\subsection{Fonctions \texttt{void} : déclaration, définition, appel}
+
+\begin{UPSTIexercice}{Repérer déclaration, définition et appels}
+    On considère le programme suivant.
+    \begin{lstlisting}[language=C, numbers=left]
+#include <stdio.h>
+
+void afficher_separateur(void);
+
+int main(void)
+{
+    printf("Debut du rapport\n");
+    afficher_separateur();
+    printf("Mesure 1 : OK\n");
+    afficher_separateur();
+    printf("Mesure 2 : OK\n");
+    return 0;
+}
+
+void afficher_separateur(void)
+{
+    printf("----------\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{Indiquer le numéro de la ligne où se trouve la \textbf{déclaration} (le prototype) de \texttt{afficher\_separateur}.}
+    \UPSTIquestion{Indiquer le numéro de la ligne où se trouve la \textbf{définition} de \texttt{afficher\_separateur}.}
+    \UPSTIquestion{Indiquer les numéros des lignes où la fonction est \textbf{appelée}.}
+    \UPSTIquestion{Prédire l'intégralité de l'affichage produit par ce programme.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Repérer déclaration, définition et appels}
+        Déclaration : ligne 3. Définition : lignes 15-18. Appels : lignes 8 et 10.
+        \begin{lstlisting}[language=bash,style=console]
+Debut du rapport
+----------
+Mesure 1 : OK
+----------
+Mesure 2 : OK
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Fonctions avec paramètres}
+
+\begin{UPSTIexercice}{Prédire l'affichage de plusieurs appels}
+    On considère le programme suivant.
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+void afficher_ligne(char c, int n)
+{
+    for (int i = 0; i < n; i = i + 1)
+    {
+        printf("%c", c);
+    }
+    printf("\n");
+}
+
+int main(void)
+{
+    afficher_ligne('=', 3);
+    afficher_ligne('*', 6);
+    afficher_ligne('=', 3);
+    return 0;
+}
+    \end{lstlisting}
+    \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
+    \UPSTIquestion{Que se passerait-il si, dans \texttt{main}, on écrivait \texttt{afficher\_ligne(3, '=');} (arguments inversés) ? On ne demande pas de prédire un affichage précis, mais d'expliquer le problème de correspondance entre arguments et paramètres.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Prédire l'affichage de plusieurs appels}
+        \begin{lstlisting}[language=bash,style=console]
+===
+******
+===
+        \end{lstlisting}
+        Les paramètres sont reçus \textbf{dans l'ordre} de leur déclaration : le premier argument est copié dans \texttt{c} (de type \texttt{char}), le second dans \texttt{n} (de type \texttt{int}). En écrivant \texttt{afficher\_ligne(3, '=')}, c'est \texttt{3} qui serait copié dans \texttt{c} et le code de \texttt{'='} (un caractère, donc en réalité un petit entier) qui serait copié dans \texttt{n} : le programme ne produirait pas du tout le résultat voulu, sans forcément provoquer d'erreur à la compilation.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIwarning}{Rappel : le paramètre est une copie (passage par valeur)}
+    Modifier un paramètre \textbf{à l'intérieur} d'une fonction ne modifie jamais la variable utilisée par l'appelant : le paramètre ne reçoit qu'une \textbf{copie} de sa valeur.
+\end{UPSTIwarning}
+
+\begin{UPSTIexercice}{Le piège du passage par valeur}
+    On considère le programme suivant.
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+void doubler(int x)
+{
+    x = x * 2;
+    printf("Dans doubler, x = %d\n", x);
+}
+
+int main(void)
+{
+    int valeur = 5;
+    printf("Avant l'appel, valeur = %d\n", valeur);
+    doubler(valeur);
+    printf("Apres l'appel, valeur = %d\n", valeur);
+    return 0;
+}
+    \end{lstlisting}
+    \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
+    \UPSTIquestion{L'appel \texttt{doubler(valeur);} a-t-il modifié la variable \texttt{valeur} de \texttt{main} ? Justifier en une phrase à l'aide de la notion de passage par valeur.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Le piège du passage par valeur}
+        \begin{lstlisting}[language=bash,style=console]
+Avant l'appel, valeur = 5
+Dans doubler, x = 10
+Apres l'appel, valeur = 5
+        \end{lstlisting}
+        Non, \texttt{valeur} n'est pas modifiée : lors de l'appel, \texttt{x} reçoit une \textbf{copie} de la valeur de \texttt{valeur} (soit 5). Modifier \texttt{x} à l'intérieur de \texttt{doubler} ne touche que cette copie locale ; la variable \texttt{valeur} de \texttt{main}, qui est une case mémoire distincte, garde sa valeur d'origine.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}

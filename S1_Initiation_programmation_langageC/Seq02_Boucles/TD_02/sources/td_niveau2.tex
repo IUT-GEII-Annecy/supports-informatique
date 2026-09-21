@@ -1,0 +1,269 @@
+\section{Niveau 2}
+
+\subsection{Fonctions avec valeur de retour}
+
+\begin{UPSTIexercice}{Prédire l'affichage d'une fonction avec retour}
+    On considère le programme suivant.
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int maximum(int a, int b)
+{
+    if (a > b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+int main(void)
+{
+    int m = maximum(7, 12);
+    printf("Le plus grand est %d\n", m);
+    printf("Directement : %d\n", maximum(30, 4) + 1);
+    return 0;
+}
+    \end{lstlisting}
+    \UPSTIquestion{Pour l'appel \texttt{maximum(7, 12)}, indiquer lequel des deux \texttt{return} est réellement exécuté.}
+    \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
+    \UPSTIquestion{Une valeur renvoyée par une fonction (comme \texttt{maximum(30, 4)}) peut-elle être utilisée directement dans un calcul, sans passer par une variable intermédiaire ? Justifier à partir de la seconde ligne affichée.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Prédire l'affichage d'une fonction avec retour}
+        Pour \texttt{maximum(7, 12)}, la condition \texttt{a > b} (\texttt{7 > 12}) est fausse : c'est donc le second \texttt{return b;} qui est exécuté, renvoyant \texttt{12}.
+        \begin{lstlisting}[language=bash,style=console]
+Le plus grand est 12
+Directement : 31
+        \end{lstlisting}
+        Oui : une valeur renvoyée par une fonction est une expression comme une autre, elle peut être utilisée immédiatement dans un calcul (ici \texttt{maximum(30, 4)} vaut \texttt{30}, et \texttt{30 + 1 = 31}), sans obligation de la stocker d'abord dans une variable.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Portée des variables}
+
+\begin{UPSTIexercice}{Deux variables locales de même nom}
+    On considère le programme suivant.
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int carre(int n)
+{
+    int resultat = n * n;
+    return resultat;
+}
+
+int cube(int n)
+{
+    int resultat = n * n * n;
+    return resultat;
+}
+
+int main(void)
+{
+    printf("Carre de 3 : %d\n", carre(3));
+    printf("Cube de 3 : %d\n", cube(3));
+    return 0;
+}
+    \end{lstlisting}
+    \UPSTIquestion{Les deux fonctions \texttt{carre} et \texttt{cube} déclarent chacune une variable nommée \texttt{resultat}. Cela pose-t-il un problème à la compilation ou à l'exécution ? Justifier à l'aide de la notion de \textbf{variable locale}.}
+    \UPSTIquestion{Prédire l'affichage de ce programme.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Deux variables locales de même nom}
+        Cela ne pose \textbf{aucun problème} : \texttt{resultat} est une variable \textbf{locale} à chacune des deux fonctions, donc chaque fonction possède sa propre case mémoire indépendante portant ce nom. Les deux \texttt{resultat} n'existent que pendant l'exécution de leur fonction respective et ne se voient pas l'une l'autre.
+        \begin{lstlisting}[language=bash,style=console]
+Carre de 3 : 9
+Cube de 3 : 27
+        \end{lstlisting}
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\begin{UPSTIexercice}{Une variable globale partagée}
+    On considère le programme suivant.
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int compteurAppels = 0;
+
+void enregistrerMesure(int valeur)
+{
+    compteurAppels = compteurAppels + 1;
+    printf("Mesure n%d : %d\n", compteurAppels, valeur);
+}
+
+int main(void)
+{
+    enregistrerMesure(23);
+    enregistrerMesure(19);
+    enregistrerMesure(31);
+    printf("Nombre total de mesures : %d\n", compteurAppels);
+    return 0;
+}
+    \end{lstlisting}
+    \UPSTIquestion{\texttt{compteurAppels} est-elle une variable locale ou globale ? Justifier en indiquant où elle est déclarée.}
+    \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
+    \UPSTIquestion{Que se passerait-il pour l'affichage si \texttt{compteurAppels} était déclarée \textbf{à l'intérieur} de \texttt{enregistrerMesure} plutôt qu'en dehors de toute fonction ?}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Une variable globale partagée}
+        \texttt{compteurAppels} est une variable \textbf{globale} : elle est déclarée en dehors de toute fonction, tout en haut du fichier. Elle est donc accessible et conserve sa valeur entre les différents appels à \texttt{enregistrerMesure}.
+        \begin{lstlisting}[language=bash,style=console]
+Mesure n1 : 23
+Mesure n2 : 19
+Mesure n3 : 31
+Nombre total de mesures : 3
+        \end{lstlisting}
+        Si \texttt{compteurAppels} était déclarée à l'intérieur de \texttt{enregistrerMesure}, ce serait une variable \textbf{locale} : elle serait recréée (et réinitialisée à 0) à \textbf{chaque appel}, perdant sa valeur d'un appel à l'autre. L'affichage deviendrait \texttt{Mesure n1 : ...} à chaque fois, et \texttt{compteurAppels} ne serait de toute façon plus accessible dans \texttt{main} pour le dernier affichage (le code ne compilerait même plus).
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Synthèse boucle + fonction}
+
+\begin{UPSTIexercice}{Une fonction qui contient une boucle (exercice de synthèse)}
+    On souhaite écrire une fonction \texttt{afficher\_jauge}, qui affiche une jauge faite de caractères \texttt{'\#'} suivis de caractères \texttt{'-'}, pour représenter un niveau (par exemple une charge de batterie) sur une longueur totale fixe.
+
+    \UPSTIquestion{Compléter le prototype de la fonction ci-dessous, sachant qu'elle prend en paramètres le nombre de \texttt{'\#'} à afficher (\texttt{nbPleins}) et le nombre total de caractères de la jauge (\texttt{longueurTotale}), et qu'elle ne renvoie rien.}
+    \begin{lstlisting}[language=C]
+..... afficher_jauge(..... nbPleins, ..... longueurTotale);
+    \end{lstlisting}
+    \UPSTIquestion{Compléter le corps de la fonction ci-dessous, qui doit afficher \texttt{nbPleins} caractères \texttt{'\#'}, puis \texttt{(longueurTotale - nbPleins)} caractères \texttt{'-'}, puis un retour à la ligne. On utilisera \textbf{deux boucles \texttt{for} successives} (non imbriquées).}
+    \begin{lstlisting}[language=C]
+void afficher_jauge(int nbPleins, int longueurTotale)
+{
+    for (..........................................)
+    {
+        printf("#");
+    }
+    for (..........................................)
+    {
+        printf("-");
+    }
+    printf("\n");
+}
+    \end{lstlisting}
+    \UPSTIquestion{Écrire, dans un \texttt{main}, les appels à \texttt{afficher\_jauge} permettant d'afficher successivement une jauge à 20\%, 60\% puis 100\%, chacune sur une longueur totale de 10 caractères (par exemple, 20\% sur 10 caractères correspond à \texttt{nbPleins = 2}).}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Une fonction qui contient une boucle (exercice de synthèse)}
+        \begin{lstlisting}[language=C]
+void afficher_jauge(int nbPleins, int longueurTotale);
+        \end{lstlisting}
+        \begin{lstlisting}[language=C]
+void afficher_jauge(int nbPleins, int longueurTotale)
+{
+    for (int i = 0; i < nbPleins; i = i + 1)
+    {
+        printf("#");
+    }
+    for (int i = 0; i < longueurTotale - nbPleins; i = i + 1)
+    {
+        printf("-");
+    }
+    printf("\n");
+}
+        \end{lstlisting}
+        \begin{lstlisting}[language=C]
+int main(void)
+{
+    afficher_jauge(2, 10);   // 20 %
+    afficher_jauge(6, 10);   // 60 %
+    afficher_jauge(10, 10);  // 100 %
+    return 0;
+}
+        \end{lstlisting}
+        L'intérêt de la fonction apparaît ici clairement : la même boucle est réutilisée trois fois, avec des paramètres différents, sans jamais être recopiée.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
+
+
+\subsection{Exercice de conception}
+
+\begin{UPSTIexercice}{Supervision d'un ensemble de capteurs}
+    On souhaite écrire une fonction qui synthétise les mesures d'une série de capteurs identiques, saisies une par une par l'utilisateur.
+
+    \begin{UPSTICahierDesCharges}{1}
+        \begin{itemize}
+            \item Écrire une fonction \texttt{int somme\_mesures(int nbCapteurs)} qui demande à l'utilisateur, via \texttt{scanf}, de saisir \texttt{nbCapteurs} mesures entières successives, et qui renvoie leur \textbf{somme}.
+            \item La fonction ne doit contenir \textbf{qu'une seule} boucle.
+        \end{itemize}
+    \end{UPSTICahierDesCharges}
+
+    \UPSTIquestion{Écrire le pseudo-code de \texttt{somme\_mesures}, en particulier la variable qui accumule la somme et son initialisation.}
+    \UPSTIquestion{Traduire ce pseudo-code en C, avec le prototype exact demandé.}
+    \UPSTIquestion{Écrire, dans un \texttt{main}, l'appel à \texttt{somme\_mesures} pour 4 capteurs, et l'affichage du résultat obtenu.}
+
+    \begin{UPSTICahierDesCharges}{2}
+        \begin{itemize}
+            \item Reprendre le cahier des charges de niveau 1.
+            \item On souhaite maintenant, à la place, connaître directement la \textbf{moyenne} des mesures (et non plus seulement leur somme), sous forme d'un nombre à virgule.
+            \item La fonction ne doit toujours demander les mesures à l'utilisateur qu'une seule fois chacune (pas de double saisie).
+        \end{itemize}
+    \end{UPSTICahierDesCharges}
+
+    \UPSTIquestion{\texttt{somme\_mesures} peut-elle être réutilisée telle quelle pour calculer une moyenne, sans aucune modification ? Si oui, comment ; si non, pourquoi.}
+    \UPSTIquestion{Écrire une fonction \texttt{float moyenne\_mesures(int nbCapteurs)} répondant au niveau 2, en réutilisant au maximum le travail déjà fait au niveau 1.}
+\end{UPSTIexercice}
+
+\begin{UPSTIprofOnlyEnv}
+    \begin{UPSTIcorrectionP}{Supervision d'un ensemble de capteurs}
+        Pseudo-code (niveau 1) :
+        \begin{verbatim}
+FONCTION somme_mesures(nbCapteurs)
+    somme <- 0
+    POUR i DE 1 A nbCapteurs FAIRE
+        AFFICHER "Mesure ? "
+        SAISIR mesure
+        somme <- somme + mesure
+    FIN POUR
+    RENVOYER somme
+FIN FONCTION
+        \end{verbatim}
+
+        Traduction en C :
+        \begin{lstlisting}[language=C]
+int somme_mesures(int nbCapteurs)
+{
+    int somme = 0;
+    for (int i = 0; i < nbCapteurs; i = i + 1)
+    {
+        int mesure;
+        printf("Mesure ? ");
+        scanf("%d", &mesure);
+        somme = somme + mesure;
+    }
+    return somme;
+}
+        \end{lstlisting}
+
+        Appel dans \texttt{main} :
+        \begin{lstlisting}[language=C]
+int main(void)
+{
+    int total = somme_mesures(4);
+    printf("Somme des mesures : %d\n", total);
+    return 0;
+}
+        \end{lstlisting}
+
+        Niveau 2 : \texttt{somme\_mesures} ne peut \textbf{pas} être réutilisée telle quelle en se contentant de diviser son résultat après l'appel (\texttt{somme\_mesures(n) / n}) sans y retoucher, car cela imposerait de \textbf{connaître son code} pour se souvenir qu'il faut diviser ensuite, et surtout la division \texttt{int / int} serait une division entière, faussant le résultat demandé sous forme de nombre à virgule. En revanche, l'idée de la boucle et de l'accumulation est directement réutilisable : il suffit d'en faire un nouveau calcul.
+        \begin{lstlisting}[language=C]
+float moyenne_mesures(int nbCapteurs)
+{
+    int total = somme_mesures(nbCapteurs);
+    float moyenne = (float) total / nbCapteurs;
+    return moyenne;
+}
+        \end{lstlisting}
+        Cette version réutilise directement \texttt{somme\_mesures} (aucune saisie n'est dupliquée) et ne fait que rajouter le calcul de la moyenne par-dessus, avec une conversion en \texttt{float} avant la division pour obtenir un résultat à virgule.
+    \end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
