@@ -16,6 +16,24 @@
 \end{lstlisting}
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Table de multiplication}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    for (int i = 1; i <= 10; i++) {
+        printf("%d x %d = %d\n", n, i, n * i);
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
 \begin{UPSTIexercice}{Somme des n premiers entiers}
 	\UPSTIetape Écrire un programme \texttt{somme\_n\_entiers.c} qui demande à l'utilisateur un entier \texttt{n} et calcule la somme des \texttt{n} premiers entiers (de 1 à \texttt{n}) en utilisant une boucle \texttt{for}. Le programme doit ensuite afficher le résultat.
 	Par exemple, si l'utilisateur entre \texttt{5}, le programme affichera :
@@ -25,6 +43,31 @@
 	\textbf{Utiliser deux boucles différentes pour le calcul de la somme et pour l'affichage du résultat.}
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Somme des n premiers entiers}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    int somme = 0;
+    for (int i = 1; i <= n; i++) {
+        somme += i;
+    }
+
+    printf("1");
+    for (int i = 2; i <= n; i++) {
+        printf(" + %d", i);
+    }
+    printf(" = %d\n", somme);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
 \begin{UPSTIexercice}{Factorielle}
 	\UPSTIetape Écrire un programme \texttt{factorielle.c} qui demande à l’utilisateur un entier \texttt{n} et calcule \texttt{n!} (la factorielle de \texttt{n}) en utilisant une boucle \texttt{for}.
 	Par exemple, pour \texttt{n = 5}, le programme affichera :
@@ -32,6 +75,31 @@
 5! = 1 x 2 x 3 x 4 x 5 = 120
 \end{lstlisting}
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Factorielle}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    long long factorielle = 1;
+    for (int i = 1; i <= n; i++) {
+        factorielle *= i;
+    }
+
+    printf("%d! = 1", n);
+    for (int i = 2; i <= n; i++) {
+        printf(" x %d", i);
+    }
+    printf(" = %lld\n", factorielle);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \begin{UPSTIexercice}{Carre}
 	\UPSTIetape Écrire un programme \texttt{carre.c} qui demande à l'utilisateur un entier \texttt{n} et affiche un carré de \texttt{n} par \texttt{n} utilisant des astérisques (\texttt{*}). Utiliser une boucle \texttt{for} imbriquée pour générer les lignes et les colonnes du carré.
@@ -44,6 +112,27 @@
 \end{lstlisting}
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Carre}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    for (int ligne = 0; ligne < n; ligne++) {
+        for (int colonne = 0; colonne < n; colonne++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
 \begin{UPSTIexercice}{Triangle -- Niveau 1}
 	\UPSTIetape Écrire un programme \texttt{triangle1.c} qui demande à l’utilisateur un entier \texttt{n} et affiche un triangle d’étoiles aligné à gauche, de hauteur \texttt{n}.
 	Par exemple, pour \texttt{n = 4} :
@@ -54,6 +143,27 @@
 ****
 \end{lstlisting}
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Triangle -- Niveau 1}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    for (int ligne = 1; ligne <= n; ligne++) {
+        for (int col = 0; col < ligne; col++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \begin{UPSTIexercice}{Triangle -- Niveau 2}
 	\UPSTIetape Écrire un programme \texttt{triangle2.c} qui demande à l’utilisateur un entier \texttt{n} et affiche un triangle isocèle aligné au centre, de hauteur \texttt{n}.
@@ -66,6 +176,30 @@
 \end{lstlisting}
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Triangle -- Niveau 2}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    for (int ligne = 1; ligne <= n; ligne++) {
+        for (int espace = 0; espace < n - ligne; espace++) {
+            printf(" ");
+        }
+        for (int etoile = 0; etoile < 2 * ligne - 1; etoile++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
 \begin{UPSTIexercice}{Damier}
 	\UPSTIetape Écrire un programme \texttt{damier.c} qui demande deux entiers \texttt{lignes} et \texttt{colonnes} et affiche un damier en alternant \texttt{\#} et \texttt{.}.
 	Par exemple, pour \texttt{lignes = 4} et \texttt{colonnes = 6} :
@@ -76,6 +210,33 @@
 .#.#.#
 \end{lstlisting}
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Damier}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int lignes, colonnes;
+    printf("Entrez le nombre de lignes : ");
+    scanf("%d", &lignes);
+    printf("Entrez le nombre de colonnes : ");
+    scanf("%d", &colonnes);
+
+    for (int i = 0; i < lignes; i++) {
+        for (int j = 0; j < colonnes; j++) {
+            if ((i + j) % 2 == 0) {
+                printf("#");
+            } else {
+                printf(".");
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \begin{UPSTIexercice}{Motif en diagonale}
 	\UPSTIetape Écrire un programme \texttt{diagonale.c} qui demande un entier \texttt{n} et affiche un carré de taille \texttt{n} avec une diagonale de \texttt{*}.
@@ -88,6 +249,31 @@
 ....*
 \end{lstlisting}
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Motif en diagonale}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j) {
+                printf("*");
+            } else {
+                printf(".");
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \subsection*{Liste des checks disponibles}
 \begin{lstlisting}[language=bash,style=console]

@@ -43,9 +43,96 @@ int main(void) {
 	\UPSTIetape Que se passe-t-il si le joueur choisi un niveau invalide (par exemple 5) ? Pourquoi ?
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Devine le nombre - Version While, avec n vies}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(void) {
+    int vies;
+    int nombre_mystere;
+    int proposition;
+    int niveau;
+
+    printf("Choisissez un niveau de difficulte :\n");
+    printf("1. Facile (10 vies)\n");
+    printf("2. Moyen (7 vies)\n");
+    printf("3. Difficile (5 vies)\n");
+    printf("4. Impossible (0 vies)\n");
+    printf("Votre choix : ");
+    scanf("%d", &niveau);
+
+    switch (niveau) {
+        case 1:
+            vies = 10;
+            break;
+        case 2:
+            vies = 7;
+            break;
+        case 3:
+            vies = 5;
+            break;
+        case 4:
+            vies = 0;
+            break;
+        default:
+            printf("Niveau invalide.\n");
+            return 1;
+    }
+
+    // Initialiser le générateur de nombres aléatoires
+    srand(time(NULL));
+    nombre_mystere = rand() % 100 + 1; // Nombre entre 1 et 100
+
+    int trouve = 0;
+    while (vies > 0 && !trouve) {
+        printf("Proposez un nombre entre 1 et 100 (%d vies restantes) : ", vies);
+        scanf("%d", &proposition);
+        vies--;
+
+        if (proposition == nombre_mystere) {
+            trouve = 1;
+        } else if (proposition < nombre_mystere) {
+            printf("C'est plus grand !\n");
+        } else {
+            printf("C'est plus petit !\n");
+        }
+    }
+
+    if (trouve) {
+        printf("Bravo, vous avez trouve le nombre mystere !\n");
+    } else {
+        printf("Perdu ! Le nombre mystere etait %d.\n", nombre_mystere);
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
 \begin{UPSTIexercice}{Devine le nombre - Version For, avec n vies}
 	\UPSTIetape Faire le même exercice que précédemment, mais en utilisant une boucle \texttt{for} pour gérer les tentatives du joueur.
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Devine le nombre - Version For, avec n vies}
+	Seule la boucle principale change par rapport à la version \texttt{while} (le reste du programme -- choix du niveau, tirage du nombre mystère -- est identique) :
+	\begin{lstlisting}[language=c]
+    int trouve = 0;
+    for (int i = 0; i < vies && !trouve; i++) {
+        printf("Proposez un nombre entre 1 et 100 (%d vies restantes) : ", vies - i);
+        scanf("%d", &proposition);
+
+        if (proposition == nombre_mystere) {
+            trouve = 1;
+        } else if (proposition < nombre_mystere) {
+            printf("C'est plus grand !\n");
+        } else {
+            printf("C'est plus petit !\n");
+        }
+    }
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \begin{UPSTIexercice}{Devine le nombre - Version Do...While, avec n vies}
 	\UPSTIetape Faire le même exercice que précédemment, mais en utilisant une boucle \texttt{do...while} pour gérer les tentatives du joueur.
@@ -53,11 +140,43 @@ int main(void) {
 	\UPSTIetape Ce type de boucle vous parait-il pertinent pour ce jeu ? Pourquoi ?
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Devine le nombre - Version Do...While, avec n vies}
+	Là encore, seule la boucle principale change :
+	\begin{lstlisting}[language=c]
+    int trouve = 0;
+    do {
+        printf("Proposez un nombre entre 1 et 100 (%d vies restantes) : ", vies);
+        scanf("%d", &proposition);
+        vies--;
+
+        if (proposition == nombre_mystere) {
+            trouve = 1;
+        } else if (proposition < nombre_mystere) {
+            printf("C'est plus grand !\n");
+        } else {
+            printf("C'est plus petit !\n");
+        }
+    } while (vies > 0 && !trouve);
+	\end{lstlisting}
+	Avec \texttt{n = 0} : contrairement aux versions \texttt{while} et \texttt{for}, le \texttt{do...while} exécute son corps \textbf{au moins une fois} avant de tester la condition. Le joueur est donc invité à proposer un nombre même avec 0 vie, alors que les deux autres versions annoncent la défaite immédiatement sans rien demander. Ce comportement est en général \textbf{non désiré} ici : le \texttt{do...while} n'est pas adapté dès que le nombre d'itérations peut être nul, ce qui est le cas pour ce jeu (niveau « Impossible »).
+\end{UPSTIcorrectionP}
+
 \begin{UPSTIexercice}{Vérifier le choix d'un menu}
 	\UPSTIetape Quelle boucle est la plus adaptée pour vérifier que l'utilisateur a bien entré un choix valide dans un menu ? Justifier.
 	\UPSTIetape Vérifier votre choix avec l'enseignant.
 	\UPSTIetape Modifier vos programme précédents pour utiliser la boucle choisie.
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Vérifier le choix d'un menu}
+	La boucle \texttt{do...while} est la plus adaptée : on a besoin de lire une première fois la saisie de l'utilisateur \emph{avant} de pouvoir tester si elle est valide, puis de recommencer tant qu'elle ne l'est pas. Une boucle \texttt{while} obligerait à dupliquer la lecture (une fois avant la boucle, une fois dans la boucle) ou à utiliser une valeur \og sentinelle \fg{} artificielle pour entrer dans la boucle.
+	\begin{lstlisting}[language=c]
+int niveau;
+do {
+    printf("Choisissez un niveau de difficulte (1 a 4) : ");
+    scanf("%d", &niveau);
+} while (niveau < 1 || niveau > 4);
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \subsection*{Liste des checks disponibles}
 \begin{lstlisting}[language=bash,style=console]

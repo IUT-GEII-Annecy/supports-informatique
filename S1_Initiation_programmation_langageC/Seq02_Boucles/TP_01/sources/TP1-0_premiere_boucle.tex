@@ -21,6 +21,25 @@ int main(void) {
 	\UPSTIetape Modifier le programme pour qu'il miaule \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
 \end{UPSTIexercice}
 
+\begin{UPSTIcorrectionP}{Boucle while : Un chat qui miaule}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Combien de fois le chat doit-il miauler ? ");
+    scanf("%d", &n);
+
+    int i = 0;
+    while (i < n) {
+        printf("Miaou !\n");
+        i++;
+    }
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
 
 %\subsection{La boucle For - Aboyer n fois}
 
@@ -39,6 +58,23 @@ int main(void) {
 	\UPSTIetape Modifier le programme pour qu'il aboie 5 fois.
 	\UPSTIetape Modifier le programme pour qu'il aboie \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Boucle for : Un chien qui aboie}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Combien de fois le chien doit-il aboyer ? ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        printf("Ouaf !\n");
+    }
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 
 %\subsection{La boucle Do...While - Chanter n fois}
@@ -60,6 +96,25 @@ int main(void) {
 	\UPSTIetape Modifier le programme pour qu'il chante 5 fois.
 	\UPSTIetape Modifier le programme pour qu'il chante \texttt{n} fois, où \texttt{n} est un entier entré par l'utilisateur.
 \end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Boucle do...while : Un oiseau qui chante}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Combien de fois l'oiseau doit-il chanter ? ");
+    scanf("%d", &n);
+
+    int i = 0;
+    do {
+        printf("Cui-cui !\n");
+        i++;
+    } while (i < n);
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
 
 \subsection*{Liste des checks disponibles}
 \begin{lstlisting}[language=bash,style=console]
