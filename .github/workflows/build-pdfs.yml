@@ -17,4 +17,5 @@ jobs:
         /Evaluations/
       enable-tp-downloads: true
       solutions-repo: IUT-GEII-Annecy/solutions
+      solutions-repo-ref: main
     secrets: inherit
