@@ -15,4 +15,6 @@ jobs:
       classify-mode: folder
       exclude-patterns: |
         /Evaluations/
+      enable-tp-downloads: true
+      solutions-repo: IUT-GEII-Annecy/solutions
     secrets: inherit
