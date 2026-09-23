@@ -1,0 +1,43 @@
+#!/bin/bash
+# Script de démarrage - TP1
+#
+# À UTILISER AVEC : source script_demarrage
+# (jamais "bash script_demarrage" ni "./script_demarrage" : le "cd" final
+# ne resterait pas actif dans votre terminal une fois le script terminé,
+# car il tournerait dans un sous-shell séparé.)
+#
+# Télécharge le squelette du TP1, le décompresse, supprime l'archive et
+# vous place dans le dossier obtenu.
+
+_tp1_archive_url="https://github.com/IUT-GEII-Annecy/squelettes/releases/download/branch-2026/tp1.zip"
+_tp1_archive="tp1.zip"
+_tp1_dir="tp1"
+
+echo "→ Téléchargement du TP1..."
+if ! _tp1_out=$(wget "$_tp1_archive_url" -O "$_tp1_archive" 2>&1); then
+    echo "✗ Échec du téléchargement :"
+    echo "$_tp1_out"
+    rm -f "$_tp1_archive"
+    unset _tp1_archive_url _tp1_archive _tp1_dir _tp1_out
+    return 1 2>/dev/null || exit 1
+fi
+
+echo "→ Décompression..."
+if ! _tp1_out=$(unzip -o "$_tp1_archive" 2>&1); then
+    echo "✗ Échec de la décompression :"
+    echo "$_tp1_out"
+    unset _tp1_archive_url _tp1_archive _tp1_dir _tp1_out
+    return 1 2>/dev/null || exit 1
+fi
+
+echo "→ Suppression de l'archive..."
+rm -f "$_tp1_archive"
+
+if [ -d "$_tp1_dir" ]; then
+    cd "$_tp1_dir"
+    echo "→ Terminé ! Vous êtes maintenant dans $(pwd)."
+else
+    echo "→ Terminé, mais le dossier $_tp1_dir est introuvable : vous restez dans $(pwd)."
+fi
+
+unset _tp1_archive_url _tp1_archive _tp1_dir _tp1_out
