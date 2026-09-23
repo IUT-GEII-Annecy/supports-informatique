@@ -19,14 +19,12 @@
     \begin{UPSTIcorrectionP}{Rectangle vide}
         \begin{lstlisting}[language=C]
 #include <stdio.h>
-
+#include <cs50.h>
 int main(void)
 {
     int w, h;
-    printf("Largeur ? ");
-    scanf("%d", &w);
-    printf("Hauteur ? ");
-    scanf("%d", &h);
+    w = get_int("Entrez la largeur du rectangle : ");
+    h = get_int("Entrez la hauteur du rectangle : ");
 
     for (int ligne = 1; ligne <= h; ligne = ligne + 1)
     {
@@ -71,13 +69,12 @@ int main(void)
     \begin{UPSTIcorrectionP}{Triangle de Pascal}
         \begin{lstlisting}[language=C]
 #include <stdio.h>
+#include <cs50.h>
 
 int main(void)
 {
     int n;
-    printf("Nombre de lignes ? ");
-    scanf("%d", &n);
-
+    n = get_int("Nombre de lignes : ");
     for (int ligne = 0; ligne < n; ligne = ligne + 1)
     {
         int valeur = 1;
@@ -194,10 +191,10 @@ int main(void) {
 #include <stdio.h>
 #include <math.h>
 #define PI 3.14159265358979323846
+#include <cs50.h>
 int main(void) {
     int r;
-    printf("Entrez le rayon du cercle : ");
-    scanf("%d", &r);
+    r = get_int("Entrez le rayon du cercle : ");
 
     for (int y = -r; y <= r; y++) {
         for (int x = -r; x <= r; x++) {
