@@ -15,7 +15,7 @@ Une \textbf{fonction} est un sous-programme nommé, qui réalise une tâche pré
 
 \subsection{Un exemple pour commencer}
 
-Un programme doit convertir plusieurs durées, données en minutes, en heures et minutes. Sans fonction, on pourrait écrire :
+Des durées, données en minutes, doivent être converties au format « heures et minutes » (XXhXXmin) par un programme. Sans fonction, on pourrait écrire :
 
 \begin{lstlisting}[language=c,caption={Conversion sans fonction},label=codeSansFonction]
 #include <stdio.h>
@@ -58,9 +58,9 @@ type_de_retour nom_fonction(type1 param1, type2 param2) {
 }
 \end{lstlisting}
   \begin{description}
-    \item[type de retour :] type de la valeur renvoyée par la fonction (\texttt{int}, \texttt{float}, \texttt{void} s'il n'y a rien à renvoyer, \dots{}) ;
+    \item[type de retour :] type de la valeur renvoyée par la fonction (\texttt{int}, \texttt{float}…). S'il n'y a rien à renvoyer, on indique \texttt{void} ;
     \item[nom de la fonction :] identifiant qui permet d'appeler la fonction ;
-    \item[paramètres :] variables reçues en entrée, entre parenthèses, séparées par des virgules (il peut ne pas y en avoir) ;
+    \item[paramètres :] variables reçues en entrée, entre parenthèses, séparées par des virgules. S'il n'y a aucun paramètre, on indique \texttt{void} ;
     \item[corps :] bloc d'instructions entre accolades, exécuté lors de l'appel ;
     \item[Le mot-clef \texttt{return} :] instruction qui renvoie une valeur et termine immédiatement l'exécution de la fonction.
   \end{description}
@@ -108,7 +108,9 @@ int aire_rectangle(int largeur, int longueur) {
 Le protype \textbf{déclare} la fonction puis la \textbf{définition} dicte son comportement. Une fois ces deux étapes effectuées, nous pouvons alors utiliser la fonction créée dans tout notre code. Cela peut être depuis le \texttt{main} ou depuis une autre fonction. 
 
 \begin{UPSTIinfor}{Appeler une fonction}
-  \textbf{Appeler une fonction}, c'est s'en servir dans une ligne de code. Pour cela, on écrit le nom de la fonction suivi, entre parenthèses, des valeurs à donner à ses paramètres, dans l'ordre du prototype et avec des types compatibles. Enfin, si cette fonction \textit{renvoie une valeur (return)}, on peut récupérer cette valeur pour la stocker dans une variable ou l'utiliser directement. En fait, l'appel de la fonction \textbf{vaut} la valeur de retour de la fonction. On peut donc l'utiliser exactement comme n'importe quelle autre valeur de ce type -- la stocker dans une variable, l'afficher, l'utiliser dans un calcul ou dans une condition.
+  \textbf{Appeler une fonction}, c'est s'en servir dans une ligne de code. Pour cela, on écrit le nom de la fonction suivi, entre parenthèses, des valeurs à donner à ses paramètres. Puis, si cette fonction \textit{renvoie une valeur (return)}, on peut récupérer cette valeur pour la stocker dans une variable ou l'utiliser directement. En fait, l'appel de la fonction \textbf{vaut} la valeur de retour de la fonction. On peut donc l'utiliser exactement comme n'importe quelle autre valeur de ce type -- la stocker dans une variable, l'afficher, l'utiliser dans un calcul ou dans une condition.
+
+  \textbf{Remarque :} les paramètres passés à la fonction doivent respecter le prototype : même ordre et même types.
 \end{UPSTIinfor}
   
   \begin{lstlisting}[language=c,caption={Différentes façons d'utiliser le résultat de \texttt{aire\_rectangle}}]
@@ -135,7 +137,8 @@ int main(void) {
 
 // Définition de la fonction
 int aire_rectangle(int largeur, int longueur) {
-    return largeur * longueur;
+    int resultat = largeur * longueur;
+    return resultat;
 }
 \end{lstlisting}
 
@@ -158,9 +161,9 @@ int main(void) {
     int aire2 = aire_rectangle(5, 2);
 
     if (aire1 > aire2) {
-        printf("Le premier rectangle a la plus grande aire (%d)\n", aire1);
+        printf("Le premier rectangle a la plus grande aire (%i)\n", aire1);
     } else {
-        printf("Le second rectangle a la plus grande aire (%d)\n", aire2);
+        printf("Le second rectangle a la plus grande aire (%i)\n", aire2);
     }
 
     return 0;
@@ -171,7 +174,7 @@ int main(void) {
 
 \section{Fonctions avec ou sans valeur de retour}
 
-Beaucoup (la majorité) de fonctions effectuent des opérations en vue de \textit{renvoyer} un résultat. Le mot-clef \texttt{return} sert alors à retourner ce résultat vers la fonction appelante. Cependant, il existe également des fonctions qui ne renvoie pas de résultat. On peut citer en exemples : \textit{Affichage d'une valeur} ou l'\textit{Initialisation d'un système}.
+Beaucoup de fonctions (la majorité) effectuent des opérations en vue de \textit{renvoyer} un résultat. Le mot-clef \texttt{return} sert alors à retourner ce résultat vers la fonction appelante. Cependant, il existe également des fonctions qui ne renvoient pas de résultat. On peut citer en exemples : \textit{Affichage d'une valeur} ou l'\textit{Initialisation d'un système}.
 
 Lorsqu'elle ne retourne pas de valeur, le \textit{type de retour} est alors \texttt{void}. 
 
@@ -179,7 +182,7 @@ Lorsqu'elle ne retourne pas de valeur, le \textit{type de retour} est alors \tex
   Une fonction de type \texttt{void} ne renvoie aucune valeur. Le mot clef \texttt{return} sert alors uniquement à terminer la fonction et non à renvoyer une valeur. 
 \end{UPSTIinfor}
 
-\begin{UPSTIwarning}{Ne pas confondre \texttt{void} et absence de paramètre}
+\begin{UPSTIwarning}{Absence de résultat et absence de paramètre}
   \texttt{void} peut apparaître à deux endroits différents, avec deux sens différents :
   \begin{itemize}
     \item devant le nom de la fonction : \texttt{void nom(...)} signifie que la fonction \textbf{ne renvoie rien} ;
@@ -192,18 +195,18 @@ Reprenons \texttt{aire\_rectangle} : plutôt que de calculer l'aire puis de l'af
 \begin{lstlisting}[language=c,caption={Une fonction \texttt{void} qui réutilise \texttt{aire\_rectangle}}]
 void afficher_aire(int largeur, int longueur) {
     int aire = aire_rectangle(largeur, longueur);
-    printf("Aire du rectangle %dx%d : %d\n", largeur, longueur, aire);
+    printf("Aire du rectangle %ix%i : %i\n", largeur, longueur, aire);
     return; // Fin de l'exécution de la fonction sans valeur retournée.
 }
 \end{lstlisting}
 
-\texttt{afficher\_aire} ne renvoie rien (elle affiche directement) : c'est pour cela qu'elle est déclarée \texttt{void}, et qu'elle ne contient pas de \texttt{return valeur;}. Notons qu'elle utilise la fonction \texttt{aire\_rectangle} qui lui renvoie la valeur de l'aire. \texttt{afficher\_aire} stocke alors cette valeur dans la variable \texttt{aire} avant de l'utiliser dans l'affichage. 
+\texttt{afficher\_aire} ne renvoie rien (elle affiche directement) : c'est pour cela qu'elle est déclarée \texttt{void}, et qu'elle ne contient pas de \texttt{return valeur;}. Notons qu'elle \emph{utilise} la fonction \texttt{aire\_rectangle} qui lui renvoie la valeur de l'aire. \texttt{afficher\_aire} stocke alors cette valeur dans la variable \texttt{aire} avant de l'utiliser dans l'affichage. 
 
 \begin{UPSTIactivite}[][Avec ou sans retour ?]
 On souhaite manipuler des températures.
-\UPSTIquestion{Écrire une fonction \texttt{float celsius\_vers\_fahrenheit(float celsius)} qui renvoie la température convertie, sachant que $F = C \times 9/5 + 32$.}
+\UPSTIquestion{Écrire la définition de la fonction de prototype \texttt{float celsius\_vers\_fahrenheit(float celsius)} qui renvoie la température convertie, sachant que $F = C \times 9/5 + 32$.}
 \UPSTIquadrillage{2}
-\UPSTIquestion{Écrire une fonction \texttt{void afficher\_fahrenheit(float celsius)} qui affiche la phrase \texttt{"X degres Celsius valent Y degres Fahrenheit"}, en réutilisant la fonction précédente.}
+\UPSTIquestion{Écrire la définition de la fonction de prototype \texttt{void afficher\_fahrenheit(float celsius)} qui affiche la phrase \texttt{"X degres Celsius valent Y degres Fahrenheit"}, en réutilisant la fonction précédente.}
 \UPSTIquadrillage{2}
 \end{UPSTIactivite}
 
@@ -249,7 +252,7 @@ Les deux variables \texttt{resultat} n'ont rien à voir l'une avec l'autre : cha
 \begin{UPSTIwarning}{Une variable locale ne survit pas à l'appel}
   Une fois qu'une fonction a terminé son exécution (après le \texttt{return}, ou après la dernière instruction pour une fonction \texttt{void}), ses variables locales disparaissent. Il est donc impossible d'accéder, depuis \texttt{main}, à une variable déclarée à l'intérieur d'une autre fonction.
 
-  Aussi, sa valeur aura disparu au prochain appel de cette fonction et elle ne pourra donc pas être réutilisé. 
+  Aussi, sa valeur aura disparu au prochain appel de cette fonction et elle ne pourra donc pas être réutilisée. 
 \end{UPSTIwarning}
 \subsection{Passage par valeur}
 Les paramètres d'une fonction sont eux-mêmes des variables locales à cette fonction. Lors de l'appel, ce n'est pas la variable de l'appelant qui est transmise, mais \textbf{une copie de sa valeur} : le paramètre reçoit cette copie, dans sa propre case mémoire. On dit que les paramètres sont \textbf{passés par valeur}.
@@ -271,5 +274,10 @@ int main(void) {
 }
 \end{lstlisting}
 
-  Ce programme affiche \texttt{Dans doubler, n vaut 10}, puis \texttt{Dans main, x vaut toujours 5} : \texttt{x} n'a jamais été modifiée, seule la copie \texttt{n} l'a été.
+  Ce programme affiche : \
+  \texttt{
+    Dans doubler, n vaut 10
+    Dans main, x vaut toujours 5
+  }
+  \texttt{x} n'a jamais été modifiée, seule la copie \texttt{n} l'a été.
 \end{UPSTIwarning}

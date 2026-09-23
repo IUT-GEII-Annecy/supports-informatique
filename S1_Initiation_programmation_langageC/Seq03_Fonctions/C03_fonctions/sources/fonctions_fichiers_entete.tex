@@ -17,6 +17,8 @@ Pour cela, le C sépare deux choses :
 
 \begin{UPSTIinfor}{Rôle d'un fichier d'en-tête (A retenir !)}
   Un fichier \texttt{.h} contient uniquement les \textbf{prototypes} des fonctions (et éventuellement des constantes, des types). Il ne contient \textbf{pas} le corps des fonctions. Il sert de « carte de visite » : il décrit ce qu'un fichier \texttt{.c} propose, sans en dévoiler le contenu.
+
+  Chaque prototype est souvent accompagné d’un \textbf{commentaire} de documentation.
 \end{UPSTIinfor}
 
 \subsection{Exemple : un mini-module de géométrie}
@@ -85,7 +87,7 @@ Si un fichier d'en-tête est inclus deux fois dans le même programme (ce qui ar
 \end{UPSTIinfor}
 
 \begin{UPSTIactivite}[][Écrire un fichier d'en-tête]
-On souhaite créer un module \texttt{conversions} regroupant deux fonctions : \texttt{float km\_vers\_miles(float km)} et \texttt{float miles\_vers\_km(float miles)}.
+On souhaite créer un module \texttt{conversions} regroupant deux fonctions de prototype \texttt{float km\_vers\_miles(float km)} et \texttt{float miles\_vers\_km(float miles)}.
 
 \UPSTIquestion{Écrire le contenu du fichier \texttt{conversions.h}, avec sa protection contre les inclusions multiples.}
 \UPSTIquadrillage{3}
@@ -110,11 +112,19 @@ Il faut ajouter \texttt{\#include "conversions.h"} en tête de \texttt{conversio
 
 \subsection{Compiler plusieurs fichiers \texttt{.c} ensemble}
 
+Jusqu'ici, vos programmes n'occupaient qu'un fichier \texttt{.c}, par exemple \texttt{programme.c}, que vous avez pu compiler avec la commande \texttt{make programme}. La commande \texttt{make} fait ici appel au \emph{compilateur C}, nommé \texttt{gcc}, et exécute la commande suivante :
+
+\begin{lstlisting}[language=bash,caption={Compilation d'un seul fichier source directement avec gcc}]
+gcc programme.c -o programme
+\end{lstlisting}
+
 Un programme peut être réparti sur plusieurs fichiers \texttt{.c}, chacun avec son fichier \texttt{.h} associé. Il faut alors indiquer au compilateur \textbf{tous} les fichiers \texttt{.c} à compiler ensemble :
 
 \begin{lstlisting}[language=bash,caption={Compilation de plusieurs fichiers sources}]
 gcc main.c geometrie.c -o programme
 \end{lstlisting}
+
+L'option \texttt{-o} sert à choisir le nom qu'aura le fichier exécutable.
 
 \begin{UPSTIinfor}{Ce qu'il faut retenir sur les fichiers d'en-tête}
   \begin{itemize}
