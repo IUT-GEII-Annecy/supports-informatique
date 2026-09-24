@@ -34,6 +34,7 @@ for (int ligne = 1; ligne <= 2; ligne = ligne + 1)
         \end{tabular}
     \end{center}
     \UPSTIquestion{Combien de fois le \texttt{printf("\textbackslash n")} (celui qui n'est \textbf{pas} imbriqué dans la boucle \texttt{colonne}) est-il exécuté au total ? Justifier.}
+    \UPSTIquestion{Donner alors l'affichage complet du programme dans la console.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
@@ -58,6 +59,11 @@ for (int ligne = 1; ligne <= 2; ligne = ligne + 1)
             \end{tabular}
         \end{center}
         Le \texttt{printf("\textbackslash n")} externe s'exécute \textbf{2 fois} : une fois par tour de la boucle \texttt{ligne}, une fois que la boucle interne \texttt{colonne} est entièrement terminée pour cette ligne.
+        L'affichage complet du programme est donc :
+        \begin{lstlisting}[language=bash,style=console]
+(1,1) (1,2) (1,3)
+(2,1) (2,2) (2,3)
+\end{lstlisting}
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}
 
@@ -94,7 +100,7 @@ do
 } while (stock > 0);
 printf("Fin B\n");
         \end{lstlisting}
-    \end{minipage}
+    \end{minipage}\\
     \UPSTIquestion{Prédire tout ce qu'affiche le programme A.}
     \UPSTIquestion{Prédire tout ce qu'affiche le programme B.}
     \UPSTIquestion{Expliquer les éventuelles différences.}

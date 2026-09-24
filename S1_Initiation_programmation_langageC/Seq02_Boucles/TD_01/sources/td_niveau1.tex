@@ -47,7 +47,7 @@ while (compteur > 0)
 }
 printf("Fin, compteur = %d\n", compteur);
 \end{lstlisting}
-    \UPSTIquestion{Compléter le tableau de trace ci-dessous, ligne par tour de boucle, jusqu'à la sortie de la boucle.}
+    \UPSTIquestion{Compléter le tableau de trace ci-dessous, représentant ce qu'affiche le programme. Lorsque l'on se trouve à l'intérieur de la boucle, indiquer la valeur de \texttt{compteur} \textbf{avant} le test de la condition ainsi que le résultat de ce test.}
 
     \begin{center}
         \begin{tabular}{|c|c|p{4cm}|}
@@ -163,7 +163,6 @@ for (int i = 10; i > 0; i = i - 3)
 printf("Boucle terminee\n");
 \end{lstlisting}
     \UPSTIquestion{Prédire, ligne par ligne, tout ce que ce programme affiche.}
-    \UPSTIquestion{Quelle est la toute dernière valeur de \texttt{i} pour laquelle le bloc de la boucle s'exécute encore ?}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
@@ -175,7 +174,6 @@ i = 4
 i = 1
 Boucle terminee
 \end{lstlisting}
-        La dernière valeur pour laquelle le bloc s'exécute est \texttt{i = 1} (car \texttt{1 > 0} est vrai) ; ensuite \texttt{i} devient \texttt{-2}, et \texttt{-2 > 0} est faux, donc la boucle s'arrête sans afficher \texttt{i = -2}.
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}
 
