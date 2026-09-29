@@ -1,0 +1,226 @@
+% ==================== THEME 1 — VARIABLES SIMPLES ====================
+
+% ---- var-declaration ----
+\element{bank-var-declaration}{
+    \begin{question}{var-declaration-v1}
+        Quelle ligne déclare correctement une variable entière nommée \texttt{age} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|int age;|}
+                \mauvaise{\lstinline[language=C]|int age|}
+                \mauvaise{\lstinline[language=C]|age int;|}
+                \mauvaise{\lstinline[language=C]|integer age;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-declaration}{
+    \begin{question}{var-declaration-v2}
+        Quelle ligne déclare correctement une variable entière nommée \texttt{score} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|int score;|}
+                \mauvaise{\lstinline[language=C]|int score|}
+                \mauvaise{\lstinline[language=C]|score int;|}
+                \mauvaise{\lstinline[language=C]|integer score;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-declaration}{
+    \begin{question}{var-declaration-v3}
+        Quelle ligne déclare correctement une variable entière nommée \texttt{compteur} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|int compteur;|}
+                \mauvaise{\lstinline[language=C]|int compteur|}
+                \mauvaise{\lstinline[language=C]|compteur int;|}
+                \mauvaise{\lstinline[language=C]|integer compteur;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{variables}{
+    \restituegroupe[1]{bank-var-declaration}
+}
+
+% ---- var-type-decimal ----
+\element{bank-var-type-decimal}{
+    \begin{question}{var-type-decimal-v1}
+        Pour stocker un nombre à virgule comme \texttt{3.14}, quel type utiliser en priorité ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|int|}
+                \bonne{\lstinline[language=C]|float|}
+                \mauvaise{\lstinline[language=C]|char|}
+                \mauvaise{\lstinline[language=C]|string|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-type-decimal}{
+    \begin{question}{var-type-decimal-v2}
+        Pour stocker un nombre à virgule comme \texttt{2.5}, quel type utiliser en priorité ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|int|}
+                \bonne{\lstinline[language=C]|float|}
+                \mauvaise{\lstinline[language=C]|char|}
+                \mauvaise{\lstinline[language=C]|string|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-type-decimal}{
+    \begin{question}{var-type-decimal-v3}
+        Pour stocker un nombre à virgule comme \texttt{9.99}, quel type utiliser en priorité ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|int|}
+                \bonne{\lstinline[language=C]|float|}
+                \mauvaise{\lstinline[language=C]|char|}
+                \mauvaise{\lstinline[language=C]|string|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{variables}{
+    \restituegroupe[1]{bank-var-type-decimal}
+}
+
+% ---- var-type-caractere ----
+\element{bank-var-type-caractere}{
+    \begin{question}{var-type-caractere-v1}
+        Quel type permet de stocker un unique caractère, comme \texttt{'A'} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|int|}
+                \mauvaise{\lstinline[language=C]|float|}
+                \bonne{\lstinline[language=C]|char|}
+                \mauvaise{\lstinline[language=C]|void|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-type-caractere}{
+    \begin{question}{var-type-caractere-v2}
+        Quel type permet de stocker un unique caractère, comme \texttt{'Z'} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|int|}
+                \mauvaise{\lstinline[language=C]|float|}
+                \bonne{\lstinline[language=C]|char|}
+                \mauvaise{\lstinline[language=C]|void|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-type-caractere}{
+    \begin{question}{var-type-caractere-v3}
+        Quel type permet de stocker un unique caractère, comme \texttt{'x'} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|int|}
+                \mauvaise{\lstinline[language=C]|float|}
+                \bonne{\lstinline[language=C]|char|}
+                \mauvaise{\lstinline[language=C]|void|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{variables}{
+    \restituegroupe[1]{bank-var-type-caractere}
+}
+
+% ---- var-nommage ----
+\element{bank-var-nommage}{
+    \begin{question}{var-nommage-v1}
+        Quel nom de variable est \textbf{invalide} en C ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|nb_essais|}
+                \mauvaise{\lstinline[language=C]|nbEssais|}
+                \bonne{\lstinline[language=C]|2eme_essai|}
+                \mauvaise{\lstinline[language=C]|essai2|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-nommage}{
+    \begin{question}{var-nommage-v2}
+        Quel nom de variable est \textbf{invalide} en C ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|nb_tours|}
+                \mauvaise{\lstinline[language=C]|nbTours|}
+                \bonne{\lstinline[language=C]|3eme_tour|}
+                \mauvaise{\lstinline[language=C]|tour3|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-nommage}{
+    \begin{question}{var-nommage-v3}
+        Quel nom de variable est \textbf{invalide} en C ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|note_max|}
+                \mauvaise{\lstinline[language=C]|noteMax|}
+                \bonne{\lstinline[language=C]|1ere_note|}
+                \mauvaise{\lstinline[language=C]|note1|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{variables}{
+    \restituegroupe[1]{bank-var-nommage}
+}
+
+% ---- var-initialisation ----
+\element{bank-var-initialisation}{
+    \begin{question}{var-initialisation-v1}
+        Que vaut \texttt{x} juste après l'exécution de la ligne \lstinline[language=C]|int x;| (sans affectation) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{0}
+                \bonne{Une valeur indéterminée}
+                \mauvaise{-1}
+                \mauvaise{Une erreur de compilation}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-initialisation}{
+    \begin{question}{var-initialisation-v2}
+        Que vaut \texttt{n} juste après l'exécution de la ligne \lstinline[language=C]|int n;| (sans affectation) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{0}
+                \bonne{Une valeur indéterminée}
+                \mauvaise{-1}
+                \mauvaise{Une erreur de compilation}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-var-initialisation}{
+    \begin{question}{var-initialisation-v3}
+        Que vaut \texttt{total} juste après l'exécution de la ligne \lstinline[language=C]|int total;| (sans affectation) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{0}
+                \bonne{Une valeur indéterminée}
+                \mauvaise{-1}
+                \mauvaise{Une erreur de compilation}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{variables}{
+    \restituegroupe[1]{bank-var-initialisation}
+}

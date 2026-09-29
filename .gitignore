@@ -45,3 +45,8 @@ _site/
 # Wrapper temporaire généré par build_pdfs.sh pour compiler la version
 # corrigée (\ChoixDeVersion{P}) ; nettoyé automatiquement, filet de sécurité.
 *__corrige.tex
+
+# Liste nominative d'étudiants pour ce QCM (non commitée à la demande de
+# l'enseignant) ; les students.csv déjà suivis ailleurs dans ce dépôt ne
+# sont pas concernés par cette règle.
+S1_Initiation_programmation_langageC/Evaluations/qcm-variables-boucles/students.csv

@@ -1,0 +1,247 @@
+% ==================== THEME 3 — CONDITIONS ====================
+
+% ---- cond-egalite ----
+\element{bank-cond-egalite}{
+    \begin{question}{cond-egalite-v1}
+        Quel opérateur permet de \textbf{tester} l'égalité entre deux entiers (et non affecter) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\texttt{=}}
+                \bonne{\texttt{==}}
+                \mauvaise{\texttt{=<}}
+                \mauvaise{\texttt{:=}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-egalite}{
+    \begin{question}{cond-egalite-v2}
+        Quel opérateur permet de \textbf{tester} l'égalité entre deux caractères (et non affecter) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\texttt{=}}
+                \bonne{\texttt{==}}
+                \mauvaise{\texttt{=<}}
+                \mauvaise{\texttt{:=}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-egalite}{
+    \begin{question}{cond-egalite-v3}
+        Quel opérateur permet de \textbf{tester} l'égalité entre deux variables flottantes (et non affecter) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{\texttt{=}}
+                \bonne{\texttt{==}}
+                \mauvaise{\texttt{=<}}
+                \mauvaise{\texttt{:=}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{conditions}{
+    \restituegroupe[1]{bank-cond-egalite}
+}
+
+% ---- cond-intervalle ----
+\element{bank-cond-intervalle}{
+    \begin{question}{cond-intervalle-v1}
+        Comment écrire la condition \(5 \le x \le 10\) (inclus) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|x >= 5 && x <= 10|}
+                \mauvaise{\lstinline[language=C]|x > 5 || x < 10|}
+                \mauvaise{\lstinline[language=C]|x > 5 && x < 10|}
+                \mauvaise{\lstinline[language=C]|x <= 5 && x >= 10|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-intervalle}{
+    \begin{question}{cond-intervalle-v2}
+        Comment écrire la condition \(0 \le n \le 20\) (inclus) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|n >= 0 && n <= 20|}
+                \mauvaise{\lstinline[language=C]|n > 0 || n < 20|}
+                \mauvaise{\lstinline[language=C]|n > 0 && n < 20|}
+                \mauvaise{\lstinline[language=C]|n <= 0 && n >= 20|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-intervalle}{
+    \begin{question}{cond-intervalle-v3}
+        Comment écrire la condition \(1 \le note \le 6\) (inclus) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|note >= 1 && note <= 6|}
+                \mauvaise{\lstinline[language=C]|note > 1 || note < 6|}
+                \mauvaise{\lstinline[language=C]|note > 1 && note < 6|}
+                \mauvaise{\lstinline[language=C]|note <= 1 && note >= 6|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{conditions}{
+    \restituegroupe[1]{bank-cond-intervalle}
+}
+
+% ---- cond-si-erreur-frequente ----
+\element{bank-cond-si-erreur-frequente}{
+    \begin{question}{cond-si-erreur-frequente-v1}
+        Quelle est l'erreur dans le code suivant ?
+        \lstinputlisting{sources/codes/cond-erreur-egal.c}
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{\texttt{=} affecte 5 à x au lieu de tester l'égalité (il fallait \texttt{==})}
+                \mauvaise{Il manque un point-virgule après le \texttt{if}}
+                \mauvaise{Les accolades sont interdites après un \texttt{if}}
+                \mauvaise{\texttt{printf} ne peut pas être utilisé dans un \texttt{if}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-si-erreur-frequente}{
+    \begin{question}{cond-si-erreur-frequente-v2}
+        Quelle est l'erreur dans le code suivant ?
+        \lstinputlisting{sources/codes/cond-erreur-egal-2.c}
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{\texttt{=} affecte 10 à note au lieu de tester l'égalité (il fallait \texttt{==})}
+                \mauvaise{Il manque un point-virgule après le \texttt{if}}
+                \mauvaise{Les accolades sont interdites après un \texttt{if}}
+                \mauvaise{\texttt{printf} ne peut pas être utilisé dans un \texttt{if}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-si-erreur-frequente}{
+    \begin{question}{cond-si-erreur-frequente-v3}
+        Quelle est l'erreur dans le code suivant ?
+        \lstinputlisting{sources/codes/cond-erreur-egal-3.c}
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{\texttt{=} affecte 1 à statut au lieu de tester l'égalité (il fallait \texttt{==})}
+                \mauvaise{Il manque un point-virgule après le \texttt{if}}
+                \mauvaise{Les accolades sont interdites après un \texttt{if}}
+                \mauvaise{\texttt{printf} ne peut pas être utilisé dans un \texttt{if}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{conditions}{
+    \restituegroupe[1]{bank-cond-si-erreur-frequente}
+}
+
+% ---- cond-else-if ----
+\element{bank-cond-else-if}{
+    \begin{question}{cond-else-if-v1}
+        Dans une structure \texttt{if}/\texttt{else if}/\texttt{else}, combien de blocs au maximum peuvent s'exécuter pour un même passage ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{1}
+                \mauvaise{Autant que de conditions vraies}
+                \mauvaise{2}
+                \mauvaise{0}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-else-if}{
+    \begin{question}{cond-else-if-v2}
+        Dans une structure \texttt{if}/\texttt{else if}/\texttt{else if}/\texttt{else}, combien de blocs au maximum sont exécutés pour un même passage ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{1}
+                \mauvaise{Autant que de conditions vraies}
+                \mauvaise{2}
+                \mauvaise{0}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-else-if}{
+    \begin{question}{cond-else-if-v3}
+        Dans une structure \texttt{if}/\texttt{else}, combien de blocs au maximum peuvent s'exécuter pour un même passage ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{1}
+                \mauvaise{Autant que de conditions vraies}
+                \mauvaise{2}
+                \mauvaise{0}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{conditions}{
+    \restituegroupe[1]{bank-cond-else-if}
+}
+
+% ---- cond-et-ou ----
+\element{bank-cond-et-ou}{
+    \begin{question}{cond-et-ou-v1}
+        Que vaut l'expression \lstinline[language=C]|(3 > 5) && (2 < 4)| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{Vrai (1)}
+                \bonne{Faux (0)}
+                \mauvaise{Erreur de compilation}
+                \mauvaise{3}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-et-ou}{
+    \begin{question}{cond-et-ou-v2}
+        Que vaut l'expression \lstinline[language=C]|(4 > 1) && (2 > 4)| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{Vrai (1)}
+                \bonne{Faux (0)}
+                \mauvaise{Erreur de compilation}
+                \mauvaise{4}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-cond-et-ou}{
+    \begin{question}{cond-et-ou-v3}
+        Que vaut l'expression \lstinline[language=C]|(1 > 2) && (5 > 0)| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{Vrai (1)}
+                \bonne{Faux (0)}
+                \mauvaise{Erreur de compilation}
+                \mauvaise{5}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{conditions}{
+    \restituegroupe[1]{bank-cond-et-ou}
+}
+
+% ---- cond-ecrire (écriture de code : reste \evaluationProfGrille, pas un tableau) ----
+\element{bank-cond-ecrire}{
+    \begin{question}{cond-ecrire-v1}
+        Écrire une condition en langage C qui affiche \texttt{"Majeur"} si la variable entière \texttt{age} est supérieure ou égale à 18, et \texttt{"Mineur"} sinon.
+        \evaluationProfGrille{2}{9}
+    \end{question}
+}
+\element{bank-cond-ecrire}{
+    \begin{question}{cond-ecrire-v2}
+        Écrire une condition en langage C qui affiche \texttt{"Positif"} si la variable entière \texttt{n} est strictement supérieure à 0, et \texttt{"Négatif ou nul"} sinon.
+        \evaluationProfGrille{2}{9}
+    \end{question}
+}
+\element{bank-cond-ecrire}{
+    \begin{question}{cond-ecrire-v3}
+        Écrire une condition en langage C qui affiche \texttt{"Admis"} si la variable entière \texttt{note} est supérieure ou égale à 10, et \texttt{"Recalé"} sinon.
+        \evaluationProfGrille{2}{9}
+    \end{question}
+}
+\element{conditions}{
+    \restituegroupe[1]{bank-cond-ecrire}
+}

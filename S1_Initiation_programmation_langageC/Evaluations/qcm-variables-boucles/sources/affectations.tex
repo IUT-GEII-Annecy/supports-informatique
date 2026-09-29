@@ -1,0 +1,322 @@
+% ==================== THEME 2 — AFFECTATIONS / EXPRESSIONS ====================
+
+% ---- aff-egal-vs-double-egal ----
+\element{bank-aff-egal-vs-double-egal}{
+    \begin{question}{aff-egal-vs-double-egal-v1}
+        Pour affecter la valeur \texttt{10} à la variable \texttt{x}, quelle écriture est correcte ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|x = 10;|}
+                \mauvaise{\lstinline[language=C]|x == 10;|}
+                \mauvaise{\lstinline[language=C]|10 = x;|}
+                \mauvaise{\lstinline[language=C]|x := 10;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-egal-vs-double-egal}{
+    \begin{question}{aff-egal-vs-double-egal-v2}
+        Pour affecter la valeur \texttt{25} à la variable \texttt{n}, quelle écriture est correcte ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|n = 25;|}
+                \mauvaise{\lstinline[language=C]|n == 25;|}
+                \mauvaise{\lstinline[language=C]|25 = n;|}
+                \mauvaise{\lstinline[language=C]|n := 25;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-egal-vs-double-egal}{
+    \begin{question}{aff-egal-vs-double-egal-v3}
+        Pour affecter la valeur \texttt{7} à la variable \texttt{score}, quelle écriture est correcte ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|score = 7;|}
+                \mauvaise{\lstinline[language=C]|score == 7;|}
+                \mauvaise{\lstinline[language=C]|7 = score;|}
+                \mauvaise{\lstinline[language=C]|score := 7;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{affectations}{
+    \restituegroupe[1]{bank-aff-egal-vs-double-egal}
+}
+
+% ---- aff-point-virgule ----
+\element{bank-aff-point-virgule}{
+    \begin{question}{aff-point-virgule-v1}
+        Quelle instruction est syntaxiquement correcte en C ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|x = x + 1|}
+                \bonne{\lstinline[language=C]|x = x + 1;|}
+                \mauvaise{\lstinline[language=C]|x = x + 1;;;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-point-virgule}{
+    \begin{question}{aff-point-virgule-v2}
+        Quelle instruction est syntaxiquement correcte en C ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|n = n - 2|}
+                \bonne{\lstinline[language=C]|n = n - 2;|}
+                \mauvaise{\lstinline[language=C]|n = n - 2;;;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-point-virgule}{
+    \begin{question}{aff-point-virgule-v3}
+        Quelle instruction est syntaxiquement correcte en C ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \mauvaise{\lstinline[language=C]|total = total + p|}
+                \bonne{\lstinline[language=C]|total = total + p;|}
+                \mauvaise{\lstinline[language=C]|total = total + p;;;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{affectations}{
+    \restituegroupe[1]{bank-aff-point-virgule}
+}
+
+% ---- aff-incrementation ----
+\element{bank-aff-incrementation}{
+    \begin{question}{aff-incrementation-v1}
+        Après \lstinline[language=C]|int x = 5; x++;|, quelle est la valeur de \texttt{x} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{4}
+                \bonne{6}
+                \mauvaise{5}
+                \mauvaise{Erreur de compilation}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-incrementation}{
+    \begin{question}{aff-incrementation-v2}
+        Après \lstinline[language=C]|int x = 9; x++;|, quelle est la valeur de \texttt{x} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{8}
+                \bonne{10}
+                \mauvaise{9}
+                \mauvaise{Erreur de compilation}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-incrementation}{
+    \begin{question}{aff-incrementation-v3}
+        Après \lstinline[language=C]|int x = 2; x++;|, quelle est la valeur de \texttt{x} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{1}
+                \bonne{3}
+                \mauvaise{2}
+                \mauvaise{Erreur de compilation}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{affectations}{
+    \restituegroupe[1]{bank-aff-incrementation}
+}
+
+% ---- aff-division-entiere ----
+\element{bank-aff-division-entiere}{
+    \begin{question}{aff-division-entiere-v1}
+        Que vaut \texttt{r} après \lstinline[language=C]|int r = 7 / 2;| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{3.5}
+                \bonne{3}
+                \mauvaise{4}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-division-entiere}{
+    \begin{question}{aff-division-entiere-v2}
+        Que vaut \texttt{r} après \lstinline[language=C]|int r = 9 / 2;| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{4.5}
+                \bonne{4}
+                \mauvaise{5}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-division-entiere}{
+    \begin{question}{aff-division-entiere-v3}
+        Que vaut \texttt{r} après \lstinline[language=C]|int r = 11 / 4;| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{2.75}
+                \bonne{2}
+                \mauvaise{3}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{affectations}{
+    \restituegroupe[1]{bank-aff-division-entiere}
+}
+
+% ---- aff-modulo ----
+\element{bank-aff-modulo}{
+    \begin{question}{aff-modulo-v1}
+        Que vaut \texttt{r} après \texttt{int r = 13 \% 5;} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{2.6}
+                \mauvaise{2}
+                \bonne{3}
+                \mauvaise{5}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-modulo}{
+    \begin{question}{aff-modulo-v2}
+        Que vaut \texttt{r} après \texttt{int r = 17 \% 4;} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{4.25}
+                \mauvaise{4}
+                \bonne{1}
+                \mauvaise{5}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-aff-modulo}{
+    \begin{question}{aff-modulo-v3}
+        Que vaut \texttt{r} après \texttt{int r = 22 \% 6;} ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \mauvaise{3.6}
+                \mauvaise{3}
+                \bonne{4}
+                \mauvaise{6}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{affectations}{
+    \restituegroupe[1]{bank-aff-modulo}
+}
+
+% ---- aff-trace (question de trace : tableau structuré au lieu du quadrillage) ----
+\element{bank-aff-trace}{
+    \begin{question}{aff-trace-v1}
+        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
+        \begin{minipage}[t]{.35\textwidth}
+            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-1.c}
+        \end{minipage}
+        \begin{minipage}[t]{.64\textwidth}
+            \evaluationProfTableauTrace{2}{%
+                \begin{center}
+                \begin{tabular}{|c|c|p{4cm}|}
+                    \hline
+                    \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+                    \hline
+                    \texttt{val\_i = val\_i + 5;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_c = 'C';} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_c++;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_i = 17 \% 4;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_i = 20 \% 4;} & & \\[0.3cm]
+                    \hline
+                \end{tabular}
+                \end{center}
+            }
+        \end{minipage}
+    \end{question}
+}
+\element{bank-aff-trace}{
+    \begin{question}{aff-trace-v2}
+        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
+        \begin{minipage}[t]{.35\textwidth}
+            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-2.c}
+        \end{minipage}
+        \begin{minipage}[t]{.64\textwidth}
+            \evaluationProfTableauTrace{2}{%
+                \begin{center}
+                \begin{tabular}{|c|c|p{4cm}|}
+                    \hline
+                    \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+                    \hline
+                    \texttt{val\_i = val\_i + 4;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_c = 'D';} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_c++;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_i = 19 \% 5;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_i = 22 \% 5;} & & \\[0.3cm]
+                    \hline
+                \end{tabular}
+                \end{center}
+            }
+        \end{minipage}
+    \end{question}
+}
+\element{bank-aff-trace}{
+    \begin{question}{aff-trace-v3}
+        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
+        \begin{minipage}[t]{.35\textwidth}
+            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-3.c}
+        \end{minipage}
+        \begin{minipage}[t]{.64\textwidth}
+            \evaluationProfTableauTrace{2}{%
+                \begin{center}
+                \begin{tabular}{|c|c|p{4cm}|}
+                    \hline
+                    \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+                    \hline
+                    \texttt{val\_i = val\_i + 3;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_c = 'E';} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_c++;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_i = 23 \% 6;} & & \\[0.3cm]
+                    \hline
+                    \texttt{val\_i = 25 \% 6;} & & \\[0.3cm]
+                    \hline
+                \end{tabular}
+                \end{center}
+            }
+        \end{minipage}
+    \end{question}
+}
+\element{affectations}{
+    \restituegroupe[1]{bank-aff-trace}
+}

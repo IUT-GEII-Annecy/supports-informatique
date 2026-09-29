@@ -1,0 +1,59 @@
+\documentclass[QCM, noCustomPackages]{UPSTI_Document}
+\usepackage{IUT_Annecy}
+\usepackage{logos_iut}
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+\def\photodir{photos}
+
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{0}
+\newcommand{\UPSTImessage}{test}
+
+\newcommand{\UPSTItitre}{QCM --- Variables, conditions et boucles}
+
+
+\newcommand{\sujet}{% Début de la boucle sur les étudiants
+\exemplaire{1}{%
+\renewcommand{\UPSTImessage}{\champnom{\nom \prenom}}
+\renewcommand{\UPSTInumeroVersion}{\id{}}
+\renewcommand{\UPSTIlogoLycee}{\photo}
+\UPSTIbuildPage
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+\section{Variables simples}
+\restituegroupe[3]{variables}
+\section{Affectations et expressions}
+\restituegroupe[3]{affectations}
+\pagebreak
+\section{Conditions}
+\restituegroupe[4]{conditions}
+\pagebreak
+\section{Boucles simples}
+\restituegroupe[4]{boucles}
+\pagebreak
+\section{Boucles imbriquées}
+\restituegroupe[3]{boucles-imbriquees}
+\AMCcleardoublepage
+}
+}
+
+
+
+
+\begin{document}
+\setdefaultgroupmode{withoutreplacement}
+\AMCrandomseed{1237893}
+\input{sources/preamble_local.tex}
+\input{sources/variables.tex}
+\input{sources/affectations.tex}
+\input{sources/conditions.tex}
+\input{sources/boucles.tex}
+\input{sources/boucles-imbriquees.tex}
+
+
+\def\AMCformQuestion#1{{\sc Question #1 :}}
+\csvreader[head to column names,]{students.csv}{}{\sujet}
+\end{document}

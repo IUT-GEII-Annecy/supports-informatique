@@ -1,0 +1,262 @@
+% ==================== THEME 4 — BOUCLES SIMPLES ====================
+
+% ---- boucle-for-trace ----
+\element{bank-boucle-for-trace}{
+    \begin{question}{boucle-for-trace-v1}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-for-1.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{10}
+                \mauvaise{15}
+                \mauvaise{0}
+                \mauvaise{5}
+                \mauvaise{4}
+                \mauvaise{i}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-for-trace}{
+    \begin{question}{boucle-for-trace-v2}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-for-2.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{6}
+                \mauvaise{10}
+                \mauvaise{0}
+                \mauvaise{4}
+                \mauvaise{3}
+                \mauvaise{i}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-for-trace}{
+    \begin{question}{boucle-for-trace-v3}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-for-3.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{15}
+                \mauvaise{21}
+                \mauvaise{0}
+                \mauvaise{6}
+                \mauvaise{5}
+                \mauvaise{i}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles}{
+    \restituegroupe[1]{bank-boucle-for-trace}
+}
+
+% ---- boucle-while-trace ----
+\element{bank-boucle-while-trace}{
+    \begin{question}{boucle-while-trace-v1}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-while-1.c}
+        \begin{multicols}{5}
+            \begin{reponses}
+                \bonne{0123}
+                \mauvaise{1234}
+                \mauvaise{01234}
+                \mauvaise{4}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-while-trace}{
+    \begin{question}{boucle-while-trace-v2}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-while-2.c}
+        \begin{multicols}{5}
+            \begin{reponses}
+                \bonne{01234}
+                \mauvaise{12345}
+                \mauvaise{012345}
+                \mauvaise{5}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-while-trace}{
+    \begin{question}{boucle-while-trace-v3}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-while-3.c}
+        \begin{multicols}{5}
+            \begin{reponses}
+                \bonne{012}
+                \mauvaise{123}
+                \mauvaise{0123}
+                \mauvaise{3}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles}{
+    \restituegroupe[1]{bank-boucle-while-trace}
+}
+
+% ---- boucle-for-vs-while ----
+\element{bank-boucle-for-vs-while}{
+    \begin{question}{boucle-for-vs-while-v1}
+        Quelle boucle utiliser lorsque l'on connaît \textbf{à l'avance} le nombre exact de répétitions ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|for|}
+                \mauvaise{\lstinline[language=C]|while| uniquement}
+                \mauvaise{\lstinline[language=C]|if|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-for-vs-while}{
+    \begin{question}{boucle-for-vs-while-v2}
+        Quelle boucle est la plus adaptée pour répéter un traitement un nombre \textbf{fixe et connu} de fois (par exemple 20 fois) ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|for|}
+                \mauvaise{\lstinline[language=C]|while| uniquement}
+                \mauvaise{\lstinline[language=C]|if|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-for-vs-while}{
+    \begin{question}{boucle-for-vs-while-v3}
+        Pour parcourir un intervalle dont les bornes sont connues dès le départ, quelle structure de boucle est la plus naturelle en C ?
+        \begin{multicols}{3}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|for|}
+                \mauvaise{\lstinline[language=C]|while| uniquement}
+                \mauvaise{\lstinline[language=C]|if|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles}{
+    \restituegroupe[1]{bank-boucle-for-vs-while}
+}
+
+% ---- boucle-condition-arret ----
+\element{bank-boucle-condition-arret}{
+    \begin{question}{boucle-condition-arret-v1}
+        Quel risque court le programme suivant ?
+        \lstinputlisting{sources/codes/boucle-infinie.c}
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{Boucle infinie, car \texttt{i} n'est jamais incrémenté}
+                \mauvaise{Erreur de compilation}
+                \mauvaise{Le programme n'affiche rien}
+                \mauvaise{Le programme s'arrête après un seul tour}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-condition-arret}{
+    \begin{question}{boucle-condition-arret-v2}
+        Quel risque court le programme suivant ?
+        \lstinputlisting{sources/codes/boucle-infinie-2.c}
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{Boucle infinie, car \texttt{n} n'est jamais incrémenté}
+                \mauvaise{Erreur de compilation}
+                \mauvaise{Le programme n'affiche rien}
+                \mauvaise{Le programme s'arrête après un seul tour}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-condition-arret}{
+    \begin{question}{boucle-condition-arret-v3}
+        Quel risque court le programme suivant ?
+        \lstinputlisting{sources/codes/boucle-infinie-3.c}
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{Boucle infinie, car \texttt{k} n'est jamais décrémenté}
+                \mauvaise{Erreur de compilation}
+                \mauvaise{Le programme n'affiche rien}
+                \mauvaise{Le programme s'arrête après un seul tour}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles}{
+    \restituegroupe[1]{bank-boucle-condition-arret}
+}
+
+% ---- boucle-offbyone ----
+\element{bank-boucle-offbyone}{
+    \begin{question}{boucle-offbyone-v1}
+        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 5; i++) { printf("Bonjour"); }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{4}
+                \bonne{5}
+                \mauvaise{6}
+                \mauvaise{0}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-offbyone}{
+    \begin{question}{boucle-offbyone-v2}
+        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 7; i++) { printf("Bonjour"); }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{6}
+                \bonne{7}
+                \mauvaise{8}
+                \mauvaise{0}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-boucle-offbyone}{
+    \begin{question}{boucle-offbyone-v3}
+        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 3; i++) { printf("Bonjour"); }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{2}
+                \bonne{3}
+                \mauvaise{4}
+                \mauvaise{0}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles}{
+    \restituegroupe[1]{bank-boucle-offbyone}
+}
+
+% ---- boucle-ecrire (écriture de code : reste \evaluationProfGrille, pas un tableau) ----
+\element{bank-boucle-ecrire}{
+    \begin{question}{boucle-ecrire-v1}
+        Écrire une boucle en langage C qui affiche les nombres entiers de 1 à 10 (une valeur par ligne).
+        \evaluationProfGrille{2}{9}
+    \end{question}
+}
+\element{bank-boucle-ecrire}{
+    \begin{question}{boucle-ecrire-v2}
+        Écrire une boucle en langage C qui affiche les nombres entiers de 1 à 6 (une valeur par ligne).
+        \evaluationProfGrille{2}{9}
+    \end{question}
+}
+\element{bank-boucle-ecrire}{
+    \begin{question}{boucle-ecrire-v3}
+        Écrire une boucle en langage C qui affiche les nombres entiers de 0 à 8 (une valeur par ligne).
+        \evaluationProfGrille{2}{9}
+    \end{question}
+}
+\element{boucles}{
+    \restituegroupe[1]{bank-boucle-ecrire}
+}

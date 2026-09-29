@@ -1,0 +1,227 @@
+% ==================== THEME 5 — BOUCLES IMBRIQUEES ====================
+
+% ---- imbr-trace-compteur ----
+\element{bank-imbr-trace-compteur}{
+    \begin{question}{imbr-trace-compteur-v1}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-imbriquee-1.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \mauvaise{3}
+                \mauvaise{2}
+                \bonne{6}
+                \mauvaise{5}
+                \mauvaise{9}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-trace-compteur}{
+    \begin{question}{imbr-trace-compteur-v2}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-imbriquee-2.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \mauvaise{4}
+                \mauvaise{2}
+                \bonne{8}
+                \mauvaise{6}
+                \mauvaise{9}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-trace-compteur}{
+    \begin{question}{imbr-trace-compteur-v3}
+        Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+        \lstinputlisting{sources/codes/boucle-imbriquee-3.c}
+        \begin{multicols}{6}
+            \begin{reponses}
+                \mauvaise{3}
+                \mauvaise{6}
+                \bonne{9}
+                \mauvaise{12}
+                \mauvaise{27}
+                \mauvaise{Boucle infinie}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles-imbriquees}{
+    \restituegroupe[1]{bank-imbr-trace-compteur}
+}
+
+% ---- imbr-nb-tours ----
+\element{bank-imbr-nb-tours}{
+    \begin{question}{imbr-nb-tours-v1}
+        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<4;i++) { for (int j=0;j<3;j++) { } }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{4}
+                \mauvaise{3}
+                \mauvaise{7}
+                \bonne{12}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-nb-tours}{
+    \begin{question}{imbr-nb-tours-v2}
+        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<5;i++) { for (int j=0;j<2;j++) { } }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{5}
+                \mauvaise{2}
+                \mauvaise{7}
+                \bonne{10}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-nb-tours}{
+    \begin{question}{imbr-nb-tours-v3}
+        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<2;i++) { for (int j=0;j<6;j++) { } }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{2}
+                \mauvaise{6}
+                \mauvaise{8}
+                \bonne{12}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles-imbriquees}{
+    \restituegroupe[1]{bank-imbr-nb-tours}
+}
+
+% ---- imbr-variable-confusion ----
+\element{bank-imbr-variable-confusion}{
+    \begin{question}{imbr-variable-confusion-v1}
+        Dans une boucle imbriquée, pourquoi faut-il utiliser \textbf{deux variables de boucle différentes} (par exemple \texttt{i} et \texttt{j}) ?
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{Réutiliser la même variable pour les deux boucles casse le comptage de la boucle externe}
+                \mauvaise{Le langage C interdit d'avoir deux boucles \texttt{for} dans un même programme}
+                \mauvaise{Cela n'a aucune importance, les deux variables peuvent avoir le même nom}
+                \mauvaise{Une boucle imbriquée n'a besoin que d'une seule variable}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-variable-confusion}{
+    \begin{question}{imbr-variable-confusion-v2}
+        Dans une boucle imbriquée, pourquoi utilise-t-on des noms de variable de boucle \textbf{distincts} (par exemple \texttt{i} pour la boucle externe et \texttt{k} pour la boucle interne) ?
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{Réutiliser la même variable pour les deux boucles casse le comptage de la boucle externe}
+                \mauvaise{Le langage C interdit d'avoir deux boucles \texttt{for} dans un même programme}
+                \mauvaise{Cela n'a aucune importance, les deux variables peuvent avoir le même nom}
+                \mauvaise{Une boucle imbriquée n'a besoin que d'une seule variable}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-variable-confusion}{
+    \begin{question}{imbr-variable-confusion-v3}
+        Que se passe-t-il si l'on utilise la \textbf{même variable} \texttt{i} pour piloter à la fois la boucle externe et la boucle interne d'une boucle imbriquée ?
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{La boucle interne modifie \texttt{i}, ce qui casse le comptage de la boucle externe}
+                \mauvaise{Le langage C interdit d'avoir deux boucles \texttt{for} dans un même programme}
+                \mauvaise{Cela n'a aucune importance, les deux boucles s'exécutent normalement}
+                \mauvaise{Une boucle imbriquée n'a besoin que d'une seule variable}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{boucles-imbriquees}{
+    \restituegroupe[1]{bank-imbr-variable-confusion}
+}
+
+% ---- imbr-trace-variable (question de trace : tableau structuré au lieu du quadrillage) ----
+\element{bank-imbr-trace-variable}{
+    \begin{question}{imbr-trace-variable-v1}
+        Pour chaque tour de la boucle externe, indiquer la valeur de \texttt{total} en fin de tour.
+        \begin{minipage}[t]{.4\textwidth}
+            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/trace-imbriquee-1.c}
+        \end{minipage}
+        \begin{minipage}[t]{.59\textwidth}
+            \evaluationProfTableauTrace{2}{%
+                \begin{center}
+                \begin{tabular}{|c|p{4cm}|}
+                    \hline
+                    \textbf{Tour (valeur de \texttt{i})} & \textbf{Valeur de \texttt{total} en fin de tour} \\
+                    \hline
+                    1 & \\[0.3cm]
+                    \hline
+                    2 & \\[0.3cm]
+                    \hline
+                    3 & \\[0.3cm]
+                    \hline
+                \end{tabular}
+                \end{center}
+            }
+        \end{minipage}
+    \end{question}
+}
+\element{bank-imbr-trace-variable}{
+    \begin{question}{imbr-trace-variable-v2}
+        Pour chaque tour de la boucle externe, indiquer la valeur de \texttt{total} en fin de tour.
+        \begin{minipage}[t]{.4\textwidth}
+            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/trace-imbriquee-2.c}
+        \end{minipage}
+        \begin{minipage}[t]{.59\textwidth}
+            \evaluationProfTableauTrace{2}{%
+                \begin{center}
+                \begin{tabular}{|c|p{4cm}|}
+                    \hline
+                    \textbf{Tour (valeur de \texttt{i})} & \textbf{Valeur de \texttt{total} en fin de tour} \\
+                    \hline
+                    1 & \\[0.3cm]
+                    \hline
+                    2 & \\[0.3cm]
+                    \hline
+                    3 & \\[0.3cm]
+                    \hline
+                \end{tabular}
+                \end{center}
+            }
+        \end{minipage}
+    \end{question}
+}
+\element{bank-imbr-trace-variable}{
+    \begin{question}{imbr-trace-variable-v3}
+        Pour chaque tour de la boucle externe, indiquer la valeur de \texttt{total} en fin de tour.
+        \begin{minipage}[t]{.4\textwidth}
+            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/trace-imbriquee-3.c}
+        \end{minipage}
+        \begin{minipage}[t]{.59\textwidth}
+            \evaluationProfTableauTrace{2}{%
+                \begin{center}
+                \begin{tabular}{|c|p{4cm}|}
+                    \hline
+                    \textbf{Tour (valeur de \texttt{i})} & \textbf{Valeur de \texttt{total} en fin de tour} \\
+                    \hline
+                    1 & \\[0.3cm]
+                    \hline
+                    2 & \\[0.3cm]
+                    \hline
+                    3 & \\[0.3cm]
+                    \hline
+                    4 & \\[0.3cm]
+                    \hline
+                \end{tabular}
+                \end{center}
+            }
+        \end{minipage}
+    \end{question}
+}
+\element{boucles-imbriquees}{
+    \restituegroupe[1]{bank-imbr-trace-variable}
+}

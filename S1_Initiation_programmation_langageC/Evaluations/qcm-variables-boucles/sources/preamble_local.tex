@@ -1,0 +1,13 @@
+% ==================== PREAMBULE LOCAL — QCM variables-boucles ====================
+% Variante locale de \evaluationProfGrille remplaçant le quadrillage \casesGrid
+% par un tableau structuré (trace d'exécution), sans toucher au paquet UPSTI
+% partagé. Le mécanisme de notation (\bareme / \AMCOpen via \evaluationProfBase)
+% est strictement identique : seul l'habillage visuel (lineuptext) change.
+%
+% Usage : \evaluationProfTableauTrace{<bareme max>}{<contenu LaTeX du tableau>}
+% (argument optionnel #1 identique à \evaluationProfGrille, non utilisé ici)
+\newcommandx{\evaluationProfTableauTrace}[3][1=]{{%
+  \evaluationProfBase[#2]{\max*GRAD/5}{\evaluationGraduee}{%
+    lineup=true, lineuptext={#3}, lines=0%
+  }%
+}}
