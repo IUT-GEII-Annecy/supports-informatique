@@ -193,7 +193,7 @@ int main(void)
 
     \begin{UPSTICahierDesCharges}{1}
         \begin{itemize}
-            \item Écrire une fonction \texttt{int somme\_mesures(int nbCapteurs)} qui demande à l'utilisateur, via \texttt{scanf}, de saisir \texttt{nbCapteurs} mesures entières successives, et qui renvoie leur \textbf{somme}.
+            \item Écrire une fonction \texttt{int somme\_mesures(int nbCapteurs)} qui demande à l'utilisateur, de saisir \texttt{nbCapteurs} mesures entières successives, et qui renvoie leur \textbf{somme}.
             \item La fonction ne doit contenir \textbf{qu'une seule} boucle.
         \end{itemize}
     \end{UPSTICahierDesCharges}
@@ -237,8 +237,7 @@ int somme_mesures(int nbCapteurs)
     for (int i = 0; i < nbCapteurs; i = i + 1)
     {
         int mesure;
-        printf("Mesure ? ");
-        scanf("%d", &mesure);
+        mesure = get_int("Mesure ? ");
         somme = somme + mesure;
     }
     return somme;
