@@ -1,0 +1,68 @@
+\section{Exercice de conception : Plan de salle}
+On souhaite écrire un programme qui aide un enseignant à représenter le plan d'une salle de classe, organisée en rangées de tables.
+
+\subsection{Question 1 : Liste des rangées}
+
+\begin{UPSTIManipulation}{Plan de salle -- Liste des rangées}
+	Écrire un programme qui :
+	\begin{enumerate}
+		\item Demande à l'utilisateur le nombre de rangées \texttt{n} de la salle (\texttt{get\_int}).
+		\item Affiche, pour chaque rangée numérotée de 1 à \texttt{n}, une ligne de la forme \texttt{Rangee <numero> : libre}.
+	\end{enumerate}
+
+	Exemple d'exécution :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez le nombre de rangees :
+3
+Rangee 1 : libre
+Rangee 2 : libre
+Rangee 3 : libre
+\end{lstlisting}
+\end{UPSTIManipulation}
+
+\subsection{Question 2 : Plan complet de la salle}
+
+\begin{UPSTIManipulation}{Plan de salle -- Plan complet}
+	On souhaite maintenant afficher un plan visuel de la salle entière.
+
+	Écrire un programme qui :
+	\begin{enumerate}
+		\item Demande à l'utilisateur le nombre de rangées \texttt{n} de la salle (\texttt{get\_int}).
+		\item Demande à l'utilisateur le nombre de places \texttt{m} par rangée (\texttt{get\_int}).
+		\item Affiche le plan de la salle : \texttt{n} lignes de \texttt{m} places chacune, chaque place étant représentée par le symbole \texttt{o}, séparé du suivant par un espace.
+	\end{enumerate}
+
+	Exemple d'exécution :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez le nombre de rangees :
+3
+Entrez le nombre de places par rangee :
+4
+o o o o
+o o o o
+o o o o
+\end{lstlisting}
+\end{UPSTIManipulation}
+
+\subsection{Pour aller plus loin (optionnel)}
+
+\begin{UPSTIManipulation}{Plan de salle -- Rangées occupées}
+	On souhaite maintenant que les rangées de numéro \textbf{impair} soient occupées.
+
+	Modifier les deux programmes précédents :
+	\begin{enumerate}
+		\item Dans le programme de la Question 1 : afficher \texttt{Rangee <numero> : occupee} pour une rangée de numéro impair, et \texttt{Rangee <numero> : libre} pour une rangée de numéro pair.
+		\item Dans le programme de la Question 2 : afficher le symbole \texttt{x} pour toutes les places d'une rangée de numéro impair, et le symbole \texttt{o} pour toutes les places d'une rangée de numéro pair.
+	\end{enumerate}
+
+	Exemple d'exécution (programme de la Question 2, avec \texttt{n = 3} et \texttt{m = 4}) :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez le nombre de rangees :
+3
+Entrez le nombre de places par rangee :
+4
+x x x x
+o o o o
+x x x x
+\end{lstlisting}
+\end{UPSTIManipulation}
