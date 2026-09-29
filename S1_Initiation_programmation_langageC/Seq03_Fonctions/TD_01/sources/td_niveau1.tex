@@ -1,6 +1,4 @@
-\section{Niveau 1}
-
-\subsection{Fonctions \texttt{void} : déclaration, définition, appel}
+\section{Les bases des fonctions}
 
 \begin{UPSTIexercice}{Repérer déclaration, définition et appels}
     On considère le programme suivant.
@@ -44,8 +42,6 @@ Mesure 2 : OK
 \end{UPSTIprofOnlyEnv}
 
 
-\subsection{Fonctions avec paramètres}
-
 \begin{UPSTIexercice}{Prédire l'affichage de plusieurs appels}
     On considère le programme suivant.
     \begin{lstlisting}[language=C]
@@ -69,7 +65,7 @@ int main(void)
 }
     \end{lstlisting}
     \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
-    \UPSTIquestion{Que se passerait-il si, dans \texttt{main}, on écrivait \texttt{afficher\_ligne(3, '=');} (arguments inversés) ? On ne demande pas de prédire un affichage précis, mais d'expliquer le problème de correspondance entre arguments et paramètres.}
+    \UPSTIquestion{Que se passerait-il si, dans \texttt{main}, on écrivait \texttt{afficher\_ligne(3, '=');} (arguments inversés) ? }
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
@@ -109,7 +105,7 @@ int main(void)
 }
     \end{lstlisting}
     \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
-    \UPSTIquestion{L'appel \texttt{doubler(valeur);} a-t-il modifié la variable \texttt{valeur} de \texttt{main} ? Justifier en une phrase à l'aide de la notion de passage par valeur.}
+    \UPSTIquestion{Expliquer.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}

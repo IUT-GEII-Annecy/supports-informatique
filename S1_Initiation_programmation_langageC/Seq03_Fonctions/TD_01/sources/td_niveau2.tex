@@ -1,7 +1,4 @@
-\section{Niveau 2}
-
-\subsection{Fonctions avec valeur de retour}
-
+\section{On s'entraine}
 \begin{UPSTIexercice}{Prédire l'affichage d'une fonction avec retour}
     On considère le programme suivant.
     \begin{lstlisting}[language=C]
@@ -29,7 +26,7 @@ int main(void)
     \end{lstlisting}
     \UPSTIquestion{Pour l'appel \texttt{maximum(7, 12)}, indiquer lequel des deux \texttt{return} est réellement exécuté.}
     \UPSTIquestion{Prédire, ligne par ligne, tout ce qu'affiche ce programme.}
-    \UPSTIquestion{Une valeur renvoyée par une fonction (comme \texttt{maximum(30, 4)}) peut-elle être utilisée directement dans un calcul, sans passer par une variable intermédiaire ? Justifier à partir de la seconde ligne affichée.}
+    \UPSTIquestion{Sans déclarer de nouvelle fonction, écrire les lignes permettant de calculer le maximum de trois entiers \texttt{a}, \texttt{b} et \texttt{c} en utilisant uniquement la fonction \texttt{maximum} déjà définie.}
 \end{UPSTIexercice}
 
 \begin{UPSTIprofOnlyEnv}
@@ -39,12 +36,14 @@ int main(void)
 Le plus grand est 12
 Directement : 31
         \end{lstlisting}
-        Oui : une valeur renvoyée par une fonction est une expression comme une autre, elle peut être utilisée immédiatement dans un calcul (ici \texttt{maximum(30, 4)} vaut \texttt{30}, et \texttt{30 + 1 = 31}), sans obligation de la stocker d'abord dans une variable.
+        Pour calculer le maximum de trois entiers \texttt{a}, \texttt{b} et \texttt{c}, on peut écrire :
+        \begin{lstlisting}[language=C]
+int m = maximum(maximum(a, b), c);
+\end{lstlisting}
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}
 
 
-\subsection{Portée des variables}
 
 \begin{UPSTIexercice}{Deux variables locales de même nom}
     On considère le programme suivant.
@@ -70,7 +69,7 @@ int main(void)
     return 0;
 }
     \end{lstlisting}
-    \UPSTIquestion{Les deux fonctions \texttt{carre} et \texttt{cube} déclarent chacune une variable nommée \texttt{resultat}. Cela pose-t-il un problème à la compilation ou à l'exécution ? Justifier à l'aide de la notion de \textbf{variable locale}.}
+    \UPSTIquestion{Les deux fonctions \texttt{carre} et \texttt{cube} déclarent chacune une variable nommée \texttt{resultat}. Cela pose-t-il un problème à la compilation ou à l'exécution ? Justifier.}
     \UPSTIquestion{Prédire l'affichage de ce programme.}
 \end{UPSTIexercice}
 
@@ -83,6 +82,10 @@ Cube de 3 : 27
         \end{lstlisting}
     \end{UPSTIcorrectionP}
 \end{UPSTIprofOnlyEnv}
+
+\UPSTIattention{L'utilisation de variables globales (déclarées en dehors de toute fonction) est à éviter, car elles sont partagées par toutes les fonctions et peuvent donc être modifiées par n'importe laquelle d'entre elles, ce qui peut provoquer des erreurs difficiles à détecter. Il est préférable de déclarer des variables locales à chaque fonction, même si elles portent le même nom.
+
+\textbf{A l'IUT, toute utilisation de variable globale doit être duement justifiée.}}
 
 
 \begin{UPSTIexercice}{Une variable globale partagée}
@@ -132,12 +135,9 @@ Nombre total de mesures : 3
     On souhaite écrire une fonction \texttt{afficher\_jauge}, qui affiche une jauge faite de caractères \texttt{'\#'} suivis de caractères \texttt{'-'}, pour représenter un niveau (par exemple une charge de batterie) sur une longueur totale fixe.
 
     \UPSTIquestion{Compléter le prototype de la fonction ci-dessous, sachant qu'elle prend en paramètres le nombre de \texttt{'\#'} à afficher (\texttt{nbPleins}) et le nombre total de caractères de la jauge (\texttt{longueurTotale}), et qu'elle ne renvoie rien.}
-    \begin{lstlisting}[language=C]
-..... afficher_jauge(..... nbPleins, ..... longueurTotale);
-    \end{lstlisting}
     \UPSTIquestion{Compléter le corps de la fonction ci-dessous, qui doit afficher \texttt{nbPleins} caractères \texttt{'\#'}, puis \texttt{(longueurTotale - nbPleins)} caractères \texttt{'-'}, puis un retour à la ligne. On utilisera \textbf{deux boucles \texttt{for} successives} (non imbriquées).}
     \begin{lstlisting}[language=C]
-void afficher_jauge(int nbPleins, int longueurTotale)
+........ afficher_jauge(...... nbPleins, ....... longueurTotale)
 {
     for (..........................................)
     {
@@ -186,7 +186,7 @@ int main(void)
 \end{UPSTIprofOnlyEnv}
 
 
-\subsection{Exercice de conception}
+\section{Exercice de conception}
 
 \begin{UPSTIexercice}{Supervision d'un ensemble de capteurs}
     On souhaite écrire une fonction qui synthétise les mesures d'une série de capteurs identiques, saisies une par une par l'utilisateur.
