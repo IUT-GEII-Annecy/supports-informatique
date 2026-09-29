@@ -221,100 +221,88 @@
 \element{bank-aff-trace}{
     \begin{question}{aff-trace-v1}
         Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
-        \begin{minipage}[t]{.35\textwidth}
-            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-1.c}
-        \end{minipage}
-        \begin{minipage}[t]{.64\textwidth}
-            \evaluationProfTableauTrace{2}{%
-                \begin{center}
-                \begin{tabular}{|c|c|p{4cm}|}
-                    \hline
-                    \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
-                    \hline
-                    \texttt{val\_i = val\_i + 5;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_c = 'C';} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_c++;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_i = 17 \% 4;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_i = 20 \% 4;} & & \\[0.3cm]
-                    \hline
-                \end{tabular}
-                \end{center}
-            }
-        \end{minipage}
+        \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-1.c}
+        \evaluationProfTableauTrace{2}{%
+            \begin{center}
+            \begin{tabular}{|c|c|p{4cm}|}
+                \hline
+                \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+                \hline
+                \texttt{val\_i = val\_i + 5;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_c = 'C';} & & \\[0.3cm]
+                \hline
+                \texttt{val\_c++;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_i = 17 \% 4;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_i = 20 \% 4;} & & \\[0.3cm]
+                \hline
+            \end{tabular}
+            \end{center}
+        }
     \end{question}
 }
 \element{bank-aff-trace}{
     \begin{question}{aff-trace-v2}
         Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
-        \begin{minipage}[t]{.35\textwidth}
-            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-2.c}
-        \end{minipage}
-        \begin{minipage}[t]{.64\textwidth}
-            \evaluationProfTableauTrace{2}{%
-                \begin{center}
-                \begin{tabular}{|c|c|p{4cm}|}
-                    \hline
-                    \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
-                    \hline
-                    \texttt{val\_i = val\_i + 4;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_c = 'D';} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_c++;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_i = 19 \% 5;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_i = 22 \% 5;} & & \\[0.3cm]
-                    \hline
-                \end{tabular}
-                \end{center}
-            }
-        \end{minipage}
+        \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-2.c}
+        \evaluationProfTableauTrace{2}{%
+            \begin{center}
+            \begin{tabular}{|c|c|p{4cm}|}
+                \hline
+                \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+                \hline
+                \texttt{val\_i = val\_i + 4;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_c = 'D';} & & \\[0.3cm]
+                \hline
+                \texttt{val\_c++;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_i = 19 \% 5;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_i = 22 \% 5;} & & \\[0.3cm]
+                \hline
+            \end{tabular}
+            \end{center}
+        }
     \end{question}
 }
 \element{bank-aff-trace}{
     \begin{question}{aff-trace-v3}
         Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
-        \begin{minipage}[t]{.35\textwidth}
-            \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-3.c}
-        \end{minipage}
-        \begin{minipage}[t]{.64\textwidth}
-            \evaluationProfTableauTrace{2}{%
-                \begin{center}
-                \begin{tabular}{|c|c|p{4cm}|}
-                    \hline
-                    \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
-                    \hline
-                    \texttt{val\_i = val\_i + 3;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_c = 'E';} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_c++;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_i = 23 \% 6;} & & \\[0.3cm]
-                    \hline
-                    \texttt{val\_i = 25 \% 6;} & & \\[0.3cm]
-                    \hline
-                \end{tabular}
-                \end{center}
-            }
-        \end{minipage}
+        \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-3.c}
+        \evaluationProfTableauTrace{2}{%
+            \begin{center}
+            \begin{tabular}{|c|c|p{4cm}|}
+                \hline
+                \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+                \hline
+                \texttt{val\_i = val\_i + 3;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_f = val\_i / 2;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_f = val\_i / 2.0;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_c = 'E';} & & \\[0.3cm]
+                \hline
+                \texttt{val\_c++;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_i = 23 \% 6;} & & \\[0.3cm]
+                \hline
+                \texttt{val\_i = 25 \% 6;} & & \\[0.3cm]
+                \hline
+            \end{tabular}
+            \end{center}
+        }
     \end{question}
 }
 \element{affectations}{
