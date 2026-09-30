@@ -66,5 +66,12 @@
 
 
 \def\AMCformQuestion#1{{\sc Question #1 :}}
-\csvreader[head to column names,]{students.csv}{}{\sujet}
+% \ficheEtudiants : même indirection que les autres projets AMC gérés par
+% l'interface web (etudiants.tex, \newcommand{\ficheEtudiants}{<nom>.csv}).
+% etudiants.tex fait lui-même le \newcommand : le défaut ci-dessous ne doit
+% être défini QUE quand ce fichier est absent (compilation en place, ici
+% même), sinon \newcommand échoue avec "already defined" et etudiants.tex
+% n'est alors jamais réellement pris en compte.
+\IfFileExists{etudiants.tex}{\input{etudiants.tex}}{\providecommand{\ficheEtudiants}{students.csv}}
+\csvreader[head to column names,]{\ficheEtudiants}{}{\sujet}
 \end{document}
