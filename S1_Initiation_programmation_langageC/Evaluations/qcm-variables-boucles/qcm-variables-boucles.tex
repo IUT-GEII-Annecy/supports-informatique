@@ -1,8 +1,18 @@
 \documentclass[QCM, noCustomPackages]{UPSTI_Document}
 \usepackage{IUT_Annecy}
 \usepackage{logos_iut}
-\input{../preamble.tex}
-\input{../../preamble_module.tex}
+% \QCMchemin / \QCMcheminModule permettent de recompiler ce fichier depuis
+% un autre répertoire (ex. déploiement AMC via un fiche_evaluation.tex qui
+% redéfinit ces macros en chemins absolus avant de \input ce fichier) : un
+% \input{../preamble.tex} littéral se résout par rapport au répertoire de
+% travail du processus LaTeX, pas par rapport à ce fichier — donc pas
+% "recompilable ailleurs" tel quel. Valeur par défaut inchangée : compiler
+% ce fichier tel quel (ex. depuis supports-informatique/) fonctionne
+% exactement comme avant.
+\providecommand{\QCMchemin}{..}
+\providecommand{\QCMcheminModule}{../..}
+\input{\QCMchemin/preamble.tex}
+\input{\QCMcheminModule/preamble_module.tex}
 
 \def\photodir{photos}
 
