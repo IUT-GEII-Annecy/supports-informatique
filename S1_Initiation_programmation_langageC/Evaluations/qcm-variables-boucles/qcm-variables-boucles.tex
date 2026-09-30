@@ -28,7 +28,14 @@
 \exemplaire{1}{%
 \renewcommand{\UPSTImessage}{\champnom{\nom \prenom}}
 \renewcommand{\UPSTInumeroVersion}{\id{}}
-\renewcommand{\UPSTIlogoLycee}{\photo}
+% \photo n'est défini par \csvreader[head to column names,] que si le CSV
+% étudiants a réellement une colonne "photo" -- sinon \photo n'existe pas
+% du tout (pas juste vide) et cette ligne casserait le logo d'en-tête pour
+% CHAQUE étudiant ("Undefined control sequence" + image introuvable),
+% comme observé avec etudiants-GEII-S1.csv (pas de colonne photo). On ne
+% remplace donc le logo IUT par défaut (logos_iut.sty) que si la colonne
+% existe pour ce CSV.
+\ifdefined\photo\renewcommand{\UPSTIlogoLycee}{\photo}\fi
 \UPSTIbuildPage
 \setcounter{figure}{0}
 \setcounter{table}{0}
