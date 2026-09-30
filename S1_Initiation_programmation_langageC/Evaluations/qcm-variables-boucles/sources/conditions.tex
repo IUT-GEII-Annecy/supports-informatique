@@ -51,7 +51,7 @@
         \begin{multicols}{4}
             \begin{reponses}
                 \bonne{\lstinline[language=C]|x >= 5 && x <= 10|}
-                \mauvaise{\lstinline[language=C]|x > 5 || x < 10|}
+                \mauvaise{\lstinline[language=C]!x > 5 || x < 10!}
                 \mauvaise{\lstinline[language=C]|x > 5 && x < 10|}
                 \mauvaise{\lstinline[language=C]|x <= 5 && x >= 10|}
             \end{reponses}
@@ -64,7 +64,7 @@
         \begin{multicols}{4}
             \begin{reponses}
                 \bonne{\lstinline[language=C]|n >= 0 && n <= 20|}
-                \mauvaise{\lstinline[language=C]|n > 0 || n < 20|}
+                \mauvaise{\lstinline[language=C]!n > 0 || n < 20!}
                 \mauvaise{\lstinline[language=C]|n > 0 && n < 20|}
                 \mauvaise{\lstinline[language=C]|n <= 0 && n >= 20|}
             \end{reponses}
@@ -77,9 +77,25 @@
         \begin{multicols}{4}
             \begin{reponses}
                 \bonne{\lstinline[language=C]|note >= 1 && note <= 6|}
-                \mauvaise{\lstinline[language=C]|note > 1 || note < 6|}
+                \mauvaise{\lstinline[language=C]!note > 1 || note < 6!}
                 \mauvaise{\lstinline[language=C]|note > 1 && note < 6|}
                 \mauvaise{\lstinline[language=C]|note <= 1 && note >= 6|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+% v4 : variante supplémentaire demandée explicitement pour l'intervalle
+% 5 <= x <= 10 ; la variable est renommée (\texttt{score}) pour ne pas
+% dupliquer mot pour mot la v1, qui utilise déjà les mêmes bornes sur \texttt{x}.
+\element{bank-cond-intervalle}{
+    \begin{question}{cond-intervalle-v4}
+        Comment écrire la condition \(5 \le score \le 10\) (inclus) ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|score >= 5 && score <= 10|}
+                \mauvaise{\lstinline[language=C]!score > 5 || score < 10!}
+                \mauvaise{\lstinline[language=C]|score > 5 && score < 10|}
+                \mauvaise{\lstinline[language=C]|score <= 5 && score >= 10|}
             \end{reponses}
         \end{multicols}
     \end{question}
@@ -180,41 +196,49 @@
 }
 
 % ---- cond-et-ou ----
+% Durci : un simple "&&" à deux termes se résout par calcul direct sans
+% connaître les priorités d'opérateurs. On passe à un mélange && / || à trois
+% termes où \&\& est prioritaire sur \textbar\textbar : une lecture naïve
+% gauche-à-droite (comme si les deux opérateurs avaient la même priorité)
+% donne un résultat différent du résultat correct.
 \element{bank-cond-et-ou}{
     \begin{question}{cond-et-ou-v1}
-        Que vaut l'expression \lstinline[language=C]|(3 > 5) && (2 < 4)| ?
-        \begin{multicols}{4}
+        Que vaut l'expression \lstinline[language=C]!(3 > 1) || (2 > 5) && (4 > 10)! ?
+        \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{Vrai (1)}
-                \bonne{Faux (0)}
+                \bonne{Vrai (1)}
+                \mauvaise{Faux (0)}
                 \mauvaise{Erreur de compilation}
-                \mauvaise{3}
+                \mauvaise{0}
+                \mauvaise{10}
             \end{reponses}
         \end{multicols}
     \end{question}
 }
 \element{bank-cond-et-ou}{
     \begin{question}{cond-et-ou-v2}
-        Que vaut l'expression \lstinline[language=C]|(4 > 1) && (2 > 4)| ?
-        \begin{multicols}{4}
+        Que vaut l'expression \lstinline[language=C]!(5 > 2) || (1 > 9) && (7 > 20)! ?
+        \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{Vrai (1)}
-                \bonne{Faux (0)}
+                \bonne{Vrai (1)}
+                \mauvaise{Faux (0)}
                 \mauvaise{Erreur de compilation}
-                \mauvaise{4}
+                \mauvaise{0}
+                \mauvaise{20}
             \end{reponses}
         \end{multicols}
     \end{question}
 }
 \element{bank-cond-et-ou}{
     \begin{question}{cond-et-ou-v3}
-        Que vaut l'expression \lstinline[language=C]|(1 > 2) && (5 > 0)| ?
-        \begin{multicols}{4}
+        Que vaut l'expression \lstinline[language=C]!(6 > 4) || (0 > 8) && (3 > 15)! ?
+        \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{Vrai (1)}
-                \bonne{Faux (0)}
+                \bonne{Vrai (1)}
+                \mauvaise{Faux (0)}
                 \mauvaise{Erreur de compilation}
-                \mauvaise{5}
+                \mauvaise{0}
+                \mauvaise{15}
             \end{reponses}
         \end{multicols}
     \end{question}

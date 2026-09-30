@@ -130,41 +130,48 @@
 }
 
 % ---- aff-division-entiere ----
+% Durci : la division entière positive (arrondi vers le bas) est déjà bien
+% connue en fin de séquence. On introduit un opérande négatif : le piège
+% classique est de croire que le C arrondit vers le bas (comme une division
+% mathématique/floor), alors qu'il tronque vers zéro.
 \element{bank-aff-division-entiere}{
     \begin{question}{aff-division-entiere-v1}
-        Que vaut \texttt{r} après \lstinline[language=C]|int r = 7 / 2;| ?
-        \begin{multicols}{4}
+        Que vaut \texttt{r} après \lstinline[language=C]|int r = -7 / 2;| ?
+        \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{3.5}
-                \bonne{3}
-                \mauvaise{4}
-                \mauvaise{1}
+                \bonne{-3}
+                \mauvaise{-4}
+                \mauvaise{-3.5}
+                \mauvaise{3}
+                \mauvaise{-7}
             \end{reponses}
         \end{multicols}
     \end{question}
 }
 \element{bank-aff-division-entiere}{
     \begin{question}{aff-division-entiere-v2}
-        Que vaut \texttt{r} après \lstinline[language=C]|int r = 9 / 2;| ?
-        \begin{multicols}{4}
+        Que vaut \texttt{r} après \lstinline[language=C]|int r = -9 / 2;| ?
+        \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{4.5}
-                \bonne{4}
-                \mauvaise{5}
-                \mauvaise{1}
+                \bonne{-4}
+                \mauvaise{-5}
+                \mauvaise{-4.5}
+                \mauvaise{4}
+                \mauvaise{-9}
             \end{reponses}
         \end{multicols}
     \end{question}
 }
 \element{bank-aff-division-entiere}{
     \begin{question}{aff-division-entiere-v3}
-        Que vaut \texttt{r} après \lstinline[language=C]|int r = 11 / 4;| ?
-        \begin{multicols}{4}
+        Que vaut \texttt{r} après \lstinline[language=C]|int r = -11 / 4;| ?
+        \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{2.75}
-                \bonne{2}
-                \mauvaise{3}
-                \mauvaise{1}
+                \bonne{-2}
+                \mauvaise{-3}
+                \mauvaise{-2.75}
+                \mauvaise{2}
+                \mauvaise{-11}
             \end{reponses}
         \end{multicols}
     \end{question}

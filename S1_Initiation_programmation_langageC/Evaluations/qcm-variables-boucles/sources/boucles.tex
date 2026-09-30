@@ -192,15 +192,20 @@
 }
 
 % ---- boucle-offbyone ----
+% Durci : le simple off-by-one sur une borne unique (\texttt{i <= N}) est
+% acquis en fin de séquence. On ajoute une seconde condition combinée par
+% \texttt{\&\&} qui provoque un arrêt anticipé de la boucle : le piège n'est
+% plus de compter les bornes mais de repérer QUELLE condition arrête la
+% boucle en premier.
 \element{bank-boucle-offbyone}{
     \begin{question}{boucle-offbyone-v1}
-        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 5; i++) { printf("Bonjour"); }| ?
+        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 10 && i != 6; i++) { printf("Bonjour"); }| ?
         \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{4}
+                \mauvaise{10}
                 \bonne{5}
                 \mauvaise{6}
-                \mauvaise{0}
+                \mauvaise{4}
                 \mauvaise{Boucle infinie}
             \end{reponses}
         \end{multicols}
@@ -208,13 +213,13 @@
 }
 \element{bank-boucle-offbyone}{
     \begin{question}{boucle-offbyone-v2}
-        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 7; i++) { printf("Bonjour"); }| ?
+        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 8 && i != 5; i++) { printf("Bonjour"); }| ?
         \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{6}
-                \bonne{7}
                 \mauvaise{8}
-                \mauvaise{0}
+                \bonne{4}
+                \mauvaise{5}
+                \mauvaise{3}
                 \mauvaise{Boucle infinie}
             \end{reponses}
         \end{multicols}
@@ -222,13 +227,13 @@
 }
 \element{bank-boucle-offbyone}{
     \begin{question}{boucle-offbyone-v3}
-        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 3; i++) { printf("Bonjour"); }| ?
+        Combien de fois le message \texttt{"Bonjour"} est-il affiché par \lstinline[language=C]|for (int i = 1; i <= 12 && i != 4; i++) { printf("Bonjour"); }| ?
         \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{2}
+                \mauvaise{12}
                 \bonne{3}
                 \mauvaise{4}
-                \mauvaise{0}
+                \mauvaise{2}
                 \mauvaise{Boucle infinie}
             \end{reponses}
         \end{multicols}

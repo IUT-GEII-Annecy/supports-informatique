@@ -54,28 +54,18 @@
 }
 
 % ---- imbr-nb-tours ----
+% Durci : quand la boucle interne repart de 0 à chaque tour, il suffit de
+% multiplier les deux bornes. On rend la borne interne dépendante de la
+% variable externe (\texttt{j=i}), ce qui impose un vrai calcul de somme
+% (nombre triangulaire) et casse le réflexe "je multiplie les deux bornes".
 \element{bank-imbr-nb-tours}{
     \begin{question}{imbr-nb-tours-v1}
-        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<4;i++) { for (int j=0;j<3;j++) { } }| ?
+        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<4;i++) { for (int j=i;j<4;j++) { } }| ?
         \begin{multicols}{5}
             \begin{reponses}
+                \mauvaise{16}
                 \mauvaise{4}
-                \mauvaise{3}
-                \mauvaise{7}
-                \bonne{12}
-                \mauvaise{1}
-            \end{reponses}
-        \end{multicols}
-    \end{question}
-}
-\element{bank-imbr-nb-tours}{
-    \begin{question}{imbr-nb-tours-v2}
-        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<5;i++) { for (int j=0;j<2;j++) { } }| ?
-        \begin{multicols}{5}
-            \begin{reponses}
-                \mauvaise{5}
-                \mauvaise{2}
-                \mauvaise{7}
+                \mauvaise{6}
                 \bonne{10}
                 \mauvaise{1}
             \end{reponses}
@@ -83,14 +73,28 @@
     \end{question}
 }
 \element{bank-imbr-nb-tours}{
-    \begin{question}{imbr-nb-tours-v3}
-        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<2;i++) { for (int j=0;j<6;j++) { } }| ?
+    \begin{question}{imbr-nb-tours-v2}
+        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<5;i++) { for (int j=i;j<5;j++) { } }| ?
         \begin{multicols}{5}
             \begin{reponses}
-                \mauvaise{2}
-                \mauvaise{6}
-                \mauvaise{8}
-                \bonne{12}
+                \mauvaise{25}
+                \mauvaise{5}
+                \mauvaise{10}
+                \bonne{15}
+                \mauvaise{1}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+\element{bank-imbr-nb-tours}{
+    \begin{question}{imbr-nb-tours-v3}
+        Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<3;i++) { for (int j=i;j<3;j++) { } }| ?
+        \begin{multicols}{5}
+            \begin{reponses}
+                \mauvaise{9}
+                \mauvaise{3}
+                \mauvaise{4}
+                \bonne{6}
                 \mauvaise{1}
             \end{reponses}
         \end{multicols}

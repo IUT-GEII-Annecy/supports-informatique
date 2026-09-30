@@ -136,15 +136,20 @@
 }
 
 % ---- var-nommage ----
+% Durci : le piège "commence par un chiffre" est repéré instantanément par tous
+% les débutants ; on le remplace par le piège plus subtil du mot-clé réservé
+% utilisé comme nom de variable, et on ajoute un identifiant à underscore
+% initial (valide, mais souvent cru interdit) pour forcer une vraie analyse.
 \element{bank-var-nommage}{
     \begin{question}{var-nommage-v1}
         Quel nom de variable est \textbf{invalide} en C ?
-        \begin{multicols}{4}
+        \begin{multicols}{5}
             \begin{reponses}
                 \mauvaise{\lstinline[language=C]|nb_essais|}
-                \mauvaise{\lstinline[language=C]|nbEssais|}
-                \bonne{\lstinline[language=C]|2eme_essai|}
+                \mauvaise{\lstinline[language=C]|_compteur|}
+                \bonne{\lstinline[language=C]|for|}
                 \mauvaise{\lstinline[language=C]|essai2|}
+                \mauvaise{\lstinline[language=C]|Essai_Final|}
             \end{reponses}
         \end{multicols}
     \end{question}
@@ -152,12 +157,13 @@
 \element{bank-var-nommage}{
     \begin{question}{var-nommage-v2}
         Quel nom de variable est \textbf{invalide} en C ?
-        \begin{multicols}{4}
+        \begin{multicols}{5}
             \begin{reponses}
                 \mauvaise{\lstinline[language=C]|nb_tours|}
-                \mauvaise{\lstinline[language=C]|nbTours|}
-                \bonne{\lstinline[language=C]|3eme_tour|}
+                \mauvaise{\lstinline[language=C]|_limite|}
+                \bonne{\lstinline[language=C]|while|}
                 \mauvaise{\lstinline[language=C]|tour3|}
+                \mauvaise{\lstinline[language=C]|TourMax|}
             \end{reponses}
         \end{multicols}
     \end{question}
@@ -165,12 +171,13 @@
 \element{bank-var-nommage}{
     \begin{question}{var-nommage-v3}
         Quel nom de variable est \textbf{invalide} en C ?
-        \begin{multicols}{4}
+        \begin{multicols}{5}
             \begin{reponses}
                 \mauvaise{\lstinline[language=C]|note_max|}
-                \mauvaise{\lstinline[language=C]|noteMax|}
-                \bonne{\lstinline[language=C]|1ere_note|}
+                \mauvaise{\lstinline[language=C]|_seuil|}
+                \bonne{\lstinline[language=C]|if|}
                 \mauvaise{\lstinline[language=C]|note1|}
+                \mauvaise{\lstinline[language=C]|NoteFinale|}
             \end{reponses}
         \end{multicols}
     \end{question}
