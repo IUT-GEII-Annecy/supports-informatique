@@ -40,6 +40,22 @@
 \setcounter{figure}{0}
 \setcounter{table}{0}
 
+% Consignes de remplissage. \multiSymbole (défini par automultiplechoice,
+% repris par \questionmult/\questionmultx dans UPSTI_AMC.sty) est le
+% symbole qu'AMC affiche déjà automatiquement après l'énoncé d'une
+% question à plusieurs réponses -- on le référence ici tel quel plutôt que
+% de le recopier en dur, pour rester synchronisé si sa valeur par défaut
+% ($\clubsuit$) changeait. Aucune question de ce QCM n'est à ce jour une
+% \questionmult (toutes n'ont qu'une seule bonne réponse) : cette consigne
+% reste donc valable même si une future variante en ajoutait une.
+\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+  \textbf{Consignes :} Noircissez complètement la case correspondant à la
+  réponse choisie. Sauf mention contraire (symbole~\multiSymbole{} après
+  l'énoncé, qui signale les questions à plusieurs réponses possibles),
+  chaque question n'admet qu'une \textbf{seule} bonne réponse.
+}}
+\vspace{\baselineskip}
+
 \section{Variables simples}
 \restituegroupe[3]{variables}
 \section{Affectations et expressions}
