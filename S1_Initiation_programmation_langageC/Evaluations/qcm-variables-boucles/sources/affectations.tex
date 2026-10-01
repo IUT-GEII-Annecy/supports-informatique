@@ -88,39 +88,42 @@
 % ---- aff-incrementation ----
 \element{bank-aff-incrementation}{
     \begin{question}{aff-incrementation-v1}
-        Après \lstinline[language=C]|int x = 5; x++;|, quelle est la valeur de \texttt{x} ?
+        Après les deux lignes suivantes, quelle est la valeur de \texttt{x} ?
+        \lstinputlisting[language=c]{sources/codes/incrementation-1.c}
         \begin{multicols}{4}
             \begin{reponses}
                 \mauvaise{4}
                 \bonne{6}
                 \mauvaise{5}
-                \mauvaise{Erreur de compilation}
+                \mauvaise{ERREUR}
             \end{reponses}
         \end{multicols}
     \end{question}
 }
 \element{bank-aff-incrementation}{
     \begin{question}{aff-incrementation-v2}
-        Après \lstinline[language=C]|int x = 9; x++;|, quelle est la valeur de \texttt{x} ?
+        Après les deux lignes suivantes, quelle est la valeur de \texttt{x} ?
+        \lstinputlisting[language=c]{sources/codes/incrementation-2.c}
         \begin{multicols}{4}
             \begin{reponses}
                 \mauvaise{8}
                 \bonne{10}
                 \mauvaise{9}
-                \mauvaise{Erreur de compilation}
+                \mauvaise{ERREUR}
             \end{reponses}
         \end{multicols}
     \end{question}
 }
 \element{bank-aff-incrementation}{
     \begin{question}{aff-incrementation-v3}
-        Après \lstinline[language=C]|int x = 2; x++;|, quelle est la valeur de \texttt{x} ?
+        Après les deux lignes suivantes, quelle est la valeur de \texttt{x} ?
+        \lstinputlisting[language=c]{sources/codes/incrementation-3.c}
         \begin{multicols}{4}
             \begin{reponses}
                 \mauvaise{1}
                 \bonne{3}
                 \mauvaise{2}
-                \mauvaise{Erreur de compilation}
+                \mauvaise{ERREUR}
             \end{reponses}
         \end{multicols}
     \end{question}
@@ -227,8 +230,8 @@
 % ---- aff-trace (question de trace : tableau structuré au lieu du quadrillage) ----
 \element{bank-aff-trace}{
     \begin{question}{aff-trace-v1}
-        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
-        \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-1.c}
+        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur, après exécution.
+        \lstinputlisting[language=c]{sources/codes/affectation-1.c}
         \evaluationProfTableauTrace{2}{%
             \begin{center}
             \begin{tabular}{|c|c|p{4cm}|}
@@ -256,8 +259,8 @@
 }
 \element{bank-aff-trace}{
     \begin{question}{aff-trace-v2}
-        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
-        \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-2.c}
+        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur, après exécution.
+        \lstinputlisting[language=c]{sources/codes/affectation-2.c}
         \evaluationProfTableauTrace{2}{%
             \begin{center}
             \begin{tabular}{|c|c|p{4cm}|}
@@ -285,8 +288,8 @@
 }
 \element{bank-aff-trace}{
     \begin{question}{aff-trace-v3}
-        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur.
-        \lstinputlisting[language=c,basicstyle=\Large]{sources/codes/affectation-3.c}
+        Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur, après exécution.
+        \lstinputlisting[language=c]{sources/codes/affectation-3.c}
         \evaluationProfTableauTrace{2}{%
             \begin{center}
             \begin{tabular}{|c|c|p{4cm}|}
