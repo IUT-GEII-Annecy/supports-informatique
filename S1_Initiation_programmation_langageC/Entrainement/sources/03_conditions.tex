@@ -1,0 +1,84 @@
+% ==================== THEME 3 — CONDITIONS (entraînement) ====================
+
+% ---- cond-egalite ----
+\begin{questionmult}{ent-cond-egalite}
+    On considère deux variables entières \texttt{p} et \texttt{q}. Parmi les expressions suivantes, lesquelles sont des tests d'égalité correctement écrits en langage C ? (plusieurs réponses possibles)
+    \begin{multicols}{2}
+        \begin{reponses}
+            \bonne{\checkmark\ \lstinline[language=C]|p == q|}
+            \mauvaise{\lstinline[language=C]|p = q|}
+            \bonne{\checkmark\ \lstinline[language=C]|(p == q)|}
+            \mauvaise{\lstinline[language=C]|p = q = 5|}
+            \bonne{\checkmark\ \lstinline[language=C]|p == q + 2|}
+            \mauvaise{\lstinline[language=C]|p eq q|}
+            \bonne{\checkmark\ \lstinline[language=C]|(p + 1) == q|}
+            \mauvaise{\lstinline[language=C]|p === q|}
+            \bonne{\checkmark\ \lstinline[language=C]|q == p|}
+            \mauvaise{\lstinline[language=C]|p <> q|}
+        \end{reponses}
+    \end{multicols}
+\end{questionmult}
+
+% ---- cond-intervalle ----
+\begin{question}{ent-cond-intervalle}
+    Comment écrire la condition \(3 \le temp \le 9\) (inclus) ?
+    \begin{multicols}{4}
+        \begin{reponses}
+            \bonne{\checkmark\ \lstinline[language=C]|temp >= 3 && temp <= 9|}
+            \mauvaise{\lstinline[language=C]!temp > 3 || temp < 9!}
+            \mauvaise{\lstinline[language=C]|3 <= temp <= 9|}
+            \mauvaise{\lstinline[language=C]|temp <= 3 && temp >= 9|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- cond-si-erreur-frequente ----
+\begin{question}{ent-cond-si-erreur-frequente}
+    Quelle est l'erreur dans le code suivant ?
+    \lstinputlisting{sources/codes/ent-cond-erreur-semicolon.c}
+    \evaluationProfGrille{2}{1}
+\end{question}
+
+\noindent\textbf{Corrigé :} le point-virgule après \texttt{if (y == 10)} termine immédiatement le \texttt{if} sur un bloc vide : le bloc \texttt{\{ printf("dix"); \}} qui suit n'est alors plus conditionné par le test et s'exécute \textbf{toujours}, quelle que soit la valeur de \texttt{y}.
+
+% ---- cond-else-if ----
+\begin{question}{ent-cond-else-if}
+    Dans une structure \texttt{if}/\texttt{else if}/\texttt{else}, si la première condition testée est vraie, les blocs suivants (\texttt{else if}, \texttt{else}) sont-ils tout de même testés ?
+    \begin{multicols}{2}
+        \begin{reponses}
+            \bonne{\checkmark\ Non, dès qu'un bloc est exécuté, les suivants sont ignorés}
+            \mauvaise{Oui, toutes les conditions sont systématiquement testées}
+            \mauvaise{Seul le bloc \texttt{else} est testé ensuite}
+            \mauvaise{Cela dépend du compilateur utilisé}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- cond-et-ou ----
+\begin{question}{ent-cond-et-ou}
+    Que vaut l'expression \lstinline[language=C]!(2 > 8) || (5 > 1) && (3 > 9)! ?
+    \begin{multicols}{5}
+        \begin{reponses}
+            \mauvaise{Vrai (1)}
+            \bonne{\checkmark\ Faux (0)}
+            \mauvaise{ERREUR}
+            \mauvaise{1}
+            \mauvaise{9}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- cond-ecrire ----
+\begin{question}{ent-cond-ecrire}
+    Écrire une condition en langage C qui affiche \texttt{"Pair"} si la variable entière \texttt{valeur} est paire, et \texttt{"Impair"} sinon.
+    \evaluationProfGrille{2}{1}
+\end{question}
+
+\noindent\textbf{Corrigé :}
+\begin{lstlisting}[language=c]
+if (valeur % 2 == 0) {
+    printf("Pair");
+} else {
+    printf("Impair");
+}
+\end{lstlisting}

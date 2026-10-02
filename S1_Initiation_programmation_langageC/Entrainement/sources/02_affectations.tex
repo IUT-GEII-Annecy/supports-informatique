@@ -1,0 +1,96 @@
+% ==================== THEME 2 — AFFECTATIONS / EXPRESSIONS (entraînement) ====================
+
+% ---- aff-egal-vs-double-egal ----
+\begin{question}{ent-aff-egal-vs-double-egal}
+    Pour affecter la valeur \texttt{18} à la variable \texttt{age}, quelle écriture est correcte ?
+    \begin{multicols}{4}
+        \begin{reponses}
+            \bonne{\checkmark\ \lstinline[language=C]|age = 18;|}
+            \mauvaise{\lstinline[language=C]|age == 18;|}
+            \mauvaise{\lstinline[language=C]|18 = age;|}
+            \mauvaise{\lstinline[language=C]|age := 18;|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- aff-point-virgule ----
+\begin{question}{ent-aff-point-virgule}
+    Parmi les lignes suivantes, laquelle est syntaxiquement \textbf{incorrecte} en C ?
+    \begin{multicols}{3}
+        \begin{reponses}
+            \bonne{\checkmark\ \lstinline[language=C]|vitesse = vitesse * 2|}
+            \mauvaise{\lstinline[language=C]|vitesse = vitesse * 2;|}
+            \mauvaise{\lstinline[language=C]|vitesse = vitesse * 2;;;|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- aff-incrementation ----
+\begin{question}{ent-aff-incrementation}
+    Après les lignes suivantes, quelle est la valeur de \texttt{y} ?
+    \lstinputlisting[language=c]{sources/codes/ent-incrementation.c}
+    \begin{multicols}{4}
+        \begin{reponses}
+            \mauvaise{6}
+            \mauvaise{7}
+            \bonne{\checkmark\ 8}
+            \mauvaise{ERREUR}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- aff-division-entiere ----
+\begin{question}{ent-aff-division-entiere}
+    Que vaut \texttt{r} après \lstinline[language=C]|int r = -13 / 4;| ?
+    \begin{multicols}{5}
+        \begin{reponses}
+            \bonne{\checkmark\ -3}
+            \mauvaise{-4}
+            \mauvaise{-3.25}
+            \mauvaise{3}
+            \mauvaise{-13}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- aff-modulo ----
+\begin{question}{ent-aff-modulo}
+    Que vaut \texttt{r} après \texttt{int r = 29 \% 7;} ?
+    \begin{multicols}{4}
+        \begin{reponses}
+            \mauvaise{4.14}
+            \mauvaise{4}
+            \bonne{\checkmark\ 1}
+            \mauvaise{7}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- aff-trace (tableau structuré) ----
+\begin{question}{ent-aff-trace}
+    Pour chacune des lignes suivantes, indiquer la variable modifiée et sa nouvelle valeur, après exécution.
+    \lstinputlisting[language=c]{sources/codes/ent-affectation.c}
+    \evaluationProfTableauTrace{2}{%
+        \begin{center}
+        \begin{tabular}{|c|c|p{4cm}|}
+            \hline
+            \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+            \hline
+            \texttt{num\_i = num\_i + 4;} & \textbf{num\_i} & \textbf{7} \\[0.3cm]
+            \hline
+            \texttt{num\_f = num\_i / 2;} & \textbf{num\_f} & \textbf{3} \\[0.3cm]
+            \hline
+            \texttt{num\_f = num\_i / 2.0;} & \textbf{num\_f} & \textbf{3.5} \\[0.3cm]
+            \hline
+            \texttt{num\_c = 'G';} & \textbf{num\_c} & \textbf{'G'} \\[0.3cm]
+            \hline
+            \texttt{num\_c++;} & \textbf{num\_c} & \textbf{'H'} \\[0.3cm]
+            \hline
+            \texttt{num\_i = 21 \% 5;} & \textbf{num\_i} & \textbf{1} \\[0.3cm]
+            \hline
+            \texttt{num\_i = 24 \% 5;} & \textbf{num\_i} & \textbf{4} \\[0.3cm]
+            \hline
+        \end{tabular}
+        \end{center}
+    }
+\end{question}

@@ -1,0 +1,58 @@
+\documentclass[QCM, noCustomPackages]{UPSTI_Document}
+\usepackage{IUT_Annecy}
+\usepackage{logos_iut}
+% Entrainement/ est un enfant direct de S1_Initiation_programmation_langageC/
+% (même niveau que Evaluations/), donc un niveau moins profond que
+% Evaluations/qcm-variables-boucles/ : preamble.tex est ici directement à la
+% racine de ce dossier (pas de "..") et preamble_module.tex reste un niveau
+% au-dessus (racine du module S1). Pas de déploiement AMC prévu pour ce
+% document (voir plus bas, pas de \QCMchemin/\providecommand nécessaire ici),
+% mais on garde le même \providecommand par cohérence avec le vrai QCM, au
+% cas où ce fichier serait un jour recompilé depuis un autre répertoire.
+\providecommand{\QCMchemin}{.}
+\providecommand{\QCMcheminModule}{..}
+\input{\QCMchemin/preamble.tex}
+\input{\QCMcheminModule/preamble_module.tex}
+
+\def\photodir{photos}
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{0}
+\newcommand{\UPSTImessage}{test}
+
+\newcommand{\UPSTItitre}{Entraînement libre --- Variables, conditions et boucles}
+
+% ==================== CORPS DU DOCUMENT ====================
+% Contrairement au vrai QCM noté (qcm-variables-boucles.tex), ce document
+% N'utilise PAS le système de banques aléatoires AMC : pas de
+% \element{bank-xxx}{...}, pas de \restituegroupe, pas de \AMCrandomseed.
+% Une seule question par type, écrite directement, dans l'ordre. \exemplaire
+% n'est appelé qu'UNE SEULE FOIS (pas de boucle \csvreader sur une liste
+% d'étudiants) : ce document est une fiche à imprimer/consulter, pas un QCM
+% à scanner et corriger via AMC.
+\newcommand{\sujet}{%
+\exemplaire{1}{%
+\renewcommand{\UPSTImessage}{Entraînement libre --- non noté}
+\renewcommand{\UPSTInumeroVersion}{0}
+\UPSTIbuildPage
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+\input{main.tex}
+\AMClabel{UPSTIfinexemplaire}
+\AMCcleardoublepage
+}
+}
+
+\begin{document}
+\input{sources/preamble_local.tex}
+
+\def\AMCformQuestion#1{{\sc Question #1 :}}
+
+% Un seul exemplaire, appelé directement (pas de \csvreader ni de liste
+% d'étudiants : \nom/\prenom/\id ne sont normalement définis que par
+% \csvreader depuis les colonnes d'un CSV étudiants, donc absents ici).
+\def\nom{}\def\prenom{}\def\id{}%
+\sujet
+
+\end{document}

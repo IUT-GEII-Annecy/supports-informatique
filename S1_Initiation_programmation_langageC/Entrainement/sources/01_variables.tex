@@ -1,0 +1,67 @@
+% ==================== THEME 1 — VARIABLES SIMPLES (entraînement) ====================
+
+% ---- var-declaration ----
+\begin{question}{ent-var-declaration}
+    Quelle ligne déclare correctement deux variables entières \texttt{a} et \texttt{b} en une seule instruction ?
+    \begin{multicols}{4}
+        \begin{reponses}
+            \bonne{\checkmark\ \lstinline[language=C]|int a, b;|}
+            \mauvaise{\lstinline[language=C]|int a; int b|}
+            \mauvaise{\lstinline[language=C]|int a - b;|}
+            \mauvaise{\lstinline[language=C]|int (a, b);|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- var-type-decimal ----
+\begin{question}{ent-var-type-decimal}
+    Un capteur de température renvoie une mesure telle que \texttt{21.75}. Quel type utiliser en priorité pour la stocker en C ?
+    \begin{multicols}{4}
+        \begin{reponses}
+            \mauvaise{\lstinline[language=C]|int|}
+            \bonne{\checkmark\ \lstinline[language=C]|float|}
+            \mauvaise{\lstinline[language=C]|char|}
+            \mauvaise{\lstinline[language=C]|string|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- var-type-caractere ----
+\begin{question}{ent-var-type-caractere}
+    On veut stocker la réponse donnée à un QCM, une seule lettre parmi \texttt{'A'}, \texttt{'B'}, \texttt{'C'}, \texttt{'D'}. Quel type utiliser ?
+    \begin{multicols}{4}
+        \begin{reponses}
+            \mauvaise{\lstinline[language=C]|int|}
+            \mauvaise{\lstinline[language=C]|float|}
+            \bonne{\checkmark\ \lstinline[language=C]|char|}
+            \mauvaise{\lstinline[language=C]|void|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- var-nommage ----
+\begin{question}{ent-var-nommage}
+    Quel nom de variable est \textbf{invalide} en C ?
+    \begin{multicols}{5}
+        \begin{reponses}
+            \mauvaise{\lstinline[language=C]|nb_points|}
+            \mauvaise{\lstinline[language=C]|_etat|}
+            \bonne{\checkmark\ \lstinline[language=C]|return|}
+            \mauvaise{\lstinline[language=C]|joueur1|}
+            \mauvaise{\lstinline[language=C]|ScoreMax|}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- var-initialisation ----
+\begin{question}{ent-var-initialisation}
+    Une variable entière non initialisée (\lstinline[language=C]|int n;|) contient-elle nécessairement la valeur \texttt{0} ?
+    \begin{multicols}{2}
+        \begin{reponses}
+            \bonne{\checkmark\ Non, sa valeur est indéterminée (le contenu dépend de ce qu'il y avait avant en mémoire)}
+            \mauvaise{Oui, toute variable C vaut \texttt{0} par défaut}
+            \mauvaise{Non, elle contient toujours \texttt{-1}}
+            \mauvaise{Non, le programme refuse de compiler}
+        \end{reponses}
+    \end{multicols}
+\end{question}

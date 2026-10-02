@@ -1,0 +1,20 @@
+% ==================== PREAMBULE LOCAL — Entraînement libre ====================
+% Copie du mécanisme utilisé dans Evaluations/qcm-variables-boucles/sources/
+% preamble_local.tex (voir ce fichier pour le commentaire d'origine) :
+% variante locale de \evaluationProfGrille remplaçant le quadrillage
+% \casesGrid par un tableau structuré (trace d'exécution), sans toucher au
+% paquet UPSTI partagé. Le mécanisme de notation (\bareme / \AMCOpen via
+% \evaluationProfBase) est strictement identique : seul l'habillage visuel
+% (lineuptext) change.
+% Nécessaire ici pour les 2 questions de trace à tableau (aff-trace et
+% imbr-trace-variable) même si ce document n'est pas noté par AMC : les
+% macros \evaluationProfGrille / \evaluationProfTableauTrace s'appuient sur
+% la même mécanique AMCOpen pour afficher la zone de réponse.
+%
+% Usage : \evaluationProfTableauTrace{<bareme max>}{<contenu LaTeX du tableau>}
+% (argument optionnel #1 identique à \evaluationProfGrille, non utilisé ici)
+\newcommandx{\evaluationProfTableauTrace}[3][1=]{{%
+  \evaluationProfBase[#2]{\max*GRAD/5}{\evaluationGraduee}{%
+    lineup=true, lineuptext={#3}, lines=0%
+  }%
+}}

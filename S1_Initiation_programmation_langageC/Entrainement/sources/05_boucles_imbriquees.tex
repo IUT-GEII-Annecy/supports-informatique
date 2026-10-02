@@ -1,0 +1,65 @@
+% ==================== THEME 5 — BOUCLES IMBRIQUEES (entraînement) ====================
+
+% ---- imbr-trace-compteur ----
+\begin{question}{ent-imbr-trace-compteur}
+    Soit le code ci-dessous, qu'affichera le programme en fin d'exécution ?
+    \lstinputlisting{sources/codes/ent-boucle-imbriquee.c}
+    \begin{multicols}{3}
+        \begin{reponses}
+            \mauvaise{4}
+            \mauvaise{3}
+            \bonne{\checkmark\ 12}
+            \mauvaise{7}
+            \mauvaise{24}
+            \mauvaise{Boucle infinie}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- imbr-nb-tours ----
+\begin{question}{ent-imbr-nb-tours}
+    Combien de fois le corps de la boucle interne s'exécute-t-il au total dans \lstinline[language=C]|for (int i=0;i<4;i++) { for (int j=0;j<=i;j++) { } }| ?
+    \begin{multicols}{5}
+        \begin{reponses}
+            \mauvaise{16}
+            \mauvaise{4}
+            \mauvaise{6}
+            \bonne{\checkmark\ 10}
+            \mauvaise{1}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- imbr-variable-confusion ----
+\begin{question}{ent-imbr-variable-confusion}
+    Quel est l'effet de modifier la variable \texttt{i} à l'intérieur du corps de la boucle interne, si \texttt{i} est aussi la variable de la boucle externe ?
+    \begin{multicols}{2}
+        \begin{reponses}
+            \bonne{\checkmark\ Cela perturbe le comptage de la boucle externe, qui utilise la même variable}
+            \mauvaise{Aucun effet, chaque boucle possède sa propre copie de \texttt{i}}
+            \mauvaise{Cela provoque une erreur de compilation}
+            \mauvaise{Cela n'affecte que la boucle interne}
+        \end{reponses}
+    \end{multicols}
+\end{question}
+
+% ---- imbr-trace-variable (tableau structuré) ----
+\begin{question}{ent-imbr-trace-variable}
+    Pour chaque tour de la boucle externe, indiquer la valeur de \texttt{total} en fin de tour.
+    \lstinputlisting[language=c]{sources/codes/ent-trace-imbriquee.c}
+    \evaluationProfTableauTrace{2}{%
+        \begin{center}
+        \begin{tabular}{|c|p{4cm}|}
+            \hline
+            \textbf{Tour (valeur de \texttt{i})} & \textbf{Valeur de \texttt{total} en fin de tour} \\
+            \hline
+            1 & \textbf{8} \\[0.3cm]
+            \hline
+            2 & \textbf{6} \\[0.3cm]
+            \hline
+            3 & \textbf{4} \\[0.3cm]
+            \hline
+        \end{tabular}
+        \end{center}
+    }
+\end{question}
