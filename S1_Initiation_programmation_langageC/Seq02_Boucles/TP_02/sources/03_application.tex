@@ -1,0 +1,37 @@
+\section{Application}
+
+\begin{UPSTIexercice}{Résistance équivalente (montage série)}
+	\UPSTIetape Écrire un programme \texttt{resistance\_serie.c} qui demande à l'utilisateur de saisir des valeurs de résistances (en ohms), une par une, jusqu'à ce qu'il entre \texttt{0} pour arrêter la saisie. Le programme affichera alors la résistance équivalente du montage en série (la somme des résistances saisies). On ne connaît pas à l'avance le nombre de résistances qui seront saisies.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez une resistance en ohms (0 pour arreter) : 220
+Entrez une resistance en ohms (0 pour arreter) : 330
+Entrez une resistance en ohms (0 pour arreter) : 100
+Entrez une resistance en ohms (0 pour arreter) : 0
+Resistance equivalente : 650.00 ohms
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Résistance équivalente (montage série)}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    double resistance;
+    double equivalente = 0;
+
+    printf("Entrez une resistance en ohms (0 pour arreter) : ");
+    scanf("%lf", &resistance);
+
+    while (resistance != 0) {
+        equivalente += resistance;
+        printf("Entrez une resistance en ohms (0 pour arreter) : ");
+        scanf("%lf", &resistance);
+    }
+
+    printf("Resistance equivalente : %.2f ohms\n", equivalente);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
