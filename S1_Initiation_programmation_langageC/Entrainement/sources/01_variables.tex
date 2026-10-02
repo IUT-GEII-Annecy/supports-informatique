@@ -5,7 +5,7 @@
     Quelle ligne déclare correctement deux variables entières \texttt{a} et \texttt{b} en une seule instruction ?
     \begin{multicols}{4}
         \begin{reponses}
-            \bonne{\checkmark\ \lstinline[language=C]|int a, b;|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|int a, b;|}
             \mauvaise{\lstinline[language=C]|int a; int b|}
             \mauvaise{\lstinline[language=C]|int a - b;|}
             \mauvaise{\lstinline[language=C]|int (a, b);|}
@@ -19,7 +19,7 @@
     \begin{multicols}{4}
         \begin{reponses}
             \mauvaise{\lstinline[language=C]|int|}
-            \bonne{\checkmark\ \lstinline[language=C]|float|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|float|}
             \mauvaise{\lstinline[language=C]|char|}
             \mauvaise{\lstinline[language=C]|string|}
         \end{reponses}
@@ -33,7 +33,7 @@
         \begin{reponses}
             \mauvaise{\lstinline[language=C]|int|}
             \mauvaise{\lstinline[language=C]|float|}
-            \bonne{\checkmark\ \lstinline[language=C]|char|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|char|}
             \mauvaise{\lstinline[language=C]|void|}
         \end{reponses}
     \end{multicols}
@@ -46,7 +46,7 @@
         \begin{reponses}
             \mauvaise{\lstinline[language=C]|nb_points|}
             \mauvaise{\lstinline[language=C]|_etat|}
-            \bonne{\checkmark\ \lstinline[language=C]|return|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|return|}
             \mauvaise{\lstinline[language=C]|joueur1|}
             \mauvaise{\lstinline[language=C]|ScoreMax|}
         \end{reponses}
@@ -58,7 +58,7 @@
     Une variable entière non initialisée (\lstinline[language=C]|int n;|) contient-elle nécessairement la valeur \texttt{0} ?
     \begin{multicols}{2}
         \begin{reponses}
-            \bonne{\checkmark\ Non, sa valeur est indéterminée (le contenu dépend de ce qu'il y avait avant en mémoire)}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }Non, sa valeur est indéterminée (le contenu dépend de ce qu'il y avait avant en mémoire)}
             \mauvaise{Oui, toute variable C vaut \texttt{0} par défaut}
             \mauvaise{Non, elle contient toujours \texttt{-1}}
             \mauvaise{Non, le programme refuse de compiler}

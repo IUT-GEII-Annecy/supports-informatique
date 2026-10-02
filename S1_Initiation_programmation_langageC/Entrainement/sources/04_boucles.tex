@@ -6,7 +6,7 @@
     \lstinputlisting{sources/codes/ent-boucle-for.c}
     \begin{multicols}{6}
         \begin{reponses}
-            \bonne{\checkmark\ 24}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }24}
             \mauvaise{10}
             \mauvaise{0}
             \mauvaise{4}
@@ -22,7 +22,7 @@
     \lstinputlisting{sources/codes/ent-boucle-while.c}
     \begin{multicols}{5}
         \begin{reponses}
-            \bonne{\checkmark\ 5432}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }5432}
             \mauvaise{54321}
             \mauvaise{432}
             \mauvaise{2}
@@ -36,7 +36,7 @@
     On ne connaît pas à l'avance le nombre d'itérations nécessaires : on veut répéter un traitement \textbf{tant qu'}une condition reste vraie. Quelle structure de boucle est la plus adaptée ?
     \begin{multicols}{3}
         \begin{reponses}
-            \bonne{\checkmark\ \lstinline[language=C]|while|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|while|}
             \mauvaise{\lstinline[language=C]|for| uniquement}
             \mauvaise{\lstinline[language=C]|if|}
         \end{reponses}
@@ -49,7 +49,7 @@
     \lstinputlisting{sources/codes/ent-boucle-infinie.c}
     \begin{multicols}{2}
         \begin{reponses}
-            \bonne{\checkmark\ Boucle infinie, car \texttt{n} s'éloigne de \texttt{0} au lieu de s'en rapprocher}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }Boucle infinie, car \texttt{n} s'éloigne de \texttt{0} au lieu de s'en rapprocher}
             \mauvaise{Erreur de compilation}
             \mauvaise{Le programme n'affiche rien}
             \mauvaise{Le programme s'arrête après un seul tour}
@@ -63,7 +63,7 @@
     \begin{multicols}{5}
         \begin{reponses}
             \mauvaise{8}
-            \bonne{\checkmark\ 5}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }5}
             \mauvaise{7}
             \mauvaise{4}
             \mauvaise{Boucle infinie}
@@ -77,9 +77,10 @@
     \evaluationProfGrille{2}{9}
 \end{question}
 
-\noindent\textbf{Corrigé :}
-\begin{lstlisting}[language=c]
+\begin{UPSTIcorrectionP}{boucle-ecrire}
+    \begin{lstlisting}[language=c]
 for (int i = 5; i <= 25; i = i + 5) {
     printf("%d\n", i);
 }
-\end{lstlisting}
+    \end{lstlisting}
+\end{UPSTIcorrectionP}

@@ -5,7 +5,7 @@
     Pour affecter la valeur \texttt{18} à la variable \texttt{age}, quelle écriture est correcte ?
     \begin{multicols}{4}
         \begin{reponses}
-            \bonne{\checkmark\ \lstinline[language=C]|age = 18;|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|age = 18;|}
             \mauvaise{\lstinline[language=C]|age == 18;|}
             \mauvaise{\lstinline[language=C]|18 = age;|}
             \mauvaise{\lstinline[language=C]|age := 18;|}
@@ -18,7 +18,7 @@
     Parmi les lignes suivantes, laquelle est syntaxiquement \textbf{incorrecte} en C ?
     \begin{multicols}{3}
         \begin{reponses}
-            \bonne{\checkmark\ \lstinline[language=C]|vitesse = vitesse * 2|}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }\lstinline[language=C]|vitesse = vitesse * 2|}
             \mauvaise{\lstinline[language=C]|vitesse = vitesse * 2;|}
             \mauvaise{\lstinline[language=C]|vitesse = vitesse * 2;;;|}
         \end{reponses}
@@ -33,7 +33,7 @@
         \begin{reponses}
             \mauvaise{6}
             \mauvaise{7}
-            \bonne{\checkmark\ 8}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }8}
             \mauvaise{ERREUR}
         \end{reponses}
     \end{multicols}
@@ -44,7 +44,7 @@
     Que vaut \texttt{r} après \lstinline[language=C]|int r = -13 / 4;| ?
     \begin{multicols}{5}
         \begin{reponses}
-            \bonne{\checkmark\ -3}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }-3}
             \mauvaise{-4}
             \mauvaise{-3.25}
             \mauvaise{3}
@@ -60,7 +60,7 @@
         \begin{reponses}
             \mauvaise{4.14}
             \mauvaise{4}
-            \bonne{\checkmark\ 1}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }1}
             \mauvaise{7}
         \end{reponses}
     \end{multicols}
@@ -76,21 +76,45 @@
             \hline
             \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
             \hline
-            \texttt{num\_i = num\_i + 4;} & \textbf{num\_i} & \textbf{7} \\[0.3cm]
+            \texttt{num\_i = num\_i + 4;} & & \\[0.3cm]
             \hline
-            \texttt{num\_f = num\_i / 2;} & \textbf{num\_f} & \textbf{3} \\[0.3cm]
+            \texttt{num\_f = num\_i / 2;} & & \\[0.3cm]
             \hline
-            \texttt{num\_f = num\_i / 2.0;} & \textbf{num\_f} & \textbf{3.5} \\[0.3cm]
+            \texttt{num\_f = num\_i / 2.0;} & & \\[0.3cm]
             \hline
-            \texttt{num\_c = 'G';} & \textbf{num\_c} & \textbf{'G'} \\[0.3cm]
+            \texttt{num\_c = 'G';} & & \\[0.3cm]
             \hline
-            \texttt{num\_c++;} & \textbf{num\_c} & \textbf{'H'} \\[0.3cm]
+            \texttt{num\_c++;} & & \\[0.3cm]
             \hline
-            \texttt{num\_i = 21 \% 5;} & \textbf{num\_i} & \textbf{1} \\[0.3cm]
+            \texttt{num\_i = 21 \% 5;} & & \\[0.3cm]
             \hline
-            \texttt{num\_i = 24 \% 5;} & \textbf{num\_i} & \textbf{4} \\[0.3cm]
+            \texttt{num\_i = 24 \% 5;} & & \\[0.3cm]
             \hline
         \end{tabular}
         \end{center}
     }
 \end{question}
+
+\begin{UPSTIcorrectionP}{aff-trace}
+    \begin{center}
+    \begin{tabular}{|c|c|p{4cm}|}
+        \hline
+        \textbf{Ligne} & \textbf{Variable} & \textbf{Nouvelle valeur} \\
+        \hline
+        \texttt{num\_i = num\_i + 4;} & num\_i & 7 \\[0.3cm]
+        \hline
+        \texttt{num\_f = num\_i / 2;} & num\_f & 3 \\[0.3cm]
+        \hline
+        \texttt{num\_f = num\_i / 2.0;} & num\_f & 3.5 \\[0.3cm]
+        \hline
+        \texttt{num\_c = 'G';} & num\_c & 'G' \\[0.3cm]
+        \hline
+        \texttt{num\_c++;} & num\_c & 'H' \\[0.3cm]
+        \hline
+        \texttt{num\_i = 21 \% 5;} & num\_i & 1 \\[0.3cm]
+        \hline
+        \texttt{num\_i = 24 \% 5;} & num\_i & 4 \\[0.3cm]
+        \hline
+    \end{tabular}
+    \end{center}
+\end{UPSTIcorrectionP}

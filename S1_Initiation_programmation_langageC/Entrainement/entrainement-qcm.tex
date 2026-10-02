@@ -34,7 +34,17 @@
 \exemplaire{1}{%
 \renewcommand{\UPSTImessage}{Entraînement libre --- non noté}
 \renewcommand{\UPSTInumeroVersion}{0}
+% UPSTIbuildPage force \UPSTIidVersionDocument à 2 (étudiant) pour toute
+% classe QCM ("Force student mode for QCM", UPSTI_Templates.sty) -- seule
+% AMC gère normalement la correction d'un QCM, pas le \documentVersion
+% d'UPSTI. Ce document n'a pas de pipeline AMC (voir plus haut), donc on
+% sauvegarde la version choisie avant l'appel, puis on la restaure juste
+% après : c'est ce qui permet à \UPSTIcorrectionP / \UPSTIprofOnly de
+% fonctionner ici comme dans un document non-QCM, sans toucher au paquet
+% partagé.
+\edef\UPSTI@versionAvant{\UPSTIidVersionDocumentDef}%
 \UPSTIbuildPage
+\renewcommand{\UPSTIidVersionDocument}{\UPSTI@versionAvant}%
 \setcounter{figure}{0}
 \setcounter{table}{0}
 

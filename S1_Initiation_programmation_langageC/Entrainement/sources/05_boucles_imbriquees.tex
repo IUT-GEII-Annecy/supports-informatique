@@ -8,7 +8,7 @@
         \begin{reponses}
             \mauvaise{4}
             \mauvaise{3}
-            \bonne{\checkmark\ 12}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }12}
             \mauvaise{7}
             \mauvaise{24}
             \mauvaise{Boucle infinie}
@@ -24,7 +24,7 @@
             \mauvaise{16}
             \mauvaise{4}
             \mauvaise{6}
-            \bonne{\checkmark\ 10}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }10}
             \mauvaise{1}
         \end{reponses}
     \end{multicols}
@@ -35,7 +35,7 @@
     Quel est l'effet de modifier la variable \texttt{i} à l'intérieur du corps de la boucle interne, si \texttt{i} est aussi la variable de la boucle externe ?
     \begin{multicols}{2}
         \begin{reponses}
-            \bonne{\checkmark\ Cela perturbe le comptage de la boucle externe, qui utilise la même variable}
+            \bonne{\UPSTIprofOnly[1]{\checkmark\ }Cela perturbe le comptage de la boucle externe, qui utilise la même variable}
             \mauvaise{Aucun effet, chaque boucle possède sa propre copie de \texttt{i}}
             \mauvaise{Cela provoque une erreur de compilation}
             \mauvaise{Cela n'affecte que la boucle interne}
@@ -53,13 +53,29 @@
             \hline
             \textbf{Tour (valeur de \texttt{i})} & \textbf{Valeur de \texttt{total} en fin de tour} \\
             \hline
-            1 & \textbf{8} \\[0.3cm]
+            1 & \\[0.3cm]
             \hline
-            2 & \textbf{6} \\[0.3cm]
+            2 & \\[0.3cm]
             \hline
-            3 & \textbf{4} \\[0.3cm]
+            3 & \\[0.3cm]
             \hline
         \end{tabular}
         \end{center}
     }
 \end{question}
+
+\begin{UPSTIcorrectionP}{imbr-trace-variable}
+    \begin{center}
+    \begin{tabular}{|c|p{4cm}|}
+        \hline
+        \textbf{Tour (valeur de \texttt{i})} & \textbf{Valeur de \texttt{total} en fin de tour} \\
+        \hline
+        1 & 8 \\[0.3cm]
+        \hline
+        2 & 6 \\[0.3cm]
+        \hline
+        3 & 4 \\[0.3cm]
+        \hline
+    \end{tabular}
+    \end{center}
+\end{UPSTIcorrectionP}
