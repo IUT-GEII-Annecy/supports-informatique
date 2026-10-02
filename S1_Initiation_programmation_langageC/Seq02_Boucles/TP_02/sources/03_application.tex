@@ -35,3 +35,40 @@ int main(void) {
 }
 	\end{lstlisting}
 \end{UPSTIcorrectionP}
+
+\begin{UPSTIexercice}{Résistance équivalente (montage parallèle)}
+	\UPSTIetape Même principe que l'exercice précédent, mais pour un montage en \textbf{parallèle} : écrire un programme \texttt{resistance\_parallele.c} qui saisit des résistances une par une (fin de saisie par \texttt{0}) et affiche la résistance équivalente, sachant que $\dfrac{1}{R_{eq}} = \dfrac{1}{R_1} + \dfrac{1}{R_2} + \dots + \dfrac{1}{R_n}$.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez une resistance en ohms (0 pour arreter) : 220
+Entrez une resistance en ohms (0 pour arreter) : 330
+Entrez une resistance en ohms (0 pour arreter) : 100
+Entrez une resistance en ohms (0 pour arreter) : 0
+Resistance equivalente : 56.90 ohms
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Résistance équivalente (montage parallèle)}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    double resistance;
+    double somme_inverses = 0;
+
+    printf("Entrez une resistance en ohms (0 pour arreter) : ");
+    scanf("%lf", &resistance);
+
+    while (resistance != 0) {
+        somme_inverses += 1.0 / resistance;
+        printf("Entrez une resistance en ohms (0 pour arreter) : ");
+        scanf("%lf", &resistance);
+    }
+
+    double equivalente = 1.0 / somme_inverses;
+    printf("Resistance equivalente : %.2f ohms\n", equivalente);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}

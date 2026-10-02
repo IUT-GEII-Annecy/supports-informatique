@@ -1,0 +1,109 @@
+\section{Numérique}
+
+\begin{UPSTIexercice}{Conversion binaire vers décimal}
+	\UPSTIetape Écrire un programme \texttt{binaire\_vers\_decimal.c} qui demande à l'utilisateur de saisir les bits d'un nombre binaire un par un, du poids fort vers le poids faible, jusqu'à ce qu'il entre \texttt{-1} pour arrêter la saisie. Le programme affichera la valeur décimale correspondante. Aucun tableau.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez un bit (0 ou 1, -1 pour arreter) : 1
+Entrez un bit (0 ou 1, -1 pour arreter) : 1
+Entrez un bit (0 ou 1, -1 pour arreter) : 0
+Entrez un bit (0 ou 1, -1 pour arreter) : 1
+Entrez un bit (0 ou 1, -1 pour arreter) : -1
+Valeur decimale : 13
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Conversion binaire vers décimal}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int bit;
+    int valeur = 0;
+
+    printf("Entrez un bit (0 ou 1, -1 pour arreter) : ");
+    scanf("%d", &bit);
+
+    while (bit != -1) {
+        valeur = valeur * 2 + bit;
+        printf("Entrez un bit (0 ou 1, -1 pour arreter) : ");
+        scanf("%d", &bit);
+    }
+
+    printf("Valeur decimale : %d\n", valeur);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
+\begin{UPSTIexercice}{Résolution d'un convertisseur analogique-numérique}
+	\UPSTIetape Un convertisseur analogique-numérique (CAN) doit coder \texttt{N} valeurs distinctes. Écrire un programme \texttt{nombre\_bits.c} qui demande \texttt{N} et calcule, à l'aide d'une boucle, le plus petit nombre de bits \texttt{n} tel que $2^n \geq N$ (sans utiliser de fonction puissance).
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez le nombre de valeurs a coder : 1000
+Nombre de bits necessaires : 10
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Résolution d'un convertisseur analogique-numérique}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez le nombre de valeurs a coder : ");
+    scanf("%d", &n);
+
+    int bits = 0;
+    long puissance = 1;
+    while (puissance < n) {
+        puissance *= 2;
+        bits++;
+    }
+
+    printf("Nombre de bits necessaires : %d\n", bits);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
+\begin{UPSTIexercice}{Bit de parité}
+	\UPSTIetape Écrire un programme \texttt{parite.c} qui demande un entier positif \texttt{n} et compte, à l'aide d'une boucle, son nombre de bits à 1 (son \emph{poids de Hamming}), utile par exemple pour calculer un bit de parité en transmission numérique. Le programme affichera ce nombre et précisera si la parité est paire ou impaire. Aucun tableau.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez un entier positif : 13
+3 bit(s) a 1 (parite impaire)
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Bit de parité}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier positif : ");
+    scanf("%d", &n);
+
+    int reste = n;
+    int nb_bits_a_1 = 0;
+    while (reste != 0) {
+        if (reste % 2 == 1) {
+            nb_bits_a_1++;
+        }
+        reste /= 2;
+    }
+
+    printf("%d bit(s) a 1 ", nb_bits_a_1);
+    if (nb_bits_a_1 % 2 == 0) {
+        printf("(parite paire)\n");
+    } else {
+        printf("(parite impaire)\n");
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
