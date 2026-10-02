@@ -1,0 +1,116 @@
+\section{Arithmétique}
+
+\begin{UPSTIexercice}{Nombre premier}
+	\UPSTIetape Écrire un programme \texttt{premier.c} qui demande un entier \texttt{n} (\texttt{n >= 2}) et affiche s'il est premier, en testant ses diviseurs à l'aide d'une boucle. Réfléchir à la condition d'arrêt pour ne pas tester plus de diviseurs que nécessaire.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez un entier : 17
+17 est premier
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Nombre premier}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    int est_premier = 1;
+    for (int d = 2; d * d <= n; d++) {
+        if (n % d == 0) {
+            est_premier = 0;
+            break;
+        }
+    }
+
+    if (est_premier) {
+        printf("%d est premier\n", n);
+    } else {
+        printf("%d n'est pas premier\n", n);
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
+\begin{UPSTIexercice}{PGCD par l'algorithme d'Euclide}
+	\UPSTIetape Écrire un programme \texttt{pgcd.c} qui demande deux entiers strictement positifs \texttt{a} et \texttt{b}, et calcule leur PGCD (plus grand commun diviseur) avec une boucle \texttt{while}, selon l'algorithme d'Euclide : tant que le reste n'est pas nul, remplacer le plus grand nombre par le reste de la division de l'un par l'autre.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez a : 48
+Entrez b : 18
+PGCD(48, 18) = 6
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{PGCD par l'algorithme d'Euclide}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int a, b;
+    printf("Entrez a : ");
+    scanf("%d", &a);
+    printf("Entrez b : ");
+    scanf("%d", &b);
+
+    int x = a, y = b;
+    while (y != 0) {
+        int reste = x % y;
+        x = y;
+        y = reste;
+    }
+
+    printf("PGCD(%d, %d) = %d\n", a, b, x);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
+\begin{UPSTIexercice}{Suite de Syracuse}
+	\UPSTIetape Écrire un programme \texttt{syracuse.c} qui demande un entier strictement positif \texttt{n} et applique la règle de Syracuse jusqu'à atteindre \texttt{1} : si le nombre courant est pair, le diviser par 2 ; sinon, le remplacer par \texttt{3n + 1}. Le programme affichera le nombre d'étapes effectuées et la plus grande valeur atteinte durant le parcours.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez un entier : 6
+6 -> 3 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
+8 etapes, valeur maximale atteinte : 16
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Suite de Syracuse}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    int valeur = n;
+    int etapes = 0;
+    int maximum = valeur;
+
+    printf("%d", valeur);
+    while (valeur != 1) {
+        if (valeur % 2 == 0) {
+            valeur /= 2;
+        } else {
+            valeur = 3 * valeur + 1;
+        }
+        etapes++;
+        if (valeur > maximum) {
+            maximum = valeur;
+        }
+        printf(" -> %d", valeur);
+    }
+    printf("\n%d etapes, valeur maximale atteinte : %d\n", etapes, maximum);
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}

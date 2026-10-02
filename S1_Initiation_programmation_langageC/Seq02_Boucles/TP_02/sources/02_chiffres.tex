@@ -1,0 +1,78 @@
+\section{Manipulation de chiffres}
+
+\begin{UPSTIexercice}{Palindrome numérique}
+	\UPSTIetape Écrire un programme \texttt{palindrome.c} qui demande un entier positif \texttt{n} et affiche s'il s'agit d'un palindrome (il se lit pareil à l'endroit et à l'envers), en inversant ses chiffres à l'aide d'une boucle (division et modulo par 10). Aucun tableau n'est autorisé.
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez un entier : 12321
+12321 est un palindrome
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Palindrome numérique}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    int reste = n;
+    int inverse = 0;
+    while (reste != 0) {
+        inverse = inverse * 10 + reste % 10;
+        reste /= 10;
+    }
+
+    if (inverse == n) {
+        printf("%d est un palindrome\n", n);
+    } else {
+        printf("%d n'est pas un palindrome\n", n);
+    }
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
+
+\begin{UPSTIexercice}{Conversion en binaire}
+	\UPSTIetape Écrire un programme \texttt{binaire.c} qui demande un entier positif \texttt{n} et affiche son écriture en base 2, \textbf{dans le bon ordre} (le bit de poids fort en premier), sans utiliser de tableau. Attention : diviser \texttt{n} successivement par 2 donne les bits dans l'ordre inverse de celui attendu à l'affichage ; il faudra trouver une autre méthode (indice : chercher d'abord la plus grande puissance de 2 inférieure ou égale à \texttt{n}).
+	Par exemple :
+	\begin{lstlisting}[language=bash,style=console]
+Entrez un entier : 13
+13 en binaire : 1101
+\end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIcorrectionP}{Conversion en binaire}
+	\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int main(void) {
+    int n;
+    printf("Entrez un entier : ");
+    scanf("%d", &n);
+
+    int puissance = 1;
+    while (puissance * 2 <= n) {
+        puissance *= 2;
+    }
+
+    printf("%d en binaire : ", n);
+    int reste = n;
+    while (puissance >= 1) {
+        if (reste >= puissance) {
+            printf("1");
+            reste -= puissance;
+        } else {
+            printf("0");
+        }
+        puissance /= 2;
+    }
+    printf("\n");
+
+    return 0;
+}
+	\end{lstlisting}
+\end{UPSTIcorrectionP}
