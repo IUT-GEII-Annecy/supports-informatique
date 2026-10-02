@@ -12,6 +12,7 @@
 # (exclu de ce site) ; nécessaire dès qu'un document QCM public (hors
 # Evaluations/) est ajouté au dépôt -- cf. S1.../Entrainement/.
 #
+# Image republiée après correction des accès GHCR (write_package).
 # Publiée sur ghcr.io/iut-geii-annecy/texlive-upsti, réutilisable par
 # n'importe quel repo du groupe (pas seulement supports-informatique).
 FROM ubuntu:24.04
