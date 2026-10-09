@@ -1,0 +1,16 @@
+\documentclass[td, noCustomPackages]{UPSTI_Document}
+\usepackage{IUT_Annecy}
+\usepackage{logos_iut}
+\usepackage{gitinfo2}
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+\UPSTIactiviteStyleClassique
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
+\newcommand{\UPSTInumero}{\sequence.1}
+\begin{document}
+
+\input{main.tex}
+
+\end{document}

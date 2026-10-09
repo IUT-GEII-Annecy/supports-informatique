@@ -1,0 +1,271 @@
+\begin{UPSTIexercice}{Amorce — la limite des variables séparées}
+    Un enseignant veut calculer la moyenne de ses étudiants. Pour 3 étudiants, il écrit naturellement :
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main(void) {
+    float note1 = 12.0, note2 = 15.5, note3 = 9.0;
+    float moyenne = (note1 + note2 + note3) / 3;
+    printf("Moyenne : %.2f\n", moyenne);
+}
+    \end{lstlisting}
+
+    \UPSTIquestion{Ce code fonctionne pour 3 étudiants. Ecrire ce même programme pour 5 étudiants.}
+    \UPSTIquestion{Quel est le problème de ce programme pour 30 étudiants, voire une promo de 200 étudiants ?}
+    \UPSTIquestion{Aussi, comment faire pour gérer un nombre d'étudiants variable, par exemple en lisant les notes au clavier ?}
+\end{UPSTIexercice}
+
+On voit qu'il est impossible de gérer ainsi une collection de données dont la taille est grande, ou simplement variable. Le langage C propose pour cela le \textbf{tableau} : une seule variable regroupant plusieurs valeurs de même type, repérées par un \textbf{indice}.
+\begin{UPSTIinfor}{Les tableaux en langage C}
+    \begin{itemize}
+        \item Un tableau est une variable qui regroupe plusieurs valeurs de même type.
+        \item Chaque valeur est repérée par un indice, qui commence à 0.
+        \item La taille d'un tableau doit être connue à la compilation (constante entière).
+        \item Les tableaux sont des variables locales, mais on peut les passer en paramètre à une fonction.
+    \end{itemize}
+    
+    \textbf{Déclarer et utiliser un tableau :}
+    \begin{lstlisting}[language=C]
+    float notes[30];     // declare un tableau de 30 flottants
+    notes[0] = 12.0;     // premier element : indice 0
+    notes[29] = 9.5;      // dernier element : indice (taille - 1)
+    \end{lstlisting}
+    En C, les indices d'un tableau de taille $n$ vont toujours de $0$ à $n-1$ : c'est ce qu'on appelle l'\textbf{indexation 0-based}.
+\end{UPSTIinfor}
+
+
+\begin{UPSTIexercice}{Identifier les tableaux}
+    Voici un extrait de programme :
+    \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main(void) {
+    int notes[5] = {12, 15, 9, 14, 18};
+    printf("%d\n", notes[2]);
+}
+    \end{lstlisting}
+
+    \UPSTIquestion{Combien d'éléments contient le tableau \texttt{notes} ?}
+    \UPSTIquestion{Quel est le type de ses éléments ?}
+    \UPSTIquestion{Que va afficher le programme ?}
+    \UPSTIquestion{Quel est l'indice du premier élément ? Et du dernier ?}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Remplir un tableau}
+    On veut lire 5 entiers au clavier et les stocker dans un tableau.
+
+    \UPSTIquestion{Compléter le code suivant :}
+    \begin{itemize}
+        \item Déclarer un tableau \texttt{donnees} capable de contenir 5 entiers.
+        \item Compléter la boucle de saisie pour remplir le tableau.
+    \end{itemize}
+    \begin{lstlisting}[language=C]
+    ..............................  \\Déclaration à compléter
+for (int i = 0; i < 5; i++) {
+        ................ = get_int("Entrez la donnée %d, elle sera stockée à l'indice %d : ", i+1, i);
+}
+    \end{lstlisting}
+    On suppose maintenant le tableau rempli, et on veut afficher les valeurs qu'il contient.
+    \UPSTIquestion{Compléter la boucle d'affichage qui parcoure le tableau et affiche chaque élément avec son indice.}
+    \begin{lstlisting}[language=C]for (int i = 0; i < 5; i++) {
+        printf("Indice %d : %d\n", i, ................);
+}
+    \end{lstlisting}
+    \UPSTIquestion{Prédire l'affichage produit lorsque le tableau contient les valeurs $(12, 15, 9, 14, 18)$.}
+    \UPSTIetape{Faire vérifier.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Somme et moyenne}
+    On dispose d'un tableau \texttt{notes[5]} contenant des entiers. On souhaite en calculer la somme à l'aide d'un \textbf{accumulateur}, c'est-à-dire une variable que l'on met à jour à chaque tour de boucle.
+
+    \begin{lstlisting}[language=C]
+int notes[5] = {12, 15, 9, 14, 18};
+int somme = 0;
+for (int i = 0; i < 5; i++) {
+    somme = /* a completer */;
+}
+float moyenne = somme / 5.0;
+    \end{lstlisting}
+
+    \UPSTIquestion{Compléter le calcul de la somme dans la boucle.}
+    \UPSTIquestion{Pourquoi divise-t-on par \texttt{5.0} et non par \texttt{5} pour obtenir la moyenne ?}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Trouver le maximum}
+    On veut parcourir un tableau d'entiers et afficher la plus grande valeur contenue, en mémorisant également l'indice où elle se trouve.
+
+    \begin{lstlisting}[language=C]
+int donnees[6] = {4, 9, 2, 15, 7, 3};
+int indiceMax = 0;
+for (int i = 1; i < 6; i++) {
+    if (/* a completer */) {
+        indiceMax = i;
+    }
+}
+printf("Max = %d a l'indice %d\n", donnees[indiceMax], indiceMax);
+    \end{lstlisting}
+
+    \UPSTIquestion{Ecrire la condition du \texttt{if} pour mettre à jour l'indice du maximum.}
+    \UPSTIquestion{Pourquoi initialise-t-on \texttt{indiceMax} à 0 et fait-on démarrer la boucle à \texttt{i = 1} plutôt qu'à \texttt{i = 0} ?}
+    \UPSTIquestion{Que se passe-t-il si tous les éléments sont égaux ?}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Inverser un tableau}
+    On veut recopier un tableau \texttt{donnees} de taille \texttt{n} dans un tableau \texttt{inverse}, mais dans l'ordre inverse : le premier élément de \texttt{donnees} doit devenir le dernier de \texttt{inverse}, et réciproquement.
+
+    \begin{lstlisting}[language=C]
+int n = 5;
+int donnees[5] = {1, 2, 3, 4, 5};
+int inverse[5];
+for (int i = 0; i < n; i++) {
+    inverse[i] = donnees[/* a completer */];
+}
+    \end{lstlisting}
+
+    \UPSTIquestion{Copléter l'indice du tableau \texttt{donnees} pour recopier les éléments dans l'ordre inverse.}
+    \UPSTIquestion{Vérifiez votre formule à la main pour \texttt{i = 0} et \texttt{i = n-1} : retrouve-t-on bien le résultat attendu ?}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Recherche dans un tableau}
+    On souhaite savoir si une valeur donnée se trouve dans un tableau, à l'aide d'une fonction qui parcourt le tableau et s'arrête dès que la valeur est trouvée (ou arrive au bout sinon).
+
+    \begin{lstlisting}[language=C]
+int contient(int t[], int n, int valeur) {
+    int trouve = 0;
+    for (int i = 0; i < n && !trouve; i++) {
+        if (t[i] == valeur) {
+            /* a completer */
+        }
+    }
+    return trouve;
+}
+    \end{lstlisting}
+
+    \UPSTIquestion{Compléter le corps du \texttt{if} pour indiquer que la valeur a été trouvée.}
+    \UPSTIquestion{À quoi sert la condition \texttt{\&\& !trouve} dans la boucle \texttt{for} ? Que se passerait-il si on l'enlevait ?}
+    \UPSTIquestion{Modifier la fonction pour qu'elle renvoie l'indice de la valeur recherchée, ou -1 si elle n'existe pas.}
+\end{UPSTIexercice}
+
+\begin{UPSTIinfo}{Passer un tableau en paramètre}
+    En C, lorsqu'on passe un tableau à une fonction, on ne passe pas le tableau entier, mais seulement l'adresse de son premier élément. Cela s'écrit dans la signature de la fonction par un paramètre de type tableau (ou pointeur) : \texttt{int t[]} ou \texttt{int *t}.
+    
+    La fonction reçoit donc \textit{un pointeur (nous verrons ce qu'est un pointeur plus tard)} vers le premier élément du tableau. La fonction doit absolument connaître la taille du tableau pour pouvoir le parcourir correctement. 
+
+    \textbf{Lorsque l'on passe un tableau en paramètre d'une fonction, on doit \textit{toujours} passer sa taille en paramètre également.}
+
+    \begin{lstlisting}[language=C]
+void afficher_tableau(int t[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", t[i]);
+    }
+    printf("\n");
+}
+    \end{lstlisting}
+\end{UPSTIinfo}
+
+\begin{UPSTIexercice}{Moyenne d'une classe}
+    On dispose d'un tableau contenant les notes d'une classe de 30 étudiants. Pour éviter de réécrire le code de calcul à chaque fois, on souhaite factoriser ce traitement dans des fonctions.
+
+    \begin{lstlisting}[language=C]
+float moyenne(/* a completer */) {
+    float somme = 0;
+    for (int i = 0; i < n; i++) {
+        somme += notes[i];
+    }
+    return somme / n;
+}
+    \end{lstlisting}
+
+    \UPSTIquestion{Compléter le code précédent pour que la fonction reçoive le tableau et sa taille en paramètres.}
+    \UPSTIquestion{Écrire une autre fonction \texttt{int au\_dessus\_de\_moyenne(float notes[], int n)} qui compte le nombre d'étudiants au-dessus de la moyenne. \textit{Cette fonction appellera la fonction \texttt{moyenne}.}}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Tableau de caractères}
+    En C, une chaîne de caractères est un tableau de \texttt{char} terminé par un caractère spécial, le \textbf{caractère nul} \texttt{'\textbackslash 0'}, qui marque la fin de la chaîne.
+
+    \begin{lstlisting}[language=C]
+char mot[] = "bonjour";
+int i = 0;
+while (/* a completer */) {
+    printf("%c\n", mot[i]);
+    i++;
+}
+    \end{lstlisting}
+
+    \UPSTIquestion{Compléter la condition de la boucle pour parcourir le tableau jusqu'au caractère nul.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Somme des éléments positifs}
+    On dispose d'un tableau \texttt{donnees} de \texttt{n} entiers, pouvant contenir des valeurs positives, négatives ou nulles.
+
+    \UPSTIquestion{Écrire un programme qui calcule et affiche la somme des seuls éléments positifs du tableau.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Compter les occurrences d'une valeur}
+    On dispose d'un tableau \texttt{donnees} de \texttt{n} entiers et d'une valeur \texttt{v} donnée par l'utilisateur.
+
+    \UPSTIquestion{Écrire un programme qui compte et affiche le nombre de fois où la valeur \texttt{v} apparaît dans le tableau \texttt{donnees}.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Tableau trié ?}
+    On dispose d'un tableau \texttt{donnees} de \texttt{n} entiers.
+
+    \UPSTIquestion{Écrire un programme qui affiche \texttt{"trié"} si les éléments du tableau sont rangés par ordre croissant (chaque élément inférieur ou égal au suivant), et \texttt{"non trié"} sinon.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Supprimer les doublons}
+    On dispose d'un tableau \texttt{donnees} de \texttt{n} entiers, pouvant contenir des valeurs répétées.
+
+    \UPSTIquestion{Écrire un programme qui construit un second tableau ne contenant qu'une seule fois chaque valeur de \texttt{donnees}, en conservant l'ordre d'apparition, puis qui l'affiche.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIexercice}{Décalage circulaire}
+    On dispose d'un tableau \texttt{donnees} de \texttt{n} entiers.
+
+    \UPSTIquestion{Écrire un programme qui décale chaque élément d'une case vers la droite, le dernier élément venant se replacer au début du tableau, puis qui affiche le résultat. Exemple : \texttt{(1, 2, 3, 4, 5)} devient \texttt{(5, 1, 2, 3, 4)}.}
+\end{UPSTIexercice}
+
+
+
+
+\begin{UPSTIexercice}{Histogramme de notes}
+    \begin{minipage}{.8\linewidth}
+        On suppose que l'on dispose d'un tableau \lstinline[language=c]{int notes[N]} de \texttt{N} notes d'étudiants, chacune comprise entre 0 et 20.
+        On souhaite représenter ces notes sous la forme d'un histogramme horizontal, par exemple celui ci-contre.
+        
+        \UPSTIquestion{Ecrire un programme qui affiche un histogramme de ce type pour n'importe quel tableau de notes.}
+    \end{minipage}\hfill
+    \begin{minipage}{.15\linewidth}
+        \begin{tabular}{ll}
+            0 &        \\
+            1 & **     \\
+            2 & *      \\
+            3 & *      \\
+            4 & ****   \\
+            5 & **     \\
+            6 & ***    \\
+            7 & ****   \\
+            8 & *****  \\
+            9 & ****** \\
+        \end{tabular}
+    \end{minipage}
+    
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Fusionner deux tableaux triés}
+    On dispose de deux tableaux d'entiers \texttt{a} et \texttt{b}, chacun déjà trié par ordre croissant.
+
+    \UPSTIquestion{Écrire un programme qui construit un troisième tableau \texttt{c}, trié par ordre croissant, contenant tous les éléments de \texttt{a} et de \texttt{b}, sans utiliser de fonction de tri (uniquement en parcourant \texttt{a} et \texttt{b} en parallèle).}
+\end{UPSTIexercice}
+
+
