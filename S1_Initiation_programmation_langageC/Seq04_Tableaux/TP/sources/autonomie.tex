@@ -1,0 +1,115 @@
+\section*{Partie 1 — Tableaux à deux dimensions}
+
+\begin{UPSTIexercice}{Manipuler une matrice 3x3}
+    On souhaite manipuler une matrice $3 \times 3$ d'entiers.
+
+    \UPSTIquestion{Déclarer un tableau \texttt{int M[3][3]}.}
+    \UPSTIquestion{Écrire deux boucles imbriquées pour le remplir (au clavier, ou avec des valeurs choisies dans le code).}
+    \UPSTIquestion{Afficher la matrice sous forme de grille (une ligne par ligne de la matrice).}
+    \UPSTIquestion{Écrire une fonction \texttt{int somme\_diagonale(int M[3][3])} qui renvoie la somme des éléments de la diagonale principale (\texttt{M[0][0] + M[1][1] + M[2][2]}).}
+\end{UPSTIexercice}
+
+
+\section*{Partie 2 — Seuillage d'image (matrice 2D)}
+
+\begin{UPSTIManipulation}{Qualité — Seuillage d'image (matrice 2D)}
+  \textbf{Contexte :} Une caméra industrielle renvoie une image en niveaux de gris (0..255). On veut produire un \textbf{masque binaire} qui isole les zones claires de l'image.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{h}, \textbf{w} ($1\le h,w \le 20$), puis \textbf{h*w} entiers dans \texttt{M[20][20]}.
+    \item Lire un \textbf{seuil T}.
+    \item Produire \texttt{B[i][j] = 1} si \texttt{M[i][j] >= T}, sinon \texttt{0}.
+    \item Afficher \texttt{B} en grille (0/1) avec un espace entre colonnes.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+h=2, w=3, T=100
+M =
+  0 120 255
+  80 100  90
+B =
+  0 1 1
+  0 1 0
+  \end{lstlisting}
+
+  \textbf{Types :} \texttt{int}. Deux boucles imbriquées.
+
+  Cet exercice est à écrire entièrement vous-même, sans squelette ni \texttt{check50} : c'est un entraînement libre, à faire valider par votre enseignant si besoin.
+\end{UPSTIManipulation}
+
+
+\section*{Partie 3 — Transposée et symétrie de matrice}
+
+\begin{UPSTIexercice}{Transposer une matrice carrée}
+    La \textbf{transposée} d'une matrice $M$ est la matrice $M^T$ obtenue en échangeant les lignes et les colonnes : $M^T[i][j] = M[j][i]$.
+
+    \UPSTIquestion{Déclarer une matrice \texttt{int M[4][4]} et la remplir avec des valeurs de votre choix.}
+    \UPSTIquestion{Écrire une fonction \texttt{void transposer(int M[4][4])} qui transpose la matrice \textbf{en place}, c'est-à-dire en échangeant \texttt{M[i][j]} et \texttt{M[j][i]} pour chaque paire d'indices, sans utiliser de tableau auxiliaire.}
+    \UPSTIquestion{Attention : si l'on parcourt naïvement \texttt{i} et \texttt{j} de 0 à 3 chacun, chaque paire sera échangée deux fois et la matrice retrouvera sa forme initiale. Comment faut-il limiter le parcours (par exemple sur \texttt{j}) pour n'échanger chaque paire qu'une seule fois ?}
+    \UPSTIquestion{Afficher la matrice avant et après transposition pour vérifier votre fonction.}
+    \UPSTIquestion{Bonus : une matrice est dite \textbf{symétrique} si elle est égale à sa transposée. Écrire une fonction \texttt{int est\_symetrique(int M[4][4])} qui le vérifie.}
+\end{UPSTIexercice}
+
+
+\section*{Partie 4 — Entraînement libre sur les tableaux 1D}
+
+Les exercices suivants reprennent les contextes travaillés pendant la séance guidée, mais cette fois \textbf{sans squelette de code et sans trou} : à vous d'écrire chaque programme entièrement, de la déclaration des variables jusqu'à l'affichage du résultat. C'est l'occasion de vérifier que vous savez reproduire seul·e ce qui a été vu en séance.
+
+\begin{UPSTIexercice}{Notes — Filtrer au-dessus d'un seuil}
+    Un professeur veut afficher les notes supérieures à un seuil.
+
+    \UPSTIquestion{Demander le nombre de notes \textbf{n} ($1\le n \le 50$), puis \textbf{n} notes (float) dans un tableau \texttt{float notes[50]}.}
+    \UPSTIquestion{Demander un \textbf{seuil} (float).}
+    \UPSTIquestion{Afficher dans l'ordre d'origine toutes les notes strictement supérieures au seuil, ou \texttt{Aucune} si aucune ne correspond, ainsi que leur nombre.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Cinéma — Places libres et taux d'occupation}
+    Une rangée de cinéma a \textbf{n} sièges ($n \le 100$), 1 = occupé, 0 = libre.
+
+    \UPSTIquestion{Demander le nombre de sièges \textbf{n}, puis pour chacun s'il est occupé ou non, dans un tableau \texttt{int rang[100]}.}
+    \UPSTIquestion{Afficher les indices des places libres dans l'ordre, puis le taux d'occupation en \% (arrondi entier). Si toutes les places sont occupées, afficher \texttt{Complet}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Playlist — Rotation à partir d'un morceau favori}
+    On veut qu'une playlist de \textbf{n} morceaux ($n \le 100$) recommence à partir d'un morceau favori, sans changer l'ordre relatif des morceaux.
+
+    \UPSTIquestion{Lire \textbf{n} morceaux, puis le nom du morceau favori.}
+    \UPSTIquestion{Afficher la playlist réordonnée en commençant par le morceau favori, tous les morceaux devant apparaître exactement une fois.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Playlist — Retirer les doublons}
+    Une playlist de \textbf{n} identifiants ($n \le 100$) contient des doublons.
+
+    \UPSTIquestion{Construire un nouveau tableau \texttt{out} contenant chaque identifiant une seule fois, en conservant l'ordre de première apparition (sans trier).}
+    \UPSTIquestion{Afficher la taille finale du tableau \texttt{out} puis ses éléments.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Borner le nombre d'invités}
+    Plusieurs personnes indiquent combien d'invités elles souhaitent amener. Chacune doit en amener entre \textbf{minQ} et \textbf{maxQ}.
+
+    \UPSTIquestion{Lire le nombre de participants puis, pour chacun, le nombre d'invités souhaités dans un tableau \texttt{qte[100]}.}
+    \UPSTIquestion{Lire \textbf{minQ} et \textbf{maxQ}, puis modifier le tableau en place : toute valeur inférieure à \texttt{minQ} devient \texttt{minQ}, toute valeur supérieure à \texttt{maxQ} devient \texttt{maxQ}. Afficher le tableau corrigé.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Moyenne glissante}
+    On veut lisser une série de \textbf{n} valeurs (visites par heure, par exemple) avec une moyenne glissante sur une fenêtre de 3 valeurs.
+
+    \UPSTIquestion{Lire \textbf{n} entiers dans un tableau \texttt{visites[100]}.}
+    \UPSTIquestion{Produire un tableau \texttt{out} tel que \texttt{out[0] = visites[0]}, \texttt{out[n-1] = visites[n-1]}, et pour les autres indices \texttt{out[i]} soit la moyenne entière de \texttt{visites[i-1]}, \texttt{visites[i]} et \texttt{visites[i+1]}. Afficher \texttt{out}.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Tri par sélection}
+    On veut trier par ordre croissant une liste de \textbf{n} tarifs (en centimes), sans utiliser de fonction de tri de la bibliothèque standard.
+
+    \UPSTIquestion{Lire \textbf{n} entiers dans un tableau \texttt{p[100]}.}
+    \UPSTIquestion{Implémenter l'algorithme du tri par sélection : à chaque passe, chercher le minimum restant et l'échanger à sa place. Afficher le tableau trié ainsi que le nombre d'échanges effectués.}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Recherche dichotomique}
+    Les identifiants d'un catalogue de \textbf{n} éléments sont triés par ordre croissant. On veut retrouver rapidement l'indice d'un identifiant donné.
+
+    \UPSTIquestion{Lire \textbf{n} entiers triés dans un tableau \texttt{id[100]}, puis un identifiant \texttt{x} recherché.}
+    \UPSTIquestion{Implémenter une recherche dichotomique (boucle \texttt{while} avec des bornes \texttt{low} et \texttt{high}) qui affiche l'indice de \texttt{x} s'il existe, ou \texttt{-1} sinon.}
+\end{UPSTIexercice}

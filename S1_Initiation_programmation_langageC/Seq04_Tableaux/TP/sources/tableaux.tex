@@ -1,0 +1,306 @@
+\begin{UPSTIexercice}{Étape 1 — Moyenne de 3 notes (code fourni, à observer)}
+  \textbf{Fichier :} \texttt{00\_moyenne\_simple/moyenne\_simple.c}
+
+  Ce premier programme vous est donné \textbf{intégralement}. Ne le modifiez pas : lancez-le, exécutez-le, et observez son fonctionnement avant de passer à la suite.
+
+  \begin{lstlisting}[language=C]
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void){
+    float note1 = get_float("Entrer la note 1 : ");
+    float note2 = get_float("Entrer la note 2 : ");
+    float note3 = get_float("Entrer la note 3 : ");
+
+    float moyenne = (note1 + note2 + note3) / 3;
+    printf("La moyenne est de %.2f\n", moyenne);
+
+    return 0;
+}
+  \end{lstlisting}
+
+  \UPSTIquestion{Exécutez le programme avec trois notes de votre choix. Le résultat est-il cohérent ?}
+  \UPSTIquestion{Imaginez qu'on vous demande d'adapter ce programme pour 10 étudiants : que faudrait-il changer, et pourquoi cela devient-il vite problématique avec des variables séparées \texttt{note1}, \texttt{note2}, \ldots ? C'est précisément ce que l'on va résoudre dans l'étape suivante avec un \textbf{tableau}.}
+\end{UPSTIexercice}
+
+
+\begin{UPSTIManipulation}{Étape 2 — Notes : moyenne de 10 valeurs avec un tableau, et débogage avec \texttt{gdb}}
+  \textbf{Fichier :} \texttt{01\_moyenne/moyenne.c}
+
+  \textbf{Contexte :} On reprend le programme précédent, mais cette fois pour \textbf{10} notes, stockées dans un tableau \texttt{float notes[10]}, et traitées par une fonction dédiée.
+
+  \textbf{Cahier des charges (rappel, déjà réalisé dans le squelette) :}
+  \begin{itemize}
+    \item Demander \textbf{10} notes (float) au clavier et les stocker dans \texttt{notes[10]}.
+    \item Calculer la \textbf{moyenne} via une fonction \texttt{float calculer\_moyenne(float notes[], int taille)}, qui prend en argument un tableau et sa taille.
+    \item Afficher le résultat.
+  \end{itemize}
+
+  \textbf{Le programme qui vous est fourni compile et s'exécute sans planter}, mais il affiche parfois un résultat \textbf{faux} : pour certains jeux de notes, la moyenne annoncée n'est pas celle attendue. C'est une erreur \textbf{silencieuse} : rien ne s'affiche en rouge, rien ne « crashe », le programme se contente de mentir sur son résultat. Ce genre d'erreur ne se repère pas toujours à la simple lecture du code : c'est l'occasion d'apprendre à utiliser un \textbf{débogueur}.
+
+  \textbf{Cahier des charges de cette étape :}
+  \begin{itemize}
+    \item Compiler le programme avec les symboles de débogage : \texttt{gcc -g -o moyenne moyenne.c -lcs50} (ou utiliser le bouton/la commande « debug » de votre éditeur si celui-ci intègre \texttt{gdb}).
+    \item Lancer le débogueur : \texttt{gdb ./moyenne}.
+    \item Poser un point d'arrêt dans la fonction suspecte : \texttt{break calculer\_moyenne}, puis démarrer l'exécution avec \texttt{run}.
+    \item Avancer pas à pas (\texttt{next}, ou \texttt{step} pour entrer dans un appel) jusqu'au \texttt{return} de la fonction, et inspecter la valeur des variables à ce moment avec \texttt{print somme}, \texttt{print taille}, \texttt{print somme / taille}, etc.
+    \item Comparer ce que le débogueur affiche à ce que vous attendiez : à quel endroit précis le calcul diverge-t-il de la valeur correcte ?
+    \item En déduire puis corriger l'erreur dans le code source, recompiler, et vérifier avec un jeu de notes dont la moyenne attendue n'est pas un nombre entier.
+  \end{itemize}
+
+  \textbf{Indice (sans donner la solution) :} l'erreur se situe dans l'expression du \texttt{return} de \texttt{calculer\_moyenne} ; le débogueur vous permettra de voir qu'une valeur intermédiaire n'a pas le type que vous croyez.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 3 — Notes : filtrer au-dessus d'un seuil}
+  \textbf{Fichier :} \texttt{02\_filtre\_notes/filtre\_notes.c}
+
+  \textbf{Contexte :} Un professeur veut afficher les notes supérieures à un seuil.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander le nombre de notes \textbf{n} ($1\le n \le 50$), puis \textbf{n} notes (float) dans un tableau \texttt{notes} de taille \texttt{MAX\_NOTES}.
+    \item Demander un \textbf{seuil} (float).
+    \item Afficher \textbf{dans l'ordre d'origine} toutes les notes \textbf{strictement supérieures} au seuil,
+          ou \texttt{Aucune} si aucune ne correspond.
+    \item Afficher également le \textbf{nombre} de notes affichées.
+  \end{itemize}
+
+  \textbf{Dans le squelette fourni}, la lecture de \texttt{n} et du \texttt{seuil}, ainsi que l'affichage final, sont déjà écrits. En revanche, \textbf{trois éléments manquent entièrement} (chacun signalé par un commentaire \texttt{/* A COMPLETER */}) :
+  \begin{enumerate}
+    \item la \textbf{déclaration} du tableau \texttt{notes} ;
+    \item la \textbf{boucle de saisie} qui demande les \texttt{n} notes et les range dans ce tableau ;
+    \item la \textbf{boucle de parcours} qui compare chaque note au seuil, affiche celles qui dépassent, et compte le nombre d'affichages.
+  \end{enumerate}
+  C'est donc à vous d'écrire la déclaration et les deux boucles, pas seulement de corriger un détail.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 4 — Cinéma : places libres et taux d'occupation}
+  \textbf{Fichier :} \texttt{03\_cinema\_occupation/cinema\_occupation.c}
+
+  \textbf{Contexte :} Une rangée de cinéma a \textbf{n} sièges (\texttt{n<=100}). 1 = occupé, 0 = libre.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander le nombre de sièges par rangée \textbf{n} puis \textbf{n} fois si le siège de la rangée est occupé ou non. Utiliser un tableau \texttt{rang} (0 ou 1), de taille \texttt{MAX\_SIEGES}.
+    \item Afficher les \textbf{indices} des \textbf{places libres} (\texttt{0..n-1}) \textbf{dans l'ordre}.
+    \item Calculer et afficher le \textbf{taux d'occupation} en \% (arrondi entier).
+    \item Si toutes occupées, afficher \texttt{Complet}.
+  \end{itemize}
+
+  \textbf{Comme à l'étape précédente}, le squelette fourni laisse \textbf{trois éléments} entièrement à votre charge :
+  \begin{enumerate}
+    \item la \textbf{déclaration} du tableau \texttt{rang} ;
+    \item la \textbf{boucle de saisie} des \texttt{n} sièges, qui range chaque réponse dans \texttt{rang} et met à jour le compteur \texttt{nb\_occupes} ;
+    \item la \textbf{boucle d'affichage} des places libres.
+  \end{enumerate}
+  Le calcul du taux d'occupation (déjà écrit) dépend de ce que vous aurez correctement rempli dans \texttt{rang} et \texttt{nb\_occupes} : une erreur dans vos boucles se verra donc aussi sur ce résultat final.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 5 — Comptage : occurrences d'une valeur}
+  \textbf{Fichier :} \texttt{04\_compte\_occurrences/compte\_occurrences.c}
+
+  \textbf{Contexte :} Avant d'attaquer la playlist, deux exercices courts pour souffler et pratiquer seul·e les bases des tableaux \texttt{int}.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} ($1\le n \le 100$) puis \textbf{n} entiers dans un tableau \texttt{valeurs} de taille \texttt{MAX\_VALEURS}.
+    \item Lire une valeur \textbf{cible} (entier).
+    \item Compter et afficher le \textbf{nombre d'occurrences} de \texttt{cible} dans \texttt{valeurs}.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+n=7
+valeurs= 3 5 3 3 8 5 1
+cible=3
+-> La valeur 3 apparait 3 fois.
+  \end{lstlisting}
+
+  \textbf{Types :} \texttt{int} uniquement.
+
+  \textbf{Cette fois, aucun squelette à trous} : le fichier fourni contient seulement les \texttt{\#include}, la lecture de \texttt{n}, le remplissage de \texttt{valeurs} et la lecture de \texttt{cible}. \textbf{Tout le reste} — le comptage et l'affichage — est entièrement à votre charge, à partir du seul cahier des charges ci-dessus.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 6 — Minimum d'un tableau et son indice}
+  \textbf{Fichier :} \texttt{05\_minimum\_tableau/minimum\_tableau.c}
+
+  \textbf{Contexte :} Second exercice court, dans le même esprit que le précédent.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} ($1\le n \le 100$) puis \textbf{n} entiers dans un tableau \texttt{valeurs} de taille \texttt{MAX\_VALEURS}.
+    \item Trouver la \textbf{plus petite valeur} du tableau ainsi que son \textbf{indice} (si le minimum apparaît plusieurs fois, garder l'indice de la \textbf{première} occurrence).
+    \item Afficher le minimum et son indice.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+n=5
+valeurs= 9 4 7 4 2
+-> Minimum = 2, trouve a l'indice 4
+  \end{lstlisting}
+
+  \textbf{Types :} \texttt{int} uniquement.
+
+  \textbf{Comme à l'étape précédente}, le fichier fourni se limite à la lecture de \texttt{n} et de \texttt{valeurs} : la recherche du minimum et de son indice est entièrement à écrire par vos soins.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 7 — Playlist : commencer par un morceau favori}
+  \textbf{Fichier :} \texttt{06\_playlist\_rotation/playlist\_rotation.c}
+
+  \textbf{Contexte :} On souhaite \textbf{recycler} une playlist pour qu'elle \textbf{commence} par l'indice \textbf{f} (0..n-1).
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} ($1\le n \le 100$) puis \textbf{n} noms de fichiers (IDs de morceaux).
+    \item Lire \textbf{morceau\_favori} (le nom du morceau favori).
+    \item Afficher la playlist en commençant par le morceau favori. Attention, tous les morceaux doivent apparaître sans modifier l'ordre relatif.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+n=5
+Entrer les 5 morceaux :
+J adore
+La symphonie des nuages
+La bandite
+Toxicity
+Basique
+
+Par quel morceau commencer : La bandite
+Merci. Nouvel ordre :
+La bandite ; Toxicity ; Basique ; J adore ; La symphonie des nuages
+  \end{lstlisting}
+
+  \textbf{À partir de cette étape, le niveau de guidage diminue encore} : la lecture des morceaux et la recherche de l'indice du morceau favori sont déjà écrites, mais \textbf{toute la boucle d'affichage final} (celle qui doit afficher les \texttt{n} morceaux en partant de \texttt{indice\_favori} et en revenant au début grâce à un \textbf{modulo}, sans en perdre aucun, avec \texttt{" ; "} entre deux morceaux) est à écrire entièrement : seul un commentaire \texttt{/* A COMPLETER */} décrit ce qu'elle doit faire, aucune ligne de code de cette boucle n'est fournie.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 8 — Playlist : retirer les doublons (ordre conservé)}
+  \textbf{Fichier :} \texttt{07\_playlist\_dedupe/playlist\_dedupe.c}
+
+  \textbf{Contexte :} Une playlist contient des IDs \textbf{répétés}. On veut garder \textbf{seulement la première occurrence} de chaque ID.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} ($1\le n \le 100$) puis \textbf{n} entiers \texttt{ids}.
+    \item Construire \texttt{out} \textbf{sans doublons} en conservant l'ordre d'apparition.
+    \item Afficher la \textbf{taille} finale puis les éléments.
+    \item Interdit : trier.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+n=7
+ids= 4 9 4 2 9 1 2
+taille=4
+-> 4 9 2 1
+  \end{lstlisting}
+
+  \textbf{Le squelette fourni ne donne plus le mécanisme de dédoublonnage} : seules la lecture de \texttt{n}/\texttt{ids} et l'affichage final sont écrits. \textbf{Tout l'algorithme de construction de \texttt{out}} (la ou les boucles qui, pour chaque élément de \texttt{ids}, déterminent s'il a déjà été recopié dans \texttt{out}, et l'y ajoutent si besoin en mettant à jour \texttt{taille\_out}) est laissé à votre initiative : un seul commentaire global décrit l'objectif, sans détailler la structure des boucles à utiliser.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 9 — Borner le nombre d'invités (clamp)}
+  \textbf{Fichier :} \texttt{08\_stock\_clamp/stock\_clamp.c}
+
+  \textbf{Contexte :} On demande à plusieurs personnes combien d'invités elles désirent amener à une fête. Cependant, on demande aux invités d'amener au moins \textbf{minQ} et au plus \textbf{maxQ} invités. On veut donc corriger les quantités demandées.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Demander le \textbf{nombre\_participants} puis, pour chacun, le nombre d'invités souhaités (stocké dans un tableau \texttt{qte} de taille \texttt{MAX\_PARTICIPANTS}).
+    \item Demander \textbf{minQ} et \textbf{maxQ} (vérifier que \texttt{minQ <= maxQ}).
+    \item \textbf{Modifier en place} : toute valeur $<minQ$ devient \texttt{minQ}, et $>maxQ$ devient \texttt{maxQ}.
+    \item Afficher le tableau corrigé.
+  \end{itemize}
+
+  \textbf{À partir de cette étape, seules les lectures d'entrées restent écrites} dans le squelette (lecture de \texttt{nombre\_participants}, remplissage de \texttt{qte}, lecture de \texttt{minQ}/\texttt{maxQ}) : \textbf{tout le traitement}, c'est-à-dire la boucle de bornage elle-même (parcourir \texttt{qte}, et remplacer chaque valeur hors bornes), est à écrire intégralement à partir du seul cahier des charges et d'un commentaire \texttt{/* A COMPLETER */} à l'échelle du bloc entier.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 10 — Web analytics : moyenne glissante (fenêtre 3)}
+  \textbf{Fichier :} \texttt{09\_web\_moving\_avg/web\_moving\_avg.c}
+
+  \textbf{Contexte :} On lisse une série de \textbf{visites par heure} avec une moyenne glissante.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} puis \textbf{n} entiers dans un tableau \texttt{v} de taille \texttt{MAX\_VISITES}.
+    \item Produire \texttt{out[i]} dans un second tableau de même taille :
+      \begin{itemize}
+        \item \texttt{out[0] = v[0]}, \texttt{out[n-1] = v[n-1]}
+        \item pour $1 \le i \le n-2$ : \texttt{out[i] = (v[i-1]+v[i]+v[i+1]) / 3} (division entière)
+      \end{itemize}
+    \item Afficher \texttt{out}.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+n=5
+visites= 2 10 5 7 1
+out= 2 5 7 4 1
+  \end{lstlisting}
+
+  \textbf{Types :} \texttt{int}. Deux tableaux \texttt{v[100]}, \texttt{out[100]}, déjà déclarés dans le squelette.
+
+  \textbf{Comme à l'étape précédente}, seule la lecture des entrées (\texttt{n} et \texttt{v}) est fournie : \textbf{tout le calcul de la moyenne glissante} (les trois cas \texttt{out[0]}, \texttt{out[n-1]}, et la boucle centrale) est à écrire en entier à partir du cahier des charges ci-dessus et d'un unique commentaire \texttt{/* A COMPLETER */}, sans aucune ligne de calcul fournie.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 11 — Tarifs : tri par sélection croissant}
+  \textbf{Fichier :} \texttt{10\_tarifs\_selection\_sort/tarifs\_selection\_sort.c}
+
+  \textbf{Contexte :} Un cinéma veut trier une liste de \textbf{tarifs en centimes} pour affichage.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} puis \textbf{n} entiers (centimes) dans un tableau \texttt{p} de taille \texttt{MAX\_TARIFS}.
+    \item Trier \textbf{par sélection} croissant (implémentation personnelle, sans \texttt{qsort}).
+    \item Afficher le tableau trié et le \textbf{nombre d'échanges} effectués (variable \texttt{nb\_echanges}, déjà déclarée et initialisée à 0).
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash]
+n=6
+p= 500 200 400 600 100 300
+sorted= 100 200 300 400 500 600
+swaps= 3
+  \end{lstlisting}
+
+  \textbf{Types :} \texttt{int}. Pas de \texttt{qsort}.
+
+  \textbf{Le squelette ne fournit plus l'algorithme} : seules la lecture de \texttt{n}/\texttt{p} et l'affichage final (tableau trié et \texttt{nb\_echanges}) restent écrits. \textbf{L'intégralité du tri par sélection} est à concevoir et écrire à partir d'un cahier des charges rappelé en commentaire (principe : pour chaque position, chercher l'indice du minimum restant, puis échanger si nécessaire en comptant les échanges réels) — c'est à vous de structurer les deux boucles imbriquées nécessaires.
+\end{UPSTIManipulation}
+
+
+\begin{UPSTIManipulation}{Étape 12 — Catalogue : recherche dichotomique par ID}
+  \textbf{Fichier :} \texttt{11\_catalogue\_bsearch/catalogue\_bsearch.c}
+
+  \textbf{Contexte :} Les IDs d'un catalogue sont \textbf{triés} croissants. On veut retrouver l'indice d'un ID donné, sans parcourir le tableau case par case : c'est le principe de la \textbf{recherche dichotomique} (ou recherche binaire), qui divise à chaque étape la zone de recherche en deux.
+
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Lire \textbf{n} puis \textbf{n} entiers triés dans un tableau \texttt{id} de taille \texttt{MAX\_IDS}.
+    \item Lire \textbf{x} (ID recherché).
+    \item \textbf{Recherche binaire} (boucle \texttt{while}) : afficher l'indice ou \texttt{-1}.
+  \end{itemize}
+
+  \textbf{Exemples :}
+  \begin{lstlisting}[language=bash]
+id= 10 20 30 40 50, x=40 -> 3
+id= 2 4 6 8, x=5 -> -1
+  \end{lstlisting}
+
+  \textbf{Types :} \texttt{int}. Contrôler \texttt{low}, \texttt{high}, \texttt{mid}.
+
+  \textbf{C'est l'exercice le plus ouvert de la séance.} Le squelette ne fournit plus que la lecture des entrées (\texttt{n}, \texttt{id}, \texttt{x}) et l'affichage final de \texttt{resultat}. \textbf{L'algorithme de dichotomie dans son intégralité} — déclaration et initialisation de \texttt{low}, \texttt{high} et \texttt{resultat}, boucle \texttt{while}, calcul de \texttt{mid}, comparaison à \texttt{x}, et mise à jour des bornes selon le résultat de cette comparaison — est à concevoir à partir du seul cahier des charges et du principe rappelé en commentaire : à vous de raisonner entièrement sur la logique de la dichotomie.
+\end{UPSTIManipulation}
+
+\begin{UPSTIinfor}{Pour aller plus loin}
+  Les tableaux à deux dimensions (matrices) ainsi qu'un entraînement complémentaire sur les notions vues aujourd'hui sont proposés dans le document \textbf{« Entraînement en autonomie »} de cette séquence, à travailler chez vous.
+\end{UPSTIinfor}
