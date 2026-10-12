@@ -1,4 +1,4 @@
-\begin{UPSTIexercice}{Étape 1 — Moyenne de 3 notes (code fourni, à observer)}
+\begin{UPSTIexercice}{Moyenne de 3 notes (code fourni, à observer)}
   \textbf{Fichier :} \texttt{00\_moyenne\_simple/moyenne\_simple.c}
 
   Ce premier programme vous est donné \textbf{intégralement}. Ne le modifiez pas : lancez-le, exécutez-le, et observez son fonctionnement avant de passer à la suite.
@@ -24,12 +24,12 @@ int main(void){
 \end{UPSTIexercice}
 
 
-\begin{UPSTIManipulation}{Étape 2 — Notes : moyenne de 10 valeurs avec un tableau, et débogage avec \texttt{gdb}}
+\begin{UPSTIManipulation}{Notes : moyenne de 10 valeurs avec un tableau, et débogage avec \texttt{debug50}}
   \textbf{Fichier :} \texttt{01\_moyenne/moyenne.c}
 
   \textbf{Contexte :} On reprend le programme précédent, mais cette fois pour \textbf{10} notes, stockées dans un tableau \texttt{float notes[10]}, et traitées par une fonction dédiée.
 
-  \textbf{Cahier des charges (rappel, déjà réalisé dans le squelette) :}
+  \textbf{Cahier des charges}
   \begin{itemize}
     \item Demander \textbf{10} notes (float) au clavier et les stocker dans \texttt{notes[10]}.
     \item Calculer la \textbf{moyenne} via une fonction \texttt{float calculer\_moyenne(float notes[], int taille)}, qui prend en argument un tableau et sa taille.
@@ -40,19 +40,19 @@ int main(void){
 
   \textbf{Cahier des charges de cette étape :}
   \begin{itemize}
-    \item Compiler le programme avec les symboles de débogage : \texttt{gcc -g -o moyenne moyenne.c -lcs50} (ou utiliser le bouton/la commande « debug » de votre éditeur si celui-ci intègre \texttt{gdb}).
-    \item Lancer le débogueur : \texttt{gdb ./moyenne}.
-    \item Poser un point d'arrêt dans la fonction suspecte : \texttt{break calculer\_moyenne}, puis démarrer l'exécution avec \texttt{run}.
-    \item Avancer pas à pas (\texttt{next}, ou \texttt{step} pour entrer dans un appel) jusqu'au \texttt{return} de la fonction, et inspecter la valeur des variables à ce moment avec \texttt{print somme}, \texttt{print taille}, \texttt{print somme / taille}, etc.
+    \item Compiler le programme
+    \item Poser un point d'arrêt dans la fonction, en cliquant à gauche du numéro de la ligne voulue. 
+    \item Lancer le débogueur : \texttt{debug50 ./moyenne}.
+    \item Faire avancer le code pas à pas à l'aide des différents boutons de l'interface.  
+    \item Observer l'évolution des variables dans la colonne de gauche
     \item Comparer ce que le débogueur affiche à ce que vous attendiez : à quel endroit précis le calcul diverge-t-il de la valeur correcte ?
     \item En déduire puis corriger l'erreur dans le code source, recompiler, et vérifier avec un jeu de notes dont la moyenne attendue n'est pas un nombre entier.
   \end{itemize}
 
-  \textbf{Indice (sans donner la solution) :} l'erreur se situe dans l'expression du \texttt{return} de \texttt{calculer\_moyenne} ; le débogueur vous permettra de voir qu'une valeur intermédiaire n'a pas le type que vous croyez.
 \end{UPSTIManipulation}
 
 
-\begin{UPSTIManipulation}{Étape 3 — Notes : filtrer au-dessus d'un seuil}
+\begin{UPSTIManipulation}{Notes : filtrer au-dessus d'un seuil}
   \textbf{Fichier :} \texttt{02\_filtre\_notes/filtre\_notes.c}
 
   \textbf{Contexte :} Un professeur veut afficher les notes supérieures à un seuil.
@@ -66,17 +66,11 @@ int main(void){
     \item Afficher également le \textbf{nombre} de notes affichées.
   \end{itemize}
 
-  \textbf{Dans le squelette fourni}, la lecture de \texttt{n} et du \texttt{seuil}, ainsi que l'affichage final, sont déjà écrits. En revanche, \textbf{trois éléments manquent entièrement} (chacun signalé par un commentaire \texttt{/* A COMPLETER */}) :
-  \begin{enumerate}
-    \item la \textbf{déclaration} du tableau \texttt{notes} ;
-    \item la \textbf{boucle de saisie} qui demande les \texttt{n} notes et les range dans ce tableau ;
-    \item la \textbf{boucle de parcours} qui compare chaque note au seuil, affiche celles qui dépassent, et compte le nombre d'affichages.
-  \end{enumerate}
-  C'est donc à vous d'écrire la déclaration et les deux boucles, pas seulement de corriger un détail.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
 
-\begin{UPSTIManipulation}{Étape 4 — Cinéma : places libres et taux d'occupation}
+\begin{UPSTIManipulation}{Cinéma : places libres et taux d'occupation}
   \textbf{Fichier :} \texttt{03\_cinema\_occupation/cinema\_occupation.c}
 
   \textbf{Contexte :} Une rangée de cinéma a \textbf{n} sièges (\texttt{n<=100}). 1 = occupé, 0 = libre.
@@ -89,17 +83,12 @@ int main(void){
     \item Si toutes occupées, afficher \texttt{Complet}.
   \end{itemize}
 
-  \textbf{Comme à l'étape précédente}, le squelette fourni laisse \textbf{trois éléments} entièrement à votre charge :
-  \begin{enumerate}
-    \item la \textbf{déclaration} du tableau \texttt{rang} ;
-    \item la \textbf{boucle de saisie} des \texttt{n} sièges, qui range chaque réponse dans \texttt{rang} et met à jour le compteur \texttt{nb\_occupes} ;
-    \item la \textbf{boucle d'affichage} des places libres.
-  \end{enumerate}
-  Le calcul du taux d'occupation (déjà écrit) dépend de ce que vous aurez correctement rempli dans \texttt{rang} et \texttt{nb\_occupes} : une erreur dans vos boucles se verra donc aussi sur ce résultat final.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
+
 \end{UPSTIManipulation}
 
 
-\begin{UPSTIManipulation}{Étape 5 — Comptage : occurrences d'une valeur}
+\begin{UPSTIManipulation}{Comptage : occurrences d'une valeur}
   \textbf{Fichier :} \texttt{04\_compte\_occurrences/compte\_occurrences.c}
 
   \textbf{Contexte :} Avant d'attaquer la playlist, deux exercices courts pour souffler et pratiquer seul·e les bases des tableaux \texttt{int}.
@@ -120,12 +109,12 @@ cible=3
   \end{lstlisting}
 
   \textbf{Types :} \texttt{int} uniquement.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 
-  \textbf{Cette fois, aucun squelette à trous} : le fichier fourni contient seulement les \texttt{\#include}, la lecture de \texttt{n}, le remplissage de \texttt{valeurs} et la lecture de \texttt{cible}. \textbf{Tout le reste} — le comptage et l'affichage — est entièrement à votre charge, à partir du seul cahier des charges ci-dessus.
 \end{UPSTIManipulation}
 
 
-\begin{UPSTIManipulation}{Étape 6 — Minimum d'un tableau et son indice}
+\begin{UPSTIManipulation}{Minimum d'un tableau et son indice}
   \textbf{Fichier :} \texttt{05\_minimum\_tableau/minimum\_tableau.c}
 
   \textbf{Contexte :} Second exercice court, dans le même esprit que le précédent.
@@ -144,13 +133,11 @@ valeurs= 9 4 7 4 2
 -> Minimum = 2, trouve a l'indice 4
   \end{lstlisting}
 
-  \textbf{Types :} \texttt{int} uniquement.
-
-  \textbf{Comme à l'étape précédente}, le fichier fourni se limite à la lecture de \texttt{n} et de \texttt{valeurs} : la recherche du minimum et de son indice est entièrement à écrire par vos soins.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
 
-\begin{UPSTIManipulation}{Étape 7 — Playlist : commencer par un morceau favori}
+\begin{UPSTIManipulation}{Playlist : commencer par un morceau favori}
   \textbf{Fichier :} \texttt{06\_playlist\_rotation/playlist\_rotation.c}
 
   \textbf{Contexte :} On souhaite \textbf{recycler} une playlist pour qu'elle \textbf{commence} par l'indice \textbf{f} (0..n-1).
@@ -176,12 +163,12 @@ Par quel morceau commencer : La bandite
 Merci. Nouvel ordre :
 La bandite ; Toxicity ; Basique ; J adore ; La symphonie des nuages
   \end{lstlisting}
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 
-  \textbf{À partir de cette étape, le niveau de guidage diminue encore} : la lecture des morceaux et la recherche de l'indice du morceau favori sont déjà écrites, mais \textbf{toute la boucle d'affichage final} (celle qui doit afficher les \texttt{n} morceaux en partant de \texttt{indice\_favori} et en revenant au début grâce à un \textbf{modulo}, sans en perdre aucun, avec \texttt{" ; "} entre deux morceaux) est à écrire entièrement : seul un commentaire \texttt{/* A COMPLETER */} décrit ce qu'elle doit faire, aucune ligne de code de cette boucle n'est fournie.
 \end{UPSTIManipulation}
 
 
-\begin{UPSTIManipulation}{Étape 8 — Playlist : retirer les doublons (ordre conservé)}
+\begin{UPSTIManipulation}{Playlist : retirer les doublons (ordre conservé)}
   \textbf{Fichier :} \texttt{07\_playlist\_dedupe/playlist\_dedupe.c}
 
   \textbf{Contexte :} Une playlist contient des IDs \textbf{répétés}. On veut garder \textbf{seulement la première occurrence} de chaque ID.
@@ -201,8 +188,7 @@ ids= 4 9 4 2 9 1 2
 taille=4
 -> 4 9 2 1
   \end{lstlisting}
-
-  \textbf{Le squelette fourni ne donne plus le mécanisme de dédoublonnage} : seules la lecture de \texttt{n}/\texttt{ids} et l'affichage final sont écrits. \textbf{Tout l'algorithme de construction de \texttt{out}} (la ou les boucles qui, pour chaque élément de \texttt{ids}, déterminent s'il a déjà été recopié dans \texttt{out}, et l'y ajoutent si besoin en mettant à jour \texttt{taille\_out}) est laissé à votre initiative : un seul commentaire global décrit l'objectif, sans détailler la structure des boucles à utiliser.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
 
@@ -219,7 +205,7 @@ taille=4
     \item Afficher le tableau corrigé.
   \end{itemize}
 
-  \textbf{À partir de cette étape, seules les lectures d'entrées restent écrites} dans le squelette (lecture de \texttt{nombre\_participants}, remplissage de \texttt{qte}, lecture de \texttt{minQ}/\texttt{maxQ}) : \textbf{tout le traitement}, c'est-à-dire la boucle de bornage elle-même (parcourir \texttt{qte}, et remplacer chaque valeur hors bornes), est à écrire intégralement à partir du seul cahier des charges et d'un commentaire \texttt{/* A COMPLETER */} à l'échelle du bloc entier.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
 
@@ -245,10 +231,8 @@ n=5
 visites= 2 10 5 7 1
 out= 2 5 7 4 1
   \end{lstlisting}
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 
-  \textbf{Types :} \texttt{int}. Deux tableaux \texttt{v[100]}, \texttt{out[100]}, déjà déclarés dans le squelette.
-
-  \textbf{Comme à l'étape précédente}, seule la lecture des entrées (\texttt{n} et \texttt{v}) est fournie : \textbf{tout le calcul de la moyenne glissante} (les trois cas \texttt{out[0]}, \texttt{out[n-1]}, et la boucle centrale) est à écrire en entier à partir du cahier des charges ci-dessus et d'un unique commentaire \texttt{/* A COMPLETER */}, sans aucune ligne de calcul fournie.
 \end{UPSTIManipulation}
 
 
@@ -273,8 +257,8 @@ swaps= 3
   \end{lstlisting}
 
   \textbf{Types :} \texttt{int}. Pas de \texttt{qsort}.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 
-  \textbf{Le squelette ne fournit plus l'algorithme} : seules la lecture de \texttt{n}/\texttt{p} et l'affichage final (tableau trié et \texttt{nb\_echanges}) restent écrits. \textbf{L'intégralité du tri par sélection} est à concevoir et écrire à partir d'un cahier des charges rappelé en commentaire (principe : pour chaque position, chercher l'indice du minimum restant, puis échanger si nécessaire en comptant les échanges réels) — c'est à vous de structurer les deux boucles imbriquées nécessaires.
 \end{UPSTIManipulation}
 
 
@@ -298,7 +282,7 @@ id= 2 4 6 8, x=5 -> -1
 
   \textbf{Types :} \texttt{int}. Contrôler \texttt{low}, \texttt{high}, \texttt{mid}.
 
-  \textbf{C'est l'exercice le plus ouvert de la séance.} Le squelette ne fournit plus que la lecture des entrées (\texttt{n}, \texttt{id}, \texttt{x}) et l'affichage final de \texttt{resultat}. \textbf{L'algorithme de dichotomie dans son intégralité} — déclaration et initialisation de \texttt{low}, \texttt{high} et \texttt{resultat}, boucle \texttt{while}, calcul de \texttt{mid}, comparaison à \texttt{x}, et mise à jour des bornes selon le résultat de cette comparaison — est à concevoir à partir du seul cahier des charges et du principe rappelé en commentaire : à vous de raisonner entièrement sur la logique de la dichotomie.
+  \UPSTIetape{Compléter le code pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
 \begin{UPSTIinfor}{Pour aller plus loin}
