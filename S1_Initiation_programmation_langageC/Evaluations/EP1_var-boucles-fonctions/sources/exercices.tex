@@ -1,0 +1,140 @@
+\section*{Consignes}
+\begin{itemize}
+  \item Durée totale : \textbf{1h30}.
+  \item Un squelette \texttt{.c} est fourni par exercice : complétez-le, ne renommez pas les fichiers.
+  \item Chaque programme doit compiler sans erreur et sans avertissement.
+  \item Attention, le résultat doit être affiché exactement comme indiqué dans les exemples, sinon la correction automatique ne pourra pas le valider. Les lignes surlignées ci-dessous sont celles effectivement vérifiées par check50 : le reste (invites de saisie) n'est donné qu'à titre indicatif.
+  \item En cas d'erreur, c'est à vous de vous adapter au check50, non l'inverse. Vous pouvez relancer le check50 autant de fois que nécessaire.
+  \item A la fin de l'épreuve, faites un submit50 de votre dossier :
+  \begin{lstlisting}[language=bash,style=console]
+submit50 IUT-GEII-Annecy/exercices/2026/info1/eval_pratique_1
+  \end{lstlisting}
+\end{itemize}
+
+\begin{UPSTIexercice}{Variables et affichage (10 min)}
+  \textbf{Fichier :} \texttt{variables.c}
+  \begin{itemize}
+    \item Demander à l'utilisateur une intensité et une tension.
+    \item Calculer la puissance électrique correspondante.
+    \item Afficher le résultat en W, avec deux chiffres après la virgule.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+Intensité (A) : 4
+Tension (V) : 230
+(*\colorbox{yellow!40}{\ttfamily Puissance : 920.00 W}*)
+  \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Condition simple (10 min)}
+  \textbf{Fichier :} \texttt{condition.c}
+  \begin{itemize}
+    \item Demander une tension à l'utilisateur.
+    \item Le programme devra afficher \texttt{Tension nominale} entre 220 V et 230 V inclus. Au dessus, afficher \texttt{Surtension}, en dessous, afficher \texttt{Sous-tension}.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+Tension (V) : 235
+(*\colorbox{yellow!40}{\ttfamily Surtension}*)
+  \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Compte à rebours (15 min)}
+  \textbf{Fichier :} \texttt{compte\_a\_rebours.c}
+  \begin{itemize}
+    \item Demander un nombre de départ à l'utilisateur.
+    \item Afficher le compte à rebours, une valeur par ligne, jusqu'à 1.
+    \item Afficher ensuite \texttt{"Décollage !"}.
+    \item Aucune temporisation n'est demandée.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+n : 5
+(*\colorbox{yellow!40}{\ttfamily 5}*)
+(*\colorbox{yellow!40}{\ttfamily 4}*)
+(*\colorbox{yellow!40}{\ttfamily 3}*)
+(*\colorbox{yellow!40}{\ttfamily 2}*)
+(*\colorbox{yellow!40}{\ttfamily 1}*)
+(*\colorbox{yellow!40}{\ttfamily Décollage !}*)
+  \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Boucle avec accumulateur (15 min)}
+  \textbf{Fichier :} \texttt{accumulateur.c}
+  \begin{itemize}
+    \item Demander à l'utilisateur un nombre de mesures.
+    \item Saisir ensuite ces mesures de tension, une à une.
+    \item Calculer et afficher leur moyenne.
+    \begin{itemize}
+      \item Afficher le résultat en V, avec deux chiffres après la virgule. Ce résultat sera précédé de la phrase \texttt{"Moyenne : "} et suivi d'un retour à la ligne.
+    \end{itemize}
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+Nombre de mesures : 3
+Tension 1 (V) : 220
+Tension 2 (V) : 225
+Tension 3 (V) : 230
+(*\colorbox{yellow!40}{\ttfamily Moyenne : 225.00 V}*)
+  \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Fonction avec paramètres et retour (15 min)}
+  \textbf{Fichier :} \texttt{diviseur\_tension.c}
+  \begin{itemize}
+    \item Demander à l'utilisateur une tension d'entrée $v_{in}$ et deux résistances $r_1$, $r_2$ d'un pont diviseur de tension.
+    \item Calculer la tension de sortie $v_{out} = v_{in} \times r_2 / (r_1 + r_2)$ à l'aide d'une fonction dédiée.
+    \item Afficher le résultat en V, avec deux chiffres après la virgule. Ce résultat sera précédé de la phrase \texttt{"Tension de sortie : "} et suivi d'un retour à la ligne.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+Vin (V) : 12
+R1 (ohm) : 1000
+R2 (ohm) : 2000
+(*\colorbox{yellow!40}{\ttfamily Tension de sortie : 8.00 V}*)
+  \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Synthèse : boucle + condition + fonction (20 min)}
+  \textbf{Fichier :} \texttt{synthese.c}
+  \begin{itemize}
+    \item Demander à l'utilisateur une tolérance (une valeur minimale et une valeur maximale), puis un nombre de mesures.
+    \item Saisir ces mesures une à une et compter, à l'aide d'une fonction dédiée, celles qui sont strictement hors de la tolérance.
+    \item Afficher le nombre total de mesures hors tolérance. Ce résultat (un entier) sera précédé de la phrase \texttt{"Mesures hors tolérance : "} et suivi d'un retour à la ligne.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+Min : 220
+Max : 230
+Nombre de mesures : 4
+Mesure 1 : 215
+Mesure 2 : 225
+Mesure 3 : 235
+Mesure 4 : 228
+(*\colorbox{yellow!40}{\ttfamily Mesures hors tolérance : 2}*)
+  \end{lstlisting}
+\end{UPSTIexercice}
+
+\begin{UPSTIexercice}{Bonus -- Récursivité : PGCD (optionnel, hors barème et hors temps de base)}
+  \textbf{Fichier :} \texttt{pgcd.c}
+
+  \textbf{Ne compte pas dans la note ni dans les 85 minutes de base.} À traiter uniquement si le reste est terminé.
+  \begin{itemize}
+    \item Demander à l'utilisateur deux entiers.
+    \item Calculer leur PGCD à l'aide d'une fonction \textbf{récursive} (algorithme d'Euclide).
+    \item Afficher le résultat (un entier). Ce résultat sera précédé de la phrase \texttt{"PGCD : "} et suivi d'un retour à la ligne.
+  \end{itemize}
+
+  \textbf{Exemple :}
+  \begin{lstlisting}[language=bash,style=console,escapeinside={(*}{*)}]
+a : 48
+b : 18
+(*\colorbox{yellow!40}{\ttfamily PGCD : 6}*)
+  \end{lstlisting}
+\end{UPSTIexercice}

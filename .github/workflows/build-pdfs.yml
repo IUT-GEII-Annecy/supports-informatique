@@ -13,8 +13,7 @@ jobs:
       site-subtitle: "Tous les supports de cours, td et tp pour le cours d'informatique Semestre 1 - GEII IUT Annecy"
       group-label: "Séquence"
       classify-mode: folder
-      exclude-patterns: |
-        /Evaluations/
+      exam-dir-pattern: /Evaluations/
       enable-tp-downloads: true
       solutions-repo: IUT-GEII-Annecy/solutions
       solutions-repo-ref: main
