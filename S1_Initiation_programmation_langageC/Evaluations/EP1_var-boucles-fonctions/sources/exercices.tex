@@ -5,6 +5,7 @@
   \item Chaque programme doit compiler sans erreur et sans avertissement.
   \item Attention, le résultat doit être affiché exactement comme indiqué dans les exemples, sinon la correction automatique ne pourra pas le valider. Les lignes surlignées ci-dessous sont celles effectivement vérifiées par check50 : le reste (invites de saisie) n'est donné qu'à titre indicatif.
   \item En cas d'erreur, c'est à vous de vous adapter au check50, non l'inverse. Vous pouvez relancer le check50 autant de fois que nécessaire.
+  \item Pour les exercices demandant \og une fonction dédiée \fg{}, le check50 vérifie directement cette fonction (pas seulement le programme dans son ensemble) : une réponse qui marche mais sans la fonction demandée ne validera pas ce check.
   \item A la fin de l'épreuve, faites un submit50 de votre dossier :
   \begin{lstlisting}[language=bash,style=console]
 submit50 IUT-GEII-Annecy/exercices/2026/info1/eval_pratique_1
@@ -12,7 +13,7 @@ submit50 IUT-GEII-Annecy/exercices/2026/info1/eval_pratique_1
 \end{itemize}
 
 \begin{UPSTIexercice}{Variables et affichage (10 min)}
-  \textbf{Fichier :} \texttt{variables.c}
+  \textbf{Fichier :} \texttt{01\_variables.c}
   \begin{itemize}
     \item Demander à l'utilisateur une intensité et une tension.
     \item Calculer la puissance électrique correspondante.
@@ -28,7 +29,7 @@ Tension (V) : 230
 \end{UPSTIexercice}
 
 \begin{UPSTIexercice}{Condition simple (10 min)}
-  \textbf{Fichier :} \texttt{condition.c}
+  \textbf{Fichier :} \texttt{02\_condition.c}
   \begin{itemize}
     \item Demander une tension à l'utilisateur.
     \item Le programme devra afficher \texttt{Tension nominale} entre 220 V et 230 V inclus. Au dessus, afficher \texttt{Surtension}, en dessous, afficher \texttt{Sous-tension}.
@@ -42,7 +43,7 @@ Tension (V) : 235
 \end{UPSTIexercice}
 
 \begin{UPSTIexercice}{Compte à rebours (15 min)}
-  \textbf{Fichier :} \texttt{compte\_a\_rebours.c}
+  \textbf{Fichier :} \texttt{03\_compte\_a\_rebours.c}
   \begin{itemize}
     \item Demander un nombre de départ à l'utilisateur.
     \item Afficher le compte à rebours, une valeur par ligne, jusqu'à 1.
@@ -63,7 +64,7 @@ n : 5
 \end{UPSTIexercice}
 
 \begin{UPSTIexercice}{Boucle avec accumulateur (15 min)}
-  \textbf{Fichier :} \texttt{accumulateur.c}
+  \textbf{Fichier :} \texttt{04\_accumulateur.c}
   \begin{itemize}
     \item Demander à l'utilisateur un nombre de mesures.
     \item Saisir ensuite ces mesures de tension, une à une.
@@ -84,7 +85,7 @@ Tension 3 (V) : 230
 \end{UPSTIexercice}
 
 \begin{UPSTIexercice}{Fonction avec paramètres et retour (15 min)}
-  \textbf{Fichier :} \texttt{diviseur\_tension.c}
+  \textbf{Fichier :} \texttt{05\_diviseur\_tension.c}
   \begin{itemize}
     \item Demander à l'utilisateur une tension d'entrée $v_{in}$ et deux résistances $r_1$, $r_2$ d'un pont diviseur de tension.
     \item Calculer la tension de sortie $v_{out} = v_{in} \times r_2 / (r_1 + r_2)$ à l'aide d'une fonction dédiée.
@@ -101,7 +102,7 @@ R2 (ohm) : 2000
 \end{UPSTIexercice}
 
 \begin{UPSTIexercice}{Synthèse : boucle + condition + fonction (20 min)}
-  \textbf{Fichier :} \texttt{synthese.c}
+  \textbf{Fichier :} \texttt{06\_synthese.c}
   \begin{itemize}
     \item Demander à l'utilisateur une tolérance (une valeur minimale et une valeur maximale), puis un nombre de mesures.
     \item Saisir ces mesures une à une et compter, à l'aide d'une fonction dédiée, celles qui sont strictement hors de la tolérance.
@@ -122,7 +123,7 @@ Mesure 4 : 228
 \end{UPSTIexercice}
 
 \begin{UPSTIexercice}{Bonus -- Récursivité : PGCD (optionnel, hors barème et hors temps de base)}
-  \textbf{Fichier :} \texttt{pgcd.c}
+  \textbf{Fichier :} \texttt{07\_pgcd.c}
 
   \textbf{Ne compte pas dans la note ni dans les 85 minutes de base.} À traiter uniquement si le reste est terminé.
   \begin{itemize}
