@@ -1,0 +1,112 @@
+% ==================== PARTIE D — FONCTIONS ====================
+% Étape de conception : modulariser le logiciel de la borne.
+%
+% Progression :
+%   D1  QCM — portée d'une variable locale (masquage, sans globale)
+%   D2  corriger le programme (passage par valeur + retour)
+%   D3a QCM multiple — appels acceptés par le compilateur
+%   D3b analyse : bonne version et effet des deux autres
+%   D4  écrire le corps d'une fonction (décision, codes de retour)
+
+\element{fonc-qcm-portee}{
+    \needspace{26\baselineskip}% évite de séparer l'intro du code
+    Un développeur tente de compter les sessions de la borne avec le programme suivant :
+    
+    \begin{center}
+        \begin{minipage}{.76\textwidth}
+            \lstinputlisting[language=c]{sources/codes/d1-portee.c}
+        \end{minipage}
+    \end{center}
+    
+    \begin{question}{fonc-qcm-portee}
+        Qu'affiche ce programme ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\texttt{1 1 1 | 0}}
+                \mauvaise{\texttt{1 2 3 | 3}}
+                \mauvaise{\texttt{1 1 1 | 3}}
+                \mauvaise{\texttt{1 2 3 | 0}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{fonc-correction-portee}{
+    \begin{question}{fonc-correction-portee}
+        Quel problème constatez-vous sur le code de la question précédente ?
+
+        \evaluationProfGrille{3}{6}
+    \end{question}
+}
+
+\element{fonc-lecture-appel}{
+    \needspace{30\baselineskip}% garde code et QCM sur la même page
+    Le calcul du montant d'une session est confié à une fonction dont le prototype est :
+    
+    \begin{center}
+        \lstinline[language=C]|float cout_session(float puissance_kw, float duree_h, float tarif_kwh);|
+    \end{center}
+    
+    Quatre appels à cette fonction apparaissent dans le programme :
+    
+    \begin{center}
+        \begin{minipage}{.84\textwidth}
+            \lstinputlisting[language=c]{sources/codes/d2-appels-cout.c}
+        \end{minipage}
+    \end{center}
+    
+    \begin{questionmult}{fonc-lecture-appel}
+        \AMCnoCompleteMulti
+        Cocher \textbf{tous} les appels acceptés par le compilateur.
+        \begin{multicols}{4}
+            \begin{reponses}[o]
+                \bonne{appel 1}
+                \bonne{appel 2}
+                \mauvaise{appel 3}
+                \bonne{appel 4}
+            \end{reponses}
+        \end{multicols}
+    \end{questionmult}
+
+    \begin{question}{fonc-lecture-appel-analyse}
+        Parmi les appels de la question précédent, indiquer
+        lequel est la \textbf{bonne version} pour calculer le coût d'une session de 22 kW pendant 1,5 h à 0,22 €/kWh ?
+        \begin{multicols}{4}
+            \begin{reponses}[o]
+                \bonne{appel 1}
+                \mauvaise{appel 2}
+                \mauvaise{appel 3}
+                \mauvaise{appel 4}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{fonc-ecrire-mode}{
+    \begin{question}{fonc-ecrire-mode}
+        On modularise maintenant la décision d'engagement de la charge.
+
+        On souhaite la fonction
+        \lstinline[language=C]|int determiner_mode(float puissance_kw, int cable_verrouille)|
+        qui retourne un \textbf{code entier} caractérisant la décision de la borne :
+        \begin{itemize}\setlength{\itemsep}{0pt}
+            \item si le câble n'est pas verrouillé (\lstinline[language=C]|cable_verrouille| vaut 0),
+                  retourner \lstinline[language=C]|-1| quelle que soit la puissance ;
+            \item sinon, retourner \lstinline[language=C]|0| si la puissance demandée ne dépasse
+                  pas 22 kW, \lstinline[language=C]|1| si elle est comprise entre 22 kW (exclu) et
+                  50 kW (inclus), \lstinline[language=C]|2| si elle dépasse 50 kW sans dépasser
+                  150 kW ;
+            \item si la puissance demandée dépasse 150 kW, retourner \lstinline[language=C]|3|
+                  (demande hors domaine de la borne).
+        \end{itemize}
+
+        La fonction ne doit rien afficher et doit retourner une valeur dans \textbf{tous} les cas.
+
+        Compléter le corps de la fonction ci-dessous.
+
+        \lstinputlisting[language=c]{sources/codes/d4-mode-debut.c}
+        \vspace*{-.5em}
+        \evaluationProfGrille{4}{11}
+        \lstinputlisting[language=c]{sources/codes/d4-fin.c}
+    \end{question}
+}

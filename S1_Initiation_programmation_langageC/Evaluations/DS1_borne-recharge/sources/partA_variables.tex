@@ -1,0 +1,202 @@
+% ==================== PARTIE A — VARIABLES ====================
+% Étape de conception : modéliser les grandeurs de base d'une session de charge
+% (puissance, durée, énergie, tarif, montant) et choisir les bons types.
+%
+% Progression :
+%   A1  trace de valeurs (tableau à compléter)
+%   A2  QCM — division entière et modulo (conversion min -> h)
+%   A3  QCM — priorité et division entière
+%   A4a compléter les déclarations (types imposés)
+%   A4b compléter les 3 expressions de calcul
+%   (l'ancien QCM flottant est déplacé en partie F)
+
+\element{var-types}{
+    \noindent\libelleProchaineQuestion\\
+    Pour chacune des grandeurs ci-dessous manipulées par la borne, cocher \textbf{une seule case} :
+    le type le plus adapté pour la variable qui la représente.
+    (\texttt{char} et \texttt{string} ne sont proposés ici qu'à titre d'options de reconnaissance.)
+
+    \begin{center}
+    {\sansNumeroQuestion\renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{5.6cm}|p{10.6cm}|}
+        \hline
+        \textbf{Grandeur} & \textbf{Type C le plus adapté} \\ \hline
+        Nombre de badges utilisateurs enregistrés dans la borne &
+        \begin{question}{var-types-nbsessions}\begin{reponseshoriz}[o] \bonne{\texttt{int}} \mauvaise{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+        Tension réseau mesurée (ex. 398,6 V) &
+        \begin{question}{var-types-tension}\begin{reponseshoriz}[o] \mauvaise{\texttt{int}} \bonne{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+        Nombre de coupures réseau détectées depuis la mise en service &
+        \begin{question}{var-types-point}\begin{reponseshoriz}[o] \bonne{\texttt{int}} \mauvaise{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+        Rendement du convertisseur de puissance (ex. 0,94) &
+        \begin{question}{var-types-tarif}\begin{reponseshoriz}[o] \mauvaise{\texttt{int}} \bonne{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+        Nombre de tentatives de dialogue avec le véhicule avant abandon &
+        \begin{question}{var-types-duree}\begin{reponseshoriz}[o] \bonne{\texttt{int}} \mauvaise{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+        Index du compteur d'énergie depuis l'installation (ex. 18\,452,7 kWh) &
+        \begin{question}{var-types-energie}\begin{reponseshoriz}[o] \mauvaise{\texttt{int}} \bonne{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+    \end{tabular}}
+    \end{center}
+    \grilleCommeUneQuestion
+}
+
+\element{var-qcm-declaration}{
+    \begin{question}{var-qcm-declaration}
+        Quelle ligne déclare correctement une variable entière \lstinline[language=C]|nb_sessions|
+        initialisée à zéro ?
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|int nb_sessions = 0;|}
+                \mauvaise{\lstinline[language=C]|nb_sessions int = 0;|}
+                \mauvaise{\lstinline[language=C]|int nb_sessions == 0;|}
+                \mauvaise{\lstinline[language=C]|int 0 = nb_sessions;|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{var-trace}{
+    \begin{question}{var-trace-1}
+        Avant d'écrire le logiciel, on vérifie la façon dont la borne manipule ses grandeurs.
+        Le fragment ci-dessous traite une session de 22 kW pendant 150 minutes,
+        facturée 0,22 €/kWh.
+        
+        Compléter le tableau en donnant la valeur de la variable affectée par chacune des lignes
+        repérées \texttt{L1} à \texttt{L5}, \textbf{en respectant le type de la variable}
+        (une valeur entière s'écrit sans décimale).
+        \evaluationProf[2]
+
+        \begin{minipage}[t]{.52\textwidth}
+            \lstinputlisting[language=c]{sources/codes/a1-trace-grandeurs.c}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{.44\textwidth}~\\
+            {\renewcommand{\arraystretch}{2}
+            \begin{tabular}{|c|l|p{2.6cm}|}
+                \hline
+                \textbf{Ligne} & \textbf{Variable} & \textbf{Valeur} \\ \hline
+                L1 & \lstinline[language=C]|duree_h_ent| & \\ \hline
+                L2 & \lstinline[language=C]|energie_kwh| & \\ \hline
+                L3 & \lstinline[language=C]|cout_euros|  & \\ \hline
+                L4 & \lstinline[language=C]|energie_kwh| & \\ \hline
+                L5 & \lstinline[language=C]|cout_euros|  & \\ \hline
+            \end{tabular}}
+
+            \medskip
+        \end{minipage}
+    \end{question}
+}
+
+\element{var-qcm-nomVariables}{
+    Le développeur a choisi des noms de variables qui ne sont pas très explicites.
+    Il souhaite les renommer pour mieux refléter leur rôle dans le calcul du coût
+    d'une session de charge.
+    
+    \begin{center}
+        \begin{minipage}{.74\textwidth}
+            \lstinputlisting[language=c]{sources/codes/a2-qcm-nomVariables.c}
+        \end{minipage}
+    \end{center}
+    
+    \begin{question}{var-qcm-nomVariables}
+        Quel nom de variable est le plus approprié pour remplacer \lstinline[language=C]|a| ?
+        \begin{multicols}{4}
+            \begin{reponses}
+                \bonne{\lstinline[language=C]|duree_min|}
+                \mauvaise{\lstinline[language=C]|heures_entamees|}
+                \mauvaise{\lstinline[language=C]|reste_min|}
+                \mauvaise{\lstinline[language=C]|minutes_restant|}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{var-qcm-conversion}{
+    \begin{question}{var-qcm-conversion}
+        Pour le ticket de stationnement, la borne convertit une durée en minutes en
+        \emph{heures entamées} et en minutes restantes.
+
+        \begin{center}
+            \begin{minipage}{.74\textwidth}
+                \lstinputlisting[language=c]{sources/codes/a2-qcm-conversion.c}
+            \end{minipage}
+        \end{center}
+
+        Qu'affiche ce fragment de code?
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{\texttt{4 5}}
+                \mauvaise{\texttt{3 5}}
+                \mauvaise{\texttt{4 65}}
+                \mauvaise{\texttt{3 65}}
+                \mauvaise{\texttt{4 55}}
+                \mauvaise{\texttt{3 55}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{var-qcm-priorite}{
+    \begin{question}{var-qcm-priorite}
+        Le stationnement est majoré de 3~\euro{} par heure entamée \emph{au-delà} de
+        120 minutes, en plus de 50 centimes de frais de service. 
+        
+        Un développeur inexpérimenté écrit :
+
+        \begin{center}
+            \begin{minipage}{.74\textwidth}
+                \lstinputlisting[language=c]{sources/codes/a3-qcm-priorite.c}
+            \end{minipage}
+        \end{center}
+
+        Qu'affiche ce fragment de code ?
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{50 cts}
+                \mauvaise{30 cts}
+                \mauvaise{150 cts}
+                \mauvaise{350 cts}
+                \mauvaise{0 cts}
+                \mauvaise{300 cts}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+
+    \begin{question}{var-qcm-priorite-corrige}
+        
+        Le code ci-dessus calcule-t-il correctement la majoration du stationnement ? Si non, corriger l'expression de calcul de \lstinline[language=C]|majoration| pour qu'elle soit correcte.
+
+        \evaluationProfGrille{2}{2}
+    \end{question}
+}
+
+\element{var-completion-decl}{
+    On facture maintenant une session réelle. La durée est saisie \textbf{en minutes},
+    le tarif est exprimé en €/kWh, et tout montant comprend 0,50 € de frais de service.
+    Les types sont imposés : \lstinline[language=C]|puissance_kw| est un nombre à virgule
+    (\lstinline[language=C]|float|), \lstinline[language=C]|duree_min| un nombre entier
+    (\lstinline[language=C]|int|), \lstinline[language=C]|tarif_kWh| un nombre à virgule
+    (\lstinline[language=C]|float|).
+
+    \textbf{Rappel :} énergie (kWh) $=$ puissance (kW) $\times$ durée (h).
+
+    \lstinputlisting[language=c,escapeinside={(*}{*)}]{sources/codes/a4-cout-session-a-completer.c}
+
+    \begin{question}{var-completion-decl}
+
+        \evaluationProf[1]
+
+        Compléter \textbf{directement dans les trois premiers cadres pointillés} la déclaration
+        des variables \lstinline[language=C]|puissance_kw|, \lstinline[language=C]|duree_min|
+        et \lstinline[language=C]|tarif_kWh|.
+
+    \end{question}
+    \begin{question}{var-completion-calcul}
+        \evaluationProf[3]
+
+        Dans le programme de la question précédente, compléter les \textbf{trois expressions
+        de calcul} manquantes (cadres pointillés de \lstinline[language=C]|duree_h|,
+        \lstinline[language=C]|energie_kwh| et \lstinline[language=C]|montant_euros|).
+        Attention au type du résultat de chaque calcul intermédiaire.
+
+        Utiliser, si besoin, l'espace ci-dessous pour justifier un choix de type ou de conversion.
+
+    \end{question}
+}

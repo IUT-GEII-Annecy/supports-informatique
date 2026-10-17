@@ -1,0 +1,61 @@
+% ==================== PARTIE E — SYNTHÈSE ====================
+% Étape de conception : intégration (fonctions + boucle + décisions) et recul critique.
+%
+%   E1  compléter un programme utilisant determiner_mode (prototype, appel, codes)
+%   E2  écrire tarif_applicable (réutilisation possible de determiner_mode)
+%   E3  critique de conception
+
+\element{synthese-utilisation}{
+    \begin{question}{synthese-utilisation}
+        On dispose de la fonction
+        \lstinline[language=C]|int determiner_mode(float puissance_kw, int cable_verrouille)|,
+        que l'on considère \textbf{correcte}. Elle retourne \lstinline[language=C]|-1| si le
+        câble n'est pas verrouillé, \lstinline[language=C]|0| en mode lent,
+        \lstinline[language=C]|1| en mode rapide, \lstinline[language=C]|2| en mode
+        ultra-rapide et \lstinline[language=C]|3| si la demande dépasse 150 kW. Sa définition
+        est placée \textbf{après} le \lstinline[language=C]|main| ; son prototype est rappelé
+        en tête du fichier.
+
+        Compléter les cadres pointillés pour que le programme traite les
+        \lstinline[language=C]|nb_sessions| demandes de la journée, compte les sessions
+        refusées (câble non verrouillé ou demande hors domaine) et affiche le mode des autres.
+        Le choix selon le code retourné est réalisé avec une structure
+        \lstinline[language=C]|switch|.
+
+        \lstinputlisting[language=c,escapeinside={(*}{*)}]{sources/codes/e1-utilisation-mode-a-completer.c}
+
+        \evaluationProf[3]
+    \end{question}
+}
+
+\element{synthese-evolution}{
+    \begin{question}{synthese-evolution}
+        L'exploitant met en place une tarification heures creuses : de 22 h à 5 h inclus, le
+        tarif est de 0,15 €/kWh ; le reste du temps, il vaut 0,22 €/kWh jusqu'à 50 kW inclus
+        et 0,30 €/kWh au-delà de 50 kW.
+
+        Compléter le corps de la fonction \lstinline[language=C]|tarif_applicable| qui retourne
+        le tarif en €/kWh correspondant à une heure de départ de session (entier de 0 à 23) et
+        à une puissance donnée. Elle peut utiliser les fonctions déjà écrites dans le sujet,
+        par exemple \lstinline[language=C]|determiner_mode| (codes rappelés à la question
+        précédente). Elle ne doit rien afficher.
+
+        \lstinputlisting[language=c]{sources/codes/e2-tarif-debut.c}
+        \vspace*{-.5em}
+        \evaluationProfGrille{4}{10}
+        \lstinputlisting[language=c]{sources/codes/d4-fin.c}
+    \end{question}
+}
+
+\element{synthese-critique}{
+    \begin{question}{synthese-critique}
+        En reprenant le programme de traitement des sessions de cette partie (utilisation de
+        \lstinline[language=C]|determiner_mode|), identifier et expliquer
+        \textbf{deux} faiblesses de conception (lisibilité, valeurs numériques écrites en dur,
+        robustesse face à des saisies inattendues, absence de vérification, découpage en
+        fonctions, comparaison de nombres à virgule\ldots), en indiquant pour chacune comment
+        y remédier.
+
+        \evaluationProfGrille{2}{6}
+    \end{question}
+}

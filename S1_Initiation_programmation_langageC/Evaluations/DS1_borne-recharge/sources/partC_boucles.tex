@@ -1,0 +1,144 @@
+% ==================== PARTIE C — BOUCLES ====================
+% Étape de conception : attente de verrouillage, série de sessions, recharge simulée, paliers.
+%
+% Progression :
+%   C1  QCM — sémantique exacte de la borne d'arrêt
+%   C2  corriger une boucle (compteur non incrémenté)
+%   C3  trace d'une boucle de recharge à gain dégressif (piège : bornes >= atteintes pile à 60 et 80, arrêt pile à 90)
+%   C4a compléter l'ossature d'une boucle (3 trous)
+%   C4b prédire l'affichage dans un cas limite (0 tour)
+%   C5  écrire le corps d'un main (bilan, maximum)
+
+\element{boucle-qcm-borne}{
+    \begin{question}{boucle-qcm-borne}
+        Au branchement, la borne revérifie le verrouillage du câble toutes les 15 secondes
+        tant que la durée d'attente écoulée ne dépasse pas 60 secondes.
+
+        \begin{center}
+            \begin{minipage}{.72\textwidth}
+                \lstinputlisting[language=c]{sources/codes/c1-qcm-borne.c}
+            \end{minipage}
+        \end{center}
+
+        Qu'affiche ce fragment ?
+        \begin{multicols}{6}
+            \begin{reponses}
+                \bonne{\texttt{5 75}}
+                \mauvaise{\texttt{4 60}}
+                \mauvaise{\texttt{4 75}}
+                \mauvaise{\texttt{5 60}}
+                \mauvaise{\texttt{3 45}}
+                \mauvaise{\texttt{4 45}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+}
+
+\element{boucle-correction}{
+    \begin{question}{boucle-correction}
+        Pour le bilan d'un point de charge, un développeur inexpérimenté a écrit le programme suivant, qui
+        cumule l'énergie délivrée par chacune des sessions de la journée.
+
+        \lstinputlisting[language=c]{sources/codes/c1b-moyenne-a-corriger.c}
+
+        Ce programme ne se comporte pas comme prévu. Décrire le comportement observé à
+        l'exécution, puis corriger le programme \textbf{directement sur le code}. Justifier
+        ci-dessous.
+
+        \evaluationProfGrille{2}{4}
+    \end{question}
+}
+
+\element{boucle-trace}{
+    \needspace{18\baselineskip}% évite de séparer l'intro du code
+    Pour préserver la batterie, la borne réduit la puissance délivrée lorsque le niveau
+    de charge augmente : le niveau gagne 20 points par pas de 10 minutes sous 60 \%,
+    puis 10 points de 60 à 80 \%, puis 5 points au-delà. Le fragment ci-dessous simule
+    cette recharge (\lstinline[language=C]|gain_pct| est le nombre de points de
+    pourcentage gagnés pendant un pas de 10 minutes).
+    
+    \begin{question}{boucle-trace}
+        Compléter le tableau en donnant, à la fin de \textbf{chaque tour de boucle}, les
+        valeurs de \lstinline[language=C]|gain_pct|, \lstinline[language=C]|niveau_pct| et
+        \lstinline[language=C]|minutes|. Numéroter vous-même les tours suivants et
+        \textbf{s'arrêter au dernier tour effectivement exécuté} (les lignes en trop restent vides).
+        \evaluationProf[2]
+
+        \begin{minipage}[t]{.48\textwidth}
+            \lstinputlisting[language=c]{sources/codes/c2-recharge-trace.c}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{.48\textwidth}~\\
+            {\renewcommand{\arraystretch}{2}
+            \begin{tabular}{|c|p{1.95cm}|p{1.75cm}|p{1.35cm}|}
+                \hline
+                \textbf{Tour} & \lstinline[language=C]|gain_pct| & \lstinline[language=C]|niveau_pct| & \lstinline[language=C]|minutes| \\ \hline
+                1 & & & \\ \hline
+                2 & & & \\ \hline
+                  & & & \\ \hline
+                  & & & \\ \hline
+                  & & & \\ \hline
+                  & & & \\ \hline
+                  & & & \\ \hline
+            \end{tabular}}
+        \end{minipage}
+    \end{question}
+
+    \begin{question}{boucle-trace-affichage}
+        Qu'affiche ce programme après exécution complète de la boucle? 
+
+        \evaluationProfGrille{2}{1}
+
+    \end{question}
+}
+
+\element{boucle-completion}{
+    \needspace{34\baselineskip}% évite de séparer l'intro du code
+    \paragraph{Simulation de la montée en charge : }
+    La borne monte le niveau de charge par paliers de 7 points de pourcentage, en partant
+    de 15 \%. Le cahier des charges impose que :
+    \begin{itemize}\setlength{\itemsep}{0pt}
+        \item la boucle s'arrête dès que le niveau atteint \textbf{ou dépasse} le niveau
+        cible saisi par l'utilisateur ;
+        \item le niveau affiché ne dépasse \textbf{jamais} 100 \%.
+    \end{itemize}
+
+    \lstinputlisting[language=c,escapeinside={(*}{*)}]{sources/codes/c3-paliers-a-completer.c}
+    
+    \begin{question}{boucle-completion}
+        Compléter les trois éléments manquants \textbf{directement dans les cadres pointillés}.
+
+        \evaluationProf[2]
+    \end{question}
+    \begin{question}{boucle-completion-affichage}
+        Indiquer ce que le programme affiche si l'utilisateur saisit un niveau cible de 10 \%.
+    
+        \evaluationProfGrille{2}{2}
+    \end{question}
+}
+
+
+\element{boucle-conception}{
+    \begin{question}{boucle-conception}
+        L'exploitant veut un bilan de fin de journée pour un point de charge.
+
+        Compléter le corps de la fonction \lstinline[language=C]|main| ci-dessous pour qu'elle :
+        \begin{itemize}\setlength{\itemsep}{0pt}
+            \item demande le nombre de sessions de la journée (entier) ;
+            \item demande ensuite, une par une, l'énergie délivrée par chaque session (en kWh,
+                  nombre à virgule) ;
+            \item calcule l'énergie totale délivrée, le nombre de sessions ayant dépassé
+                  20 kWh, et l'énergie de la session la plus importante de la journée ;
+            \item affiche ces trois résultats à la fin.
+        \end{itemize}
+
+        \textbf{Contraintes :} les valeurs saisies ne doivent pas être conservées toutes en
+        mémoire (on ne dispose d'aucune structure permettant de stocker une série de valeurs) ;
+        chaque valeur est donc traitée au moment de sa saisie. Le choix de la boucle et la
+        gestion correcte du maximum lors de la première itération font partie de l'évaluation.
+
+        \lstinputlisting[language=c]{sources/codes/squelette-main-debut.c}
+        \vspace*{-.5em}
+        \evaluationProfGrille{4}{12}
+        \lstinputlisting[language=c]{sources/codes/squelette-main-fin.c}
+    \end{question}
+}

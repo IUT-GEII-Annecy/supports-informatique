@@ -1,0 +1,214 @@
+\documentclass[QCM, noCustomPackages, basic]{UPSTI_Document}
+
+
+\UPSTIloadProfile{BUT_GEII}
+
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+\def\photodir{photos}
+
+%----------------------------------------------------------------------
+% \trou{largeur} : cadre pointillé inséré DANS un listing via
+% escapeinside={(*}{*)}, à l'endroit exact où l'étudiant doit écrire.
+% Exemple d'usage dans un fichier .c :  float duree_h = (*\trou{4cm}*);
+%----------------------------------------------------------------------
+\newcommand{\trou}[1]{%
+    \tikz[baseline=(trou.base)]{%
+        \node[draw=gray!70, dashed, rounded corners=2pt, inner sep=2pt,
+              minimum width=#1, minimum height=2em, fill=white,
+              anchor=base] (trou) {\strut};%
+    }%
+}
+
+
+% Masque le libellé "Question n" (grilles où chaque ligne est une question AMC ;
+% le numéro affiché est géré par le compteur UPSTIopenQNum du package UPSTI_AMC)
+\newcommand{\sansNumeroQuestion}{\def\AMCbeginQuestion##1##2{}}
+% Affiche le libellé de la prochaine question sans la consommer
+\newcommand{\libelleProchaineQuestion}{\textbf{Question \the\numexpr\value{UPSTIopenQNum}+1\relax}}
+% Après une grille de questions AMC sans libellé, la grille compte pour une question affichée
+\newcommand{\grilleCommeUneQuestion}{\stepcounter{UPSTIopenQNum}}
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{0}
+\newcommand{\UPSTImessage}{DS1 - Borne de recharge}
+\newcommand{\UPSTItitre}{Variables, conditions, boucles et fonctions}
+
+\newcommand{\sujetA}{
+\exemplaire{3}{%
+\noindent\champnom{\fbox{
+    \begin{minipage}{.9\linewidth}
+        Nom, prénom et groupe :
+
+        \vspace*{.5cm}\dotfill
+        \vspace*{1mm}
+    \end{minipage}
+}}
+
+\renewcommand{\UPSTImessage}{Sujet A}
+\renewcommand{\UPSTInumeroVersion}{A}
+\UPSTIbuildPage
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+%======================================================================
+% CONTEXTE GÉNÉRAL — cahier des charges du système étudié
+%======================================================================
+\section*{Contexte : la borne de recharge \textsc{EV-BR150}}
+
+Vous intégrez le bureau d'études d'un équipementier qui développe la borne de recharge
+pour véhicules électriques \textsc{EV-BR150}, destinée aux parkings d'entreprise. Votre
+mission porte sur le \textbf{logiciel embarqué} de supervision de la borne : il mesure,
+décide, facture et rend compte. Le cahier des charges qui vous est remis est le suivant.
+
+\medskip
+\noindent\textbf{Architecture et puissance.} La borne dispose de \textbf{deux points de
+charge} indépendants pouvant fonctionner simultanément. La puissance délivrée à un véhicule
+va de 3,7 kW à \textbf{150 kW} au maximum. Trois modes d'exploitation sont définis selon la
+puissance demandée par le véhicule : mode \emph{lent} jusqu'à 22 kW inclus, mode
+\emph{rapide} au-delà de 22 kW et jusqu'à 50 kW inclus, mode \emph{ultra-rapide} au-delà de
+50 kW. Toute demande supérieure à 150 kW est hors du domaine de la borne.
+
+\medskip
+\noindent\textbf{Grandeurs électriques et sécurité.} Le raccordement est triphasé
+400 V ; la tension réseau mesurée doit rester comprise entre \textbf{360 V et 440 V}
+(bornes incluses). Le courant demandé ne doit pas dépasser \textbf{63 A}. La température du
+module de puissance doit rester \textbf{strictement inférieure à 65 °C}. La charge ne
+s'engage que si le câble est \textbf{verrouillé} côté borne. Dès qu'une de ces conditions
+n'est plus respectée, la charge est interrompue.
+
+\medskip
+\noindent\textbf{Tarification.} L'énergie est facturée 0,22 €/kWh en mode lent et rapide,
+et 0,30 €/kWh au-delà de 50 kW. Un tarif heures creuses de 0,15 €/kWh s'applique aux
+sessions démarrées entre 22 h et 5 h inclus. Chaque point de charge utilisé ajoute
+\textbf{0,50 € de frais de service} par session. Le stationnement au-delà de 120 minutes
+peut être majoré.
+
+\medskip
+\noindent\textbf{Exploitation.} Les durées sont relevées en minutes par l'automate, alors
+que les tarifs sont exprimés au kWh : les conversions sont à la charge du logiciel. En fin
+de journée, l'exploitant attend un bilan : nombre de sessions valides, énergie délivrée,
+recette. Une session est déclarée \textbf{anormale} (donc ni comptée, ni facturée) si sa
+puissance dépasse 150 kW ou si sa durée est nulle ou négative.
+
+\medskip
+\noindent\textbf{Déroulement du sujet.} Les parties A à E suivent les étapes de conception de
+ce logiciel : on modélise d'abord les \textbf{grandeurs} (partie A), puis les \textbf{règles
+de sécurité et de mode} (partie B), puis le \textbf{traitement d'une série de sessions}
+(partie C), puis la \textbf{modularisation en fonctions} (partie D), et enfin
+l'\textbf{intégration} de l'ensemble (partie E). Chaque partie redonne toutes les données
+nécessaires : elle se traite \textbf{indépendamment} des autres.
+
+\medskip
+Les cadres pointillés
+\trou{1.6cm} placés dans les programmes sont à compléter directement sur le sujet.
+
+\medskip
+\noindent\textbf{Reprise du code existant.} Une première version de ce logiciel a été écrite
+par un développeur débutant qui vient de quitter l'entreprise. Vous êtes recruté pour
+\textbf{reprendre et fiabiliser} son travail. Tous les extraits de code fournis dans ce sujet
+(à lire, à compléter ou à corriger) proviennent de cette version : ils peuvent contenir des
+erreurs. \textbf{Ne supposez donc jamais qu'un extrait est correct} : lisez chaque ligne avec
+attention pour déterminer ce que le programme fait \emph{réellement}, et non ce qu'il était
+censé faire. Lorsqu'il vous est demandé d'écrire du code vous-même, appliquez la même
+exigence : c'est votre code qui servira désormais de référence.
+
+\pagebreak
+
+\section{Partie A — Modéliser les grandeurs de la session de charge}
+
+Cette première partie porte sur le choix des types, la déclaration, la division entière et la priorité des opérateurs, appliqués aux variables qui représenteront les grandeurs de la session de charge. On rappelle que la puissance est exprimée en kW, la durée en minutes, le tarif en €/kWh et le montant en €. Les conversions d'unités sont à la charge du logiciel.
+
+\restituegroupe{var-types}
+\restituegroupe{var-qcm-declaration}
+\restituegroupe{var-qcm-conversion}
+\restituegroupe{var-qcm-priorite}
+\restituegroupe{var-trace}
+%\restituegroupe{var-completion-decl}
+
+\pagebreak
+
+\section{Partie B — Décider : sécurité et mode de charge}
+
+Deuxième étape : la borne doit décider. Elle autorise ou refuse la charge selon les
+conditions d'exploitation, puis choisit le mode de charge adapté à la puissance demandée.
+
+\restituegroupe{cond-completion}
+\restituegroupe{cond-correction}
+
+\pagebreak
+
+\section{Partie C — Répéter : traiter une série de sessions}
+
+Troisième étape : la borne répète sans cesse des traitements. On étudie ici l'attente du
+verrouillage du câble, le cumul de l'énergie des sessions de la journée, la simulation d'une
+recharge à puissance dégressive, puis une montée en charge par paliers.
+
+\restituegroupe{boucle-qcm-borne}
+\restituegroupe{boucle-correction}
+\restituegroupe{boucle-trace}
+\restituegroupe{boucle-completion}
+%\restituegroupe{boucle-conception}
+
+\pagebreak
+
+\section{Partie D — Modulariser : des fonctions pour la borne}
+
+Quatrième étape : le logiciel grossit. On isole les traitements (comptage, facturation, décision
+d'engagement) dans des fonctions réutilisables et testables séparément.
+
+\restituegroupe{fonc-ecrire-mode}
+\restituegroupe{fonc-qcm-portee}
+\restituegroupe{fonc-correction-portee}
+\restituegroupe{fonc-lecture-appel}
+
+\pagebreak
+
+\section{Partie E — Intégrer : le bilan de journée}
+
+Dernière étape : on assemble une fonction déjà écrite, une boucle et une structure de choix
+pour traiter les demandes de la journée et compter les sessions refusées.
+
+\restituegroupe{synthese-utilisation}
+% \restituegroupe{synthese-evolution}
+% \restituegroupe{synthese-critique}
+
+% \pagebreak
+
+% \section{Partie F — Questions supplémentaires}
+
+% Ces deux questions, plus délicates, portent sur des subtilités du langage C (représentation
+% des nombres à virgule, évaluation des conditions composées).
+
+% \restituegroupe{var-qcm-flottant}
+% \restituegroupe{cond-qcm-courtcircuit}
+
+\AMCcleardoublepage
+}
+}
+
+
+\begin{document}
+
+\vspace{1em}
+
+\begin{center}
+    \textit{Aucun document autorisé, sans calculatrice, durée : 55 min}\\
+    \textit{Si vous constatez une erreur dans le document, indiquez les suppositions que vous faites pour répondre à la question.}\\
+    \textit{Chaque partie porte sur ses propres données et extraits de code, indépendamment des autres parties.}
+\end{center}
+
+\setdefaultgroupmode{withoutreplacement}
+\input{sources/partA_variables.tex}
+\input{sources/partB_conditions.tex}
+\input{sources/partC_boucles.tex}
+\input{sources/partD_fonctions.tex}
+\input{sources/partE_synthese.tex}
+\input{sources/partF_supplementaires.tex}
+
+\def\AMCformQuestion#1{{\sc Question #1 :}}
+
+\AMCrandomseed{1237893}
+\sujetA
+\end{document}

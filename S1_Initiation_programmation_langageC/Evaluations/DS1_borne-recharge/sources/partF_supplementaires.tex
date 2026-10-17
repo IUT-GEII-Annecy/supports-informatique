@@ -1,0 +1,45 @@
+% ==================== PARTIE F — QUESTIONS SUPPLÉMENTAIRES ====================
+% Questions plus difficiles déplacées en fin de sujet (retours du référent) :
+%   F1  QCM — précision flottante (ex-A2)
+%   F2  QCM — évaluation court-circuit de || (ex-B1)
+
+\element{var-qcm-flottant}{
+    \begin{question}{var-qcm-flottant}
+        La borne cumule trois tranches de facturation de 0,1 € chacune, puis vérifie le total.
+
+        \begin{center}
+            \begin{minipage}{.72\textwidth}
+                \lstinputlisting[language=c]{sources/codes/a2-qcm-flottant.c}
+            \end{minipage}
+        \end{center}
+
+        Qu'affiche ce fragment, et pour quelle raison ?
+        \begin{reponses}
+            \bonne{\texttt{ECART} : 0.1 n'a pas de représentation binaire exacte, le cumul des arrondis rend le total différent de 0.3}
+            \mauvaise{\texttt{EXACT} : trois additions de 0.1 donnent exactement 0.3}
+            \mauvaise{\texttt{ECART} : un \lstinline[language=C]|float| ne conserve que deux décimales}
+            \mauvaise{Rien : comparer deux \lstinline[language=C]|float| avec \lstinline[language=C]|==| provoque une erreur de compilation}
+        \end{reponses}
+    \end{question}
+}
+
+\element{cond-qcm-courtcircuit}{
+    \begin{question}{cond-qcm-courtcircuit}
+        La fonction de lecture du capteur de tension est lente : chaque lecture est tracée
+        à l'écran. Le module de sécurité est écrit ainsi :
+
+        \begin{center}
+            \begin{minipage}{.80\textwidth}
+                \lstinputlisting[language=c]{sources/codes/b1-court-circuit.c}
+            \end{minipage}
+        \end{center}
+
+        Qu'affiche exactement ce programme ?
+        \begin{reponses}
+            \bonne{\texttt{Coupure} seul : l'opérateur \lstinline[language=C]!||! n'évalue pas son second opérande lorsque le premier est vrai}
+            \mauvaise{\texttt{[lecture capteur]} puis \texttt{Coupure} : les deux opérandes d'une condition sont toujours évalués}
+            \mauvaise{\texttt{[lecture capteur]} seul : la condition est fausse car la tension dépasse la plage autorisée}
+            \mauvaise{\texttt{Coupure} seul : un \lstinline[language=C]|printf| placé dans une fonction appelée depuis un \lstinline[language=C]|if| n'est jamais exécuté}
+        \end{reponses}
+    \end{question}
+}

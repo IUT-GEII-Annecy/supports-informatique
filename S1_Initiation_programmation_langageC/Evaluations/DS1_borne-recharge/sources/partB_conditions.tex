@@ -1,0 +1,45 @@
+% ==================== PARTIE B — CONDITIONS ====================
+% Étape de conception : règles de sécurité et choix du mode de charge.
+%
+% Progression :
+%   B1  compléter UNE condition composée  (trou dans le code, escapeinside)
+%   B2  repérer (numéroter) et corriger des erreurs
+%   (QCM court-circuit déplacé en partie F ; conception supprimée, doublon de D)
+
+\element{cond-completion}{
+    \begin{question}{cond-completion}
+        La borne n'autorise une charge que si \textbf{toutes} les conditions d'exploitation
+        sont réunies :
+        \begin{itemize}\setlength{\itemsep}{0pt}
+            \item tension réseau comprise entre 360 V et 440 V, \textbf{bornes incluses} ;
+            \item courant demandé \textbf{au plus} égal à 63 A ;
+            \item température du module de puissance \textbf{strictement} inférieure à 65 °C.
+        \end{itemize}
+
+        Écrire la condition manquante \textbf{directement dans le cadre pointillé}.
+
+        \lstinputlisting[language=c,escapeinside={(*}{*)}]{sources/codes/b2-autorisation-a-completer.c}
+
+        Justifier brièvement le choix des opérateurs aux bornes de la plage de tension.
+
+        \evaluationProfGrille{2}{3}
+    \end{question}
+}
+
+\element{cond-correction}{
+    \begin{question}{cond-correction}
+        Un technicien a écrit le module de surveillance ci-dessous. Compilé sans option
+        d'avertissement, il affiche parfois « Charge interrompue » alors qu'aucun défaut
+        n'a été signalé.
+
+        \lstinputlisting[language=c]{sources/codes/b3-securite-a-corriger.c}
+
+        Repérer la ou les erreurs présentes dans ce programme en les \textbf{numérotant
+        directement sur le listing} (1, 2\ldots). Puis, dans le cadre
+        ci-dessous, donner pour chaque numéro la \textbf{ligne corrigée} et le comportement
+        fautif que la correction supprime.
+
+        \evaluationProfGrille{3}{7}
+    \end{question}
+}
+
