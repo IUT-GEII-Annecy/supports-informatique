@@ -78,9 +78,8 @@ mission porte sur le \textbf{logiciel embarqué} de supervision de la borne : il
 décide, facture et rend compte. Le cahier des charges qui vous est remis est le suivant.
 
 \medskip
-\noindent\textbf{Architecture et puissance.} La borne dispose de \textbf{deux points de
-charge} indépendants pouvant fonctionner simultanément. La puissance délivrée à un véhicule
-va de 3,7 kW à \textbf{150 kW} au maximum. Trois modes d'exploitation sont définis selon la
+\noindent\textbf{Architecture et puissance.} La borne délivre, par point de charge, une
+puissance qui va de 3,7 kW à \textbf{150 kW} au maximum. Trois modes d'exploitation sont définis selon la
 puissance demandée par le véhicule : mode \emph{lent} jusqu'à 22 kW inclus, mode
 \emph{rapide} au-delà de 22 kW et jusqu'à 50 kW inclus, mode \emph{ultra-rapide} au-delà de
 50 kW. Toute demande supérieure à 150 kW est hors du domaine de la borne.
@@ -112,22 +111,16 @@ puissance dépasse 150 kW ou si sa durée est nulle ou négative.
 ce logiciel : on modélise d'abord les \textbf{grandeurs} (partie A), puis les \textbf{règles
 de sécurité et de mode} (partie B), puis le \textbf{traitement d'une série de sessions}
 (partie C), puis la \textbf{modularisation en fonctions} (partie D), et enfin
-l'\textbf{intégration} de l'ensemble (partie E). Chaque partie redonne toutes les données
-nécessaires : elle se traite \textbf{indépendamment} des autres.
-
-\medskip
-Les cadres pointillés
-\trou{1.6cm} placés dans les programmes sont à compléter directement sur le sujet.
+l'\textbf{intégration} de l'ensemble (partie E). Les cadres pointillés \trou{1.6cm}
+placés dans les programmes sont à compléter directement sur le sujet.
 
 \medskip
 \noindent\textbf{Reprise du code existant.} Une première version de ce logiciel a été écrite
 par un développeur débutant qui vient de quitter l'entreprise. Vous êtes recruté pour
-\textbf{reprendre et fiabiliser} son travail. Tous les extraits de code fournis dans ce sujet
-(à lire, à compléter ou à corriger) proviennent de cette version : ils peuvent contenir des
-erreurs. \textbf{Ne supposez donc jamais qu'un extrait est correct} : lisez chaque ligne avec
-attention pour déterminer ce que le programme fait \emph{réellement}, et non ce qu'il était
-censé faire. Lorsqu'il vous est demandé d'écrire du code vous-même, appliquez la même
-exigence : c'est votre code qui servira désormais de référence.
+\textbf{reprendre et fiabiliser} son travail. Tous les extraits de code du sujet proviennent
+de cette version et peuvent contenir des erreurs : \textbf{ne supposez jamais qu'un extrait est
+correct}, déterminez ce que le programme fait \emph{réellement}, et non ce qu'il était censé
+faire.
 
 \pagebreak
 
@@ -149,8 +142,7 @@ exigence : c'est votre code qui servira désormais de référence.
 
 \section{Décider : sécurité et mode de charge}
 
-Deuxième étape : la borne doit décider. Elle autorise ou refuse la charge selon les
-conditions d'exploitation, puis choisit le mode de charge adapté à la puissance demandée.
+La borne doit décider : autoriser ou refuser la charge, surveiller la sécurité.
 
 
 \subsection{Lire une condition}
@@ -164,9 +156,7 @@ conditions d'exploitation, puis choisit le mode de charge adapté à la puissanc
 
 \section{Répéter : traiter une série de sessions}
 
-Troisième étape : la borne répète sans cesse des traitements. On étudie ici l'attente du
-verrouillage du câble, le cumul de l'énergie des sessions de la journée, la simulation d'une
-recharge à puissance dégressive, puis une montée en charge par paliers.
+La borne répète sans cesse des traitements : attentes, cumuls, simulations.
 
 \subsection{Attente du verrouillage}
 \restituegroupe{boucle-qcm-borne}
@@ -185,8 +175,7 @@ recharge à puissance dégressive, puis une montée en charge par paliers.
 
 \section{Modulariser : des fonctions pour la borne}
 
-Quatrième étape : le logiciel grossit. On isole les traitements (comptage, facturation, décision
-d'engagement) dans des fonctions réutilisables et testables séparément.
+Le logiciel grossit : on isole ses traitements dans des fonctions réutilisables.
 
 \needspace{34\baselineskip}% garde le titre avec son code
 \subsection{Appeler une fonction existante}
