@@ -5,7 +5,7 @@
 % Progression :
 %   A1  trace de valeurs (tableau à compléter)
 %   A2  QCM — division entière et modulo (conversion min -> h)
-%   A3  QCM — priorité et division entière
+%   A3  QCM — priorité des opérateurs (division exacte) + expression générale
 %   A4a compléter les déclarations (types imposés)
 %   A4b compléter les 3 expressions de calcul
 %   (l'ancien QCM flottant est déplacé en partie F)
@@ -29,8 +29,8 @@
         \begin{question}{var-types-point}\begin{reponseshoriz}[o] \bonne{\texttt{int}} \mauvaise{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
         Rendement du convertisseur de puissance (ex. 0,94) &
         \begin{question}{var-types-tarif}\begin{reponseshoriz}[o] \mauvaise{\texttt{int}} \bonne{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
-        Nombre de tentatives de dialogue avec le véhicule avant abandon &
-        \begin{question}{var-types-duree}\begin{reponseshoriz}[o] \bonne{\texttt{int}} \mauvaise{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
+        Un caractère représentant la catégorie d'un utilisateur (ex. 'A', 'B', 'C') &
+        \begin{question}{var-types-duree}\begin{reponseshoriz}[o] \mauvaise{\texttt{int}} \mauvaise{\texttt{float}} \bonne{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
         Index du compteur d'énergie depuis l'installation (ex. 18\,452,7 kWh) &
         \begin{question}{var-types-energie}\begin{reponseshoriz}[o] \mauvaise{\texttt{int}} \bonne{\texttt{float}} \mauvaise{\texttt{char}} \mauvaise{\texttt{string}} \end{reponseshoriz}\end{question} \\ \hline
     \end{tabular}}
@@ -42,12 +42,14 @@
     \begin{question}{var-qcm-declaration}
         Quelle ligne déclare correctement une variable entière \lstinline[language=C]|nb_sessions|
         initialisée à zéro ?
-        \begin{multicols}{2}
+        \begin{multicols}{3}
             \begin{reponses}
                 \bonne{\lstinline[language=C]|int nb_sessions = 0;|}
                 \mauvaise{\lstinline[language=C]|nb_sessions int = 0;|}
                 \mauvaise{\lstinline[language=C]|int nb_sessions == 0;|}
                 \mauvaise{\lstinline[language=C]|int 0 = nb_sessions;|}
+                \mauvaise{\lstinline[language=C]|(nb_sessions == 0);|}
+                \mauvaise{\lstinline[language=C]|int nb_sessions == 0;|}
             \end{reponses}
         \end{multicols}
     \end{question}
@@ -56,7 +58,7 @@
 \element{var-trace}{
     \begin{question}{var-trace-1}
         Avant d'écrire le logiciel, on vérifie la façon dont la borne manipule ses grandeurs.
-        Le fragment ci-dessous traite une session de 22 kW pendant 150 minutes,
+        Le fragment ci-dessous traite une session de 7 kW pendant 150 minutes,
         facturée 0,22 €/kWh.
         
         Compléter le tableau en donnant la valeur de la variable affectée par chacune des lignes
@@ -64,17 +66,17 @@
         (une valeur entière s'écrit sans décimale).
         \evaluationProf[2]
 
-        \begin{minipage}[t]{.52\textwidth}
+        \begin{minipage}[t]{.56\textwidth}
             \lstinputlisting[language=c]{sources/codes/a1-trace-grandeurs.c}
         \end{minipage}\hfill
-        \begin{minipage}[t]{.44\textwidth}~\\
+        \begin{minipage}[t]{.42\textwidth}~\\
             {\renewcommand{\arraystretch}{2}
             \begin{tabular}{|c|l|p{2.6cm}|}
                 \hline
                 \textbf{Ligne} & \textbf{Variable} & \textbf{Valeur} \\ \hline
-                L1 & \lstinline[language=C]|duree_h_ent| & \\ \hline
+                L1 & \lstinline[language=C]|duree_h| & \\ \hline
                 L2 & \lstinline[language=C]|energie_kwh| & \\ \hline
-                L3 & \lstinline[language=C]|cout_euros|  & \\ \hline
+                L3 & \lstinline[language=C]|energie_kwh_ent|  & \\ \hline
                 L4 & \lstinline[language=C]|energie_kwh| & \\ \hline
                 L5 & \lstinline[language=C]|cout_euros|  & \\ \hline
             \end{tabular}}
@@ -109,17 +111,35 @@
 }
 
 \element{var-qcm-conversion}{
+    Pour le ticket de stationnement, la borne convertit la durée (min) en
+    \emph{heures entamées} et en minutes restantes.
+
+    \begin{center}
+        \begin{minipage}{.74\textwidth}
+            \lstinputlisting[language=c]{sources/codes/a2-qcm-conversion.c}
+        \end{minipage}
+    \end{center}
+
+    \begin{question}{var-lecture-printf}
+        Pour \lstinline[language=C]|heures_entamees|
+        valant \texttt{2} et \lstinline[language=C]|reste_min| valant \texttt{7}, qu'affiche la dernière
+        ligne (l'appel à \lstinline[language=C]|printf|) du programme ci-dessous ?
+        \begin{multicols}{2}
+            \begin{reponses}
+                \bonne{\texttt{2 7}}
+                \mauvaise{\texttt{7 2}}
+                \mauvaise{\texttt{27}}
+                \mauvaise{\texttt{722}}
+                \mauvaise{\texttt{\%d \%d}}
+                \mauvaise{\texttt{heures\_entamees reste\_min}}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+    
+
+
     \begin{question}{var-qcm-conversion}
-        Pour le ticket de stationnement, la borne convertit une durée en minutes en
-        \emph{heures entamées} et en minutes restantes.
-
-        \begin{center}
-            \begin{minipage}{.74\textwidth}
-                \lstinputlisting[language=c]{sources/codes/a2-qcm-conversion.c}
-            \end{minipage}
-        \end{center}
-
-        Qu'affiche ce fragment de code?
+        Qu'affiche ce fragment de code complet (avec \lstinline[language=C]|duree_min| égal à 185) ?
         \begin{multicols}{6}
             \begin{reponses}
                 \bonne{\texttt{4 5}}
@@ -134,25 +154,39 @@
 }
 
 \element{var-qcm-priorite}{
-    \begin{question}{var-qcm-priorite}
-        Le stationnement est majoré de 3~\euro{} par heure entamée \emph{au-delà} de
-        120 minutes, en plus de 50 centimes de frais de service. 
-        
-        Un développeur inexpérimenté écrit :
-
-        \begin{center}
-            \begin{minipage}{.74\textwidth}
-                \lstinputlisting[language=c]{sources/codes/a3-qcm-priorite.c}
-            \end{minipage}
-        \end{center}
-
-        Qu'affiche ce fragment de code ?
+    Le stationnement est majoré de 3~\euro{} par heure entamée \emph{au-delà} de
+    120 minutes, en plus de 50 centimes de frais de service. 
+    
+    Un développeur inexpérimenté écrit :
+    
+    \begin{center}
+        \begin{minipage}{.74\textwidth}
+            \lstinputlisting[language=c]{sources/codes/a3-qcm-priorite.c}
+        \end{minipage}
+    \end{center}
+    
+    \begin{question}{var-qcm-priorite-180}
+        Qu'affiche ce fragment de code si on entre une durée de 180 minutes ?
         \begin{multicols}{6}
             \begin{reponses}
-                \bonne{50 cts}
-                \mauvaise{30 cts}
-                \mauvaise{150 cts}
+                \bonne{350 cts}
+                \mauvaise{50 cts}
+                \mauvaise{200 cts}
+                \mauvaise{950 cts}
+                \mauvaise{0 cts}
+                \mauvaise{300 cts}
+            \end{reponses}
+        \end{multicols}
+    \end{question}
+
+    \begin{question}{var-qcm-priorite-150}
+        Qu'affiche ce fragment de code si on entre une durée de 150 minutes ?
+        \begin{multicols}{6}
+            \begin{reponses}
                 \mauvaise{350 cts}
+                \bonne{50 cts}
+                \mauvaise{200 cts}
+                \mauvaise{950 cts}
                 \mauvaise{0 cts}
                 \mauvaise{300 cts}
             \end{reponses}
@@ -161,7 +195,7 @@
 
     \begin{question}{var-qcm-priorite-corrige}
         
-        Le code ci-dessus calcule-t-il correctement la majoration du stationnement ? Si non, corriger l'expression de calcul de \lstinline[language=C]|majoration| pour qu'elle soit correcte.
+        Proposer une correction du programme pour qu'il calcule correctement le montant à facturer.
 
         \evaluationProfGrille{2}{2}
     \end{question}

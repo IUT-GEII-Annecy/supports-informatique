@@ -7,11 +7,11 @@ int main(void)
     int nb_paliers   = 0;
     int niveau_cible = get_int("Niveau de charge souhaite (%) : ");
 
-    while ((*\trou{10cm}*))
+    while ((*\trou{12.5cm}*))
     {
-        niveau_pct = (*\trou{10cm}*);
+        niveau_pct = (*\trou{12.5cm}*);
 
-        if ((*\trou{10cm}*))
+        if ((*\trou{12.5cm}*))
         {
             niveau_pct = 100;
         }

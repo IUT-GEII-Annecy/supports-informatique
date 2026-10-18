@@ -8,25 +8,33 @@ int main(void)
     int nb_sessions = get_int("Nombre de sessions : ");
     int nb_refus    = 0;
 
-    for (int i = 1; (*\trou{4cm}*); i++)
+    for (int i = 1; i <= nb_sessions; i++)
     {
         float puissance_kw     = get_float("Puissance demandee (kW) : ");
         int   cable_verrouille = get_int("Cable verrouille (1/0) : ");
 
-        int code = (*\trou{8cm}*);
+        int code = (*\trou{12cm}*);
 
-        switch ((*\trou{2.5cm}*))
+        switch ((*\trou{4cm}*))
         {
-            case (*\trou{1.5cm}*):
-            case 3:
-                nb_refus++;
-                break;
-            case (*\trou{1.5cm}*):
+            (*\trou{4cm}*):
                 printf("Session %d : mode lent\n", i);
                 break;
-            (*\trou{2.5cm}*)
-                printf("Session %d : mode rapide ou ultra-rapide\n", i);
+                
+            (*\trou{4cm}*):
+                printf("Session %d : mode rapide\n", i);
                 break;
+
+            (*\trou{4cm}*):
+                printf("Session %d : mode ultra rapide\n", i);
+                break;
+
+            (*\trou{4cm}*):
+            (*\trou{4cm}*):
+                printf("Session %d : refus\n", i);
+                nb_refus++;
+                break;
+                
         }
     }
 

@@ -14,29 +14,28 @@
         Au branchement, la borne revérifie le verrouillage du câble toutes les 15 secondes
         tant que la durée d'attente écoulée ne dépasse pas 60 secondes.
 
-        \begin{center}
-            \begin{minipage}{.72\textwidth}
+            \begin{minipage}{.45\textwidth}
                 \lstinputlisting[language=c]{sources/codes/c1-qcm-borne.c}
-            \end{minipage}
-        \end{center}
-
-        Qu'affiche ce fragment ?
-        \begin{multicols}{6}
+            \end{minipage}\hfill
+\begin{minipage}{.5\textwidth}
+        Qu'affiche l'extrait de code ci-contre?
+        \begin{multicols}{2}
             \begin{reponses}
-                \bonne{\texttt{5 75}}
-                \mauvaise{\texttt{4 60}}
+                \mauvaise{\texttt{5 75}}
+                \bonne{\texttt{4 60}}
                 \mauvaise{\texttt{4 75}}
                 \mauvaise{\texttt{5 60}}
                 \mauvaise{\texttt{3 45}}
                 \mauvaise{\texttt{4 45}}
             \end{reponses}
         \end{multicols}
+        \end{minipage}
     \end{question}
 }
 
 \element{boucle-correction}{
     \begin{question}{boucle-correction}
-        Pour le bilan d'un point de charge, un développeur inexpérimenté a écrit le programme suivant, qui
+        Pour le bilan d'un point de charge, un développeur inexpérimenté a écrit l'extrait de code suivant, qui
         cumule l'énergie délivrée par chacune des sessions de la journée.
 
         \lstinputlisting[language=c]{sources/codes/c1b-moyenne-a-corriger.c}
@@ -93,7 +92,6 @@
 
 \element{boucle-completion}{
     \needspace{34\baselineskip}% évite de séparer l'intro du code
-    \paragraph{Simulation de la montée en charge : }
     La borne monte le niveau de charge par paliers de 7 points de pourcentage, en partant
     de 15 \%. Le cahier des charges impose que :
     \begin{itemize}\setlength{\itemsep}{0pt}
@@ -109,11 +107,11 @@
 
         \evaluationProf[2]
     \end{question}
-    \begin{question}{boucle-completion-affichage}
-        Indiquer ce que le programme affiche si l'utilisateur saisit un niveau cible de 10 \%.
+    % \begin{question}{boucle-completion-affichage}
+    %     Indiquer ce que le programme affiche si l'utilisateur saisit un niveau cible de 40 \%.
     
-        \evaluationProfGrille{2}{2}
-    \end{question}
+    %     \evaluationProfGrille{2}{2}
+    % \end{question}
 }
 
 

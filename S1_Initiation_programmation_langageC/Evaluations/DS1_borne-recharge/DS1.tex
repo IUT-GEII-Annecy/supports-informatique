@@ -16,11 +16,26 @@
 \newcommand{\trou}[1]{%
     \tikz[baseline=(trou.base)]{%
         \node[draw=gray!70, dashed, rounded corners=2pt, inner sep=2pt,
-              minimum width=#1, minimum height=2em, fill=white,
+              minimum width=#1, minimum height=2.4em, fill=white,
               anchor=base] (trou) {\strut};%
     }%
 }
 
+
+%----------------------------------------------------------------------
+% Numérotation automatique des parties et sous-parties :
+%   \section{Sujet}     ->  « Partie A — Sujet »
+%   \subsection{Thème}  ->  « A1 — Thème »  (remis à zéro à chaque partie)
+%----------------------------------------------------------------------
+\renewcommand{\thesection}{\Alph{section}}
+\renewcommand{\thesubsection}{\thesection\arabic{subsection}}
+\makeatletter
+\def\DS@fmt@section{Partie~\thesection~--- }
+\def\DS@fmt@subsection{\thesubsection~--- }
+\renewcommand{\@seccntformat}[1]{%
+    \ifcsname DS@fmt@#1\endcsname\csname DS@fmt@#1\endcsname
+    \else\csname the#1\endcsname\quad\fi}
+\makeatother
 
 % Masque le libellé "Question n" (grilles où chaque ligne est une question AMC ;
 % le numéro affiché est géré par le compteur UPSTIopenQNum du package UPSTI_AMC)
@@ -116,67 +131,84 @@ exigence : c'est votre code qui servira désormais de référence.
 
 \pagebreak
 
-\section{Partie A — Modéliser les grandeurs de la session de charge}
+\section{Modéliser les grandeurs de la session de charge}
 
-Cette première partie porte sur le choix des types, la déclaration, la division entière et la priorité des opérateurs, appliqués aux variables qui représenteront les grandeurs de la session de charge. On rappelle que la puissance est exprimée en kW, la durée en minutes, le tarif en €/kWh et le montant en €. Les conversions d'unités sont à la charge du logiciel.
-
+\subsection{Déclarer des variables}
 \restituegroupe{var-types}
 \restituegroupe{var-qcm-declaration}
+\subsection{Calcul des heures entamées}
 \restituegroupe{var-qcm-conversion}
+\subsection{Le dépassement}
 \restituegroupe{var-qcm-priorite}
+\needspace{20\baselineskip}% garde le titre avec son code
+\subsection{Trace d'un calcul de coût}
 \restituegroupe{var-trace}
 %\restituegroupe{var-completion-decl}
 
 \pagebreak
 
-\section{Partie B — Décider : sécurité et mode de charge}
+\section{Décider : sécurité et mode de charge}
 
 Deuxième étape : la borne doit décider. Elle autorise ou refuse la charge selon les
 conditions d'exploitation, puis choisit le mode de charge adapté à la puissance demandée.
 
+
+\subsection{Lire une condition}
+\restituegroupe{cond-lecture-if}
+\subsection{Autoriser la charge}
 \restituegroupe{cond-completion}
+\subsection{Surveiller la sécurité}
 \restituegroupe{cond-correction}
 
 \pagebreak
 
-\section{Partie C — Répéter : traiter une série de sessions}
+\section{Répéter : traiter une série de sessions}
 
 Troisième étape : la borne répète sans cesse des traitements. On étudie ici l'attente du
 verrouillage du câble, le cumul de l'énergie des sessions de la journée, la simulation d'une
 recharge à puissance dégressive, puis une montée en charge par paliers.
 
+\subsection{Attente du verrouillage}
 \restituegroupe{boucle-qcm-borne}
+\needspace{24\baselineskip}% garde le titre avec son code
+\subsection{Cumul de l'énergie}
 \restituegroupe{boucle-correction}
+\needspace{22\baselineskip}% garde le titre avec son code
+\subsection{Recharge à puissance dégressive}
 \restituegroupe{boucle-trace}
+\needspace{38\baselineskip}% garde le titre avec son code
+\subsection{Montée en charge par paliers}
 \restituegroupe{boucle-completion}
 %\restituegroupe{boucle-conception}
 
 \pagebreak
 
-\section{Partie D — Modulariser : des fonctions pour la borne}
+\section{Modulariser : des fonctions pour la borne}
 
 Quatrième étape : le logiciel grossit. On isole les traitements (comptage, facturation, décision
 d'engagement) dans des fonctions réutilisables et testables séparément.
 
-\restituegroupe{fonc-ecrire-mode}
-\restituegroupe{fonc-qcm-portee}
-\restituegroupe{fonc-correction-portee}
+\needspace{34\baselineskip}% garde le titre avec son code
+\subsection{Appeler une fonction existante}
 \restituegroupe{fonc-lecture-appel}
+\needspace{30\baselineskip}% garde le titre avec son code
+\subsection{Portée d'une variable}
+\restituegroupe{fonc-qcm-portee}
+% \restituegroupe{fonc-correction-portee}
+\needspace{40\baselineskip}% garde le titre avec son code
+\subsection{Écrire une fonction de décision}
+\restituegroupe{fonc-ecrire-mode}
 
 \pagebreak
 
-\section{Partie E — Intégrer : le bilan de journée}
-
-Dernière étape : on assemble une fonction déjà écrite, une boucle et une structure de choix
-pour traiter les demandes de la journée et compter les sessions refusées.
-
+\section{Intégrer : le bilan de journée}
 \restituegroupe{synthese-utilisation}
 % \restituegroupe{synthese-evolution}
 % \restituegroupe{synthese-critique}
 
 % \pagebreak
 
-% \section{Partie F — Questions supplémentaires}
+% \section{Questions supplémentaires}
 
 % Ces deux questions, plus délicates, portent sur des subtilités du langage C (représentation
 % des nombres à virgule, évaluation des conditions composées).

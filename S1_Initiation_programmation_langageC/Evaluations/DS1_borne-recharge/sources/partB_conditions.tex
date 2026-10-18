@@ -2,44 +2,63 @@
 % Étape de conception : règles de sécurité et choix du mode de charge.
 %
 % Progression :
+%   B0  QCM — lire un if/else simple (sans piège)
 %   B1  compléter UNE condition composée  (trou dans le code, escapeinside)
 %   B2  repérer (numéroter) et corriger des erreurs
 %   (QCM court-circuit déplacé en partie F ; conception supprimée, doublon de D)
 
+\element{cond-lecture-if}{
+  La borne surveille la température de son module de puissance avec le code suivant.
+
+  \begin{question}{cond-lecture-if}
+    \begin{minipage}{.45\textwidth}
+      \lstinputlisting[language=c]{sources/codes/b0-lecture-if.c}
+    \end{minipage}\hfill
+    \begin{minipage}{.5\textwidth}
+      Qu'affiche ce fragment de code ?
+      \begin{reponses}
+        \bonne{\texttt{Module OK}}
+        \mauvaise{\texttt{Surchauffe : charge coupee}}
+        \mauvaise{\texttt{Module OK} puis, sur la ligne suivante, \texttt{Surchauffe : charge coupee}}
+        \mauvaise{Rien : aucune des deux branches n'est exécutée}
+      \end{reponses}
+    \end{minipage}
+  \end{question}
+}
+
 \element{cond-completion}{
-    \begin{question}{cond-completion}
-        La borne n'autorise une charge que si \textbf{toutes} les conditions d'exploitation
-        sont réunies :
-        \begin{itemize}\setlength{\itemsep}{0pt}
-            \item tension réseau comprise entre 360 V et 440 V, \textbf{bornes incluses} ;
-            \item courant demandé \textbf{au plus} égal à 63 A ;
-            \item température du module de puissance \textbf{strictement} inférieure à 65 °C.
-        \end{itemize}
+  \begin{question}{cond-completion}
+    La borne n'autorise une charge que si \textbf{toutes} les conditions d'exploitation
+    sont réunies :
+  \begin{itemize}\setlength{\itemsep}{0pt}
+      \item tension réseau comprise entre 360 V et 440 V, \textbf{bornes incluses} ;
+      \item courant demandé \textbf{au plus} égal à 63 A ;
+      \item température du module de puissance \textbf{strictement} inférieure à 65 °C.
+    \end{itemize}
 
-        Écrire la condition manquante \textbf{directement dans le cadre pointillé}.
+    Écrire la condition manquante \textbf{directement dans le cadre pointillé}.
 
-        \lstinputlisting[language=c,escapeinside={(*}{*)}]{sources/codes/b2-autorisation-a-completer.c}
+    \lstinputlisting[language=c,escapeinside={(*}{*)}]{sources/codes/b2-autorisation-a-completer.c}
 
-        Justifier brièvement le choix des opérateurs aux bornes de la plage de tension.
+    Justifier brièvement le choix des opérateurs aux bornes de la plage de tension.
 
-        \evaluationProfGrille{2}{3}
-    \end{question}
+    \evaluationProfGrille{2}{3}
+  \end{question}
 }
 
 \element{cond-correction}{
-    \begin{question}{cond-correction}
-        Un technicien a écrit le module de surveillance ci-dessous. Compilé sans option
-        d'avertissement, il affiche parfois « Charge interrompue » alors qu'aucun défaut
-        n'a été signalé.
+  \begin{question}{cond-correction}
+    Un technicien a écrit le module de surveillance ci-dessous. Compilé sans option
+    d'avertissement, il affiche parfois « Charge interrompue » alors qu'aucun défaut
+    n'a été signalé.
 
-        \lstinputlisting[language=c]{sources/codes/b3-securite-a-corriger.c}
+    \lstinputlisting[language=c]{sources/codes/b3-securite-a-corriger.c}
 
-        Repérer la ou les erreurs présentes dans ce programme en les \textbf{numérotant
-        directement sur le listing} (1, 2\ldots). Puis, dans le cadre
-        ci-dessous, donner pour chaque numéro la \textbf{ligne corrigée} et le comportement
-        fautif que la correction supprime.
+    Repérer la ou les erreurs présentes dans ce programme en les \textbf{numérotant
+    directement sur le listing} (1, 2\ldots). Puis, dans le cadre
+    ci-dessous, donner pour chaque numéro la \textbf{ligne corrigée} et le comportement
+    fautif que la correction supprime.
 
-        \evaluationProfGrille{3}{7}
-    \end{question}
+    \evaluationProfGrille{3}{7}
+  \end{question}
 }
-
