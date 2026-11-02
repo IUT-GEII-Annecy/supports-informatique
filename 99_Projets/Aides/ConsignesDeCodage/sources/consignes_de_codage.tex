@@ -12,12 +12,20 @@ documentés (ex.\ une constante de configuration) -- et dans ce cas, le
 commentaire doit expliquer \textbf{pourquoi} elle ne peut pas être un
 paramètre.
 
-\subsection*{Noms de variables explicites}
-Un nom de variable doit permettre de comprendre son rôle sans avoir à
-lire le reste du code. Préférer \texttt{nb\_joueurs} à \texttt{n}, ou
-\texttt{indice\_carte\_tiree} à \texttt{i2}. Les noms d'une seule lettre
-sont tolérés uniquement pour un indice de boucle local et de portée
-très courte (ex.\ \texttt{for (int i = 0; ...)}).
+\subsection*{Noms de variables, fonctions et tableaux (inspiré de la norme 42)}
+Un nom doit permettre de comprendre son rôle sans avoir à lire le reste
+du code. Pas de préfixe de type façon notation hongroise (\texttt{l\_},
+\texttt{tab\_}, \texttt{g\_}...) : le rôle se lit dans le nom, pas dans
+un préfixe.
+
+\begin{itemize}
+  \item \textbf{snake\_case partout}, jamais de camelCase : \texttt{nb\_joueurs}, pas \texttt{nbJoueurs}.
+  \item \textbf{Variables} : nom explicite et complet. Préférer \texttt{nb\_joueurs} à \texttt{n}, \texttt{indice\_carte\_tiree} à \texttt{i2}. Seuls \texttt{i}, \texttt{j}, \texttt{k} sont tolérés, uniquement comme compteur de boucle local et de portée très courte (ex.\ \texttt{for (int i = 0; ...)}).
+  \item \textbf{Booléens} : préfixés par \texttt{est\_}, \texttt{a\_} ou \texttt{peut\_} pour que leur lecture soit une question/affirmation : \texttt{est\_gagnant}, \texttt{a\_rejoue}, \texttt{peut\_tirer}.
+  \item \textbf{Tableaux} : un nom explicite, au pluriel si possible, décrivant ce qu'il contient -- pas de préfixe \texttt{tab\_} : \texttt{scores}, \texttt{cartes\_tirees}, \texttt{grille}.
+  \item \textbf{Fonctions} : \texttt{verbe\_nom}, une action claire par fonction : \texttt{calculer\_score()}, \texttt{afficher\_plateau()}. Une fonction qui renvoie un booléen se lit comme une question : \texttt{est\_victoire()}, \texttt{peut\_jouer()}.
+  \item \textbf{Constantes et macros} : \texttt{UPPER\_SNAKE\_CASE} : \texttt{NB\_JOUEURS\_MAX}, \texttt{TAILLE\_GRILLE}.
+\end{itemize}
 
 \subsection*{Indentations valides}
 Chaque niveau d'imbrication (fonction, boucle, condition) doit être
