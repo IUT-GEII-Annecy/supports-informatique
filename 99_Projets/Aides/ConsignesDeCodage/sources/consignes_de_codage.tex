@@ -1,0 +1,27 @@
+\section{Consignes de codage}
+
+Ces règles s'appliquent à \textbf{tous} les projets de ce dossier. Elles
+seront vérifiées lors de la relecture du code et discutées en
+soutenance.
+
+\subsection*{Pas de variable globale non justifiée}
+Toute donnée nécessaire à une fonction doit lui être transmise par
+paramètre (ou renvoyée par valeur de retour), pas via une variable
+globale. Une variable globale ne se justifie que dans des cas rares et
+documentés (ex.\ une constante de configuration) -- et dans ce cas, le
+commentaire doit expliquer \textbf{pourquoi} elle ne peut pas être un
+paramètre.
+
+\subsection*{Noms de variables explicites}
+Un nom de variable doit permettre de comprendre son rôle sans avoir à
+lire le reste du code. Préférer \texttt{nb\_joueurs} à \texttt{n}, ou
+\texttt{indice\_carte\_tiree} à \texttt{i2}. Les noms d'une seule lettre
+sont tolérés uniquement pour un indice de boucle local et de portée
+très courte (ex.\ \texttt{for (int i = 0; ...)}).
+
+\subsection*{Indentations valides}
+Chaque niveau d'imbrication (fonction, boucle, condition) doit être
+indenté de façon cohérente et visible, de sorte que la structure du
+code soit lisible sans avoir à compter les accolades. Un éditeur de
+code peut généralement réindenter automatiquement un fichier -- prendre
+l'habitude de le faire avant de rendre son travail.

@@ -1,0 +1,34 @@
+\documentclass[TD, noCustomPackages]{UPSTI_Document}
+\usepackage{IUT_Annecy}
+\usepackage{logos_iut}
+
+% --- Git info (nécessite git et les hooks gitinfo2 activés) ---
+\usepackage{gitinfo2} % génère gitHeadInfo.gin via hooks post-commit/checkout/merge
+% Voir doc gitinfo2 pour activer les hooks une fois:
+%   git config --local gitinfo2.enabled true
+%   git info # ou copier les hooks fournis par le package
+\input{../../preamble.tex}
+\input{../../../S1_Initiation_programmation_langageC/preamble_module.tex}
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
+\newcommand{\UPSTInumero}{\sequence.Aides.2}
+\usepackage{eso-pic}
+\begin{document}
+% QR code (marqueur pédagogique) : superposition additive en bas à droite de chaque page via eso-pic.
+% Source unique du texte : ../../_commun/images/marqueur_qr.txt -- partagé
+% par tous les projets et aides (modifier uniquement ce .txt, jamais le
+% .png, puis régénérer le QR depuis 99_Projets/_commun/ avec :
+%   qrencode -8 -o images/marqueur_qr.png -s 10 -l H -r images/marqueur_qr.txt
+\AddToShipoutPictureFG{%
+    \AtPageLowerLeft{\put(\LenToUnit{\paperwidth-1.1cm},\LenToUnit{0.35cm}){\includegraphics[height=0.7cm]{../../_commun/images/marqueur_qr.png}}}%
+}
+\AddToShipoutPictureFG{%
+    \AtPageUpperLeft{\put(\LenToUnit{1.5cm},\LenToUnit{-1cm}){%
+        \parbox{15cm}{\tiny\color{white}\input{../../_commun/images/marqueur_qr.txt}}%
+    }}%
+}
+
+\input{main.tex}
+
+\end{document}
