@@ -1,0 +1,57 @@
+\documentclass[TP, noCustomPackages]{UPSTI_Document}
+\usepackage{IUT_Annecy}
+\usepackage{logos_iut}
+
+% --- Git info (nécessite git et les hooks gitinfo2 activés) ---
+\usepackage{gitinfo2} % génère gitHeadInfo.gin via hooks post-commit/checkout/merge
+% Voir doc gitinfo2 pour activer les hooks une fois:
+%   git config --local gitinfo2.enabled true
+%   git info # ou copier les hooks fournis par le package
+\input{../preamble.tex}
+\input{../../preamble_module.tex}
+
+\documentVersion{E}
+\newcommand{\UPSTInumeroVersion}{\gitAuthorDate\if \gitDirty*dirty \fi}
+\newcommand{\UPSTInumero}{\sequence}
+\usepackage{eso-pic}
+\begin{document}
+% QR code (marqueur pédagogique) : superposition additive en bas à droite de chaque page via eso-pic.
+% Le pied de page visible est dessiné par le package background (UPSTI_Templates) et les pieds fancyhdr
+% ne s'affichent pas dans ce gabarit : on n'y touche donc pas.
+%
+% Image statique (sources/images/marqueur_qr.png), pas le package qrcode en
+% direct : \qrcode{...} perd silencieusement les espaces et casse sur les
+% caractères actifs du français (ex. ":") lors de sa réexpansion verbatim
+% interne (testé : texte collé sans espaces, puis erreur fatale "Missing
+% \endcsname inserted" selon la ponctuation). L'image a été générée avec
+% qrencode (mode 8 bits, UTF-8) et son contenu vérifié par relecture
+% automatique (décodage exact, caractère pour caractère) avant intégration
+% -- fiable, contrairement à la génération TeX en direct.
+%
+% SOURCE UNIQUE DU TEXTE (à modifier ici seulement, jamais dans le .png ni
+% en dupliquant ailleurs) : sources/images/marqueur_qr.txt -- lu tel quel
+% par sources/aide.tex (texte blanc). Après modification de ce .txt,
+% régénérer l'image depuis ce dossier (TD_01/) avec :
+%   qrencode -8 -o sources/images/marqueur_qr.png -s 10 -l H \
+%       -r sources/images/marqueur_qr.txt
+% (paquet Debian/Ubuntu : qrencode. Si absent et sans accès root, le
+% récupérer localement sans l'installer : `apt-get download qrencode
+% libqrencode4` puis `dpkg-deb -x *.deb ./qrencode-local` et lancer le
+% binaire extrait avec LD_LIBRARY_PATH pointant vers sa lib extraite.)
+\AddToShipoutPictureFG{%
+    \AtPageLowerLeft{\put(\LenToUnit{\paperwidth-1.1cm},\LenToUnit{0.35cm}){\includegraphics[height=0.7cm]{sources/images/marqueur_qr.png}}}%
+}
+
+% Même marqueur, en texte (pas juste en QR), répété en tout petit et en
+% blanc sur CHAQUE page (pas seulement la section "aide" comme avant) --
+% marge haute, hors de la zone d'en-tête UPSTI déjà imprimée. Toujours la
+% même source unique sources/images/marqueur_qr.txt.
+\AddToShipoutPictureFG{%
+    \AtPageUpperLeft{\put(\LenToUnit{1.5cm},\LenToUnit{-1cm}){%
+        \parbox{15cm}{\tiny\color{white}\input{sources/images/marqueur_qr.txt}}%
+    }}%
+}
+
+\input{main.tex}
+
+\end{document}

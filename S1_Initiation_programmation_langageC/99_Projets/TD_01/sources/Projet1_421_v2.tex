@@ -10,6 +10,15 @@
   \item Le second joueur joue ensuite de la même manière et doit effectuer exactement le même nombre de lancers que le premier.
   \item À la fin de la manche, on compare les combinaisons. Le vainqueur prend à son adversaire un nombre de points dépendant de sa combinaison.
   \item Le vainqueur d’une manche commence la manche suivante.
+  \item Le vainqueur final est celui qui a pris tous les points de son adversaire.
+\end{itemize}
+
+\subsection*{Contraintes imposées}
+\begin{itemize}
+  \item Les 3 dés du joueur 1 sont rangés dans les 3 \textbf{premières} cases d'un tableau \texttt{l\_tab\_jeu} de 6 cases ; ceux du joueur 2 dans les 3 \textbf{dernières} cases.
+  \item Les points des 2 joueurs sont rangés dans un tableau de 2 cases.
+  \item Un \textbf{seul} code gère aussi bien le joueur 1 que le joueur 2 (voir aide ci-dessous).
+  \item Pour relancer des dés, le joueur indique leurs numéros sous la forme d'un entier (ex.\ \texttt{23} pour relancer les dés n°2 et n°3).
 \end{itemize}
 
 \subsection*{Combinaisons gagnantes}
@@ -40,7 +49,9 @@ Aucune & Le plus grand nombre formé l’emporte & 1 \\ \hline
 \end{UPSTICahierDesCharges}
 
 \begin{UPSTICahierDesCharges}{Score automatique}
-  Calcul du score automatique.
+  Le programme reconnaît la meilleure combinaison et gère les points lui-même.
+
+  \textit{Aide :} pour reconnaître les combinaisons, il est conseillé de ranger les dés dans l'ordre croissant.
 \end{UPSTICahierDesCharges}
 
 \begin{UPSTICahierDesCharges}{L'ordinateur joue}
@@ -55,5 +66,3 @@ Aucune & Le plus grand nombre formé l’emporte & 1 \\ \hline
   \end{itemize}
 \end{UPSTICahierDesCharges}
 
-\subsection*{Aide pour le projet}
-\lstinputlisting[language=C]{421\_squelette.c}

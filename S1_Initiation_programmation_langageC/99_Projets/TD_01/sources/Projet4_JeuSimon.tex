@@ -23,6 +23,15 @@ Tester la mémoire des joueurs en construisant une \textbf{séquence de caractè
 \textit{Aide :} une \textbf{seule boucle} pour les deux joueurs (même code) avec une variable de joueur (\texttt{0/1}) ; afficher la séquence courante en parcourant le tableau de 0 à \texttt{nbrCoup}.
 \end{UPSTICahierDesCharges}
 
+
+\begin{UPSTICahierDesCharges}{Robustesse et présentation}
+  \begin{itemize}
+    \item Valider les saisies (lettre minuscule), gérer la \textbf{taille max} de 50 caractères et les \textbf{messages} de statut.
+    \item Proposer un \textbf{menu} : Jeu 1 (2 joueurs) / Jeu 2 (contre l’ordinateur).
+    \item Soigner l'affichage (Rendre le jeu le plus beau possible) 
+  \end{itemize}
+\end{UPSTICahierDesCharges}
+
 \begin{UPSTICahierDesCharges}{Mode contre l’ordinateur}
 \begin{itemize}
   \item L’ordinateur joue en alternance avec le joueur humain et \textbf{ajoute} un caractère à la séquence.
@@ -32,14 +41,3 @@ Tester la mémoire des joueurs en construisant une \textbf{séquence de caractè
 \textit{Aide :} générer le caractère de l’ordinateur aléatoirement, et introduire une \og erreur \fg{} selon une probabilité paramétrable.
 \end{UPSTICahierDesCharges}
 
-\begin{UPSTICahierDesCharges}{Robustesse et présentation}
-\begin{itemize}
-  \item Valider les saisies (lettre minuscule), gérer la \textbf{taille max} de 50 caractères et les \textbf{messages} de statut.
-  \item Proposer un \textbf{menu} : Jeu 1 (2 joueurs) / Jeu 2 (contre l’ordinateur).
-  \item Soigner l'affichage (Rendre le jeu le plus beau possible) 
-\end{itemize}
-\textit{Aide :} stocker la séquence correcte et la séquence saisie dans \texttt{char tab[50]}; \texttt{time(NULL)} pour initialiser l’aléatoire.
-\end{UPSTICahierDesCharges}
-
-\subsection*{Squelette de départ}
-\lstinputlisting[language=C]{simon\_squelette.c}

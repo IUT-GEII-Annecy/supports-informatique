@@ -1,0 +1,50 @@
+\section{Projet 13 — Penalty !}
+\setcounter{UPSTInumeroCahier des charges}{0}
+
+\subsection*{Objectif du jeu}
+Simuler une séance de tirs au but entre un joueur physique (joueur 1) et un joueur virtuel (joueur 2, le programme). Droite et gauche sont vues du côté du tireur.
+
+\subsection*{Règles du jeu}
+\begin{itemize}
+  \item Le joueur 1 choisit un nom pour son équipe et un nom pour l'équipe du joueur 2.
+  \item Le tireur choisit son tir sous la forme d'un caractère :
+  \begin{itemize}
+    \item \texttt{'d'} / \texttt{'g'} : à droite / à gauche du gardien, frappe molle et mal placée ;
+    \item \texttt{'D'} / \texttt{'G'} : à droite / à gauche du gardien, frappe forte placée petit filet ;
+    \item \texttt{'m'} : au milieu, frappe molle à ras de terre ; \texttt{'M'} : au milieu, frappe type panenka.
+  \end{itemize}
+  \item Les tirs \texttt{'D'}, \texttt{'G'} ou \texttt{'M'} ont $n$ chances sur 8 de terminer \textbf{en dehors de la cage}, où $n$ est le nombre de fois que \texttt{'D'}, \texttt{'G'} ou \texttt{'M'} ont déjà été choisis par ce joueur lors de la séance (tirage aléatoire par le programme).
+  \item Le gardien plonge : \texttt{'d'} (à droite), \texttt{'g'} (à gauche) ou \texttt{'m'} (une partie du corps reste au milieu).
+  \item Le gardien gagne si le tir est hors cadre, ou si le tir est \texttt{'d'}, \texttt{'g'} ou \texttt{'m'} et que le gardien a choisi respectivement \texttt{'d'}, \texttt{'g'} ou \texttt{'m'}. Sinon le tireur marque.
+  \item Les choix du joueur virtuel sont aléatoires. Les joueurs changent de rôle après chaque tir.
+  \item Séance de \textbf{5 penalties} tirés en alternance ; en cas d'égalité, \textbf{mort subite}. Le jeu s'arrête dès que l'issue est acquise (ex.\ 4 à 2 après 4 tirs).
+\end{itemize}
+
+\subsection*{Cahier des charges}
+\begin{UPSTICahierDesCharges}{1}
+\begin{itemize}
+  \item Séance complète joueur physique contre programme : saisie des noms, choix des tirs et des plongeons, gestion de la probabilité de tir hors cadre, score.
+  \item Fin anticipée de la séance, mort subite, annonce du vainqueur.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{2}
+\begin{itemize}
+  \item Ranger le résultat de chaque tir dans un tableau (un par joueur, 20 cases pour prévoir la mort subite) : 0 = manqué, 1 = arrêté par le gardien, 2 = réussi.
+  \item En fin de partie, afficher le résumé de la séance \textbf{en couleur}, par exemple :
+\begin{verbatim}
+Penalty 1 pour OM : Arrêté par le gardien
+Penalty 2 pour OM : Réussi
+...
+Penalty 5 pour PSG : Réussi
+
+PSG win !!!
+\end{verbatim}
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{3}
+\begin{itemize}
+  \item Les 2 joueurs sont des joueurs physiques (choix du mode par menu).
+\end{itemize}
+\end{UPSTICahierDesCharges}

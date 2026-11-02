@@ -1,0 +1,39 @@
+\section{Projet 12 — Black Jack adapté}
+\setcounter{UPSTInumeroCahier des charges}{0}
+
+\subsection*{Objectif du jeu}
+Adapter un Black Jack simplifié avec un jeu de 52 cartes, tirage sans remise, calcul des scores et du gagnant. Le joueur 1 est un joueur physique, le joueur 2 est le programme.
+
+\subsection*{Règles du jeu}
+\begin{itemize}
+  \item Jeu de \textbf{52 cartes} encodées \texttt{CCVV} (couleur$\times$100 + valeur). Couleurs : 72=\texttt{'H'} (c\oe{}ur), 80=\texttt{'P'} (pique), 84=\texttt{'T'} (trèfle), 67=\texttt{'C'} (carreau).
+  \item Codes des cartes : 1 (As), 2, \ldots, 10, 11 (Valet), 12 (Dame), 13 (Roi).
+  \item \textbf{Valeur} des cartes : 1 point pour l'As, 2 pour 2, \ldots, 9 pour 9, puis \textbf{10} pour 10, Valet, Dame et Roi.
+  \item Le programme distribue \textbf{2 cartes} au joueur 1, additionne leurs valeurs et lui demande s'il en veut une autre. Il peut en demander autant qu'il veut, mais s'il dépasse 21, son score vaut 0 et il passe la main.
+  \item Le joueur 2 (le programme) tire \textbf{autant de cartes} que le joueur 1. Le plus grand score gagne.
+  \item Les cartes de chaque joueur sont rangées dans un tableau de 20 cases (pour être large).
+\end{itemize}
+
+\subsection*{Cahier des charges}
+\begin{UPSTICahierDesCharges}{1}
+\begin{itemize}
+  \item Tirage des cartes \textbf{sans remise} : si au premier tirage (sur 52 cases) la case n°19 est choisie, on remplace son contenu par celui de la dernière case ; le tirage suivant se fait sur 51 cases \textit{(voir section~\ref{sec:tirage-sans-remise})}.
+  \item Affichage des cartes tirées et proposition de tirer de nouvelles cartes.
+  \item Calcul et affichage des scores, annonce du vainqueur.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{2}
+\begin{itemize}
+  \item En cas de match nul, une carte supplémentaire est tirée à chacun ; sa valeur s'ajoute à l'ancienne somme. Le vainqueur est celui qui obtient le plus grand score sans dépasser 21. Si les deux dépassent 21, c'est la somme de toutes les cartes qui départage.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{3}
+\begin{itemize}
+  \item Mode \textbf{2 joueurs}; comparaison et annonce du gagnant.
+  \item Rejouabilité et présentation.
+  \item Factoriser en fonctions.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+

@@ -2,15 +2,24 @@
 \setcounter{UPSTInumeroCahier des charges}{0}
 
 \subsection*{Objectif du jeu}
-Simuler un bandit manchot à 3 rouleaux et gérer le capital du joueur selon les combinaisons obtenues.
+Simuler un bandit manchot (machines à sous) à 3 rouleaux et gérer le capital du joueur selon les combinaisons obtenues.
+
 
 \subsection*{Règles du jeu}
 \begin{itemize}
   \item 3 \textbf{rouleaux} de 11 figures (tableau 2D). Codes : \texttt{7, B, L, C} (sept, barre, citron, cerise).
   \item Le joueur commence avec \textbf{100 points} et mise 1 ou 3 points.
   \item Appui sur \texttt{J} : tirage aléatoire d’une figure par rouleau; affichage en ligne des trois codes.
-  \item Gagne/perd selon les combinaisons définies; le capital est mis à jour; le joueur peut continuer (\texttt{O/N}).
+  \item Le joueur gagne si une des combinaisons ci-dessous apparaît (\textbf{peu importe l'ordre}), sinon il perd sa mise ; le capital est mis à jour ; le joueur peut continuer (\texttt{O/N}).
 \end{itemize}
+
+\subsection*{Les rouleaux et les combinaisons}
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{sources/images/bandit_manchot_rouleaux.png}
+\end{center}
+Dans le programme : 7 est mémorisé par \texttt{'7'}, BAR par \texttt{'B'}, cerise par \texttt{'C'}, citron par \texttt{'L'}.
+
+\textit{Conseils :} ranger les 3 figures tirées dans un tableau ; en mode test, vous pouvez modifier les rouleaux pour favoriser une combinaison.
 
 \subsection*{Cahier des charges}
 \begin{UPSTICahierDesCharges}{1}
@@ -24,7 +33,7 @@ Simuler un bandit manchot à 3 rouleaux et gérer le capital du joueur selon les
 \begin{UPSTICahierDesCharges}{2}
 \begin{itemize}
   \item Implémenter les \textbf{mises} (1 ou 3), détailler les combinaisons gagnantes/perdantes.
-  \item Autoriser de \textbf{conserver} un ou plusieurs rouleaux (ex.\,saisie \texttt{23}) avec pénalité de points.
+  \item Si aucune combinaison n'apparaît, le joueur peut \textbf{rejouer} un ou plusieurs rouleaux (ex.\,saisie \texttt{23} pour rejouer les rouleaux 2 et 3, puis \texttt{J}) ; il perd alors 1 point (ou 3 selon la mise de départ). Et ainsi de suite jusqu'à obtenir une combinaison ou ne plus avoir de points.
   \item Récapitulatif clair de fin.
 \end{itemize}
 \end{UPSTICahierDesCharges}
@@ -37,5 +46,3 @@ Simuler un bandit manchot à 3 rouleaux et gérer le capital du joueur selon les
 \end{itemize}
 \end{UPSTICahierDesCharges}
 
-\subsection*{Squelette de départ}
-\lstinputlisting[language=C]{bandit_squelette.c}

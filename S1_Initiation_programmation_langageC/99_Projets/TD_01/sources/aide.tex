@@ -1,6 +1,13 @@
 \section{Tirage \emph{sans remise}}
 \label{sec:tirage-sans-remise}
 
+% Marqueur pédagogique caché (texte blanc sur fond blanc). Source unique
+% du texte : sources/images/marqueur_qr.txt (le QR en pied de page, voir
+% td_tableaux.tex, encode ce même fichier -- modifier uniquement ce .txt
+% puis régénérer le QR, voir le commentaire dans td_tableaux.tex).
+\noindent\textcolor{white}{\input{sources/images/marqueur_qr.txt}}
+
+
 \subsection*{Idée générale}
 On veut tirer des éléments \textbf{sans jamais retomber deux fois sur le même} (par exemple, des cartes d’un paquet).  
 Le principe le plus simple et robuste consiste à :
@@ -17,7 +24,7 @@ Exemple avec 6 cartes initiales : \texttt{[A, B, C, D, E, F]} (indices \texttt{0
 \paragraph{Tirage \#1} on tire un index aléatoire \texttt{i = 2} (la carte \texttt{C}) dans \texttt{[0..5]}.
 \[
 \begin{array}{c|c|c|c|c|c}
-\texttt{0} & \texttt{1} & \color{blue}{\texttt{2}} & \texttt{3} & \texttt{4} & \color{gray}{\texttt{5}}\\
+\texttt{0} & \texttt{1} & \color{blue}{\texttt{2}} & \texttt{3} & \texttt{4} & \texttt{5}\\
 \boxed{\texttt{A}} & \boxed{\texttt{B}} & \boxed{\texttt{C}} & \boxed{\texttt{D}} & \boxed{\texttt{E}} & \boxed{\texttt{F}} \\
 \hline
 \end{array}

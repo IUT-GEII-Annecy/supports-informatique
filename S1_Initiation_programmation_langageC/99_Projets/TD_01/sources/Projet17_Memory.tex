@@ -1,0 +1,44 @@
+\section{Projet 17 — Memory}
+\setcounter{UPSTInumeroCahier des charges}{0}
+
+\subsection*{Objectif du jeu}
+Retrouver les 8 paires de valeurs identiques cachées dans une grille de 16 cases, en un minimum de tentatives.
+
+\subsection*{Règles du jeu}
+\begin{itemize}
+  \item La grille compte \textbf{16 cases} ($4\times4$, tableau d'entiers ou de \texttt{char}) contenant \textbf{8 paires} : les valeurs \texttt{1} à \texttt{8}, chacune en double, placées au hasard.
+  \item Par défaut toutes les cases sont \textbf{cachées} et affichées \texttt{?}.
+  \item À chaque tentative, le joueur indique \textbf{deux positions distinctes} ; leurs valeurs sont révélées.
+  \item Si les deux valeurs sont \textbf{identiques}, la paire est trouvée et reste visible définitivement ; sinon les deux cases sont de nouveau cachées après une courte pause (\texttt{sleep()}, voir section Bonus).
+  \item Le jeu est \textbf{gagné} lorsque les 8 paires sont trouvées.
+\end{itemize}
+
+\textit{Conseil :} on utilise deux tableaux de même taille : l'un contient les \textbf{valeurs}, l'autre l'\textbf{état} de chaque case (trouvée ou non). Le mélange initial repose sur des échanges de cases, comme le tirage sans remise (section~\ref{sec:tirage-sans-remise}).
+
+\subsection*{Cahier des charges}
+\begin{UPSTICahierDesCharges}{1}
+\begin{itemize}
+  \item Remplir la grille avec les valeurs \texttt{1} à \texttt{8} \textbf{en double}.
+  \item \textbf{Mélanger} la grille aléatoirement par échanges de cases.
+  \item Afficher la grille \textbf{cachée} (\texttt{?}) ; en mode test, afficher aussi la grille réelle.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{2}
+\begin{itemize}
+  \item Saisir \textbf{deux positions} (vérifier qu'elles sont valides, distinctes et non déjà trouvées).
+  \item Afficher \textbf{temporairement} les deux valeurs réelles, puis les \textbf{comparer}.
+  \item Mettre à jour le \textbf{tableau d'état} (case trouvée oui/non) et ré-afficher la grille après la pause.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{3}
+\begin{itemize}
+  \item Compter et afficher le \textbf{nombre de tentatives}.
+  \item Détecter la \textbf{victoire} (8 paires sur 8).
+  \item Structurer en fonctions (remplissage, mélange, affichage, saisie, comparaison).
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\textit{Amélioration :} mode \textbf{2 joueurs} : le joueur qui trouve une paire rejoue ; le vainqueur est celui qui a trouvé le plus de paires.
+

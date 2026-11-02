@@ -1,0 +1,42 @@
+\section{Projet 16 — Le taquin}
+\setcounter{UPSTInumeroCahier des charges}{0}
+
+\subsection*{Objectif du jeu}
+Remettre dans l'ordre les nombres 1 à 15 d'une grille $4\times4$ en faisant glisser les tuiles dans la case vide.
+
+\subsection*{Règles du jeu}
+\begin{itemize}
+  \item La grille est un \textbf{tableau 2D d'entiers} $4\times4$ contenant les nombres \texttt{1} à \texttt{15} et une \textbf{case vide codée \texttt{0}}.
+  \item Le joueur désigne une tuile \textbf{adjacente} à la case vide (par sa valeur, ou par une direction) ; adjacente signifie au-dessus, en dessous, à gauche ou à droite (pas en diagonale).
+  \item Si la tuile est bien adjacente, elle \textbf{échange sa position} avec la case vide ; sinon le coup est refusé.
+  \item Le jeu est \textbf{gagné} lorsque les tuiles sont rangées dans l'ordre croissant, ligne par ligne, la case vide étant en bas à droite.
+\end{itemize}
+
+\textit{Attention :} remplir la grille par un mélange totalement aléatoire des 16 valeurs produit, une fois sur deux, un taquin \textbf{impossible à résoudre}. On part donc de la grille triée et on effectue une longue série de \textbf{déplacements valides} tirés au hasard : la grille obtenue est toujours soluble. Le déplacement lui-même n'est qu'un \textbf{échange} de deux cases, comme dans le tirage sans remise (section~\ref{sec:tirage-sans-remise}).
+
+\subsection*{Cahier des charges}
+\begin{UPSTICahierDesCharges}{1}
+\begin{itemize}
+  \item Initialiser la grille \textbf{triée} (\texttt{1..15} puis \texttt{0}) et l'\textbf{afficher} (case vide affichée par un espace).
+  \item Écrire une fonction qui retrouve la \textbf{position (ligne, colonne)} de la case vide.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{2}
+\begin{itemize}
+  \item \textbf{Mélanger} la grille par une série (par ex.\,200) d'échanges valides aléatoires de la case vide avec une voisine.
+  \item Demander au joueur la tuile à déplacer, vérifier qu'elle est \textbf{adjacente} à la case vide, puis effectuer l'\textbf{échange} ; sinon afficher un message d'erreur.
+  \item Ré-afficher la grille après chaque coup.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{3}
+\begin{itemize}
+  \item Détecter la \textbf{victoire} par comparaison avec la grille triée.
+  \item Compter et afficher le \textbf{nombre de coups} joués.
+  \item Structurer en fonctions (affichage, recherche de la case vide, déplacement, test de victoire) et sécuriser les saisies.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\textit{Amélioration :} chronométrer la partie avec \texttt{time(NULL)} (voir section Bonus) et afficher le temps de résolution.
+

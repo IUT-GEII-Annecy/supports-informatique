@@ -1,0 +1,56 @@
+\section{Projet 7 — Le morpion}
+\setcounter{UPSTInumeroCahier des charges}{0}
+
+\subsection*{Objectif du jeu}
+Réaliser un morpion (3×3) jouable à deux joueurs au clavier, avec affichage ASCII et détection de victoire/égalité.
+
+\subsection*{Règles du jeu}
+\begin{itemize}
+  \item Affichage de la grille dans le terminal avec des caractères de base : \texttt{'X'} pour le joueur 1, \texttt{'O'} pour le joueur 2.
+  \item Les joueurs jouent à tour de rôle tant que 3 caractères ne sont pas alignés. C'est le programme qui vérifie les alignements.
+  \item Si un joueur joue sur une case inexistante ou déjà occupée, il \textbf{perd son tour}.
+  \item Le jeu se joue avec le \textbf{pavé numérique} du clavier.
+  \item En mémoire, la grille est un tableau de \textbf{9 entiers} : \texttt{0} = case vide, \texttt{1} = 'X' (J1), \texttt{2} = 'O' (J2).
+\end{itemize}
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{sources/images/clavier_pave_numerique.png}\\
+    \textit{Clavier pour jouer}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.6\textwidth]{sources/images/morpion_grille_exemple.png}\\
+    \textit{Grille correspondant à \texttt{\{1,0,0,0,2,0,1,0,2\}}}
+  \end{minipage}
+\end{center}
+
+Pour tester, déclarez le tableau et initialisez-le avec ces valeurs, puis affichez la grille pour vérifier (voir aide).
+
+\subsection*{Cahier des charges}
+\begin{UPSTICahierDesCharges}{1}
+\begin{itemize}
+  \item Boucle infinie munie d'un compteur de passages : si le compteur est pair, afficher \og joueur 1 joue \fg{}, sinon \og joueur 2 joue \fg{}. \textbf{Même code} pour les deux joueurs (c'est la variable \texttt{l\_joueur} qui fait la différence).
+  \item Saisie de la case par le joueur \textbf{sans vérification} : affecter la case correspondante avec 1 (J1) ou 2 (J2).
+  \item Afficher la grille après chaque coup.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{2}
+\begin{itemize}
+  \item Si la case n'existe pas ou est déjà occupée, le joueur \textbf{perd son tour} : la case n'est pas affectée et on passe au joueur suivant.
+  \item \textbf{Détecter} la victoire : le joueur 1 gagne lorsque le \textbf{produit} des 3 cases d'une ligne, d'une colonne ou d'une diagonale vaut 1 ; le joueur 2 lorsqu'il vaut 8.
+  \item \textbf{Détecter} la fin de partie sans vainqueur : le produit de toutes les cases est non nul.
+\end{itemize}
+\textit{Aide :} pensez à utiliser une ou plusieurs boucles \texttt{for} pour les tests.
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{3}
+\begin{itemize}
+  \item Jouer contre l'ordinateur, muni d'une \textbf{intelligence artificielle} pour ne pas perdre et essayer de gagner.
+  \item Écrire une fonction prenant en entrée le tableau de jeu et retournant 1 si le joueur 1 a gagné, 2 si le joueur 2 a gagné, -1 sinon. Demandez de l'aide à votre enseignant.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+

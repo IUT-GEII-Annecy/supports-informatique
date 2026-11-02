@@ -1,0 +1,46 @@
+\section{Projet 15 — 2048}
+\setcounter{UPSTInumeroCahier des charges}{0}
+
+\subsection*{Objectif du jeu}
+Faire glisser et fusionner les tuiles d'une grille $4\times4$ pour obtenir une tuile de valeur \textbf{2048}.
+
+\subsection*{Règles du jeu}
+\begin{itemize}
+  \item La grille est un \textbf{tableau 2D d'entiers} $4\times4$ ; une case vide contient \texttt{0}.
+  \item Au départ, \textbf{2 tuiles de valeur 2} sont placées au hasard sur deux cases vides \textbf{distinctes}.
+  \item À chaque coup, le joueur choisit une direction : \texttt{8}/\texttt{2}/\texttt{4}/\texttt{6} (pavé numérique) ou \texttt{z}/\texttt{s}/\texttt{q}/\texttt{d} pour haut/bas/gauche/droite.
+  \item Toutes les tuiles \textbf{glissent} dans cette direction jusqu'au bord ou jusqu'à une autre tuile.
+  \item Deux tuiles adjacentes \textbf{de même valeur} dans le sens du mouvement \textbf{fusionnent} en une tuile de valeur double. Une tuile ne fusionne \textbf{qu'une seule fois par coup} (pas de fusion en chaîne : la ligne \texttt{2 2 4 0} poussée à gauche donne \texttt{4 4 0 0}, et non \texttt{8 0 0 0}).
+  \item Si le coup a \textbf{modifié la grille}, une nouvelle tuile (\texttt{2} ou \texttt{4}, au hasard) apparaît sur une case vide.
+  \item \textbf{Victoire} dès qu'une tuile atteint 2048. \textbf{Défaite} si la grille est pleine et qu'aucune direction ne peut plus la modifier.
+\end{itemize}
+
+\textit{Conseil :} commencer par traiter une \textbf{seule ligne} vers la gauche (tableau 1D de 4 cases) : on tasse d'abord les valeurs non nulles vers la gauche (décalage), on fusionne les paires voisines égales, puis on tasse à nouveau. Les trois autres directions se ramènent à ce cas en parcourant la grille dans un autre ordre.
+
+\subsection*{Cahier des charges}
+\begin{UPSTICahierDesCharges}{1}
+\begin{itemize}
+  \item Déclarer la grille $4\times4$ et l'\textbf{initialiser à 0}.
+  \item Placer \textbf{2 tuiles de valeur 2} sur deux cases vides distinctes tirées au hasard.
+  \item \textbf{Afficher} la grille proprement (colonnes alignées, \texttt{.} pour une case vide).
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{2}
+\begin{itemize}
+  \item Écrire le \textbf{glissement + fusion vers la gauche}, ligne par ligne, en respectant la règle « une seule fusion par tuile et par coup ».
+  \item Tester sur des lignes choisies à la main (\texttt{2 2 2 2} $\rightarrow$ \texttt{4 4 0 0}, \texttt{0 2 0 2} $\rightarrow$ \texttt{4 0 0 0}, \texttt{4 2 2 0} $\rightarrow$ \texttt{4 4 0 0}).
+  \item Indiquer si le coup a \textbf{modifié} la grille (comparaison avant/après).
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\begin{UPSTICahierDesCharges}{3}
+\begin{itemize}
+  \item Gérer les \textbf{4 directions} et la saisie du joueur (refuser une touche invalide).
+  \item Ajouter une \textbf{nouvelle tuile} (2 ou 4) après chaque coup valide uniquement.
+  \item Détecter la \textbf{victoire} (tuile 2048) et la \textbf{défaite} (grille pleine et aucun coup possible) ; structurer en fonctions.
+\end{itemize}
+\end{UPSTICahierDesCharges}
+
+\textit{Amélioration :} score cumulé (somme des valeurs créées par fusion) ; affichage \textbf{couleur} selon la valeur de la tuile avec les codes ANSI \texttt{\textbackslash033[4Xm} déjà vus dans les projets 5 et 11.
+
