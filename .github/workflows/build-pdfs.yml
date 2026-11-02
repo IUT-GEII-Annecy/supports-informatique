@@ -14,6 +14,8 @@ jobs:
       group-label: "Séquence"
       classify-mode: folder
       exam-dir-pattern: /Evaluations/
+      projects-dir-pattern: /99_Projets/
+      projects-group-label: "Projet"
       enable-tp-downloads: true
       solutions-repo: IUT-GEII-Annecy/solutions
       solutions-repo-ref: main
