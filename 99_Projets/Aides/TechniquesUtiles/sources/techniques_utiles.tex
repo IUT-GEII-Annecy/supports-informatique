@@ -1,0 +1,104 @@
+\section{Tirage \emph{sans remise}}
+\label{sec:tirage-sans-remise}
+
+\subsection{Idée générale}
+On veut tirer des éléments sans jamais retomber deux fois sur le même
+(par exemple, des cartes d'un paquet). Le principe le plus simple et
+robuste consiste à :
+\begin{enumerate}
+  \item Stocker tous les éléments dans un tableau (paquet).
+  \item À chaque tirage, tirer un index aléatoire parmi les positions encore disponibles $[0\,..\,\texttt{borne}]$.
+  \item Échanger l'élément tiré avec celui en fin de zone disponible (\texttt{borne}), puis réduire la borne d'1.
+\end{enumerate}
+Ainsi, la zone \texttt{[0..borne]} contient encore les éléments
+disponibles, et la zone \texttt{[borne+1..fin]} contient les éléments
+déjà tirés.
+
+\subsection{Schéma pas à pas}
+Exemple avec 6 cartes initiales : \texttt{[A, B, C, D, E, F]} (indices \texttt{0..5}), \texttt{borne = 5}.
+
+\paragraph{Tirage \#1} on tire un index aléatoire \texttt{i = 2} (la carte \texttt{C}) dans \texttt{[0..5]}.
+\[
+\begin{array}{c|c|c|c|c|c}
+\texttt{0} & \texttt{1} & \color{blue}{\texttt{2}} & \texttt{3} & \texttt{4} & \texttt{5}\\
+\boxed{\texttt{A}} & \boxed{\texttt{B}} & \boxed{\texttt{C}} & \boxed{\texttt{D}} & \boxed{\texttt{E}} & \boxed{\texttt{F}} \\
+\hline
+\end{array}
+\]
+On échange la case \texttt{i=2} avec la case \texttt{borne=5} :
+\[
+\begin{array}{c|c|c|c|c|c}
+\texttt{0} & \texttt{1} & \color{blue}{\texttt{2}} & \texttt{3} & \texttt{4} & \color{gray}{\texttt{5}}\\
+\boxed{\texttt{A}} & \boxed{\texttt{B}} & \boxed{\texttt{F}} & \boxed{\texttt{D}} & \boxed{\texttt{E}} & \fbox{\texttt{C}} \\
+\hline
+\end{array}
+\]
+Puis \texttt{borne ← 4}. La carte \texttt{C} est sortie (à droite), elle ne sera plus retirable.
+
+\paragraph{Tirage \#2} on tire \texttt{i = 1} dans \texttt{[0..4]} (car \texttt{borne=4}) :
+\[
+\begin{array}{c|c|c|c|c|c}
+\texttt{0} & \color{blue}{\texttt{1}} & \texttt{2} & \texttt{3} & \color{gray}{\texttt{4}} & \color{gray}{\texttt{5}}\\
+\boxed{\texttt{A}} & \boxed{\color{blue}{\texttt{B}}} & \boxed{\texttt{F}} & \boxed{\texttt{D}} & \boxed{\texttt{E}} & \fbox{\texttt{C}} \\
+\hline
+\end{array}
+\]
+On échange avec \texttt{borne=4}, puis \texttt{borne ← 3} :
+\[
+\begin{array}{c|c|c|c|c|c}
+\texttt{0} & \texttt{1} & \texttt{2} & \texttt{3} & \color{gray}{\texttt{4 (tirée)}} & \color{gray}{\texttt{5 (tirée)}}\\
+\boxed{\texttt{A}} & \boxed{\texttt{E}} & \boxed{\texttt{F}} & \boxed{\texttt{D}} & \fbox{\texttt{B}} & \fbox{\texttt{C}} \\
+\hline
+\end{array}
+\]
+On poursuit ainsi jusqu'à ce que \texttt{borne < 0} (tous les éléments tirés), ou qu'on ait tiré le nombre voulu d'éléments.
+
+\subsection{Erreurs fréquentes à éviter}
+\begin{itemize}
+  \item Ne pas réduire la borne : risque de re-tirer le même élément.
+  \item Tirer sur toute la longueur \texttt{[0..N-1]} à chaque fois : doublons possibles.
+\end{itemize}
+
+\section{Temporisation avec \texttt{sleep}}
+
+La fonction \texttt{sleep()}, déclarée dans \texttt{<unistd.h>}, suspend
+l'exécution du programme pendant un nombre de secondes donné. Elle est
+utile pour marquer une pause entre deux affichages (par exemple, laisser
+le temps de lire un message avant d'effacer l'écran).
+
+\begin{lstlisting}[language=C]
+#include <unistd.h>
+
+printf("Préparez-vous...\n");
+sleep(3); // attente bloquante de 3 secondes
+printf("C'est parti !\n");
+\end{lstlisting}
+
+\begin{UPSTIinfor}{Pour une attente plus courte}
+La fonction \texttt{usleep()}, également dans \texttt{<unistd.h>}, attend
+en microsecondes (\texttt{usleep(500000)} attend 0,5 seconde).
+\end{UPSTIinfor}
+
+\section{Couleurs dans la console}
+
+Un terminal qui interprète les séquences ANSI accepte des codes
+d'échappement pour changer la couleur du texte ou du fond avant un
+affichage, et pour revenir à la normale ensuite. Le code général est
+\texttt{"\textbackslash033[<code>m"}, suivi en fin d'affichage de
+\texttt{"\textbackslash033[0m"} pour réinitialiser.
+
+\begin{lstlisting}[language=C]
+printf("\033[31mTexte rouge\033[0m\n");   // texte rouge
+printf("\033[42m  \033[0m\n");            // carré de fond vert
+\end{lstlisting}
+
+Quelques codes de fond courants : \texttt{40} noir, \texttt{41} rouge,
+\texttt{42} vert, \texttt{44} bleu. Les mêmes valeurs diminuées de 10
+(\texttt{30}, \texttt{31}, \texttt{32}, \texttt{34}) s'appliquent à la
+couleur du texte plutôt qu'à son fond.
+
+\begin{UPSTIinfor}{Effacer le terminal}
+L'appel \texttt{system("clear");} efface le contenu affiché dans le
+terminal, utile en complément d'une temporisation pour rafraîchir
+l'affichage d'un plateau de jeu.
+\end{UPSTIinfor}

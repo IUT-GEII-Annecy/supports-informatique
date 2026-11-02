@@ -1,0 +1,74 @@
+\section{Évaluation}
+
+L'évaluation repose sur la soutenance : la compréhension du code présenté
+et la capacité à répondre aux questions posées sur son fonctionnement. Un
+code qui fonctionne mais n'est pas compris par son auteur n'est pas
+considéré comme acquis.
+
+\subsection{Pendant la réalisation et la soutenance}
+\begin{itemize}
+  \item Le code doit être écrit et compris par l'étudiant lui-même : pas d'intelligence artificielle.
+  \item Pas de téléphone.
+\end{itemize}
+
+\section{Règles de codage}
+
+Ces règles s'appliquent à tous les projets de ce dossier. Elles sont
+vérifiées lors de la relecture du code et discutées en soutenance.
+
+\subsection{Pas de variable globale non justifiée}
+
+Toute donnée nécessaire à une fonction lui est transmise par paramètre
+(ou renvoyée par valeur de retour), jamais via une variable globale. Une
+variable globale ne se justifie que dans des cas rares et documentés
+(exemple : une constante de configuration). Dans ce cas, le commentaire
+explique pourquoi elle ne peut pas être un paramètre, et son nom est
+préfixé \texttt{g\_} (exemple : \texttt{g\_nb\_joueurs\_max}). Ce préfixe
+est la seule exception à la règle \og pas de préfixe \fg{} de la section
+suivante : une variable globale doit sauter aux yeux partout où elle est
+utilisée.
+
+\subsection{Noms de variables, fonctions et tableaux (inspiré de la norme 42)}
+
+Un nom doit permettre de comprendre le rôle de l'identifiant sans lire le
+reste du code. Les variables locales et les tableaux ne portent pas de
+préfixe de type façon notation hongroise (\texttt{l\_}, \texttt{tab\_}...) :
+le rôle se lit dans le nom, pas dans un préfixe. Les seuls préfixes
+autorisés sont ceux listés ci-dessous, chacun avec un sens précis.
+
+\begin{itemize}
+  \item \textbf{snake\_case partout}, jamais de camelCase : \texttt{nb\_joueurs}, pas \texttt{nbJoueurs}.
+  \item \textbf{Variables} : nom explicite et complet. Préférer \texttt{nb\_joueurs} à \texttt{n}, \texttt{indice\_carte\_tiree} à \texttt{i2}. Seuls \texttt{i}, \texttt{j}, \texttt{k} sont tolérés, uniquement comme compteur de boucle local et de portée très courte (\texttt{for (int i = 0; ...)}).
+  \item \textbf{Une seule déclaration par ligne} : \texttt{int a; int b;}, jamais \texttt{int a, b;}.
+  \item \textbf{Booléens} : préfixés par \texttt{est\_}, \texttt{a\_} ou \texttt{peut\_}, pour que leur lecture soit une question ou une affirmation : \texttt{est\_gagnant}, \texttt{a\_rejoue}, \texttt{peut\_tirer}.
+  \item \textbf{Tableaux} : nom explicite, au pluriel si possible, décrivant ce qu'il contient, sans préfixe \texttt{tab\_} : \texttt{scores}, \texttt{cartes\_tirees}, \texttt{grille}.
+  \item \textbf{Fonctions} : \texttt{verbe\_nom}, une action claire par fonction : \texttt{calculer\_score()}, \texttt{afficher\_plateau()}. Une fonction qui renvoie un booléen se lit comme une question : \texttt{est\_victoire()}, \texttt{peut\_jouer()}.
+  \item \textbf{Constantes et macros} : \texttt{UPPER\_SNAKE\_CASE} : \texttt{NB\_JOUEURS\_MAX}, \texttt{TAILLE\_GRILLE}.
+  \item \textbf{Variable globale justifiée} : préfixe \texttt{g\_} (voir ci-dessus).
+  \item \textbf{\texttt{struct}, \texttt{enum}, \texttt{union}, \texttt{typedef}} : préfixe \texttt{s\_} pour une struct, \texttt{e\_} pour un enum, \texttt{u\_} pour une union, \texttt{t\_} pour le nom créé par \texttt{typedef} (exemple : \texttt{typedef struct s\_joueur \{ ... \} t\_joueur;}). Ces constructions ne sont pas obligatoires dans ces projets ; si elles sont utilisées, ces préfixes s'appliquent.
+\end{itemize}
+
+\subsection{Indentation}
+
+Chaque niveau d'imbrication (fonction, boucle, condition) est indenté de
+façon cohérente et visible, de sorte que la structure du code soit
+lisible sans compter les accolades. Un éditeur de code réindente
+généralement un fichier automatiquement ; prendre l'habitude de le faire
+avant de rendre son travail.
+
+\begin{UPSTIinfor}{Pour aller plus loin : éviter les nombres magiques}
+Une valeur qui a un sens précis dans le programme (une taille de grille,
+un code de carte, un nombre maximal de joueurs...) est plus lisible et
+plus facile à modifier si elle porte un nom, plutôt que d'apparaître en
+dur à plusieurs endroits du code. La directive \texttt{\#define} n'ayant
+pas encore été vue en cours au moment de ces projets, ce point est une
+information, pas une règle vérifiée en soutenance.
+\begin{lstlisting}[language=C]
+#define TAILLE_GRILLE 4
+
+int grille[TAILLE_GRILLE][TAILLE_GRILLE];
+\end{lstlisting}
+\texttt{TAILLE\_GRILLE} se comporte comme la valeur \texttt{4} partout où
+elle apparaît, mais en changeant une seule ligne, toute la grille change
+de taille.
+\end{UPSTIinfor}
