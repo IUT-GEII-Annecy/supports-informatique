@@ -1,33 +1,53 @@
-\section{Projet 17 — Memory}
+\section{Projet 14 — Memory}
 
 \subsection*{Objectif du jeu}
-Retrouver les 8 paires de valeurs identiques cachées dans une grille de 16 cases, en un minimum de tentatives.
+Retrouver les 8 paires de cartes identiques cachées dans une grille de 16 cartes, en un minimum de tentatives.
 
 \subsection*{Règles du jeu}
 \begin{itemize}
-  \item La grille compte \textbf{16 cases} ($4\times4$, tableau d'entiers ou de \texttt{char}) contenant \textbf{8 paires} : les valeurs \texttt{1} à \texttt{8}, chacune en double, placées au hasard.
-  \item Par défaut toutes les cases sont \textbf{cachées} et affichées \texttt{?}.
-  \item À chaque tentative, le joueur indique \textbf{deux positions distinctes} ; leurs valeurs sont révélées.
-  \item Si les deux valeurs sont \textbf{identiques}, la paire est trouvée et reste visible définitivement ; sinon les deux cases sont de nouveau cachées après une courte pause (\texttt{sleep()}, voir section Bonus).
+  \item La grille compte \textbf{16 cartes} ($4\times4$) numérotées de \texttt{1} à \texttt{16}. Chaque carte porte une \textbf{lettre} sur sa face : les lettres \texttt{'A'} à \texttt{'H'}, chacune en \textbf{double} (8 paires).
+  \item Les lettres sont attribuées aux cartes par un \textbf{tirage aléatoire sans remise} (comme les cartes du Poker) : on ne les mélange pas, on les tire une à une.
+  \item Par défaut toutes les cartes sont \textbf{cachées} : le dos d'une carte affiche un \texttt{?} et, juste en dessous, son \textbf{numéro}, toujours visible.
+  \item À chaque tentative, le joueur indique le \textbf{numéro de deux cartes distinctes} ; leurs faces (les lettres) sont révélées.
+  \item Si les deux lettres sont \textbf{identiques}, la paire est trouvée et reste visible définitivement ; sinon les deux cartes sont de nouveau cachées après une courte pause (\texttt{sleep()}, voir section Bonus).
   \item Le jeu est \textbf{gagné} lorsque les 8 paires sont trouvées.
 \end{itemize}
 
-\textit{Conseil :} on utilise deux tableaux de même taille : l'un contient les \textbf{valeurs}, l'autre l'\textbf{état} de chaque case (trouvée ou non). Le mélange initial repose sur des échanges de cases, comme le tirage sans remise (voir la fiche d'aide « Techniques utiles », section Tirage sans remise).
+\subsection*{Affichage de la grille}
+Au départ, toutes les cartes sont cachées. L'affichage ci-dessous est fourni dans le squelette :
+\begin{lstlisting}[basicstyle=\ttfamily\small,numbers=none]
++----+----+----+----+
+| ?  | ?  | ?  | ?  |
+|  1 |  2 |  3 |  4 |
++----+----+----+----+
+| ?  | ?  | ?  | ?  |
+|  5 |  6 |  7 |  8 |
++----+----+----+----+
+| ?  | ?  | ?  | ?  |
+|  9 | 10 | 11 | 12 |
++----+----+----+----+
+| ?  | ?  | ?  | ?  |
+| 13 | 14 | 15 | 16 |
++----+----+----+----+
+\end{lstlisting}
+Une carte \textbf{trouvée} affiche sa lettre à la place du \texttt{?} (et de son numéro).
+
+\textit{Conseil :} on utilise trois tableaux de 16 cases : les \textbf{lettres} des cartes, l'\textbf{état} de chaque carte (trouvée ou non) et un \textbf{paquet} de 16 lettres (\texttt{AABBCC\dots HH}) dans lequel on tire. Le tirage sans remise remplace la case tirée par la dernière case du paquet, puis réduit le paquet d'une case (voir la fiche d'aide « Techniques utiles », section Tirage sans remise). Pour tester, remplacez le tirage aléatoire par un tirage non aléatoire.
 
 \subsection*{Cahier des charges}
 \begin{UPSTICahierDesCharges}{1}
 \begin{itemize}
-  \item Remplir la grille avec les valeurs \texttt{1} à \texttt{8} \textbf{en double}.
-  \item \textbf{Mélanger} la grille aléatoirement par échanges de cases.
-  \item Afficher la grille \textbf{cachée} (\texttt{?}) ; en mode test, afficher aussi la grille réelle.
+  \item Remplir le paquet avec les lettres \texttt{'A'} à \texttt{'H'} \textbf{en double}.
+  \item Attribuer une lettre à chacune des 16 cartes par \textbf{tirage aléatoire sans remise} dans le paquet.
+  \item Afficher la grille \textbf{cachée} (fournie dans le squelette) ; en mode test, afficher aussi les lettres réelles.
 \end{itemize}
 \end{UPSTICahierDesCharges}
 
 \begin{UPSTICahierDesCharges}{2}
 \begin{itemize}
-  \item Saisir \textbf{deux positions} (vérifier qu'elles sont valides, distinctes et non déjà trouvées).
-  \item Afficher \textbf{temporairement} les deux valeurs réelles, puis les \textbf{comparer}.
-  \item Mettre à jour le \textbf{tableau d'état} (case trouvée oui/non) et ré-afficher la grille après la pause.
+  \item Saisir les \textbf{numéros de deux cartes} (vérifier qu'ils sont compris entre 1 et 16, distincts et que les cartes ne sont pas déjà trouvées).
+  \item Afficher \textbf{temporairement} les deux lettres réelles, puis les \textbf{comparer}.
+  \item Mettre à jour le \textbf{tableau d'état} (carte trouvée oui/non) et ré-afficher la grille après la pause.
 \end{itemize}
 \end{UPSTICahierDesCharges}
 
@@ -35,7 +55,7 @@ Retrouver les 8 paires de valeurs identiques cachées dans une grille de 16 case
 \begin{itemize}
   \item Compter et afficher le \textbf{nombre de tentatives}.
   \item Détecter la \textbf{victoire} (8 paires sur 8).
-  \item Structurer en fonctions (remplissage, mélange, affichage, saisie, comparaison).
+  \item Structurer en fonctions (remplissage du paquet, tirage, affichage, saisie, comparaison).
 \end{itemize}
 \end{UPSTICahierDesCharges}
 
