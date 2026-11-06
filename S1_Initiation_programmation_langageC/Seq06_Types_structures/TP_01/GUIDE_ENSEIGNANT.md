@@ -22,7 +22,8 @@ pas la marche à suivre. En fin de séance, les étudiants rendent un unique fic
 `jeu_combat.c` constituant le mini-jeu complet et fonctionnel (après l'étape 12).
 
 **Interactivité : un vrai jeu, pas une simulation qui se déroule seule.** À partir de l'étape 5,
-le joueur doit prendre de vraies décisions au clavier (`scanf`) pendant la partie : choisir
+le joueur doit prendre de vraies décisions au clavier (fonctions `cs50` : `get_int`,
+`get_string`) pendant la partie : choisir
 d'attaquer, choisir sa cible parmi plusieurs monstres, décider d'utiliser une potion plutôt que
 d'attaquer. L'IA des monstres reste volontairement simple (attaque automatique) : c'est le
 joueur qui doit avoir des choix à faire, pas le jeu qui s'affiche tout seul.
@@ -138,7 +139,8 @@ difficulté sans avoir à relire tout son code.
 2. **Étape 5 (premier menu joueur)**
    - C'est la première fois que le joueur prend une décision au clavier pendant la partie
      (et non plus seulement à la création des personnages) : vérifier que chacun sait lire un
-     entier avec `scanf("%d", ...)` pour un choix de menu
+     entier avec `get_int(...)` pour un choix de menu (pas besoin de vérifier un code retour,
+     `get_int` relit automatiquement tant que la saisie n'est pas un entier valide)
 
 3. **Étape 6-7 (tableaux de structures)**
    - Rappeler le lien avec la séquence Tableaux : `equipe[i].stats.pv` combine indexation et
@@ -150,10 +152,11 @@ difficulté sans avoir à relire tout son code.
      saisi est dans les bornes **et** correspond à un monstre encore vivant avant d'attaquer
      (sinon redemander la saisie)
 
-4. **Étape 9 (scanf et chaînes)**
-   - Les étudiants ont souvent des problèmes avec `scanf("%s", ...)` pour les noms contenant des
-     espaces (non traité ici, les noms sont sans espace) — rappeler `%29s` avec la taille du
-     tableau moins 1
+4. **Étape 9 (`get_string` et chaînes)**
+   - Avec `get_string`, la saisie d'un nom contenant des espaces (par exemple « Jean Dupont »)
+     fonctionne nativement, contrairement à `scanf("%s", ...)` qui s'arrête au premier espace —
+     mais ce TP suppose des noms sans espace pour rester simple ; signaler ce point si un
+     étudiant s'interroge sur la différence avec `scanf`
 
 5. **Étape 10 (menu attaquer/potion)**
    - Même logique de menu qu'à l'étape 5, avec un choix supplémentaire : insister sur le fait

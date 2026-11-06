@@ -1,3 +1,4 @@
+#include <cs50.h>
 #include <stdio.h>
 
 #define TAILLE_EQUIPE 3
@@ -15,7 +16,7 @@ typedef enum {
 } Classe;
 
 typedef struct {
-    char nom[30];
+    string nom;
     Classe classe;
     Stats stats;
     int degats_infliges;   // Etape 11
@@ -143,15 +144,11 @@ int main(void)
 {
     Personnage equipe[TAILLE_EQUIPE];
     for (int i = 0; i < TAILLE_EQUIPE; i++) {
-        printf("Personnage %d - Nom: ", i);
-        scanf("%29s", equipe[i].nom);
-        int classe_choisie;
-        printf("Personnage %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", i);
-        scanf("%d", &classe_choisie);
+        equipe[i].nom = get_string("Personnage %d - Nom: ", i);
+        int classe_choisie = get_int("Personnage %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", i);
         equipe[i].classe = (Classe) classe_choisie;
         equipe[i].stats = stats_initiales(equipe[i].classe);
-        printf("Personnage %d - Degats infliges: ", i);
-        scanf("%d", &equipe[i].degats_infliges);
+        equipe[i].degats_infliges = get_int("Personnage %d - Degats infliges: ", i);
     }
 
     printf("\nAttaquant principal : indice %d\n", indice_plus_fort(equipe, TAILLE_EQUIPE));

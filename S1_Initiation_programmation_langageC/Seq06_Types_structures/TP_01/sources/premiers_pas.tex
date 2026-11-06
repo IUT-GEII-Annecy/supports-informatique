@@ -6,10 +6,12 @@
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Déclarer une structure \texttt{Personnage} avec les champs : \texttt{char nom[30]},
+    \item Déclarer une structure \texttt{Personnage} avec les champs : \texttt{string nom},
       \texttt{int pv} et \texttt{int attaque}
     \item Dans le \texttt{main}, créer une variable \texttt{héros} de type \texttt{Personnage}
-    \item Demander à l'utilisateur son nom, ses pv et son attaque
+    \item Demander à l'utilisateur son nom, ses pv et son attaque, avec les fonctions
+      \texttt{get\_string} et \texttt{get\_int} de la librairie \texttt{cs50} (ajouter
+      \texttt{\#include <cs50.h>} en haut du fichier)
     \item Afficher sa fiche sous la forme : \texttt{Nom (PV: x, ATQ: y)}
   \end{itemize}
 
@@ -21,8 +23,17 @@ Attaque: 8
 -> Arthor (PV: 30, ATQ: 8)
   \end{lstlisting}
 
-  \textbf{Rappel :} pour lire une chaîne de caractères avec \texttt{scanf}, utiliser
-  \texttt{scanf("\%29s", nom);} (sans esperluette \texttt{\&} devant un tableau de \texttt{char}).
+  \textbf{Squelette à copier-coller :} collez le bloc suivant dans la section
+  \texttt{// === Déclaration des structures ===} du fichier, puis complétez les \texttt{TODO}.
+  Complétez également le \texttt{main} (dans \texttt{// === Programme principal ===}) pour
+  déclarer \texttt{héros}, demander les trois informations avec \texttt{get\_string} /
+  \texttt{get\_int}, et afficher sa fiche.
+
+  \begin{lstlisting}[language=C]
+typedef struct {
+    string nom;   // TODO : completer avec pv et attaque
+} Personnage;
+  \end{lstlisting}
 
   \UPSTIetape{Compléter le squelette \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
@@ -55,10 +66,40 @@ Defense: 4
 -> Lysia (PV: 25, ATQ: 6, DEF: 4)
   \end{lstlisting}
 
+  \textbf{Squelettes à copier-coller :} la structure \texttt{Stats} va dans la section
+  \texttt{// === Déclaration des structures ===} (\textbf{avant} \texttt{Personnage}, qui
+  l'utilise). Le prototype de \texttt{afficher\_personnage} va dans
+  \texttt{// === Déclaration des fonctions ===}, et son corps dans
+  \texttt{// === Définition des fonctions ===}.
+
+  \begin{lstlisting}[language=C]
+typedef struct {
+    int pv;
+    int attaque;
+    int defense;   // TODO : relire la structure Personnage pour l'adapter
+} Stats;
+  \end{lstlisting}
+
+  \begin{lstlisting}[language=C]
+// Prototype
+void afficher_personnage(Personnage p);
+
+// Corps
+void afficher_personnage(Personnage p)
+{
+    // TODO : afficher p.nom, p.stats.pv, p.stats.attaque, p.stats.defense
+}
+  \end{lstlisting}
+
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
 \subsection{Type énuméré}
+
+\begin{UPSTIinfor}{Rappel}
+  Avant de poursuivre, relisez dans le cours la partie sur les \textbf{types énumérés}
+  (\texttt{enum}) : leur déclaration, et leur utilisation dans un \texttt{switch}.
+\end{UPSTIinfor}
 
 \begin{UPSTIManipulation}{Étape 3 — Choisir une classe}
   \textbf{Contexte :} Chaque personnage appartient désormais à une \textbf{classe}
@@ -86,6 +127,34 @@ Defense: 4
 Nom du personnage: Arthor
 Classe (0=Guerrier, 1=Mage, 2=Archer): 0
 -> Arthor (PV: 35, ATQ: 7, DEF: 6)
+  \end{lstlisting}
+
+  \textbf{Squelettes à copier-coller :} l'énuméré \texttt{Classe} va dans
+  \texttt{// === Déclaration des structures ===}, \textbf{avant} \texttt{Personnage} qui
+  l'utilise. Le prototype de \texttt{stats\_initiales} va avec les autres prototypes, son corps
+  avec les autres corps de fonctions.
+
+  \begin{lstlisting}[language=C]
+typedef enum {
+    GUERRIER,
+    MAGE,
+    ARCHER
+} Classe;
+  \end{lstlisting}
+
+  \begin{lstlisting}[language=C]
+// Prototype
+Stats stats_initiales(Classe c);
+
+// Corps
+Stats stats_initiales(Classe c)
+{
+    Stats s;
+    switch (c) {
+        // TODO : un case par valeur de Classe, avec les PV/ATQ/DEF de depart
+    }
+    return s;
+}
   \end{lstlisting}
 
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}

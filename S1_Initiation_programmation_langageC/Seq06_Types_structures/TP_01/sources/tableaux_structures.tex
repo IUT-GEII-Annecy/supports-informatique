@@ -37,7 +37,7 @@ Apres : Arthor (PV: 0, ATQ: 7, DEF: 6)
     \item Tant qu'aucun des deux n'a 0 PV, à chaque tour :
       \begin{itemize}
         \item afficher un petit menu au joueur, par exemple \texttt{1. Attaquer}, et lire son
-          choix au clavier (\texttt{scanf("\%d", ...)})
+          choix au clavier avec \texttt{get\_int}
         \item \texttt{p1} attaque \texttt{p2} si le joueur a choisi d'attaquer
         \item si \texttt{p2} est encore en vie, \texttt{p2} attaque \texttt{p1} à son tour
           (cette attaque reste automatique)

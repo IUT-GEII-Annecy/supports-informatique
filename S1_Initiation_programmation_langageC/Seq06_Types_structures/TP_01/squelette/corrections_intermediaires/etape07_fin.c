@@ -1,3 +1,4 @@
+#include <cs50.h>
 #include <stdio.h>
 
 #define TAILLE_EQUIPE 3
@@ -16,7 +17,7 @@ typedef enum {
 } Classe;
 
 typedef struct {
-    char nom[30];
+    string nom;
     Classe classe;
     Stats stats;
 } Personnage;
@@ -75,10 +76,8 @@ void afficher_monstres_numerotes(Personnage monstres[], int taille)
 // Etape 7 : lecture au clavier d'une cible valide (vivante) parmi les monstres
 int choisir_cible_vivante(Personnage monstres[], int taille)
 {
-    int choix;
     for (;;) {
-        printf("Quel monstre attaquer (numero) ? ");
-        scanf("%d", &choix);
+        int choix = get_int("Quel monstre attaquer (numero) ? ");
         if (choix >= 0 && choix < taille && monstres[choix].stats.pv > 0) {
             return choix;
         }
@@ -89,12 +88,9 @@ int choisir_cible_vivante(Personnage monstres[], int taille)
 static Personnage saisir_personnage(const char *etiquette, int indice)
 {
     Personnage p;
-    printf("%s %d - Nom: ", etiquette, indice);
-    scanf("%29s", p.nom);
+    p.nom = get_string("%s %d - Nom: ", etiquette, indice);
 
-    int classe_choisie;
-    printf("%s %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", etiquette, indice);
-    scanf("%d", &classe_choisie);
+    int classe_choisie = get_int("%s %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", etiquette, indice);
     p.classe = (Classe) classe_choisie;
     p.stats = stats_initiales(p.classe);
     return p;

@@ -1,3 +1,4 @@
+#include <cs50.h>
 #include <stdio.h>
 
 // --- Etape 2 : structure imbriquee ---
@@ -16,7 +17,7 @@ typedef enum {
 
 // --- Etape 1->3 : la structure Personnage s'est enrichie progressivement ---
 typedef struct {
-    char nom[30];
+    string nom;
     Classe classe;
     Stats stats;
 } Personnage;
@@ -43,12 +44,9 @@ int main(void)
 {
     Personnage heros;
 
-    printf("Nom du personnage: ");
-    scanf("%29s", heros.nom);
+    heros.nom = get_string("Nom du personnage: ");
 
-    int classe_choisie;
-    printf("Classe (0=Guerrier, 1=Mage, 2=Archer): ");
-    scanf("%d", &classe_choisie);
+    int classe_choisie = get_int("Classe (0=Guerrier, 1=Mage, 2=Archer): ");
     heros.classe = (Classe) classe_choisie;
     heros.stats = stats_initiales(heros.classe);
 

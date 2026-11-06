@@ -12,10 +12,11 @@ le dossier `corrections_intermediaires/` (réservé à l'enseignant, à ne pas d
 ## Étape 1 — Personnage simple (solution complète)
 
 ```c
+#include <cs50.h>
 #include <stdio.h>
 
 typedef struct {
-    char nom[30];
+    string nom;
     int pv;
     int attaque;
 } Personnage;
@@ -24,14 +25,10 @@ int main(void)
 {
     Personnage heros;
 
-    printf("Nom du personnage: ");
-    scanf("%29s", heros.nom);
+    heros.nom = get_string("Nom du personnage: ");
 
-    printf("Points de vie: ");
-    scanf("%d", &heros.pv);
-
-    printf("Attaque: ");
-    scanf("%d", &heros.attaque);
+    heros.pv = get_int("Points de vie: ");
+    heros.attaque = get_int("Attaque: ");
 
     printf("%s (PV: %d, ATQ: %d)\n", heros.nom, heros.pv, heros.attaque);
 
@@ -42,13 +39,17 @@ int main(void)
 **Points importants :**
 - On utilise `typedef` pour simplifier l'utilisation de la structure
 - L'accès aux champs se fait avec l'opérateur `.`
-- Pour lire une chaîne avec `scanf`, pas d'esperluette (`&`) devant un tableau de `char`
+- `get_string` renvoie un `string` (alias `char *` fourni par `cs50`) : on peut l'affecter
+  directement à un champ de type `string`, sans copie manuelle
+- `get_int` relit automatiquement la saisie tant qu'elle n'est pas un entier valide : pas besoin
+  de vérifier de code de retour, contrairement à `scanf`
 
 ---
 
 ## Étape 2 — Stats imbriquées (solution complète)
 
 ```c
+#include <cs50.h>
 #include <stdio.h>
 
 typedef struct {
@@ -58,7 +59,7 @@ typedef struct {
 } Stats;
 
 typedef struct {
-    char nom[30];
+    string nom;
     Stats stats;
 } Personnage;
 
@@ -71,15 +72,11 @@ int main(void)
 {
     Personnage perso;
 
-    printf("Nom du personnage: ");
-    scanf("%29s", perso.nom);
+    perso.nom = get_string("Nom du personnage: ");
 
-    printf("Points de vie: ");
-    scanf("%d", &perso.stats.pv);
-    printf("Attaque: ");
-    scanf("%d", &perso.stats.attaque);
-    printf("Defense: ");
-    scanf("%d", &perso.stats.defense);
+    perso.stats.pv = get_int("Points de vie: ");
+    perso.stats.attaque = get_int("Attaque: ");
+    perso.stats.defense = get_int("Defense: ");
 
     afficher_personnage(perso);
 
@@ -96,6 +93,7 @@ int main(void)
 ## Étape 4 — Subir des dégâts (solution complète)
 
 ```c
+#include <cs50.h>
 #include <stdio.h>
 
 typedef struct {
@@ -107,7 +105,7 @@ typedef struct {
 typedef enum { GUERRIER, MAGE, ARCHER } Classe;
 
 typedef struct {
-    char nom[30];
+    string nom;
     Classe classe;
     Stats stats;
 } Personnage;
@@ -142,21 +140,16 @@ int main(void)
 {
     Personnage heros;
 
-    printf("Nom du personnage: ");
-    scanf("%29s", heros.nom);
+    heros.nom = get_string("Nom du personnage: ");
 
-    int classe_choisie;
-    printf("Classe (0=Guerrier, 1=Mage, 2=Archer): ");
-    scanf("%d", &classe_choisie);
+    int classe_choisie = get_int("Classe (0=Guerrier, 1=Mage, 2=Archer): ");
     heros.classe = (Classe) classe_choisie;
     heros.stats = stats_initiales(heros.classe);
 
     printf("Avant : ");
     afficher_personnage(heros);
 
-    int degats;
-    printf("Degats subis: ");
-    scanf("%d", &degats);
+    int degats = get_int("Degats subis: ");
 
     heros = subir_degats(heros, degats);  // reaffectation : c'est elle qui "modifie" heros
 
@@ -179,6 +172,7 @@ int main(void)
 ## Étape 6 — Équipe (tableau de structures, solution complète)
 
 ```c
+#include <cs50.h>
 #include <stdio.h>
 
 #define TAILLE_EQUIPE 3
@@ -192,7 +186,7 @@ typedef struct {
 typedef enum { GUERRIER, MAGE, ARCHER } Classe;
 
 typedef struct {
-    char nom[30];
+    string nom;
     Classe classe;
     Stats stats;
 } Personnage;
@@ -234,12 +228,9 @@ int main(void)
     Personnage equipe[TAILLE_EQUIPE];
 
     for (int i = 0; i < TAILLE_EQUIPE; i++) {
-        printf("Personnage %d - Nom: ", i);
-        scanf("%29s", equipe[i].nom);
+        equipe[i].nom = get_string("Personnage %d - Nom: ", i);
 
-        int classe_choisie;
-        printf("Personnage %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", i);
-        scanf("%d", &classe_choisie);
+        int classe_choisie = get_int("Personnage %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", i);
         equipe[i].classe = (Classe) classe_choisie;
         equipe[i].stats = stats_initiales(equipe[i].classe);
     }
