@@ -10,6 +10,20 @@
 \input{../../preamble_module.tex}
 
 \documentVersion{E}
+% \trou[reponse]{largeur} : cadre pointillé à compléter, utilisé dans un
+% listing (via escapeinside={(*}{*)}) ou directement dans le texte.
+%   - version élève (\documentVersion{E}) : rectangle vide (réponse ignorée) ;
+%   - version prof  (\documentVersion{P}) : réponse affichée en rouge dans
+%     le rectangle (via \UPSTIcorrection), qui s'élargit si nécessaire.
+% Dans un listing, la réponse est en mode LaTeX : échapper les « _ » (\_).
+\newcommand{\trou}[2][]{%
+    \tikz[baseline=(trou.base)]{%
+        \node[draw=gray!70, dashed, rounded corners=2pt, inner sep=2pt,
+              minimum width=#2, minimum height=2.4em, fill=white,
+              anchor=base] (trou) {\strut\ifnumequal{1}{\UPSTIidVersionDocumentDef}%
+                {\UPSTIcorrection[1]{\ttfamily #1}}{}};%
+    }%
+}
 \newcommand{\UPSTInumeroVersion}{1}
 \newcommand{\UPSTInumero}{\sequence.1}
 \begin{document}

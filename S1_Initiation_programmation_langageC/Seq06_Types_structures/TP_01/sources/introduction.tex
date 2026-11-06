@@ -1,58 +1,26 @@
 \subsection*{Objectifs du TP}
 
-Ce TP vous permet de découvrir et manipuler les \textbf{types structurés} (structures) en langage C. Les structures sont un concept fondamental qui permet de regrouper plusieurs données de types différents en une seule entité logique.
+Vous allez construire un \textbf{mini-jeu de combat au tour par tour} (façon RPG) en langage C,
+pour mettre en pratique les types structurés : structures simples, structures imbriquées,
+tableaux de structures, et énumérations.
 
 \textbf{Compétences visées :}
 \begin{itemize}
-  \item Déclarer et utiliser des structures simples
+  \item Déclarer et utiliser des structures simples et imbriquées
   \item Manipuler des tableaux de structures
-  \item Créer des structures imbriquées
-  \item Passer des structures en paramètres de fonctions
-  \item Résoudre des problèmes réalistes avec les structures
+  \item Passer des structures en paramètres de fonctions, et les modifier en les renvoyant
+    avec \texttt{return}
+  \item Utiliser un type énuméré (\texttt{enum}) comme champ d'une structure
+  \item Combiner ces notions pour résoudre un problème plus riche (mini-projet final)
 \end{itemize}
 
-% \subsection*{Organisation du TP}
+\subsection*{Organisation}
 
-% Le TP est organisé en 4 parties progressives :
-% \begin{enumerate}
-%   \item \textbf{Premiers pas} : Découverte des structures avec des points 2D
-%   \item \textbf{Tableaux de structures} : Manipulation de collections de données structurées
-%   \item \textbf{Structures imbriquées} : Structures contenant d'autres structures
-%   \item \textbf{Bonus} : Exercices plus avancés pour aller plus loin
-% \end{enumerate}
-
-\subsection*{Validation des exercices}
-
-Les premiers exercices peuvent être validés avec l'outil \texttt{check50} :
-\begin{lstlisting}[language=bash]
-check50 IUT-GEII-Annecy/exercices/2025/info1/tp\_structures/nom\_exercice
-\end{lstlisting}
-
-\textbf{Conseils :}
-\begin{itemize}
-  \item Testez votre code manuellement avant d'utiliser \texttt{check50}
-  \item Lisez attentivement les messages d'erreur
-  \item N'hésitez pas à utiliser le débogueur (\texttt{gdb} ou l'extension VS Code)
-  \item Demandez de l'aide à votre enseignant si vous êtes bloqué
-\end{itemize}
-
-\subsection*{Conseils méthodologiques}
-
-Pour réussir ce TP :
-\begin{enumerate}
-  \item \textbf{Lisez la théorie} avant de commencer les exercices
-  \item \textbf{Commencez simple} : faites les premiers exercices même s'ils semblent faciles
-  \item \textbf{Testez progressivement} : compilez et testez après chaque modification
-  \item \textbf{Utilisez des noms explicites} : nommez vos variables et fonctions clairement
-  \item \textbf{Commentez votre code} : cela vous aidera à comprendre votre propre logique
-\end{enumerate}
+Vous travaillez sur un \textbf{unique fichier}, \texttt{jeu\_combat.c}, du début à la fin de la
+séance. Vous ne créez pas de nouveau fichier à chaque exercice : vous partez du squelette
+fourni, et chaque étape du TP s'ajoute au code déjà écrit. Vous ne connaissez pas encore les
+pointeurs (\texttt{*}, \texttt{\&}, \texttt{malloc}) : ce TP n'en a pas besoin.
 
 \textbf{Durée estimée :} \UPSTIduree
-
-\vspace{1cm}
-
-\begin{center}
-  \textbf{Bon travail !}
-\end{center}
 
 \pagebreak

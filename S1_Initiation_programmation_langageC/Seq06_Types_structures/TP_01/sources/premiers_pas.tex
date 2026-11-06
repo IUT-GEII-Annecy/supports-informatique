@@ -1,103 +1,92 @@
-Vous pouvez télécharger un squelette sur le lien suivant : 
+\subsection{Une première structure}
 
-\begin{lstlisting}[language=bash]
-wget https://github.com/IUT-GEII-Annecy/squelettes/releases/download/branch-2025/tp6.zip
-\end{lstlisting}
-Dans cette première partie, vous allez découvrir les structures en manipulant des points dans un plan 2D.
-
-\subsection{Déclaration et utilisation basique}
-
-\begin{UPSTIManipulation}{Déclarer et afficher un point}
-  \textbf{Objectif :} Créer une structure Point et l'utiliser.
+\begin{UPSTIManipulation}{Étape 1 — Fiche de personnage simple}
+  \textbf{Contexte :} On veut représenter un personnage de jeu par son nom, ses points de vie
+  et sa puissance d'attaque.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Déclarer une structure \texttt{Point} avec deux champs \texttt{float x} et \texttt{float y}
-    \item Dans le \texttt{main}, créer une variable \texttt{p1} de type \texttt{Point}
-    \item Demander à l'utilisateur les coordonnées x et y
-    \item Afficher le point sous la forme : \texttt{Point: (x, y)}
+    \item Déclarer une structure \texttt{Personnage} avec les champs : \texttt{char nom[30]},
+      \texttt{int pv} et \texttt{int attaque}
+    \item Dans le \texttt{main}, créer une variable \texttt{héros} de type \texttt{Personnage}
+    \item Demander à l'utilisateur son nom, ses pv et son attaque
+    \item Afficher sa fiche sous la forme : \texttt{Nom (PV: x, ATQ: y)}
   \end{itemize}
 
   \textbf{Exemple d'exécution :}
-  \begin{lstlisting}[style=console]
-Entrez x: 3.5
-Entrez y: 2.8
-Point: (3.5, 2.8)
+  \begin{lstlisting}[language=bash]
+Nom du personnage: Arthor
+Points de vie: 30
+Attaque: 8
+-> Arthor (PV: 30, ATQ: 8)
   \end{lstlisting}
 
-  \tcblower
-  \begin{lstlisting}[language=bash]
-check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/point_simple
-  \end{lstlisting}
+  \textbf{Rappel :} pour lire une chaîne de caractères avec \texttt{scanf}, utiliser
+  \texttt{scanf("\%29s", nom);} (sans esperluette \texttt{\&} devant un tableau de \texttt{char}).
+
+  \UPSTIetape{Compléter le squelette \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Fonction de création de point}
+\subsection{Structure imbriquée}
 
-  \textbf{Objectif :} Créer une fonction qui retourne une structure.
+\begin{UPSTIManipulation}{Étape 2 — Séparer les statistiques}
+  \textbf{Contexte :} On souhaite ajouter une statistique de \textbf{défense}, et regrouper
+  les statistiques combattantes dans une structure \texttt{Stats} dédiée, \textbf{imbriquée}
+  dans \texttt{Personnage}.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Écrire une fonction \texttt{Point creer\_point(float x, float y)} qui crée et retourne un \texttt{Point}
-    \item Écrire une fonction \texttt{void afficher\_point(Point p)} qui affiche un point sous la forme \texttt{(x, y)}
-    \item Dans le \texttt{main}, utiliser ces fonctions pour créer et afficher 3 points
+    \item Déclarer une structure \texttt{Stats} avec les champs \texttt{int pv},
+      \texttt{int attaque}, \texttt{int defense}
+    \item \texttt{Personnage} n'a plus directement les champs \texttt{pv} et \texttt{attaque} :
+      il contient désormais un champ \texttt{Stats stats}
+    \item Écrire une fonction \texttt{void afficher\_personnage(Personnage p)} qui affiche la
+      fiche sous la forme \texttt{Nom (PV: x, ATQ: y, DEF: z)}
+    \item Adapter la saisie pour demander la défense en plus, puis afficher la fiche avec cette
+      nouvelle fonction
   \end{itemize}
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/creer_point
-%   \end{lstlisting}
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Nom du personnage: Lysia
+Points de vie: 25
+Attaque: 6
+Defense: 4
+-> Lysia (PV: 25, ATQ: 6, DEF: 4)
+  \end{lstlisting}
+
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Calculer la distance à l'origine}
+\subsection{Type énuméré}
 
-  \textbf{Contexte :} On souhaite calculer la distance entre un point et l'origine (0, 0).
-
-  \textbf{Formule :} $d = \sqrt{x^2 + y^2}$ (utiliser \texttt{sqrt} de \texttt{math.h})
+\begin{UPSTIManipulation}{Étape 3 — Choisir une classe}
+  \textbf{Contexte :} Chaque personnage appartient désormais à une \textbf{classe}
+  (Guerrier, Mage ou Archer), qui détermine ses statistiques de départ.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Reprendre la structure \texttt{Point}
-    \item Écrire une fonction \texttt{float distance\_origine(Point p)} qui calcule et retourne la distance
-    \item Dans le \texttt{main}, créer un point, demander ses coordonnées et afficher sa distance à l'origine
-    \item Arrondir l'affichage à 2 décimales
+    \item Déclarer un type énuméré \texttt{Classe} : \texttt{GUERRIER}, \texttt{MAGE},
+      \texttt{ARCHER}
+    \item Ajouter un champ \texttt{Classe classe} à \texttt{Personnage}
+    \item Écrire une fonction \texttt{Stats stats\_initiales(Classe c)} qui renvoie les
+      statistiques de départ correspondant à la classe :
+      \begin{itemize}
+        \item \texttt{GUERRIER} : PV=35, ATQ=7, DEF=6
+        \item \texttt{MAGE} : PV=20, ATQ=10, DEF=2
+        \item \texttt{ARCHER} : PV=25, ATQ=9, DEF=3
+      \end{itemize}
+    \item Remplacer la saisie manuelle des statistiques par la demande du \textbf{nom} et de la
+      \textbf{classe} (entier 0, 1 ou 2), les statistiques étant alors initialisées
+      automatiquement
   \end{itemize}
 
-  \textbf{Note :} Pour compiler avec \texttt{math.h}, ajouter \texttt{-lm} : \texttt{gcc fichier.c -lm}
-
-  \tcblower
+  \textbf{Exemple d'exécution :}
   \begin{lstlisting}[language=bash]
-check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/distance_origine
+Nom du personnage: Arthor
+Classe (0=Guerrier, 1=Mage, 2=Archer): 0
+-> Arthor (PV: 35, ATQ: 7, DEF: 6)
   \end{lstlisting}
+
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
-
-\subsection{Fonctions sur les structures}
-
-\begin{UPSTIManipulation}{Distance entre deux points}
-
-  \textbf{Contexte :} Calculer la distance entre deux points quelconques.
-
-  \textbf{Formule :} $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$
-
-  \textbf{Cahier des charges :}
-  \begin{itemize}
-    \item Écrire une fonction \texttt{float distance(Point p1, Point p2)}
-    \item Dans le \texttt{main}, demander les coordonnées de deux points
-    \item Afficher la distance entre ces deux points (2 décimales)
-  \end{itemize}
-
-  \textbf{Exemple :}
-  \begin{lstlisting}[style=console]
-Point 1 - x: 0
-Point 1 - y: 0
-Point 2 - x: 3
-Point 2 - y: 4
-Distance: 5.00
-  \end{lstlisting}
-
-  \tcblower
-  \begin{lstlisting}[language=bash]
-check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/distance_deux_points
-  \end{lstlisting}
-\end{UPSTIManipulation}
-
-

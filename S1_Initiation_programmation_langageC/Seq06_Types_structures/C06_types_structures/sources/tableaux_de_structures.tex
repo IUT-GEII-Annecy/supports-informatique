@@ -1,0 +1,77 @@
+\section{Tableaux de structures}
+
+\subsection{Principe}
+
+Une structure décrit \emph{un} élément (un étudiant, une mesure) ; pour en gérer plusieurs, on range les structures dans un tableau. Chaque case du tableau est alors une structure complète.
+
+\begin{UPSTIinfor}{Tableau de structures}
+  \begin{lstlisting}[language=c,caption={Déclaration et accès}]
+#define NB_ETUDIANTS 4
+Etudiant promo[NB_ETUDIANTS] = {
+    {101, 'L', 12.5},
+    {102, 'M', 8.0},
+    {103, 'A', 15.5},
+    {104, 'K', 10.0}
+};
+promo[2].note = 16.0;   // note de l'etudiant d'indice 2
+\end{lstlisting}
+  \texttt{promo[i]} est une variable de type \texttt{Etudiant} ; \texttt{promo[i].note} est un \texttt{float}. On lit l'expression de gauche à droite : \emph{on choisit d'abord la case, puis le champ}.
+\end{UPSTIinfor}
+
+\begin{lstlisting}[language=c,caption={Affichage de toute la promotion},label=codeAffichePromo]
+for (int i = 0; i < NB_ETUDIANTS; i++) {
+    printf("%d (%c) : %.1f\n", promo[i].numero, promo[i].initiale, promo[i].note);
+}
+\end{lstlisting}
+
+\subsection{Agrégats et recherche}
+
+Les algorithmes vus sur les tableaux simples (somme, moyenne, maximum, recherche, comptage) s'appliquent sans changement : seule l'expression d'accès devient \texttt{tableau[i].champ}.
+
+\begin{UPSTIactivite}[][Statistiques sur la promotion]
+On reprend le tableau \texttt{promo}.
+\UPSTIquestion{Compléter le code qui calcule la moyenne de la promotion et compte les étudiants ayant une note inférieure à 10.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Moyenne et comptage, à compléter}]
+float somme = 0;
+int nb_sous_dix = 0;
+for (int i = 0; i < NB_ETUDIANTS; i++) {
+    somme = somme + (*\trou[{promo[i].note}]{6cm}*);
+    if ((*\trou[{promo[i].note < 10}]{8cm}*)) {
+        nb_sous_dix++;
+    }
+}
+printf("Moyenne : %.2f, %d note(s) sous 10\n", somme / NB_ETUDIANTS, nb_sous_dix);
+\end{lstlisting}
+\UPSTIquestion{Compléter le code qui affiche le numéro de l'étudiant ayant la meilleure note.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Meilleur étudiant, à compléter}]
+int indice_meilleur = 0;
+for (int i = 1; i < NB_ETUDIANTS; i++) {
+    if ((*\trou[{promo[i].note > promo[indice\_meilleur].note}]{10cm}*)) {
+        indice_meilleur = i;
+    }
+}
+printf("Major : %d\n", (*\trou[{promo[indice\_meilleur].numero}]{6cm}*));
+\end{lstlisting}
+Pourquoi mémorise-t-on l'\textbf{indice} du meilleur étudiant plutôt que sa seule note ? \trou[Mémoriser l'indice donne accès à tous les champs de l'étudiant trouvé (numéro, initiale, note), alors que la note seule ne dit pas à qui elle appartient.]{13.5cm}
+\end{UPSTIactivite}
+
+\begin{UPSTIactivite}[][Recherche par numéro]
+\UPSTIquestion{Compléter le code qui recherche dans \texttt{promo} l'étudiant dont le numéro est contenu dans la variable \texttt{int numero\_cherche}, et affiche sa note ou le message \texttt{"Inconnu"}.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Recherche, à compléter}]
+int indice_trouve = -1;   // -1 : valeur impossible pour un indice
+for (int i = 0; i < NB_ETUDIANTS; i++) {
+    if ((*\trou[{promo[i].numero == numero\_cherche}]{9cm}*)) {
+        indice_trouve = i;
+    }
+}
+if ((*\trou[indice\_trouve == -1]{6cm}*)) {
+    printf("Inconnu\n");
+} else {
+    printf("Note : %.1f\n", (*\trou[{promo[indice\_trouve].note}]{6cm}*));
+}
+\end{lstlisting}
+\end{UPSTIactivite}
+
+\begin{UPSTIwarning}{Tableau de structures ou structure de tableaux ?}
+  Il est tentant d'écrire trois tableaux séparés \texttt{numeros[4]}, \texttt{initiales[4]} et \texttt{notes[4]}. Cela fonctionne, mais rien ne garantit que les trois tableaux restent cohérents (un tri appliqué à \texttt{notes} seul mélange les étudiants). Avec un tableau de structures, déplacer \texttt{promo[i]} déplace toutes les informations de l'étudiant à la fois.
+\end{UPSTIwarning}

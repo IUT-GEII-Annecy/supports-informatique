@@ -1,129 +1,119 @@
-Cette partie explore l'utilisation de tableaux de structures, une combinaison puissante pour gérer des collections de données complexes.
+\subsection{Une première attaque}
 
-\subsection{Premiers tableaux de structures}
-
-\begin{UPSTIManipulation}{Polygone — Calculer le périmètre}
-
-  \textbf{Contexte :} Un polygone est défini par une séquence de points. On veut calculer son périmètre.
+\begin{UPSTIManipulation}{Étape 4 — Subir des dégâts}
+  \textbf{Contexte :} On veut faire subir des dégâts à un personnage, sans jamais faire
+  descendre ses PV en dessous de 0.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Utiliser la structure \texttt{Point} (x, y)
-    \item Demander le nombre de sommets \textbf{n} ($3 \le n \le 20$)
-    \item Lire les coordonnées de \textbf{n} points dans un tableau \texttt{Point sommets[20]}
-    \item Calculer le périmètre : somme des distances entre points consécutifs
-    \item Ne pas fermer le polygone (pas de distance entre dernier et premier point)
-    \item Afficher le périmètre avec 2 décimales
+    \item Écrire une fonction \texttt{Personnage subir\_degats(Personnage cible, int degats)}
+      qui renvoie \texttt{cible} avec ses PV réduits de \texttt{degats}, sans descendre en
+      dessous de 0
+    \item Dans le \texttt{main}, afficher la fiche du personnage, lui faire subir des dégâts
+      (valeur demandée à l'utilisateur), puis afficher sa fiche à nouveau
   \end{itemize}
 
-  \textbf{Exemple :}
-  \begin{lstlisting}[style=console]
-Nombre de sommets: 4
-Point 0: (0, 0)
-Point 1: (1, 0)
-Point 2: (1, 1)
-Point 3: (0, 1)
-Perimetre: 3.00
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Nom du personnage: Arthor
+Classe (0=Guerrier, 1=Mage, 2=Archer): 0
+Avant : Arthor (PV: 35, ATQ: 7, DEF: 6)
+Degats subis: 40
+Apres : Arthor (PV: 0, ATQ: 7, DEF: 6)
   \end{lstlisting}
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/perimetre_polygone
-%   \end{lstlisting}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Trouver le point le plus proche de l'origine}
-
-  \textbf{Contexte :} Parmi un ensemble de points, identifier celui qui est le plus proche de l'origine.
+\begin{UPSTIManipulation}{Étape 5 — Un combat en un contre un}
+  \textbf{Contexte :} On fait s'affronter deux personnages, tour par tour, jusqu'à ce que l'un
+  des deux soit vaincu (0 PV).
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Demander \textbf{n} ($1 \le n \le 50$) puis lire \textbf{n} points
-    \item Trouver le point ayant la distance minimale à l'origine
-    \item Afficher l'indice de ce point (0..n-1) et sa distance à l'origine (2 décimales)
-    \item En cas d'égalité, afficher le premier trouvé
+    \item Créer deux personnages \texttt{p1} et \texttt{p2}
+    \item Tant qu'aucun des deux n'a 0 PV : \texttt{p1} attaque \texttt{p2}, puis si
+      \texttt{p2} est encore en vie, \texttt{p2} attaque \texttt{p1}
+    \item Afficher les PV restants des deux personnages après chaque tour
+    \item À la fin du combat, afficher le nom du vainqueur
   \end{itemize}
 
-  \textbf{Exemple :}
-  \begin{lstlisting}[style=console]
-Nombre de points: 3
-Point 0: (5, 5)
-Point 1: (1, 1)
-Point 2: (2, 3)
-Point le plus proche: indice 1, distance 1.41
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Tour 1 : Arthor PV=25 / Lysia PV=29
+Tour 2 : Arthor PV=25 / Lysia PV=16
+Tour 3 : Arthor PV=18 / Lysia PV=16
+Tour 4 : Arthor PV=18 / Lysia PV=3
+Tour 5 : Arthor PV=11 / Lysia PV=0
+Vainqueur : Arthor
   \end{lstlisting}
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/point_plus_proche
-%   \end{lstlisting}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-% \subsection{Structures plus complexes}
+\subsection{Une équipe de héros}
 
-% \begin{UPSTIManipulation}{Gestion de capteurs — Température moyenne}
+\begin{UPSTIManipulation}{Étape 6 — Constituer une équipe}
+  \textbf{Contexte :} Un seul héros, c'est bien, mais une équipe, c'est mieux. On remplace le
+  combat 1 contre 1 par la constitution d'une équipe entière.
 
-%   \textbf{Contexte :} Un système industriel dispose de plusieurs capteurs de température.
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Constituer un tableau de 3 personnages (\texttt{Personnage equipe[3]}), remplis l'un
+      après l'autre (nom, classe)
+    \item Écrire une fonction qui affiche la fiche de chaque personnage de l'équipe
+    \item Écrire une fonction qui renvoie la somme des PV de toute l'équipe
+    \item Afficher l'équipe, puis ses PV totaux
+  \end{itemize}
 
-%   \textbf{Structure à utiliser :}
-%   \begin{lstlisting}[language=C]
-% typedef struct {
-%     int id;              // Identifiant du capteur
-%     float temperature;   // Temperature en degres Celsius
-%     int actif;          // 1 si actif, 0 si inactif
-% } Capteur;
-%   \end{lstlisting}
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Personnage 0 - Nom: Arthor
+Personnage 0 - Classe (0=Guerrier, 1=Mage, 2=Archer): 0
+Personnage 1 - Nom: Lysia
+Personnage 1 - Classe (0=Guerrier, 1=Mage, 2=Archer): 1
+Personnage 2 - Nom: Finn
+Personnage 2 - Classe (0=Guerrier, 1=Mage, 2=Archer): 2
 
-%   \textbf{Cahier des charges :}
-%   \begin{itemize}
-%     \item Demander \textbf{n} ($1 \le n \le 30$) capteurs
-%     \item Pour chaque capteur, lire : id, température, état (0 ou 1)
-%     \item Calculer et afficher la \textbf{température moyenne} des capteurs \textbf{actifs uniquement}
-%     \item Si aucun capteur actif, afficher \texttt{Aucun capteur actif}
-%     \item Afficher la moyenne avec 2 décimales
-%   \end{itemize}
+Arthor (PV: 35, ATQ: 7, DEF: 6)
+Lysia (PV: 20, ATQ: 10, DEF: 2)
+Finn (PV: 25, ATQ: 9, DEF: 3)
+PV totaux de l'equipe: 80
+  \end{lstlisting}
 
-%   \textbf{Exemple :}
-%   \begin{lstlisting}[style=console]
-% Nombre de capteurs: 3
-% Capteur 0 - ID: 101, Temperature: 22.5, Actif (1/0): 1
-% Capteur 1 - ID: 102, Temperature: 18.0, Actif (1/0): 0
-% Capteur 2 - ID: 103, Temperature: 25.5, Actif (1/0): 1
-% Temperature moyenne: 24.00
-%   \end{lstlisting}
+  \textbf{Remarque :} comme pour un tableau "classique", la taille de l'équipe doit toujours
+  être transmise en paramètre aux fonctions qui le parcourent.
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/capteurs_temperature
-%   \end{lstlisting}
-% \end{UPSTIManipulation}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
+\end{UPSTIManipulation}
 
-% \begin{UPSTIManipulation}{Capteurs — Identifier les alertes}
-%   \textbf{} \texttt{tp\_structures/08\_capteurs\_alertes}
+\begin{UPSTIManipulation}{Étape 7 — Face à plusieurs monstres}
+  \textbf{Contexte :} L'équipe de héros affronte maintenant un \textbf{groupe} de monstres (et
+  non un seul), représenté lui aussi par un tableau de structures \texttt{Personnage}.
 
-%   \textbf{Contexte :} Détecter les capteurs actifs dont la température dépasse un seuil.
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Constituer un second tableau de 2 personnages représentant les monstres, rempli de la
+      même façon que l'équipe de héros
+    \item Afficher le groupe de monstres
+    \item Faire subir à \texttt{equipe[0]} les attaques successives de chaque monstre encore en
+      vie, et afficher son état après chaque attaque
+  \end{itemize}
 
-%   \textbf{Cahier des charges :}
-%   \begin{itemize}
-%     \item Utiliser la même structure \texttt{Capteur}
-%     \item Demander \textbf{n} capteurs et les lire
-%     \item Demander un \textbf{seuil} de température
-%     \item Afficher les \textbf{IDs} des capteurs actifs dont la température \textbf{dépasse strictement} le seuil
-%     \item Si aucun, afficher \texttt{Aucune alerte}
-%   \end{itemize}
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+--- Equipe de heros ---
+Arthor (PV: 35, ATQ: 7, DEF: 6)
+Lysia (PV: 20, ATQ: 10, DEF: 2)
+Finn (PV: 25, ATQ: 9, DEF: 3)
 
-%   \textbf{Exemple :}
-%   \begin{lstlisting}[style=console]
-% Nombre de capteurs: 4
-% (Saisie des capteurs...)
-% Seuil: 23.0
-% Alertes: 101 103
-%   \end{lstlisting}
+--- Monstres ---
+Gobelin (PV: 15, ATQ: 5, DEF: 1)
+Orc (PV: 30, ATQ: 8, DEF: 4)
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/capteurs_alertes
-%   \end{lstlisting}
-% \end{UPSTIManipulation}
+Arthor subit l'attaque de Gobelin : PV restants 30
+Arthor subit l'attaque de Orc : PV restants 22
+  \end{lstlisting}
 
-\pagebreak
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
+\end{UPSTIManipulation}

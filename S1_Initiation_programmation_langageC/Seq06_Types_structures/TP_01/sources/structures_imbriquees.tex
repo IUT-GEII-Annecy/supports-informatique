@@ -1,146 +1,120 @@
-Cette partie introduit les structures imbriquées et des applications plus réalistes.
+\subsection{Analyser une équipe}
 
-\subsection{Structures contenant d'autres structures}
-
-\begin{UPSTIManipulation}{Rectangle — Calcul de l'aire}
-
-  \textbf{Contexte :} Un rectangle est défini par deux points : coin supérieur gauche et coin inférieur droit.
-
-  \textbf{Structures à utiliser :}
-  \begin{lstlisting}[language=C]
-typedef struct {
-    float x;
-    float y;
-} Point;
-
-typedef struct {
-    Point coin_haut_gauche;
-    Point coin_bas_droit;
-} Rectangle;
-  \end{lstlisting}
+\begin{UPSTIManipulation}{Étape 8 — Qui frappe le plus fort ?}
+  \textbf{Contexte :} Avant un combat, on veut désigner comme attaquant principal le personnage
+  de l'équipe ayant l'attaque la plus élevée.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Demander les coordonnées des deux coins du rectangle
-    \item Calculer l'aire : $\text{largeur} \times \text{hauteur}$
-    \item Largeur = $|x_2 - x_1|$, Hauteur = $|y_2 - y_1|$
-    \item Afficher l'aire avec 2 décimales
+    \item Écrire une fonction qui reçoit l'équipe (tableau de structures et sa taille) et
+      renvoie l'\textbf{indice} du personnage ayant l'attaque la plus élevée (en cas d'égalité,
+      garder le premier trouvé)
+    \item Afficher l'indice et le nom du personnage le plus offensif
   \end{itemize}
 
-  \textbf{Exemple :}
-  \begin{lstlisting}[style=console]
-Coin haut-gauche - x: 0
-Coin haut-gauche - y: 3
-Coin bas-droit - x: 4
-Coin bas-droit - y: 0
-Aire: 12.00
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Arthor (PV: 35, ATQ: 7, DEF: 6)
+Lysia (PV: 20, ATQ: 10, DEF: 2)
+Finn (PV: 25, ATQ: 9, DEF: 3)
+Attaquant principal: indice 1 (Lysia, ATQ=10)
   \end{lstlisting}
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/rectangle_aire
-%   \end{lstlisting}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Cercle — Intersection avec un point}
+\subsection{Un butin après le combat}
 
-  \textbf{Contexte :} Vérifier si un point est à l'intérieur d'un cercle.
-
+\begin{UPSTIManipulation}{Étape 9 — Ramasser un objet}
+  \textbf{Contexte :} Après un combat, les monstres vaincus laissent tomber des objets,
+  représentés par un tableau de structures \texttt{Objet} (indépendant de
+  \texttt{Personnage}), parmi lesquels on cherche le meilleur à équiper.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Proposer une structure pour représenter un cercle.
-    \item Demander le centre du cercle (x, y) et son rayon
-    \item Demander les coordonnées d'un point à tester
-    \item Calculer la distance entre le point et le centre
-    \item Afficher \texttt{INTERIEUR} si distance $\le$ rayon, sinon \texttt{EXTERIEUR}
+    \item Déclarer une structure \texttt{Objet} avec un nom et un bonus d'attaque
+    \item Constituer un tableau de 3 objets (saisie du nom et du bonus pour chacun)
+    \item Trouver l'objet ayant le plus grand bonus d'attaque, et équiper un personnage avec
+      (augmenter son attaque du bonus de l'objet)
+    \item Afficher la fiche du personnage avant et après l'équipement, ainsi que le nom de
+      l'objet équipé
   \end{itemize}
 
-  \textbf{Exemple :}
-  \begin{lstlisting}[style=console]
-Centre du cercle - x: 0
-Centre du cercle - y: 0
-Rayon: 5
-Point a tester - x: 3
-Point a tester - y: 4
-INTERIEUR
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Objet 0 - Nom: Epee rouillee
+Objet 0 - Bonus d'attaque: 1
+Objet 1 - Nom: Lame des braves
+Objet 1 - Bonus d'attaque: 5
+Objet 2 - Nom: Dague usee
+Objet 2 - Bonus d'attaque: 2
+
+Avant : Arthor (PV: 35, ATQ: 7, DEF: 6)
+Objet equipe : Lame des braves (bonus +5)
+Apres : Arthor (PV: 35, ATQ: 12, DEF: 6)
   \end{lstlisting}
 
-  \textbf{Note :} Distance = 5, exactement sur le cercle, donc INTERIEUR.
-
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/cercle_point
-%   \end{lstlisting}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-% \subsection{Application réaliste}
+\subsection{Se soigner}
 
-% \begin{UPSTIManipulation}{Gestion d'étudiants — Calcul de moyenne}
+\begin{UPSTIManipulation}{Étape 10 — Boire une potion}
+  \textbf{Contexte :} On introduit des potions qui produisent des effets différents : soin ou
+  poison.
 
-%   \textbf{Contexte :} Gérer une liste d'étudiants avec leurs notes.
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Représenter un type d'effet (soin ou poison) et une structure \texttt{Potion} (nom,
+      effet, valeur)
+    \item Écrire une fonction qui applique l'effet d'une potion à un personnage :
+      \begin{itemize}
+        \item soin : augmente les PV, sans dépasser 50
+        \item poison : diminue les PV, sans descendre sous 0
+      \end{itemize}
+    \item Faire subir des dégâts à un personnage, puis lui faire boire une potion de soin ;
+      afficher sa fiche avant et après la potion
+  \end{itemize}
 
-%   \textbf{Structure à utiliser :}
-%   \begin{lstlisting}[language=C]
-% typedef struct {
-%     int numero;          // Numero etudiant
-%     char nom[50];        // Nom de l'etudiant
-%     float note1;         // Premiere note
-%     float note2;         // Deuxieme note
-%     float note3;         // Troisieme note
-% } Etudiant;
-%   \end{lstlisting}
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Avant la potion : Arthor (PV: 10, ATQ: 7, DEF: 6)
+Arthor boit une Potion de soin (+20)
+Apres la potion : Arthor (PV: 30, ATQ: 7, DEF: 6)
+  \end{lstlisting}
 
-%   \textbf{Cahier des charges :}
-%   \begin{itemize}
-%     \item Demander \textbf{n} ($1 \le n \le 30$) étudiants
-%     \item Pour chaque étudiant, lire : numéro, nom, 3 notes
-%     \item Pour chaque étudiant, calculer et afficher sa moyenne (2 décimales)
-%     \item Format : \texttt{Etudiant numero - nom: moyenne}
-%   \end{itemize}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
+\end{UPSTIManipulation}
 
-%   \textbf{Exemple :}
-%   \begin{lstlisting}[style=console]
-% Nombre d'etudiants: 2
-% Etudiant 0 - Numero: 12345
-% Nom: Dupont
-% Note 1: 15.5
-% Note 2: 14.0
-% Note 3: 16.5
-% Etudiant 1 - Numero: 12346
-% Nom: Martin
-% Note 1: 12.0
-% Note 2: 13.5
-% Note 3: 11.5
+\subsection{Classer son équipe}
 
-% Moyennes:
-% Etudiant 12345 - Dupont: 15.33
-% Etudiant 12346 - Martin: 12.33
-%   \end{lstlisting}
+\begin{UPSTIManipulation}{Étape 11 — Classement par dégâts infligés}
+  \textbf{Contexte :} À la fin d'un combat, on veut classer les membres de l'équipe du plus au
+  moins offensif, selon les dégâts qu'ils ont infligés.
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/etudiants_moyenne
-%   \end{lstlisting}
-% \end{UPSTIManipulation}
+  \textbf{Cahier des charges :}
+  \begin{itemize}
+    \item Ajouter à chaque personnage un total de dégâts infligés (saisi directement, sans
+      simuler tout le combat)
+    \item Trier l'équipe par ordre décroissant de dégâts infligés, en adaptant le tri par
+      sélection vu à la séquence précédente
+    \item Afficher le classement obtenu
+  \end{itemize}
 
-% \begin{UPSTIManipulation}{Étudiants — Classement par moyenne}
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+Personnage 0 - Nom: Arthor
+Personnage 0 - Degats infliges: 42
+Personnage 1 - Nom: Lysia
+Personnage 1 - Degats infliges: 65
+Personnage 2 - Nom: Finn
+Personnage 2 - Degats infliges: 18
 
-%   \textbf{Contexte :} Afficher les étudiants dont la moyenne dépasse un seuil donné.
+Classement :
+1. Lysia : 65
+2. Arthor : 42
+3. Finn : 18
+  \end{lstlisting}
 
-%   \textbf{Cahier des charges :}
-%   \begin{itemize}
-%     \item Utiliser la même structure \texttt{Etudiant}
-%     \item Demander \textbf{n} étudiants et les lire
-%     \item Demander un \textbf{seuil} de moyenne
-%     \item Afficher les étudiants dont la moyenne est \textbf{supérieure ou égale} au seuil
-%     \item Format : \texttt{numero - nom: moyenne}
-%     \item Si aucun étudiant ne dépasse le seuil, afficher \texttt{Aucun etudiant}
-%   \end{itemize}
-
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/etudiants_classement
-%   \end{lstlisting}
-% \end{UPSTIManipulation}
-
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
+\end{UPSTIManipulation}

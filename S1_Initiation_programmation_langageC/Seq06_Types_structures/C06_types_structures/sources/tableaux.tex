@@ -1,0 +1,89 @@
+\section{Tableaux simples et tableaux à deux dimensions}
+
+\subsection{L'essentiel sur les tableaux simples}
+
+Un tableau permet de stocker sous un seul nom plusieurs valeurs \textbf{de même type}, rangées les unes à la suite des autres en mémoire. Chaque valeur (ou \textbf{case}) est repérée par son \textbf{indice}.
+
+\begin{UPSTIinfor}{Tableau à une dimension}
+  \begin{lstlisting}[language=c,caption={Déclaration et accès}]
+#define N 5
+int notes[N];                   // tableau de N entiers, non initialisé
+int temperatures[4] = {3, 8, 1, 6}; // déclaration avec initialisation
+temperatures[0] = 10;               // première case
+temperatures[3] = temperatures[1] + 2; // dernière case
+\end{lstlisting}
+  \begin{itemize}
+    \item la taille doit être connue à la déclaration (on utilise souvent une constante \texttt{\#define}) ;
+    \item les indices vont de \texttt{0} à \texttt{taille - 1} ;
+    \item on parcourt un tableau avec une boucle \texttt{for} dont le compteur sert d'indice.
+  \end{itemize}
+\end{UPSTIinfor}
+
+\begin{UPSTIwarning}{Débordement de tableau}
+  Le C ne vérifie pas les indices. Écrire \texttt{temperatures[4]} sur un tableau de 4 cases compile, mais lit ou écrase une zone mémoire qui n'appartient pas au tableau : le comportement du programme devient imprévisible.
+\end{UPSTIwarning}
+
+\begin{lstlisting}[language=c,caption={Parcours classique : somme des valeurs},label=codeSommeTableau]
+int somme_temperatures = 0;
+for (int i = 0; i < 4; i++) {
+    somme_temperatures = somme_temperatures + temperatures[i];
+}
+\end{lstlisting}
+
+\subsection{Tableaux à deux dimensions}
+
+De nombreuses données sont naturellement organisées en lignes et en colonnes : une grille de jeu, une image (pixels), un tableau de mesures relevées par plusieurs capteurs à plusieurs instants. On utilise alors un tableau à deux dimensions.
+
+\begin{UPSTIinfor}{Tableau à deux dimensions}
+  \begin{lstlisting}[language=c,caption={Déclaration et accès}]
+#define NB_LIGNES 3
+#define NB_COLONNES 4
+int grille[NB_LIGNES][NB_COLONNES];
+
+int matrice[2][3] = { {1, 2, 3},
+                      {4, 5, 6} };   // 2 lignes, 3 colonnes
+matrice[1][2] = 0;  // ligne 1, colonne 2 : remplace le 6
+\end{lstlisting}
+  \begin{itemize}
+    \item le premier indice désigne la \textbf{ligne}, le second la \textbf{colonne} ;
+    \item chaque indice commence à \texttt{0} : \texttt{matrice[1][2]} est la case de la 2\up{e} ligne, 3\up{e} colonne ;
+    \item on parcourt toutes les cases avec \textbf{deux boucles imbriquées} : la boucle extérieure sur les lignes, la boucle intérieure sur les colonnes.
+  \end{itemize}
+\end{UPSTIinfor}
+
+\begin{lstlisting}[language=c,caption={Affichage d'un tableau 2D ligne par ligne},label=codeAffiche2D]
+for (int i = 0; i < 2; i++) {         // pour chaque ligne
+    for (int j = 0; j < 3; j++) {     // pour chaque colonne
+        printf("%d ", matrice[i][j]);
+    }
+    printf("\n");                     // fin de la ligne
+}
+\end{lstlisting}
+
+\UPSTIremarque[Combien de tours ?]{
+  Avec deux boucles imbriquées, l'instruction la plus intérieure est exécutée \texttt{NB\_LIGNES} $\times$ \texttt{NB\_COLONNES} fois : une fois par case du tableau.
+}
+
+\subsection{Un cas concret : relevé de mesures}
+
+Une station dispose de \texttt{NB\_CAPTEURS = 3} capteurs de tension, chacun relevé \texttt{NB\_MESURES = 5} fois. Les mesures sont stockées dans \texttt{float mesures[NB\_CAPTEURS][NB\_MESURES]} : la ligne \texttt{i} contient les 5 mesures du capteur \texttt{i}.
+
+\begin{UPSTIactivite}[][Moyenne par capteur]
+\UPSTIquestion{Compléter le code suivant pour qu'il affiche, pour chaque capteur, la moyenne de ses mesures.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Moyenne par capteur, à compléter}]
+for (int i = 0; i < NB_CAPTEURS; i++) {
+    (*\trou[float somme\_capteur = 0;]{9cm}*)       // initialisation
+    for (int j = 0; j < NB_MESURES; j++) {
+        (*\trou[{somme\_capteur = somme\_capteur + mesures[i][j];}]{9cm}*) // accumulation
+    }
+    printf("Capteur %d : %.2f V\n", i, (*\trou[somme\_capteur / NB\_MESURES]{4cm}*));
+}
+\end{lstlisting}
+\UPSTIquestion{Quelles modifications faut-il apporter pour afficher plutôt la moyenne de chaque instant de mesure (moyenne des 3 capteurs pour la mesure 0, puis pour la mesure 1, etc.) ?}
+
+Il faut échanger le rôle des boucles : la boucle extérieure doit porter sur \trou[les mesures (compteur \texttt{j})]{6cm}, la boucle intérieure sur \trou[les capteurs (compteur \texttt{i})]{6cm} ; l'accès reste \texttt{mesures[i][j]}, mais on divise la somme par \trou[NB\_CAPTEURS]{3cm}.
+\end{UPSTIactivite}
+
+\begin{UPSTIwarning}{Où placer l'initialisation de l'accumulateur ?}
+  Si \texttt{somme\_capteur = 0} est placé avant la boucle extérieure, la somme du capteur 1 contient aussi celle du capteur 0 : les moyennes sont fausses. Une variable qui doit repartir de zéro pour chaque ligne s'initialise \textbf{au début de la boucle extérieure}.
+\end{UPSTIwarning}

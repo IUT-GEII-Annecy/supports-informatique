@@ -1,0 +1,145 @@
+\section{Structures imbriquées et fonctions}
+
+\subsection{Une structure dans une structure}
+
+Un champ peut être lui-même d'un type structuré déjà déclaré, ou être un tableau. Cela permet de construire des types de plus en plus riches à partir de types simples.
+
+\begin{lstlisting}[language=c,caption={Types imbriqués},label=codeImbrique]
+typedef struct {
+    int jour;
+    int mois;
+    int annee;
+} Date;
+
+#define NB_NOTES 3
+typedef struct {
+    int numero;
+    Date naissance;          // champ de type structure
+    float notes[NB_NOTES];   // champ de type tableau
+} Fiche;
+\end{lstlisting}
+
+\begin{UPSTIinfor}{Accès aux champs imbriqués}
+  On enchaîne les opérateurs d'accès, de gauche à droite :
+  \begin{lstlisting}[language=c,caption={Accès en cascade}]
+Fiche fiche = {101, {14, 7, 2007}, {12.0, 9.5, 14.0}};
+fiche.naissance.annee = 2006;   // champ annee du champ naissance
+fiche.notes[1] = 11.0;          // case 1 du champ notes
+\end{lstlisting}
+  Le type \texttt{Date} doit être déclaré \textbf{avant} le type \texttt{Fiche} qui l'utilise.
+\end{UPSTIinfor}
+
+\begin{UPSTIactivite}[][Lire une expression]
+On déclare \texttt{Fiche groupe[20];}. Donner le type de chacune des expressions suivantes :
+\begin{itemize}
+  \item \texttt{groupe} : \trou[tableau de 20 \texttt{Fiche}]{6cm}
+  \item \texttt{groupe[3]} : \trou[\texttt{Fiche}]{3cm}
+  \item \texttt{groupe[3].naissance} : \trou[\texttt{Date}]{3cm}
+  \item \texttt{groupe[3].naissance.mois} : \trou[\texttt{int}]{3cm}
+  \item \texttt{groupe[3].notes} : \trou[tableau de 3 \texttt{float}]{6cm}
+  \item \texttt{groupe[3].notes[0]} : \trou[\texttt{float}]{3cm}
+\end{itemize}
+\UPSTIquestion{Compléter l'instruction qui affiche la dernière note du premier étudiant du groupe.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={À compléter}]
+printf("%.1f\n", (*\trou[{groupe[0].notes[NB\_NOTES - 1]}]{9cm}*));
+\end{lstlisting}
+\end{UPSTIactivite}
+
+\subsection{Passer une structure à une fonction}
+
+Un type structuré s'utilise comme n'importe quel type, y compris comme type de paramètre ou comme type de retour d'une fonction.
+
+\begin{lstlisting}[language=c,caption={Fonctions sur des points},label=codeFonctionsPoint]
+#include <stdio.h>
+#include <math.h>
+
+typedef struct {
+    float x;
+    float y;
+} Point;
+
+float distance(Point point_a, Point point_b);
+Point milieu(Point point_a, Point point_b);
+
+int main(void) {
+    Point point_a = {1.0, 2.0};
+    Point point_b = {4.0, 6.0};
+    printf("AB = %.2f\n", distance(point_a, point_b));
+    Point point_milieu = milieu(point_a, point_b);
+    printf("M(%.1f ; %.1f)\n", point_milieu.x, point_milieu.y);
+    return 0;
+}
+
+float distance(Point point_a, Point point_b) {
+    float dx = point_b.x - point_a.x;
+    float dy = point_b.y - point_a.y;
+    return sqrt(dx * dx + dy * dy);
+}
+
+Point milieu(Point point_a, Point point_b) {
+    Point point_milieu;
+    point_milieu.x = (point_a.x + point_b.x) / 2;
+    point_milieu.y = (point_a.y + point_b.y) / 2;
+    return point_milieu;
+}
+\end{lstlisting}
+
+Comparé au listing~\ref{codeSansStruct}, le prototype \texttt{distance(Point point\_a, Point point\_b)} est plus court et ne permet plus de mélanger les coordonnées. La fonction \texttt{milieu} montre aussi qu'une fonction peut renvoyer \textbf{plusieurs valeurs regroupées} dans une structure, ce qui est impossible avec un simple \texttt{return} d'un \texttt{int} ou d'un \texttt{float}.
+
+\begin{UPSTIwarning}{Passage par valeur}
+  Comme pour les types simples, une structure passée en paramètre est \textbf{copiée} : la fonction travaille sur une copie, et modifier ses champs ne modifie pas la variable de l'appelant. Pour obtenir une structure modifiée, la fonction la renvoie avec \texttt{return} et l'appelant l'affecte : \texttt{point\_a = translater(point\_a, 1.0, 0.0);}.
+\end{UPSTIwarning}
+
+\begin{UPSTIactivite}[][Prévoir l'affichage]
+\begin{lstlisting}[language=c,caption={Que va afficher ce programme ?},label=codePrediction]
+void deplacer(Point point_p) {
+    point_p.x = point_p.x + 10;
+}
+
+int main(void) {
+    Point point_a = {1.0, 2.0};
+    deplacer(point_a);
+    printf("%.1f\n", point_a.x);
+    return 0;
+}
+\end{lstlisting}
+\UPSTIquestion{Indiquer ce qu'affiche ce programme et justifier.}
+
+Ce programme affiche \trou[1.0]{1.5cm}, car \trou[deplacer reçoit une copie de point\_a ; la modification de point\_p est perdue à la fin de l'appel]{11cm}.
+\UPSTIquestion{Compléter la fonction \texttt{translater} et la ligne d'appel du \texttt{main} qui déplace réellement \texttt{point\_a} de 10 en abscisse.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Translation, à compléter}]
+Point translater(Point point_p, float dx, float dy) {
+    point_p.x = point_p.x + dx;
+    point_p.y = point_p.y + dy;
+    (*\trou[return point\_p;]{7cm}*)
+}
+// dans le main :
+(*\trou[point\_a = translater(point\_a, 10.0, 0.0);]{12cm}*)
+\end{lstlisting}
+\end{UPSTIactivite}
+
+\begin{UPSTIactivite}[][Fonction sur une structure imbriquée]
+\UPSTIquestion{Compléter la fonction \texttt{moyenne\_fiche}, qui renvoie la moyenne des notes contenues dans la fiche \texttt{fiche}.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Moyenne d'une fiche, à compléter}]
+float moyenne_fiche(Fiche fiche) {
+    float somme = 0;
+    for (int i = 0; i < NB_NOTES; i++) {
+        (*\trou[{somme = somme + fiche.notes[i];}]{10cm}*)
+    }
+    return somme / NB_NOTES;
+}
+\end{lstlisting}
+\UPSTIquestion{Compléter la fonction \texttt{est\_avant}, qui renvoie 1 si \texttt{date\_a} est strictement antérieure à \texttt{date\_b}, 0 sinon.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Comparaison de dates, à compléter}]
+int est_avant(Date date_a, Date date_b) {
+    if (date_a.annee != date_b.annee) {
+        return date_a.annee < date_b.annee;
+    }
+    if ((*\trou[date\_a.mois != date\_b.mois]{8cm}*)) {
+        return (*\trou[date\_a.mois < date\_b.mois]{8cm}*);
+    }
+    return (*\trou[date\_a.jour < date\_b.jour]{8cm}*);
+}
+\end{lstlisting}
+On compare d'abord les années ; les mois ne départagent que si les années sont égales, et les jours que si années et mois sont égaux.
+\end{UPSTIactivite}

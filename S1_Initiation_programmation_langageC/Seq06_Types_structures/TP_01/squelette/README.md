@@ -1,36 +1,32 @@
-# Squelettes pour le TP Types Structurés
+# Squelette pour le TP Types Structurés — Mini-jeu de combat
 
-Ce dossier contient des fichiers squelettes pour faciliter le démarrage des exercices du TP.
+Ce TP est un **projet filé** : vous ne travaillez pas sur une collection de petits exercices
+indépendants, mais sur un **unique fichier**, `jeu_combat.c`, que vous enrichissez à chaque
+étape pendant toute la séance (3h), jusqu'à obtenir un mini-jeu complet et fonctionnel.
 
-## Fichiers disponibles
+## Fichier
 
-- `01_point_simple.c` - Exercice 1.1 : Premier programme avec structure Point
-- `02_distance_origine.c` - Exercice 1.2 : Calcul de distance avec fonction
-- `07_capteurs_temperature.c` - Exercice 2.3 : Tableau de structures Capteur
-- `09_rectangle_aire.c` - Exercice 3.1 : Structures imbriquées Rectangle
-- `11_etudiants_moyenne.c` - Exercice 3.3 : Application réaliste avec Etudiant
+- `jeu_combat.c` — le squelette de départ. **C'est le seul fichier que vous modifiez.**
 
 ## Utilisation
 
-1. Copiez le fichier squelette correspondant à l'exercice dans votre dossier de travail
-2. Renommez-le si nécessaire selon les consignes de l'exercice
-3. Complétez les parties marquées par `// TODO:`
-4. Compilez et testez votre programme
-5. Utilisez `check50` pour valider votre solution
-
-## Compilation
-
-Pour les programmes utilisant `math.h`, n'oubliez pas d'ajouter `-lm` :
+1. Copiez `jeu_combat.c` dans votre dossier de travail
+2. À chaque étape du TP, lisez le cahier des charges et complétez votre code en conséquence
+3. Compilez et testez votre programme **après chaque étape**, pas seulement à la fin :
 
 ```bash
-gcc mon_programme.c -lm -o mon_programme
+gcc jeu_combat.c -o jeu_combat
+./jeu_combat
 ```
 
-## Conseils
+4. Conseil : sauvegardez une copie avant chaque grande partie du TP (par exemple
+   `cp jeu_combat.c jeu_combat_sauvegarde.c`), pour pouvoir revenir en arrière si une
+   modification casse le programme
 
-- Lisez attentivement les commentaires dans chaque squelette
-- Testez votre code progressivement, ne codez pas tout d'un coup
-- Utilisez le débogueur si vous rencontrez des problèmes
-- N'hésitez pas à demander de l'aide à votre enseignant
+## Si vous êtes bloqué ou en retard
 
-Bon courage !
+Demandez à votre enseignant : il dispose de versions de référence du fichier à plusieurs
+points de la progression, pour vérifier où vous devriez être arrivé ou vous aider à repartir
+d'une base saine.
+
+Bon combat !

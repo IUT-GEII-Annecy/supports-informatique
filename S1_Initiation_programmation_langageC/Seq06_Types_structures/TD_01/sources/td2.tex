@@ -8,53 +8,15 @@
         \item sa moyenne.
     \end{itemize}
 
-    \UPSTIquestion{Proposer une liste de variables pour stocker ces informations.}
-    \begin{UPSTIprofOnlyEnv}
-        Par exemple :
-    \begin{lstlisting}[language=C]
-    string prenom;
-    int age;
-    float moyenne;
-    \end{lstlisting}
-        On peut discuter de la taille du tableau de caractères (ici 30).
-    \end{UPSTIprofOnlyEnv}
+    \UPSTIquestion{Comment stocker les informations de 3 étudiants différents, sans utiliser de structure ?}
 
-    \UPSTIquestion{Écrire un code qui définit puis affiche les informations d'une étudiante nommée « Alice », 20 ans, moyenne 14.2.}
-    \begin{UPSTIprofOnlyEnv}
-    \begin{lstlisting}[language=C]
-    string prenom = "Alice";
-    int age = 20;
-    float moyenne = 14.2f;
-
-    printf("%s, %d ans, moyenne = %.1f\\n", prenom, age, moyenne);
-    \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
-
-    \UPSTIquestion{Comment stocker les informations de 3 étudiants différents ?}
-    \begin{UPSTIprofOnlyEnv}
-    Sans structure, on peut multiplier les variables :
-    \begin{lstlisting}[language=C]
-    string prenom1, prenom2, prenom3;
-    int age1, age2, age3;
-    float moyenne1, moyenne2, moyenne3;
-    \end{lstlisting}
-    On peut aussi utiliser 3 tableaux parallèles :
-    \begin{lstlisting}[language=C]
-    string prenoms[3];
-    int ages[3];
-    float moyennes[3];
-    \end{lstlisting}
-    Mais on voit déjà que cela devient plus difficile à suivre.
-    \end{UPSTIprofOnlyEnv}
+    Sans structure, on peut multiplier les variables (\texttt{prenom1}, \texttt{age1}, \texttt{moyenne1}, \texttt{prenom2}, ...)
+    ou utiliser \trou[{3 tableaux parallèles (prenoms[], ages[], moyennes[])}]{10cm}.
 
     \UPSTIquestion{Pourquoi cette approche devient-elle source d'erreurs ?}
-    \begin{UPSTIprofOnlyEnv}
-    Parce qu’il faut constamment \textbf{se souvenir} que les éléments
-        	exttt{prenom1}, \texttt{age1}, \texttt{moyenne1} vont ensemble, etc.
-        On risque facilement de mélanger les indices ou d’oublier un champ.
-        On ne manipule jamais « un étudiant » mais « plusieurs variables séparées »,
-        ce qui augmente la probabilité d’erreurs et rend le code difficile à maintenir.
-    \end{UPSTIprofOnlyEnv}
+
+    Parce qu'il faut constamment \trou[se souvenir que les éléments correspondant au même étudiant (par ex. prenom1, age1, moyenne1, ou les cases d'indice i dans chaque tableau) vont ensemble]{13cm} :
+    on risque de mélanger les indices ou d'oublier un champ, car on ne manipule jamais « un étudiant » mais plusieurs variables séparées.
 \end{UPSTIexercice}
 
 % ==========================================================================
@@ -91,78 +53,43 @@ typedef struct {
 \begin{UPSTIexercice}{Créer une structure cohérente}
     On regroupe les données dans une seule entité : un \textbf{type structuré}.
 
-    \UPSTIquestion{À l'aide de l'exemple précédent, écris la définition d'une structure \texttt{Etudiant} contenant les champs correspondants aux informations d'un étudiant (prénom, âge, moyenne).}
-    \begin{UPSTIprofOnlyEnv}
-        Par exemple, avec un \texttt{typedef} :
-        \begin{lstlisting}[language=C]
-    typedef struct {
-        string prenom;
-        int age;
-        float moyenne;
-    } T_Etudiant;
-    \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
+    \UPSTIquestion{Compléter la définition du type \texttt{T\_Etudiant} (prénom, âge, moyenne), les déclarations d'une variable \texttt{etudiant\_1} et d'un tableau \texttt{classe} de 30 étudiants, puis la boucle de saisie des 30 étudiants et la recherche du meilleur étudiant de la classe.}
 
-    \UPSTIquestion{Écrire les déclarations suivantes :}
-    \begin{itemize}
-        \item une variable \texttt{etudiant\_1} représentant un étudiant,
-        \item un tableau \texttt{classe} de 30 étudiants.
-    \end{itemize}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={T\_Etudiant, à compléter}]
+typedef struct {
+    (*\trou[string prenom;]{6cm}*)
+    (*\trou[int age;]{6cm}*)
+    (*\trou[float moyenne;]{6cm}*)
+} T_Etudiant;
+
 T_Etudiant etudiant_1;
-T_Etudiant classe[30];
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
-
-    \UPSTIquestion{Écrire les lignes de code permettant d'initialiser les informations de l'étudiant \texttt{etudiant\_1} avec les valeurs suivantes : prénom « Bob », âge 22, moyenne 15.5.}
-    \begin{UPSTIprofOnlyEnv}
-    Deux possibilités :
-
-    	\textbf{Initialisation directe :}
-    \begin{lstlisting}[language=C]
-T_Etudiant etudiant_1 = {"Bob", 22, 15.5f};
+(*\trou[{T\_Etudiant classe[30];}]{8cm}*)
 \end{lstlisting}
 
-    	\textbf{Affectation champ par champ :}
-    \begin{lstlisting}[language=C]
-etudiant_1.prenom = "Bob";
-etudiant_1.age = 22;
-etudiant_1.moyenne = 15.5f;
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Saisie et recherche du meilleur étudiant, à compléter}]
+int i;
+for (i = 0; i < 30; i++) {
+    printf("Etudiant %d\n", i + 1);
+    (*\trou[{classe[i].prenom}]{6cm}*) = get_string("Prenom : ");
+    (*\trou[{classe[i].age}]{6cm}*) = get_int("Age : ");
+    (*\trou[{classe[i].moyenne}]{6cm}*) = get_float("Moyenne : ");
+}
 
-    \UPSTIquestion{Écrire les lignes de code permettant de demander à l'utilisateur de saisir les informations des 30 étudiants du tableau \texttt{classe}.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
-    int i;
-    for (i = 0; i < 30; i++) {
-        printf("Etudiant %d\\n", i+1);
-        classe[i].prenom = get_string("Prenom : ");
-
-        classe[i].age = get_int("Age : ");
-
-        classe[i].moyenne = get_float("Moyenne : ");
-    }
-    \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
-
-    \UPSTIquestion{Écrire les lignes de code permettant d'afficher le prénom et la moyenne du meilleur étudiant de la classe.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
-int i, indice_meilleur = 0;
-
+int indice_meilleur = 0;
 for (i = 1; i < 30; i++) {
-    if (classe[i].moyenne > classe[indice_meilleur].moyenne) {
+    if ((*\trou[{classe[i].moyenne > classe[indice\_meilleur].moyenne}]{10cm}*)) {
         indice_meilleur = i;
     }
 }
 
-printf("Meilleur etudiant : %s, moyenne = %.2f\\n",
-       classe[indice_meilleur].prenom,
-       classe[indice_meilleur].moyenne);
+printf("Meilleur etudiant : %s, moyenne = %.2f\n",
+       (*\trou[{classe[indice\_meilleur].prenom}]{6cm}*),
+       (*\trou[{classe[indice\_meilleur].moyenne}]{6cm}*));
 \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
+
+    On peut initialiser un étudiant de deux façons : soit par initialisation directe
+    \trou[{T\_Etudiant etudiant\_1 = \{"Bob", 22, 15.5f\};}]{10cm}, soit champ par champ
+    (\texttt{etudiant\_1.prenom = "Bob";}, etc.).
 \end{UPSTIexercice}
 
 % ==========================================================================
@@ -170,64 +97,45 @@ printf("Meilleur etudiant : %s, moyenne = %.2f\\n",
 \begin{UPSTIexercice}{Représenter une heure}
     On veut manipuler une heure sous la forme \texttt{HH:MM:SS}.
 
-    \UPSTIquestion{Proposer un type structuré \texttt{T\_Heure} permettant de stocker les informations d'un horaire.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \UPSTIquestion{Compléter le type \texttt{T\_Heure} et les fonctions permettant d'afficher une heure, de la convertir en secondes, et inversement de reconstruire une heure à partir d'un nombre de secondes.}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={T\_Heure, à compléter}]
 typedef struct {
-    int h;
-    int m;
-    int s;
+    (*\trou[int h;]{5cm}*)
+    (*\trou[int m;]{5cm}*)
+    (*\trou[int s;]{5cm}*)
 } T_Heure;
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 
-    \UPSTIquestion{Écrire une fonction \texttt{void afficher\_heure(T\_Heure t)} qui affiche \texttt{HH:MM:SS}.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
 void afficher_heure(T_Heure t) {
-    printf("%02d:%02d:%02d\\n", t.h, t.m, t.s);
+    printf("%02d:%02d:%02d\n", (*\trou[t.h, t.m, t.s]{6cm}*));
 }
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 
-    \UPSTIquestion{Écrire \texttt{int en\_secondes(T\_Heure t)} qui renvoie le nombre total de secondes.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
 int en_secondes(T_Heure t) {
-    return t.h * 3600 + t.m * 60 + t.s;
+    return (*\trou[{t.h * 3600 + t.m * 60 + t.s}]{10cm}*);
+}
+
+T_Heure inverse(int total_secondes) {
+    T_Heure t;
+    (*\trou[{t.h = total\_secondes / 3600;}]{10cm}*)
+    total_secondes %= 3600;
+    (*\trou[{t.m = total\_secondes / 60;}]{10cm}*)
+    (*\trou[{t.s = total\_secondes \% 60;}]{10cm}*)
+    return t;
 }
 \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 
-    \UPSTIquestion{Créer deux horaires dans le \texttt{main} et afficher la différence en secondes.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Utilisation dans le main, à compléter}]
 int main(void) {
     T_Heure h1 = {8, 30, 0};
     T_Heure h2 = {10, 15, 30};
 
-    int s1 = en_secondes(h1);
-    int s2 = en_secondes(h2);
+    int s1 = (*\trou[en\_secondes(h1)]{6cm}*);
+    int s2 = (*\trou[en\_secondes(h2)]{6cm}*);
 
-    printf("Différence = %d secondes\\n", s2 - s1);
+    printf("Difference = %d secondes\n", s2 - s1);
     return 0;
 }
 \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
-
-    \UPSTIquestion{Ecrire la fonction inverse qui prend en paramètre un entier représentant un nombre de secondes et qui renvoie une structure \texttt{T\_Heure} correspondante.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
-T_Heure inverse(int total_secondes) {
-    T_Heure t;
-    t.h = total_secondes / 3600;
-    total_secondes %= 3600;
-    t.m = total_secondes / 60;
-    t.s = total_secondes % 60;
-    return t;
-}
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 \end{UPSTIexercice}
 
 % --------------------------------------------------------------------------
@@ -240,26 +148,19 @@ T_Heure inverse(int total_secondes) {
         \item son taux de TVA (nombre à virgule).
     \end{itemize}
 
-    \UPSTIquestion{Proposer un type structuré \texttt{T\_Produit} pour stocker ces informations.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
-    typedef struct {
-        string nom;
-        float prixHT;
-        float tva;   // en pourcentage, par ex. 20.0
-    } T_Produit;
-    \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
+    \UPSTIquestion{Compléter le type \texttt{T\_Produit} et la fonction renvoyant le prix TTC d'un produit (la fonction ne prendra qu'un seul argument).}
 
-    \UPSTIquestion{Écrire une fonction qui renvoie le prix TTC d'un produit (la fonction ne prendra qu'un seul argument).}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={T\_Produit, à compléter}]
+typedef struct {
+    (*\trou[string nom;]{6cm}*)
+    (*\trou[float prixHT;]{6cm}*)
+    (*\trou[float tva;]{6cm}*)  // en pourcentage, par ex. 20.0
+} T_Produit;
+
 float prixTTC(T_Produit p) {
-    return p.prixHT * (1.0f + p.tva / 100.0f);
+    return (*\trou[{p.prixHT * (1.0f + p.tva / 100.0f)}]{12cm}*);
 }
 \end{lstlisting}
-        On pourra ensuite utiliser cette fonction dans un \texttt{main} pour comparer plusieurs produits.
-    \end{UPSTIprofOnlyEnv}
 \end{UPSTIexercice}
 
 % --------------------------------------------------------------------------
@@ -273,62 +174,43 @@ typedef struct{
 } T_Vecteur;
 \end{lstlisting}
 
-    \UPSTIquestion{Écrire une fonction qui renvoie la norme $\sqrt{x^2 + y^2}$ d'un vecteur donné en paramètre.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \UPSTIquestion{Compléter les fonctions \texttt{norme}, \texttt{addition} et \texttt{oppose}, ainsi que leur utilisation dans le \texttt{main}.}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Fonctions sur T\_Vecteur, à compléter}]
 #include <math.h>
 
 float norme(T_Vecteur v) {
-    return sqrtf(v.x * v.x + v.y * v.y);
+    return (*\trou[{sqrtf(v.x * v.x + v.y * v.y)}]{10cm}*);
 }
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 
-    \UPSTIquestion{Écrire une fonction permettant de sommer deux vecteurs.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
 T_Vecteur addition(T_Vecteur a, T_Vecteur b) {
     T_Vecteur res;
-    res.x = a.x + b.x;
-    res.y = a.y + b.y;
+    (*\trou[{res.x = a.x + b.x;}]{9cm}*)
+    (*\trou[{res.y = a.y + b.y;}]{9cm}*)
     return res;
 }
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 
-    \UPSTIquestion{Écrire une fonction permettant de donner l'opposé d'un vecteur.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
 T_Vecteur oppose(T_Vecteur v) {
     T_Vecteur res;
-    res.x = -v.x;
-    res.y = -v.y;
+    (*\trou[{res.x = -v.x;}]{9cm}*)
+    (*\trou[{res.y = -v.y;}]{9cm}*)
     return res;
 }
 \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 
-    \UPSTIquestion{Dans le \texttt{main}, déclarer trois vecteurs, afficher leurs normes, puis afficher la norme de $a-b$.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Utilisation dans le main, à compléter}]
 int main(void) {
     T_Vecteur a = {3.0f, 4.0f};
     T_Vecteur b = {1.0f, 2.0f};
-    T_Vecteur c = {-2.0f, 0.5f};
 
-    printf("||a|| = %f\\n", norme(a));
-    printf("||b|| = %f\\n", norme(b));
-    printf("||c|| = %f\\n", norme(c));
+    printf("||a|| = %f\n", (*\trou[norme(a)]{6cm}*));
+    printf("||b|| = %f\n", (*\trou[norme(b)]{6cm}*));
 
-    T_Vecteur diff;
-    diff.x = a.x - b.x;
-    diff.y = a.y - b.y;
-
-    printf("||a-b|| = %f\\n", norme(diff));
+    T_Vecteur diff = (*\trou[{addition(a, oppose(b))}]{10cm}*);
+    printf("||a-b|| = %f\n", norme(diff));
     return 0;
 }
 \end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
 \end{UPSTIexercice}
 
 % ==========================================================================
@@ -350,32 +232,127 @@ typedef struct {
 } T_EtudiantAdresse;
 \end{lstlisting}
 
-    \UPSTIquestion{Comment accéder à la ville d’un étudiant ?}
-    \begin{UPSTIprofOnlyEnv}
-        Si \texttt{e} est une variable de type \texttt{T\_EtudiantAdresse}, on accède à la ville par :
-        \begin{lstlisting}[language=C]
-e.adresse.ville
-\end{lstlisting}
-    \end{UPSTIprofOnlyEnv}
+    \UPSTIquestion{Quel est l'avantage de créer une structure imbriquée plutôt qu'ajouter 3 champs à \texttt{Etudiant} ?}
 
-    \UPSTIquestion{Quel est l’avantage de créer une structure imbriquée plutôt qu’ajouter 3 champs à \texttt{Etudiant} ?}
-    \begin{UPSTIprofOnlyEnv}
-        On regroupe tous les champs liés à l'adresse dans une seule structure \texttt{T\_Adresse}.
-        Cela permet :
-        \begin{itemize}
-            \item de réutiliser \texttt{T\_Adresse} pour d'autres structures (Professeur, Entreprise, etc.) ;
-            \item de rendre le code plus lisible (une entité logique = une structure) ;
-            \item de faciliter les modifications (ajouter un champ à l'adresse sans toucher toutes les structures qui l'utilisent).
-        \end{itemize}
-    \end{UPSTIprofOnlyEnv}
+    On regroupe tous les champs liés à l'adresse dans une seule structure \texttt{T\_Adresse}, ce qui permet
+    \trou[de réutiliser T\_Adresse pour d'autres structures (Professeur, Entreprise, etc.) et de faciliter les modifications ultérieures]{13cm}.
 
-    \UPSTIquestion{Proposer une fonction \texttt{int habite\_ville(T\_EtudiantAdresse e, const char* ville)} qui renvoie 1 si l'étudiant habite dans la ville donnée, 0 sinon.}
-    \begin{UPSTIprofOnlyEnv}
-        \begin{lstlisting}[language=C]
+    \UPSTIquestion{Compléter l'accès à la ville d'un étudiant, ainsi que la fonction \texttt{habite\_ville}.}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Accès et fonction sur T\_EtudiantAdresse, à compléter}]
+// Si e est une variable de type T_EtudiantAdresse :
+string ville_e = (*\trou[{e.adresse.ville}]{6cm}*);
+
 int habite_ville(T_EtudiantAdresse e, const char* ville) {
-    return (strcmp(e.adresse.ville, ville) == 0);
+    return (*\trou[{strcmp(e.adresse.ville, ville) == 0}]{10cm}*);
 }
 \end{lstlisting}
-        On peut ensuite parcourir un tableau d'étudiants et afficher ceux qui habitent dans une ville donnée.
-    \end{UPSTIprofOnlyEnv}
+\end{UPSTIexercice}
+
+% ==========================================================================
+
+\begin{UPSTIexercice}{Pour aller plus loin : tableau d'étudiants avec adresse}
+    On dispose maintenant d'une \textbf{promotion entière} d'étudiants, chacun avec son adresse
+    (type \texttt{T\_EtudiantAdresse} défini précédemment). On fixe une taille maximale de promotion :
+    \begin{lstlisting}[language=C]
+#define TAILLE_MAX_PROMO 40
+\end{lstlisting}
+
+    \UPSTIquestion{Compléter la déclaration du tableau de la promotion, la saisie de ses \texttt{nbEtudiants} étudiants (prénom, âge, moyenne, puis les 3 champs de l'adresse), et la fonction qui compte combien d'étudiants habitent une ville donnée.}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Déclaration et saisie, à compléter}]
+(*\trou[{T\_EtudiantAdresse promo[TAILLE\_MAX\_PROMO];}]{12cm}*)
+int nbEtudiants;
+int i;
+
+nbEtudiants = get_int("Nombre d'etudiants : ");
+
+for (i = 0; i < nbEtudiants; i++) {
+    promo[i].prenom = get_string("Prenom : ");
+    promo[i].age    = get_int("Age : ");
+    promo[i].moyenne = get_float("Moyenne : ");
+    (*\trou[{promo[i].adresse.rue}]{6cm}*)        = get_string("Rue : ");
+    (*\trou[{promo[i].adresse.codePostal}]{6cm}*) = get_int("Code postal : ");
+    (*\trou[{promo[i].adresse.ville}]{6cm}*)      = get_string("Ville : ");
+}
+\end{lstlisting}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Comptage par ville, à compléter}]
+int compter_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville) {
+    int i, compteur = 0;
+
+    for (i = 0; i < nbEtudiants; i++) {
+        if ((*\trou[{strcmp(promo[i].adresse.ville, ville) == 0}]{10cm}*)) {
+            (*\trou[compteur++;]{6cm}*)
+        }
+    }
+    return compteur;
+}
+\end{lstlisting}
+
+    \UPSTIquestion{Pourquoi la fonction \texttt{compter\_ville} doit-elle recevoir \texttt{nbEtudiants} en paramètre, en plus du tableau \texttt{promo} ?}
+
+    Parce qu'un tableau \trou[ne connaît pas lui-même le nombre d'éléments réellement utilisés (ici TAILLE\_MAX\_PROMO est une taille maximale, pas forcément le nombre d'étudiants effectivement saisis)]{13.5cm} :
+    sans cette information, la fonction ne pourrait pas savoir où arrêter sa boucle.
+\end{UPSTIexercice}
+
+% ==========================================================================
+
+\begin{UPSTIexercice}{Pour aller plus loin : filtrer et afficher par ville}
+    On souhaite maintenant afficher la \textbf{liste complète} des étudiants d'une ville donnée
+    (prénom et moyenne), puis calculer la \textbf{moyenne de la classe restreinte aux étudiants
+    d'une ville donnée}. On réutilise le tableau \texttt{promo} et la fonction \texttt{compter\_ville}
+    de l'exercice précédent.
+
+    \UPSTIquestion{Compléter la fonction \texttt{afficher\_ville} qui affiche le prénom et la moyenne de chaque étudiant d'une ville donnée, et la fonction \texttt{moyenne\_ville} qui renvoie la moyenne de ces étudiants.}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Filtrage par ville, à compléter}]
+void afficher_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville) {
+    int i;
+
+    for (i = 0; i < nbEtudiants; i++) {
+        if ((*\trou[{strcmp(promo[i].adresse.ville, ville) == 0}]{10cm}*)) {
+            printf("%s : %.2f\n", (*\trou[{promo[i].prenom}]{6cm}*), (*\trou[{promo[i].moyenne}]{6cm}*));
+        }
+    }
+}
+
+float moyenne_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville) {
+    int i, nb = 0;
+    float somme = 0.0f;
+
+    for (i = 0; i < nbEtudiants; i++) {
+        if (strcmp(promo[i].adresse.ville, ville) == 0) {
+            (*\trou[{somme += promo[i].moyenne;}]{9cm}*)
+            (*\trou[nb++;]{6cm}*)
+        }
+    }
+
+    if ((*\trou[nb == 0]{6cm}*)) {
+        return 0.0f;
+    }
+    return (*\trou[somme / nb]{6cm}*);
+}
+\end{lstlisting}
+
+    \UPSTIquestion{Dans le \texttt{main}, écrire l'appel permettant d'afficher les étudiants de la ville saisie par l'utilisateur, puis leur moyenne.}
+
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Utilisation dans le main, à compléter}]
+int main(void) {
+    T_EtudiantAdresse promo[TAILLE_MAX_PROMO];
+    int nbEtudiants;
+    string ville;
+
+    // ... saisie de nbEtudiants et de promo (cf. exercice precedent) ...
+
+    ville = get_string("Ville recherchee : ");
+
+    printf("Etudiants de %s :\n", ville);
+    (*\trou[{afficher\_ville(promo, nbEtudiants, ville);}]{12cm}*)
+
+    printf("Moyenne a %s : %.2f\n", ville,
+           (*\trou[{moyenne\_ville(promo, nbEtudiants, ville)}]{10cm}*));
+    return 0;
+}
+\end{lstlisting}
 \end{UPSTIexercice}

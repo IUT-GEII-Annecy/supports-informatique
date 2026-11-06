@@ -1,0 +1,149 @@
+\section{Les types énumérés}
+
+\subsection{Le problème des codes magiques}
+
+Un feu tricolore est commandé par un programme qui mémorise son état dans un entier : 0 pour rouge, 1 pour orange, 2 pour vert.
+
+\begin{lstlisting}[language=c,caption={Codes entiers « magiques »},label=codeMagique]
+int etat = 0;
+if (etat == 2) {
+    etat = 1;
+}
+etat = 7;   // accepte, mais ne correspond a aucun etat
+\end{lstlisting}
+
+Pour comprendre ce code, il faut connaître par cœur la signification de chaque nombre. Une première amélioration consiste à nommer les valeurs avec \texttt{\#define} :
+
+\begin{lstlisting}[language=c,caption={Constantes \texttt{\#define}},label=codeDefine]
+#define ROUGE  0
+#define ORANGE 1
+#define VERT   2
+int etat = ROUGE;
+\end{lstlisting}
+
+Le code est plus lisible, mais \texttt{etat} reste un \texttt{int} quelconque : rien n'indique que ces trois constantes forment un ensemble, ni que \texttt{etat} ne doit prendre que l'une d'elles.
+
+\subsection{Déclarer un type énuméré}
+
+\begin{UPSTIinfor}{Type énuméré}
+  Un \textbf{type énuméré} définit un type dont les valeurs possibles sont une liste de noms.
+  \begin{lstlisting}[language=c,caption={Syntaxe}]
+typedef enum {
+    VALEUR1,   // vaut 0
+    VALEUR2,   // vaut 1
+    VALEUR3    // vaut 2
+} NomDuType;
+\end{lstlisting}
+  \begin{itemize}
+    \item chaque nom est associé à un entier, à partir de 0 et dans l'ordre ; on peut imposer une valeur : \texttt{VALEUR1 = 10} ;
+    \item par convention, les valeurs s'écrivent en majuscules ;
+    \item une variable de ce type s'utilise comme un entier : affectation, \texttt{==}, \texttt{switch}, \texttt{printf("\%d", ...)}.
+  \end{itemize}
+\end{UPSTIinfor}
+
+\begin{lstlisting}[language=c,caption={Le feu tricolore avec un \texttt{enum}},label=codeFeu]
+typedef enum { ROUGE, ORANGE, VERT } CouleurFeu;
+
+CouleurFeu suivant(CouleurFeu couleur) {
+    switch (couleur) {
+        case VERT:   return ORANGE;
+        case ORANGE: return ROUGE;
+        default:     return VERT;
+    }
+}
+
+int main(void) {
+    CouleurFeu feu = ROUGE;
+    for (int i = 0; i < 4; i++) {
+        feu = suivant(feu);
+    }
+    if (feu == VERT) {
+        printf("Passez\n");
+    }
+    return 0;
+}
+\end{lstlisting}
+
+\begin{UPSTIinfor}{\texttt{enum} ou \texttt{\#define} ?}
+  \begin{itemize}
+    \item le type de la variable (\texttt{CouleurFeu feu}) documente à lui seul les valeurs attendues ;
+    \item les valeurs sont regroupées en une seule déclaration et numérotées automatiquement : ajouter une valeur ne demande pas de renuméroter ;
+    \item le compilateur peut avertir (option \texttt{-Wall}) lorsqu'un \texttt{switch} oublie un des cas de l'énumération.
+  \end{itemize}
+  \texttt{\#define} reste adapté aux constantes isolées qui ne forment pas un ensemble de cas, comme une taille de tableau (\texttt{\#define N 10}) ou une valeur physique.
+\end{UPSTIinfor}
+
+\UPSTIremarque[Afficher une valeur énumérée]{
+  \texttt{printf("\%d", feu)} affiche le numéro (0, 1 ou 2), pas le nom. Pour afficher \texttt{"ROUGE"}, il faut écrire soi-même un \texttt{switch} qui associe un texte à chaque valeur.
+}
+
+\subsection{Exemples d'utilisation}
+
+\begin{lstlisting}[language=c,caption={Quelques énumérations courantes},label=codeExemplesEnum]
+typedef enum { LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE } Jour;
+
+typedef enum { ARRET, DEMARRAGE, MARCHE, DEFAUT } EtatMoteur;
+
+typedef enum { OK, ERREUR_DIVISION_PAR_ZERO, ERREUR_HORS_PLAGE } CodeErreur;
+\end{lstlisting}
+
+Une fonction peut renvoyer un \texttt{CodeErreur} pour signaler clairement à l'appelant ce qui s'est passé :
+
+\begin{lstlisting}[language=c,caption={Résultat d'une fonction},label=codeErreurEnum]
+CodeErreur verifier_consigne(int consigne) {
+    if (consigne < 0 || consigne > 100) {
+        return ERREUR_HORS_PLAGE;
+    }
+    return OK;
+}
+// appel :
+if (verifier_consigne(consigne_demandee) != OK) {
+    printf("Consigne refusee\n");
+}
+\end{lstlisting}
+
+Une énumération se combine naturellement avec une structure, comme champ :
+
+\begin{lstlisting}[language=c,caption={Énumération en champ de structure},label=codeEnumStruct]
+typedef struct {
+    int numero;
+    EtatMoteur etat;
+    float vitesse;   // en tr/min
+} Moteur;
+\end{lstlisting}
+
+\begin{UPSTIactivite}[][Week-end ou pas ?]
+\UPSTIquestion{Compléter les fonctions \texttt{est\_week\_end} et \texttt{lendemain} (le lendemain de \texttt{DIMANCHE} est \texttt{LUNDI}).}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Fonctions sur les jours, à compléter}]
+int est_week_end(Jour jour) {
+    return (*\trou[jour == SAMEDI || jour == DIMANCHE;]{10cm}*)
+}
+
+Jour lendemain(Jour jour) {
+    if ((*\trou[jour == DIMANCHE]{7cm}*)) {
+        return LUNDI;
+    }
+    return (*\trou[jour + 1;]{7cm}*)
+}
+\end{lstlisting}
+\UPSTIquestion{Pourquoi peut-on aussi écrire \texttt{return jour >= SAMEDI;} dans \texttt{est\_week\_end} ?}
+
+\trou[Les valeurs sont numérotées dans l'ordre de déclaration (\texttt{SAMEDI} vaut 5, \texttt{DIMANCHE} vaut 6, et c'est la dernière) : les comparer comme des entiers équivaut à tester l'appartenance au week-end.]{13.5cm}
+\end{UPSTIactivite}
+
+\begin{UPSTIactivite}[][Choisir le bon outil]
+On souhaite décrire les 8 radiateurs d'un bâtiment. Chaque radiateur a une puissance (W), une température de consigne (°C), un mode de fonctionnement (éteint, hors-gel, éco ou confort) et les 24 températures relevées chaque heure.
+\UPSTIquestion{Compléter les déclarations suivantes.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Déclarations, à compléter}]
+typedef enum { (*\trou[ETEINT, HORS\_GEL, ECO, CONFORT]{10cm}*) } Mode;
+
+typedef struct {
+    int puissance;
+    float consigne;
+    (*\trou[Mode mode;]{6cm}*)
+    (*\trou[{float releves[24];}]{6cm}*)      // une temperature par heure
+} Radiateur;
+
+(*\trou[{Radiateur batiment[8];}]{8cm}*)          // les 8 radiateurs du batiment
+\end{lstlisting}
+\end{UPSTIactivite}

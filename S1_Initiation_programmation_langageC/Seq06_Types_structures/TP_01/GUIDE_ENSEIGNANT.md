@@ -1,216 +1,176 @@
-# Guide Enseignant - TP Types Structurés
+# Guide Enseignant — TP Types Structurés (mini-jeu de combat RPG)
 
 ## Vue d'ensemble du TP
 
-**Durée estimée :** 1h30
-**Niveau :** BUT GEII 1ère année
-**Prérequis :** Fonctions, tableaux, pointeurs (notions de base)
-**Objectif principal :** Maîtriser les types structurés en C
+**Durée estimée :** 3h
+**Niveau :** BUT GEII 1ère année (S1)
+**Prérequis :** Fonctions, tableaux (dont tri par sélection), bases du C — **pas** les pointeurs
+ni `malloc`
+**Objectif principal :** Maîtriser les types structurés en C (structures simples, imbriquées,
+tableaux de structures, énumérations) à travers un fil rouge motivant : un mini-jeu de combat
+console au tour par tour, construit étape par étape.
+
+**Contrainte de conception :** aucun exercice ne fait appel aux pointeurs. Pour modifier une
+structure dans une fonction, on utilise systématiquement le patron `x = f(x, ...);` (la fonction
+renvoie la valeur modifiée, l'appelant réaffecte) — exactement comme dans le cours.
+
+**Format du TP : un projet filé, pas une collection d'exercices.** Les étudiants travaillent sur
+**un seul fichier**, `jeu_combat.c`, du début à la fin de la séance. Chaque étape ne crée pas un
+nouveau programme : elle **reprend le fichier de l'étape précédente** et l'enrichit (nouveau
+champ, nouvelle structure, nouvelle fonction, nouveau comportement). Chaque énoncé dans le PDF
+liste explicitement ce qui doit être **ajouté** ou **modifié** par rapport à la version
+précédente du fichier, sous forme de puces de type diff. En fin de séance, les étudiants
+rendent un unique fichier `jeu_combat.c` constituant le mini-jeu complet et fonctionnel (après
+l'étape 12).
 
 ## Structure du TP
 
-Le TP est organisé en 4 sections progressives totalisant 16 exercices :
+Le TP est organisé en 4 sections progressives totalisant 14 étapes (13 étapes principales +
+1 variante), toutes appliquées sur le **même fichier** `jeu_combat.c`.
 
-### 1. Premiers pas avec les structures (4 exercices)
-- **Objectif :** Découverte des structures avec des points 2D simples
-- **Exercices :**
-  - 1.1 : Déclaration et affichage d'un point
-  - 1.2 : Distance à l'origine (introduction des fonctions avec structures)
-  - 1.3 : Distance entre deux points
-  - 1.4 : Fonctions créant et affichant des points
+### 1. Fiche de personnage (étapes 1-3)
+- **Objectif :** découverte des structures avec une fiche de personnage simple
+- 1. Personnage simple (nom, pv, attaque)
+- 2. Structure imbriquée (`Stats` dans `Personnage`)
+- 3. Énuméré `Classe` + initialisation par `switch`
 
-**Concepts clés :** Déclaration, initialisation, accès aux champs, passage en paramètre
+**Concepts clés :** déclaration, initialisation, accès aux champs (dont champs imbriqués),
+`enum`, fonction qui renvoie une structure
 
-### 2. Tableaux de structures (4 exercices)
-- **Objectif :** Manipuler des collections de données structurées
-- **Exercices :**
-  - 2.1 : Périmètre d'un polygone
-  - 2.2 : Point le plus proche de l'origine
-  - 2.3 : Température moyenne de capteurs actifs
-  - 2.4 : Alertes de capteurs au-dessus d'un seuil
+### 2. Attaques et combats (étapes 4-7)
+- 4. `subir_degats` : modifier une structure **sans pointeur** (return + réaffectation), clamp
+- 5. Combat 1 contre 1, boucle jusqu'à élimination
+- 6. Équipe (premier tableau de structures `Personnage equipe[]`)
+- 7. **Plusieurs monstres** : un second tableau de structures côté adversaires, l'équipe de
+  héros affronte un **groupe**, pas un monstre isolé
 
-**Concepts clés :** Tableaux de structures, parcours, filtrage, calculs agrégés
+**Concepts clés :** modification via return, tableaux de structures, deux tableaux de structures
+manipulés en parallèle
 
-### 3. Structures imbriquées (4 exercices)
-- **Objectif :** Créer des structures contenant d'autres structures
-- **Exercices :**
-  - 3.1 : Aire d'un rectangle (structure contenant deux points)
-  - 3.2 : Point à l'intérieur d'un cercle
-  - 3.3 : Moyenne d'étudiants
-  - 3.4 : Classement d'étudiants selon un seuil
+### 3. Enrichir le jeu (étapes 8-11)
+- 8. Trouver l'indice du personnage le plus offensif dans un tableau de structures
+- 9. Inventaire : **nouveau** tableau de structures (`Objet`), butin après combat
+- 10. Potions et effets : `enum TypeEffet` imbriqué dans une structure `Potion`
+- 11. Classement de l'équipe par dégâts infligés : tri par sélection sur un tableau de structures
 
-**Concepts clés :** Structures imbriquées, chaînes de caractères, applications réalistes
+**Concepts clés :** recherche d'indice, plusieurs types de structures qui interagissent entre
+eux, enum imbriqué, tri de structures (réinvestissement de la séquence Tableaux)
 
-### 4. Exercices bonus (4 exercices)
-- **Objectif :** Approfondir et consolider
-- **Exercices :**
-  - 4.1 : Top 3 des articles les plus chers
-  - 4.2 : Calcul de jours écoulés depuis le début de l'année
-  - 4.3 : Distribution de cartes
-  - 4.4 : Mini base de données de contacts avec menu
+### 4. Mini-projet final (étapes 12-13)
+- 12. **Capstone** : combat de l'équipe de héros contre le groupe de monstres, jusqu'à
+  élimination d'un camp — mobilise tableaux de structures, structures imbriquées, énumérations
+  et fonctions à tableau de structures en paramètre, dans le même fichier. C'est la version
+  finale de `jeu_combat.c`, celle qui est rendue.
+- 12bis. Variante (si le temps le permet) : équiper toute l'équipe de butin avant le combat
+- 13. Bonus ultime (facultatif, sur copie du fichier) : plusieurs vagues de monstres successives
 
-**Concepts clés :** Tri de structures, manipulation avancée, projet intégratif
+**Concepts clés :** synthèse de toutes les notions du TP, réutilisation de code déjà écrit
 
 ## Philosophie pédagogique
 
 ### Progression
-Le TP suit une progression en 3 phases conformément à la philosophie GEII :
+1. **Phase guidée (étapes 1-4)** : introduction douce, squelettes fournis pour les structures
+   simple, imbriquée, et le patron `return` sans pointeur
+2. **Phase semi-guidée (étapes 5-11)** : autonomie croissante, énoncés détaillés, squelettes
+   fournis uniquement pour les tout premiers tableaux de structures (6, 7) et les nouvelles
+   structures (9)
+3. **Phase autonome — mini-projet (étapes 12-13)** : synthèse, l'étape 13 est volontairement
+   ouverte
 
-1. **Phase guidée (exercices 1.1-1.4)** : Introduction douce avec des squelettes
-2. **Phase semi-guidée (exercices 2.1-3.4)** : Autonomie croissante, énoncés détaillés
-3. **Phase autonome (exercices 4.1-4.4)** : Défis nécessitant synthèse et créativité
+### Squelette fourni
 
-### Squelettes fournis
-Des squelettes de code sont fournis pour 5 exercices clés :
-- `01_point_simple.c` - Premier contact
-- `02_distance_origine.c` - Première fonction avec structure
-- `07_capteurs_temperature.c` - Premier tableau de structures
-- `09_rectangle_aire.c` - Première structure imbriquée
-- `11_etudiants_moyenne.c` - Application réaliste
+Un seul squelette de départ est fourni : `squelette/jeu_combat.c` (équivalent à l'étape 1,
+structure `Personnage` minimale avec `// TODO`). Les étudiants travaillent **uniquement** sur
+ce fichier pendant toute la séance : chaque étape reprend le fichier précédent et l'enrichit, il
+n'y a pas de nouveau squelette à télécharger en cours de route.
 
-**Rationale :** Les squelettes aident à démarrer les nouveaux concepts, mais les étudiants doivent coder from scratch pour les exercices suivants.
+### Versions de référence intermédiaires (enseignant uniquement)
+
+Le dossier `squelette/corrections_intermediaires/` contient quatre photographies **complètes et
+compilables** de `jeu_combat.c` à des points de contrôle de la progression — à ne **pas**
+distribuer aux étudiants, elles servent uniquement à l'enseignant pour dépanner ou vérifier
+l'avancement :
+- `etape03_fin.c` — fin de la partie « Fiche de personnage » (structure imbriquée + enum)
+- `etape07_fin.c` — fin de la partie « Attaques et combats » (équipe + plusieurs monstres)
+- `etape11_fin.c` — fin de la partie « Enrichir le jeu » (inventaire, potions, classement)
+- `etape12_fin.c` — mini-jeu complet (capstone)
+
+**Rationale :** un seul fil conducteur de code, cohérent avec le principe de projet filé ; les
+versions intermédiaires permettent à l'enseignant de recaler rapidement un étudiant en
+difficulté sans avoir à relire tout son code.
 
 ## Ressources pédagogiques
 
 ### Documents fournis
-- **PDF principal** : `types_structures.pdf` (13 pages)
-  - Introduction avec objectifs et consignes
-  - Théorie complète sur les structures
-  - 16 exercices avec cahiers des charges
+- **PDF principal** : `types_structures.pdf`
+  - Introduction (objectifs, contrainte "pas de pointeurs", principe du projet filé, conseils)
+  - Théorie complète sur les structures (dont le patron de modification sans pointeur)
+  - 14 étapes avec cahiers des charges sous forme de diffs ("ajouter"/"modifier") par rapport au
+    fichier de l'étape précédente
 
-- **Squelettes** : dossier `squelette/`
-  - 5 fichiers .c avec TODO commentés
-  - README.md avec instructions d'utilisation
-  - CORRECTIONS_EXEMPLES.md avec solutions commentées
-
-### Validation automatique
-Tous les exercices sont validables avec `check50` :
-```bash
-check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/nom_exercice
-```
-
-**Note :** Les tests check50 doivent être créés séparément (non inclus dans ce TP).
+- **Squelette et références** : dossier `squelette/`
+  - `jeu_combat.c` — l'unique squelette de départ distribué aux étudiants, avec `TODO` commentés
+  - `corrections_intermediaires/` — 4 versions de référence complètes du fichier à des points de
+    contrôle de la progression (réservé enseignant)
+  - `README.md` avec instructions d'utilisation
+  - `CORRECTIONS_EXEMPLES.md` avec extraits commentés pour les étapes 1, 2, 4 et 6
 
 ## Conseils pour l'animation
 
 ### Points d'attention
 
-1. **Syntaxe des structures** (10 premières minutes)
-   - Bien insister sur la différence avec/sans typedef
-   - Montrer l'opérateur `.` vs `->`
-   - Expliquer le passage par valeur vs par adresse
+1. **Modifier sans pointeur** (étape 4) — point critique du TP
+   - Bien insister : `cible` dans `subir_degats` est une **copie**
+   - Rappeler la syntaxe vue en cours : `point_a = translater(point_a, ...);`
+   - Faire visualiser au tableau pourquoi `subir_degats(heros, 10);` seul (sans réaffectation)
+     ne change rien
 
-2. **Exercice 2.3 (Capteurs)** - Point critique
-   - Premier exercice avec filtre (actif/inactif)
-   - Gestion du cas "aucun capteur actif"
-   - Vérifier la compréhension avant de continuer
+2. **Étape 6-7 (tableaux de structures)**
+   - Rappeler le lien avec la séquence Tableaux : `equipe[i].stats.pv` combine indexation et
+     accès à un champ
+   - Insister sur la nécessité de transmettre la taille en paramètre, comme pour un tableau
+     "classique"
+   - L'étape 7 introduit **volontairement** un second tableau de structures (`monstres[]`) tôt
+     dans la progression : ne pas attendre le mini-projet final pour manipuler plusieurs
+     structures en tableau
 
-3. **Exercice 3.3 (Étudiants)** - Difficulté scanf
-   - Les étudiants ont souvent des problèmes avec `scanf` pour les chaînes
-   - Bien expliquer `scanf(" %[^\n]", nom)` et l'espace avant %
-   - Avoir un exemple au tableau
+3. **Étape 9 (scanf et chaînes)**
+   - Les étudiants ont souvent des problèmes avec `scanf("%s", ...)` pour les noms contenant des
+     espaces (non traité ici, les noms sont sans espace) — rappeler `%29s` avec la taille du
+     tableau moins 1
 
-4. **Exercices bonus** - Différenciation
-   - Pour les étudiants en avance
-   - Peuvent être donnés en TP supplémentaire ou en DM
-   - Le 4.4 (contacts) est un mini-projet complet
+4. **Étape 12 (capstone)**
+   - Bien faire identifier, avant de coder, les deux tableaux (`heros[]`, `monstres[]`) et la
+     fonction commune `indice_premier_vivant`, réutilisable sur l'un ou l'autre tableau car ce
+     sont tous deux des tableaux de `Personnage`
 
-### Timing suggéré (1h30)
+### Timing suggéré (3h)
 
-- 0-10 min : Rappel théorique et présentation du TP
-- 10-30 min : Exercices 1.1 à 1.4 (premiers pas)
-- 30-60 min : Exercices 2.1 à 2.4 (tableaux de structures)
-- 60-80 min : Exercices 3.1 à 3.4 (structures imbriquées)
-- 80-90 min : Bonus ou approfondissement selon le niveau
+- 0-15 min : rappel théorique (structures, imbrication, patron sans pointeur)
+- 15-45 min : étapes 1 à 3 (fiche de personnage)
+- 45-90 min : étapes 4 à 7 (attaques, combats, équipes, plusieurs monstres)
+- 90-135 min : étapes 8 à 11 (enrichissements : analyse, inventaire, potions, classement)
+- 135-165 min : étape 12 (mini-projet final)
+- 165-180 min : étape 13 (bonus) ou consolidation selon le niveau
 
 ### Évaluation formative
 
 **Points de contrôle suggérés :**
-- Après 1.2 : Vérifier la compréhension du passage de structure en paramètre
-- Après 2.3 : Vérifier la maîtrise des tableaux de structures
-- Après 3.1 : Vérifier la compréhension des structures imbriquées
+- Après l'étape 4 : vérifier la compréhension du patron `return` + réaffectation
+- Après l'étape 7 : vérifier la maîtrise des tableaux de structures et de leur taille en paramètre
+- Après l'étape 12 : vérifier que les étudiants savent combiner toutes les notions sans aide
 
 ## Variantes et adaptations
 
-### Pour une séance plus courte (1h)
-- Exercices obligatoires : 1.1, 1.2, 1.3, 2.3, 3.1
-- Exercices au choix parmi les autres
+### Pour une séance plus courte (1h30)
+- Exercices obligatoires : 1, 2, 4, 6, 7
+- Le reste (8-11, 12-13) au choix ou en travail à la maison
 
-### Pour une séance plus longue (2h)
-- Ajouter les exercices bonus comme obligatoires
-- Demander des fonctions supplémentaires (par ex. tri des étudiants)
-
-### Pour un TP noté
-Suggérer une grille :
-- Exercices 1.x : 4 points (1 point chacun)
-- Exercices 2.x : 6 points (1.5 points chacun)
-- Exercices 3.x : 6 points (1.5 points chacun)
-- Bonus : 4 points
-- **Total : 20 points**
-
-## Prolongements possibles
-
-- **Projet suivant :** Système de gestion (bibliothèque, stock, etc.)
-- **Approfondissement :** Structures avec allocation dynamique (malloc)
-- **Lien avec autres UE :** Bases de données (modélisation)
-
-## Questions fréquentes des étudiants
-
-**Q : Pourquoi utiliser typedef ?**
-R : Pour simplifier l'écriture. Au lieu de `struct Point p`, on écrit juste `Point p`.
-
-**Q : Quelle est la différence entre `.` et `->` ?**
-R : `.` pour les structures, `->` pour les pointeurs vers structures. `p->x` équivaut à `(*p).x`.
-
-**Q : Peut-on comparer deux structures avec == ?**
-R : Non, il faut comparer champ par champ ou écrire une fonction de comparaison.
-
-**Q : Comment initialiser tous les champs à zéro ?**
-R : `Point p = {0};` initialise tous les champs à 0.
-
-**Q : Peut-on retourner une structure depuis une fonction ?**
-R : Oui ! C'est valide et pratique. La structure est copiée.
-
-## Support technique
-
-### Compilation
-- Standard C99 ou supérieur recommandé
-- Flag `-lm` nécessaire pour les exercices avec sqrt()
-- Exemple : `gcc -std=c99 -Wall fichier.c -lm -o programme`
-
-### Environnement
-- CS50 IDE (recommandé pour check50)
-- VS Code avec extension C/C++
-- Tout environnement C standard
-
-## Fichiers du TP
-
-```
-TP_01/
-├── types_structures.tex          # Fichier principal LaTeX
-├── types_structures.pdf          # PDF compilé (13 pages)
-├── main.tex                      # Structure du document
-├── sources/                      # Sources LaTeX
-│   ├── introduction.tex          # Introduction du TP
-│   ├── methodo.tex              # Théorie sur les structures
-│   ├── premiers_pas.tex         # Section 1
-│   ├── tableaux_structures.tex  # Section 2
-│   ├── structures_imbriquees.tex # Section 3
-│   └── bonus.tex                # Section 4
-└── squelette/                   # Squelettes pour étudiants
-    ├── README.md                # Guide d'utilisation
-    ├── CORRECTIONS_EXEMPLES.md  # Solutions commentées
-    ├── 01_point_simple.c
-    ├── 02_distance_origine.c
-    ├── 07_capteurs_temperature.c
-    ├── 09_rectangle_aire.c
-    └── 11_etudiants_moyenne.c
-```
-
-## Auteur et licence
-
-Ce TP a été conçu pour le module S1 Initiation à la programmation en langage C du BUT GEII, suivant la philosophie pédagogique établie dans les TPs précédents de la séquence.
-
----
-
-**Bon TP !**
+### Pour une séance plus longue ou un TP noté
+- Ajouter l'étape 13 (vagues de monstres) comme obligatoire
+- Suggestion de grille sur 20 points :
+  - Étapes 1-3 (fiche de personnage) : 4 points
+  - Étapes 4-7 (attaques et combats) : 6 points
+  - Étapes 8-11 (enrichissements) : 6 points
+  - Étape 12 (mini-projet) : 4 points
+  - Étape 13 : bonus

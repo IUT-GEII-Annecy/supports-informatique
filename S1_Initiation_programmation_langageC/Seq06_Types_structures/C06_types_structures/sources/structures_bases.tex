@@ -1,0 +1,115 @@
+\section{Les structures}
+
+\subsection{Regrouper des données de types différents}
+
+Pour représenter un point du plan, il faut deux nombres : son abscisse et son ordonnée. Pour décrire un étudiant, il faut un numéro (entier), une note (réel) et une initiale (caractère). Avec des variables séparées, on obtient vite :
+
+\begin{lstlisting}[language=c,caption={Données éparpillées},label=codeSansStruct]
+float point_a_x = 1.0, point_a_y = 2.0;
+float point_b_x = 4.0, point_b_y = 6.0;
+float distance(float x1, float y1, float x2, float y2);
+\end{lstlisting}
+
+\begin{lstlisting}[language=c,caption={Données éparpillées pour deux étudiants},label=codeSansStructEtu]
+int numero_etudiant1 = 101;  char initiale_etudiant1 = 'L';  float note_etudiant1 = 12.5;
+int numero_etudiant2 = 102;  char initiale_etudiant2 = 'M';  float note_etudiant2 = 8.0;
+void afficher_etudiant(int numero, char initiale, float note);
+\end{lstlisting}
+
+Rien n'indique au compilateur que \texttt{point\_a\_x} et \texttt{point\_a\_y} vont ensemble ; les fonctions ont des listes de paramètres de plus en plus longues, et une inversion (\texttt{distance(point\_a\_x, point\_b\_x, point\_a\_y, point\_b\_y)} ou \texttt{afficher\_etudiant(numero\_etudiant1, initiale\_etudiant2, note\_etudiant1)}) passe inaperçue. Un tableau ne résout pas le problème dès que les données sont de types différents, puisqu'un tableau ne contient que des valeurs d'un même type.
+
+Une \textbf{structure} permet de créer un \textbf{nouveau type} qui regroupe plusieurs variables, appelées \textbf{champs}, éventuellement de types différents.
+
+\subsection{Déclarer un type structuré}
+
+Commençons par le cas le plus simple : un point du plan, décrit par deux champs de même type.
+
+\begin{lstlisting}[language=c,caption={Un premier type structuré},label=codeTypePoint]
+typedef struct {
+    float x;
+    float y;
+} Point;   // Point est maintenant un type, comme int ou float
+\end{lstlisting}
+
+Les champs peuvent aussi être de types différents, ce qui est le principal intérêt des structures. La syntaxe générale est la suivante.
+
+\begin{UPSTIinfor}{Déclaration d'un type structuré}
+  \begin{lstlisting}[language=c,caption={Syntaxe avec \texttt{typedef}}]
+typedef struct {
+    type1 champ1;
+    type2 champ2;
+    // ...
+} NomDuType;
+\end{lstlisting}
+  \begin{itemize}
+    \item cette déclaration crée un type, elle ne crée aucune variable ;
+    \item elle se place en dehors de toute fonction, avant le \texttt{main} et les prototypes (ou dans un fichier d'en-tête \texttt{.h}) ;
+    \item ne pas oublier le \textbf{point-virgule} final après le nom du type.
+  \end{itemize}
+\end{UPSTIinfor}
+
+\begin{lstlisting}[language=c,caption={Un type structuré aux champs de types différents},label=codeTypesPoint]
+typedef struct {
+    int numero;
+    char initiale;
+    float note;
+} Etudiant;
+\end{lstlisting}
+
+\subsection{Variables, accès aux champs et initialisation}
+
+Une fois le type déclaré, on l'utilise comme \texttt{int} ou \texttt{float} pour déclarer des variables.
+
+\begin{UPSTIinfor}{Accès aux champs : l'opérateur point}
+  \texttt{variable.champ} désigne le champ \texttt{champ} de la variable structurée \texttt{variable}. Il s'utilise comme une variable ordinaire du type du champ : lecture, affectation, calcul, \texttt{printf}, \texttt{scanf}.
+  \begin{lstlisting}[language=c,caption={Utilisation}]
+Point point_a;              // variable de type Point
+point_a.x = 1.0;
+point_a.y = 2.0;
+Point point_b = {4.0, 6.0};            // initialisation dans l'ordre des champs
+Point point_c = {.y = 3.0, .x = 0.5};  // initialisation par nom de champ
+printf("A(%.1f ; %.1f)\n", point_a.x, point_a.y);
+scanf("%f", &point_b.x);
+\end{lstlisting}
+\end{UPSTIinfor}
+
+\UPSTIremarque[Copie d'une structure]{
+  L'affectation \texttt{point\_b = point\_a;} copie d'un coup tous les champs de \texttt{point\_a} dans \texttt{point\_b}. En revanche, on ne peut pas comparer deux structures avec \texttt{==}, ni les afficher directement avec \texttt{printf} : il faut traiter les champs un par un.
+}
+
+\begin{UPSTIactivite}[][Utiliser le type Etudiant]
+On reprend le type \texttt{Etudiant} du listing~\ref{codeTypesPoint}.
+\UPSTIquestion{Compléter le programme : déclarer la variable \texttt{etudiant} représentant l'étudiant numéro 103, d'initiale \texttt{'A'}, ayant obtenu 15,5 ; puis écrire la condition qui affiche \og Admis \fg{} lorsque sa note est supérieure ou égale à 10.}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Utilisation d'un Etudiant, à compléter}]
+int main(void) {
+    (*\trou[Etudiant etudiant = \{103, 'A', 15.5\};]{12cm}*)
+
+    if ((*\trou[etudiant.note >= 10]{8cm}*)) {
+        printf("%c (%d) : Admis\n", (*\trou[etudiant.initiale, etudiant.numero]{6cm}*));
+    }
+    return 0;
+}
+\end{lstlisting}
+\end{UPSTIactivite}
+
+\begin{UPSTIactivite}[][Trouver les erreurs]
+On considère le type \texttt{Point} déclaré plus haut et l'extrait suivant, où \texttt{point\_p} et \texttt{point\_q} sont deux variables de type \texttt{Point}.
+\begin{lstlisting}[language=c,caption={Extrait à corriger},label=codeErreursStruct]
+Point point_p = {2.0, 5.0};
+Point point_q;
+x = 3.0;
+point_q.z = 1.0;
+point_q = point_p;
+if (point_p == point_q) {
+    printf("%f\n", point_p);
+}
+\end{lstlisting}
+\UPSTIquestion{Pour chacune des lignes fautives suivantes, écrire la ligne corrigée (ou \og rien \fg{} si la ligne est correcte).}
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Corrections ligne par ligne}]
+x = 3.0;                 (*\trou[point\_q.x = 3.0;  //  x  n'est pas une variable, c'est un champ]{11cm}*)
+point_q.z = 1.0;          (*\trou[(a supprimer : Point n'a pas de champ z)]{11cm}*)
+point_q = point_p;        (*\trou[rien : copie correcte de tous les champs]{11cm}*)
+if (point_p == point_q)  (*\trou[if (point\_p.x == point\_q.x \&\& point\_p.y == point\_q.y)]{11cm}*)
+printf("%f\n", point_p);  (*\trou[printf("\%f \%f\textbackslash n", point\_p.x, point\_p.y);]{11cm}*)
+\end{lstlisting}
+\end{UPSTIactivite}

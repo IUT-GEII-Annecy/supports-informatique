@@ -1,136 +1,75 @@
-Ces exercices bonus permettent d'approfondir les structures avec des applications plus complexes.
+\subsection{Mini-projet : combat d'équipes}
 
-\subsection{Exercices bonus}
-
-\begin{UPSTIManipulation}{Gestion de stock — Articles les plus chers}
-  \textbf{Contexte :} Un magasin souhaite identifier ses 3 articles les plus chers en stock.
-
-  \textbf{Structure à utiliser :}
-  \begin{lstlisting}[language=C]
-typedef struct {
-    int code;            // Code article
-    char nom[50];        // Nom de l'article
-    float prix;          // Prix unitaire en euros
-    int quantite;        // Quantite en stock
-} Article;
-  \end{lstlisting}
+\begin{UPSTIManipulation}{Étape 12 — Capstone : l'équipe contre les monstres}
+  \textbf{Contexte :} L'équipe de héros affronte tout le groupe de monstres, jusqu'à
+  l'élimination complète d'un des deux camps.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Demander \textbf{n} ($3 \le n \le 50$) articles
-    \item Lire les informations de chaque article
-    \item Afficher les 3 articles ayant le \textbf{prix unitaire le plus élevé}
-    \item Les afficher par ordre décroissant de prix
-    \item Format : \texttt{code - nom: prix EUR}
+    \item Les deux camps s'affrontent tant qu'il reste au moins un personnage vivant de chaque
+      côté
+    \item À chaque tour, un héros vivant attaque un monstre vivant, puis, si un monstre est
+      encore vivant, il attaque un héros vivant à son tour
+    \item Chaque attaque et son résultat (PV restants de la cible) sont affichés
+    \item À la fin, le camp vainqueur est annoncé
   \end{itemize}
 
-  \textbf{Indice :} Tri par sélection adapté aux structures.
+  \textbf{Exemple d'exécution :}
+  \begin{lstlisting}[language=bash]
+--- Equipe de heros ---
+Arthor (PV: 35, ATQ: 7, DEF: 6)
+Lysia (PV: 20, ATQ: 10, DEF: 2)
+Finn (PV: 25, ATQ: 9, DEF: 3)
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/stock_top3
-%   \end{lstlisting}
+--- Monstres ---
+Gobelin (PV: 15, ATQ: 5, DEF: 1)
+Orc (PV: 30, ATQ: 8, DEF: 4)
+
+Tour 1 : Arthor attaque Gobelin (PV restants: 8)
+Tour 1 : Gobelin attaque Arthor (PV restants: 30)
+Tour 2 : Arthor attaque Gobelin (PV restants: 1)
+Tour 2 : Gobelin attaque Arthor (PV restants: 25)
+Tour 3 : Arthor attaque Gobelin (PV restants: 0)
+Gobelin est vaincu !
+Tour 4 : Arthor attaque Orc (PV restants: 23)
+...
+Les heros l'emportent !
+  \end{lstlisting}
+
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus. C'est la version finale de votre mini-jeu.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Date — Calcul du nombre de jours écoulés}
-
-  \textbf{Contexte :} Calculer le nombre de jours écoulés depuis le début de l'année pour une date donnée.
-
-  \textbf{Structure à utiliser :}
-  \begin{lstlisting}[language=C]
-typedef struct {
-    int jour;   // 1-31
-    int mois;   // 1-12
-    int annee;  // ex: 2025
-} Date;
-  \end{lstlisting}
+\begin{UPSTIManipulation}{Étape 12bis — Variante : équiper toute l'équipe avant le combat}
+  \textbf{Contexte :} On distribue le butin ramassé (étape 9) à toute l'équipe avant le combat
+  final, pas à un seul personnage.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Demander une date (jour, mois, année)
-    \item Calculer le nombre de jours écoulés depuis le 1er janvier de la même année
-    \item Ne pas tenir compte des années bissextiles (tous les mois ont leur nombre réel de jours)
-    \item Afficher le résultat
+    \item Avant le combat, chaque héros reçoit un objet qui améliore son attaque
+    \item Vérifier que les héros infligent davantage de dégâts qu'avant d'être équipés
   \end{itemize}
 
-  \textbf{Exemple :}
-  \begin{lstlisting}[style=console]
-Jour: 15
-Mois: 3
-Annee: 2025
-Jours ecoules: 74
-  \end{lstlisting}
-
-  \textbf{Rappel :} Janvier=31j, Février=28j, Mars=31j, Avril=30j, etc.
-
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/date_jours
-%   \end{lstlisting}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Jeu de cartes — Distribution}
+\subsection{Pour aller encore plus loin}
 
-  \textbf{Contexte :} Représenter et manipuler des cartes à jouer.
-
-  \textbf{Structure à utiliser :}
-  \begin{lstlisting}[language=C]
-typedef struct {
-    int valeur;     // 1-13 (As=1, Valet=11, Dame=12, Roi=13)
-    char couleur;   // 'C'oeur, 'P'ique, 'T'refle, 'K'arreau
-} Carte;
-  \end{lstlisting}
+\begin{UPSTIManipulation}{Étape 13 — Bonus ultime : plusieurs vagues de monstres}
+  \textbf{Contexte :} Si l'équipe gagne un combat, elle affronte une nouvelle vague de
+  monstres, plus forte que la précédente, jusqu'à être vaincue ou avoir surmonté toutes les
+  vagues.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
-    \item Créer un tableau de 52 cartes représentant un jeu complet
-    \item Afficher toutes les cartes sous la forme \texttt{valeur-couleur}
-    \item Par exemple : \texttt{1-C}, \texttt{2-C}, ..., \texttt{13-C}, \texttt{1-P}, etc.
+    \item L'équipe affronte successivement plusieurs vagues de monstres, chacune plus difficile
+      que la précédente
+    \item Les héros conservent leurs PV restants d'une vague à l'autre
+    \item Le jeu annonce soit la victoire finale, soit la vague à laquelle l'équipe a été
+      vaincue
   \end{itemize}
 
-  \textbf{Astuce :} Utiliser deux boucles imbriquées.
+  \textbf{Remarque :} cet exercice est ouvert : il n'y a pas une seule bonne façon d'augmenter
+  la difficulté des vagues. Réutilisez le code déjà écrit sans le dupliquer.
 
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/cartes_distribution
-%   \end{lstlisting}
+  \UPSTIetape{Modifier \texttt{jeu\_combat.c} (ou une copie) pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
-
-\begin{UPSTIManipulation}{BONUS ULTIME — Mini base de données de contacts}
-
-  \textbf{Contexte :} Créer un système simple de gestion de contacts avec menu.
-
-  \textbf{Structure à utiliser :}
-  \begin{lstlisting}[language=C]
-typedef struct {
-    int id;
-    char nom[50];
-    char prenom[50];
-    char telephone[15];
-    char email[50];
-} Contact;
-  \end{lstlisting}
-
-  \textbf{Cahier des charges :}
-  \begin{itemize}
-    \item Créer un tableau de maximum 100 contacts
-    \item Implémenter un menu avec les options :
-    \begin{enumerate}
-      \item Ajouter un contact
-      \item Afficher tous les contacts
-      \item Rechercher un contact par nom
-      \item Quitter
-    \end{enumerate}
-    \item L'ID doit être auto-incrémenté (commence à 1)
-    \item La recherche doit afficher tous les contacts dont le nom contient la chaîne recherchée
-  \end{itemize}
-
-  \textbf{Défi :} Gérer proprement l'ajout et la recherche !
-
-%   \tcblower
-%   \begin{lstlisting}[language=bash]
-% check50 IUT-GEII-Annecy/exercices/2025/info1/tp_structures/contacts_bdd
-%   \end{lstlisting}
-\end{UPSTIManipulation}
-
-\pagebreak

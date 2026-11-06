@@ -1,315 +1,303 @@
-# Corrections et Exemples - TP Types Structurés
+# Corrections et Exemples — TP Types Structurés (mini-jeu de combat)
 
-Ce document contient des corrections commentées pour certains exercices clés du TP.
+Ce TP est un **projet filé** : les étudiants travaillent sur un seul fichier `jeu_combat.c`
+qu'ils enrichissent étape après étape. Ce document contient des corrections commentées
+illustrant le contenu attendu du fichier à certaines étapes clés — chaque extrait montre
+l'état du fichier à cette étape, pas un programme indépendant.
 
-## Exercice 1.1 - Point Simple (Solution complète)
+Pour des **versions complètes et compilables** du fichier à quatre points de contrôle de la
+progression (fin de la partie 1, fin de la partie 2, fin de la partie 3, version finale), voir
+le dossier `corrections_intermediaires/` (réservé à l'enseignant, à ne pas distribuer).
+
+## Étape 1 — Personnage simple (solution complète)
 
 ```c
 #include <stdio.h>
 
-// Déclaration de la structure Point
 typedef struct {
-    float x;
-    float y;
-} Point;
+    char nom[30];
+    int pv;
+    int attaque;
+} Personnage;
 
 int main(void)
 {
-    Point p1;  // Déclaration d'une variable de type Point
+    Personnage heros;
 
-    // Demande des coordonnées
-    printf("Entrez x: ");
-    scanf("%f", &p1.x);
+    printf("Nom du personnage: ");
+    scanf("%29s", heros.nom);
 
-    printf("Entrez y: ");
-    scanf("%f", &p1.y);
+    printf("Points de vie: ");
+    scanf("%d", &heros.pv);
 
-    // Affichage du point
-    printf("Point: (%.1f, %.1f)\n", p1.x, p1.y);
+    printf("Attaque: ");
+    scanf("%d", &heros.attaque);
+
+    printf("%s (PV: %d, ATQ: %d)\n", heros.nom, heros.pv, heros.attaque);
 
     return 0;
 }
 ```
 
 **Points importants :**
-- On utilise `typedef` pour simplifier l'utilisation
+- On utilise `typedef` pour simplifier l'utilisation de la structure
 - L'accès aux champs se fait avec l'opérateur `.`
-- `%.1f` affiche un float avec 1 décimale
+- Pour lire une chaîne avec `scanf`, pas d'esperluette (`&`) devant un tableau de `char`
 
 ---
 
-## Exercice 1.3 - Distance entre deux points (Solution complète)
-
-```c
-#include <stdio.h>
-#include <math.h>
-
-typedef struct {
-    float x;
-    float y;
-} Point;
-
-// Fonction qui calcule la distance entre deux points
-float distance(Point p1, Point p2)
-{
-    float dx = p2.x - p1.x;
-    float dy = p2.y - p1.y;
-    return sqrt(dx*dx + dy*dy);
-}
-
-int main(void)
-{
-    Point p1, p2;
-
-    printf("Point 1 - x: ");
-    scanf("%f", &p1.x);
-    printf("Point 1 - y: ");
-    scanf("%f", &p1.y);
-
-    printf("Point 2 - x: ");
-    scanf("%f", &p2.x);
-    printf("Point 2 - y: ");
-    scanf("%f", &p2.y);
-
-    float dist = distance(p1, p2);
-    printf("Distance: %.2f\n", dist);
-
-    return 0;
-}
-```
-
-**Compilation :** `gcc distance.c -lm -o distance`
-
----
-
-## Exercice 2.3 - Capteurs température (Solution complète)
+## Étape 2 — Stats imbriquées (solution complète)
 
 ```c
 #include <stdio.h>
 
 typedef struct {
-    int id;
-    float temperature;
-    int actif;  // 1 pour actif, 0 pour inactif
-} Capteur;
+    int pv;
+    int attaque;
+    int defense;
+} Stats;
+
+typedef struct {
+    char nom[30];
+    Stats stats;
+} Personnage;
+
+void afficher_personnage(Personnage p)
+{
+    printf("%s (PV: %d, ATQ: %d, DEF: %d)\n", p.nom, p.stats.pv, p.stats.attaque, p.stats.defense);
+}
 
 int main(void)
 {
-    Capteur capteurs[30];
-    int n;
+    Personnage perso;
 
-    printf("Nombre de capteurs: ");
-    scanf("%d", &n);
+    printf("Nom du personnage: ");
+    scanf("%29s", perso.nom);
 
-    // Lecture des capteurs
-    for (int i = 0; i < n; i++) {
-        printf("Capteur %d - ID: ", i);
-        scanf("%d", &capteurs[i].id);
-        printf("Temperature: ");
-        scanf("%f", &capteurs[i].temperature);
-        printf("Actif (1/0): ");
-        scanf("%d", &capteurs[i].actif);
-    }
+    printf("Points de vie: ");
+    scanf("%d", &perso.stats.pv);
+    printf("Attaque: ");
+    scanf("%d", &perso.stats.attaque);
+    printf("Defense: ");
+    scanf("%d", &perso.stats.defense);
 
-    // Calcul de la moyenne des capteurs actifs
-    float somme = 0;
-    int nb_actifs = 0;
-
-    for (int i = 0; i < n; i++) {
-        if (capteurs[i].actif == 1) {
-            somme += capteurs[i].temperature;
-            nb_actifs++;
-        }
-    }
-
-    if (nb_actifs == 0) {
-        printf("Aucun capteur actif\n");
-    } else {
-        float moyenne = somme / nb_actifs;
-        printf("Temperature moyenne: %.2f\n", moyenne);
-    }
+    afficher_personnage(perso);
 
     return 0;
 }
 ```
 
 **Points importants :**
-- Tableau de structures : `Capteur capteurs[30]`
-- Accès à un champ : `capteurs[i].temperature`
-- Il faut gérer le cas où aucun capteur n'est actif
+- Structure imbriquée : `Personnage` contient un champ `Stats`
+- Accès à un champ imbriqué : `perso.stats.pv` (on chaîne les `.`)
 
 ---
 
-## Exercice 3.1 - Rectangle aire (Solution complète)
+## Étape 4 — Subir des dégâts (solution complète)
 
 ```c
 #include <stdio.h>
-#include <math.h>
 
 typedef struct {
-    float x;
-    float y;
-} Point;
+    int pv;
+    int attaque;
+    int defense;
+} Stats;
+
+typedef enum { GUERRIER, MAGE, ARCHER } Classe;
 
 typedef struct {
-    Point coin_haut_gauche;
-    Point coin_bas_droit;
-} Rectangle;
+    char nom[30];
+    Classe classe;
+    Stats stats;
+} Personnage;
+
+Stats stats_initiales(Classe c)
+{
+    Stats s;
+    switch (c) {
+        case GUERRIER: s.pv = 35; s.attaque = 7;  s.defense = 6; break;
+        case MAGE:      s.pv = 20; s.attaque = 10; s.defense = 2; break;
+        case ARCHER:    s.pv = 25; s.attaque = 9;  s.defense = 3; break;
+    }
+    return s;
+}
+
+void afficher_personnage(Personnage p)
+{
+    printf("%s (PV: %d, ATQ: %d, DEF: %d)\n", p.nom, p.stats.pv, p.stats.attaque, p.stats.defense);
+}
+
+// Pas de pointeur : on renvoie la structure modifiee, l'appelant reaffecte.
+Personnage subir_degats(Personnage cible, int degats)
+{
+    cible.stats.pv -= degats;
+    if (cible.stats.pv < 0) {
+        cible.stats.pv = 0;
+    }
+    return cible;
+}
 
 int main(void)
 {
-    Rectangle rect;
+    Personnage heros;
 
-    printf("Coin haut-gauche - x: ");
-    scanf("%f", &rect.coin_haut_gauche.x);
-    printf("Coin haut-gauche - y: ");
-    scanf("%f", &rect.coin_haut_gauche.y);
+    printf("Nom du personnage: ");
+    scanf("%29s", heros.nom);
 
-    printf("Coin bas-droit - x: ");
-    scanf("%f", &rect.coin_bas_droit.x);
-    printf("Coin bas-droit - y: ");
-    scanf("%f", &rect.coin_bas_droit.y);
+    int classe_choisie;
+    printf("Classe (0=Guerrier, 1=Mage, 2=Archer): ");
+    scanf("%d", &classe_choisie);
+    heros.classe = (Classe) classe_choisie;
+    heros.stats = stats_initiales(heros.classe);
 
-    // Calcul de la largeur et hauteur
-    float largeur = fabs(rect.coin_bas_droit.x - rect.coin_haut_gauche.x);
-    float hauteur = fabs(rect.coin_bas_droit.y - rect.coin_haut_gauche.y);
+    printf("Avant : ");
+    afficher_personnage(heros);
 
-    // Calcul de l'aire
-    float aire = largeur * hauteur;
+    int degats;
+    printf("Degats subis: ");
+    scanf("%d", &degats);
 
-    printf("Aire: %.2f\n", aire);
+    heros = subir_degats(heros, degats);  // reaffectation : c'est elle qui "modifie" heros
+
+    printf("Apres : ");
+    afficher_personnage(heros);
 
     return 0;
 }
 ```
 
 **Points importants :**
-- Structure imbriquée : `Rectangle` contient deux `Point`
-- Accès à un champ imbriqué : `rect.coin_haut_gauche.x`
-- Utilisation de `fabs()` pour la valeur absolue de float
+- `subir_degats` reçoit une **copie** de `cible` : la modifier dans la fonction ne change rien à
+  l'extérieur
+- C'est le `return cible;` suivi de la réaffectation `heros = subir_degats(heros, degats);` qui
+  fait que `heros` change réellement dans le `main`
+- Le clamp (`if (... < 0) ... = 0;`) évite des PV négatifs
 
 ---
 
-## Exercice 3.3 - Étudiants moyenne (Solution avec fonction)
+## Étape 6 — Équipe (tableau de structures, solution complète)
 
 ```c
 #include <stdio.h>
-#include <string.h>
+
+#define TAILLE_EQUIPE 3
 
 typedef struct {
-    int numero;
-    char nom[50];
-    float note1;
-    float note2;
-    float note3;
-} Etudiant;
+    int pv;
+    int attaque;
+    int defense;
+} Stats;
 
-// Fonction pour calculer la moyenne d'un étudiant
-float calculer_moyenne(Etudiant e)
+typedef enum { GUERRIER, MAGE, ARCHER } Classe;
+
+typedef struct {
+    char nom[30];
+    Classe classe;
+    Stats stats;
+} Personnage;
+
+Stats stats_initiales(Classe c)
 {
-    return (e.note1 + e.note2 + e.note3) / 3.0;
+    Stats s;
+    switch (c) {
+        case GUERRIER: s.pv = 35; s.attaque = 7;  s.defense = 6; break;
+        case MAGE:      s.pv = 20; s.attaque = 10; s.defense = 2; break;
+        case ARCHER:    s.pv = 25; s.attaque = 9;  s.defense = 3; break;
+    }
+    return s;
+}
+
+void afficher_personnage(Personnage p)
+{
+    printf("%s (PV: %d, ATQ: %d, DEF: %d)\n", p.nom, p.stats.pv, p.stats.attaque, p.stats.defense);
+}
+
+void afficher_equipe(Personnage equipe[], int taille)
+{
+    for (int i = 0; i < taille; i++) {
+        afficher_personnage(equipe[i]);
+    }
+}
+
+int pv_totaux(Personnage equipe[], int taille)
+{
+    int total = 0;
+    for (int i = 0; i < taille; i++) {
+        total += equipe[i].stats.pv;
+    }
+    return total;
 }
 
 int main(void)
 {
-    Etudiant etudiants[30];
-    int n;
+    Personnage equipe[TAILLE_EQUIPE];
 
-    printf("Nombre d'etudiants: ");
-    scanf("%d", &n);
+    for (int i = 0; i < TAILLE_EQUIPE; i++) {
+        printf("Personnage %d - Nom: ", i);
+        scanf("%29s", equipe[i].nom);
 
-    // Lecture des étudiants
-    for (int i = 0; i < n; i++) {
-        printf("Etudiant %d - Numero: ", i);
-        scanf("%d", &etudiants[i].numero);
-
-        // Important : l'espace avant % consomme le '\n' résiduel
-        printf("Nom: ");
-        scanf(" %[^\n]", etudiants[i].nom);
-
-        printf("Note 1: ");
-        scanf("%f", &etudiants[i].note1);
-        printf("Note 2: ");
-        scanf("%f", &etudiants[i].note2);
-        printf("Note 3: ");
-        scanf("%f", &etudiants[i].note3);
+        int classe_choisie;
+        printf("Personnage %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", i);
+        scanf("%d", &classe_choisie);
+        equipe[i].classe = (Classe) classe_choisie;
+        equipe[i].stats = stats_initiales(equipe[i].classe);
     }
 
-    // Affichage des moyennes
-    printf("\nMoyennes:\n");
-    for (int i = 0; i < n; i++) {
-        float moyenne = calculer_moyenne(etudiants[i]);
-        printf("Etudiant %d - %s: %.2f\n",
-               etudiants[i].numero,
-               etudiants[i].nom,
-               moyenne);
-    }
+    printf("\n");
+    afficher_equipe(equipe, TAILLE_EQUIPE);
+    printf("PV totaux de l'equipe: %d\n", pv_totaux(equipe, TAILLE_EQUIPE));
 
     return 0;
 }
 ```
 
 **Points importants :**
-- Chaîne de caractères dans une structure : `char nom[50]`
-- Lecture d'une chaîne : `scanf(" %[^\n]", nom)` lit jusqu'au retour à la ligne
-- L'espace avant `%` consomme les espaces/retours à la ligne résiduels
-- Fonction qui prend une structure en paramètre
+- Un tableau de structures se déclare et se parcourt comme un tableau "classique" :
+  `equipe[i].stats.pv`
+- Une fonction qui reçoit un tableau de structures doit toujours recevoir sa **taille** à côté
+  (le tableau ne la connaît pas lui-même)
 
 ---
 
 ## Astuces générales
 
-### Passage de structures aux fonctions
-
-**Par valeur (copie) :**
-```c
-void afficher(Point p) {
-    printf("(%.1f, %.1f)\n", p.x, p.y);
-}
-```
-
-**Par adresse (modification possible) :**
-```c
-void deplacer(Point *p, float dx, float dy) {
-    p->x += dx;  // Notation -> pour les pointeurs
-    p->y += dy;
-}
-
-// Utilisation :
-Point p = {0, 0};
-deplacer(&p, 5, 3);  // Passer l'adresse avec &
-```
-
 ### Initialisation de structures
 
 ```c
-// Méthode 1 : Initialisation lors de la déclaration
-Point p1 = {3.5, 2.8};
+// Methode 1 : champ par champ
+Personnage p;
+p.pv = 35;
 
-// Méthode 2 : Champ par champ
-Point p2;
-p2.x = 3.5;
-p2.y = 2.8;
+// Methode 2 : initialisation a la declaration
+Stats s = {35, 7, 6};
 
-// Méthode 3 : Initialisation avec désignateurs (C99)
-Point p3 = {.x = 3.5, .y = 2.8};
+// Methode 3 : initialisation avec designateurs (C99)
+Stats s2 = {.pv = 35, .attaque = 7, .defense = 6};
 ```
 
-### Compilation avec math.h
+### Modifier une structure sans pointeur
 
-N'oubliez jamais le flag `-lm` :
-```bash
-gcc mon_programme.c -lm -o mon_programme
+Ce TP n'utilise **pas** les pointeurs. Pour faire évoluer une structure dans une fonction, le
+seul moyen est donc de la **renvoyer** modifiée, puis de **réaffecter** la variable de l'appelant :
+
+```c
+Personnage subir_degats(Personnage cible, int degats) {
+    cible.stats.pv -= degats;
+    return cible;
+}
+
+heros = subir_degats(heros, 10);  // obligatoire : sinon heros ne change pas
 ```
 
 ### Débogage
 
-Utilisez `gdb` ou l'extension VS Code pour déboguer :
 ```bash
-gcc -g mon_programme.c -lm -o mon_programme
+gcc -g mon_programme.c -o mon_programme
 gdb ./mon_programme
 ```
 
 ---
 
-**Note :** Ces corrections sont fournies à titre indicatif. Il existe souvent plusieurs façons correctes de résoudre un exercice !
+**Note :** Ces corrections sont fournies à titre indicatif. Il existe souvent plusieurs façons
+correctes de résoudre un exercice !
