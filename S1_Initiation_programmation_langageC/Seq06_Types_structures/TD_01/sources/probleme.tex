@@ -21,15 +21,15 @@
 #define NB_NOTES_MAX      10
 
 typedef struct {
-    (*\trou[string nom;]{6cm}*)
-    (*\trou[float coeff;]{6cm}*)
+    (*\trou[string nom;]{7.5cm}*)
+    (*\trou[float coeff;]{7.5cm}*)
 } T_Matiere;
 
 typedef struct {
-    (*\trou[{float notes[NB\_MATIERES][NB\_NOTES\_MAX];}]{10cm}*)
-    (*\trou[{int nb\_notes[NB\_MATIERES];}]{10cm}*)  // nombre de notes pour chaque matiere
-    (*\trou[string prenom;]{6cm}*)
-    (*\trou[int age;]{6cm}*)
+    (*\trou[{float notes[NB\_MATIERES][NB\_NOTES\_MAX];}]{11.5cm}*)
+    (*\trou[{int nb\_notes[NB\_MATIERES];}]{11.5cm}*)  // nombre de notes pour chaque matiere
+    (*\trou[string prenom;]{7.5cm}*)
+    (*\trou[int age;]{7.5cm}*)
 } T_Eleve;
 
 T_Matiere matieres[NB_MATIERES];
@@ -53,22 +53,22 @@ float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
         float moy_matiere = 0.0f;
 
         // Calculer la moyenne pour cette matiere
-        for (k = 0; k < (*\trou[{e.nb\_notes[i]}]{6cm}*); k++) {
-            moy_matiere += (*\trou[{e.notes[i][k]}]{6cm}*);
+        for (k = 0; k < (*\trou[{e.nb\_notes[i]}]{7.5cm}*); k++) {
+            moy_matiere += (*\trou[{e.notes[i][k]}]{7.5cm}*);
         }
         if (e.nb_notes[i] > 0) {
             moy_matiere /= e.nb_notes[i];
         }
 
         // Ajouter a la moyenne ponderee
-        somme_notes  += (*\trou[{moy\_matiere * matieres[i].coeff}]{10cm}*);
-        somme_coeffs += (*\trou[{matieres[i].coeff}]{6cm}*);
+        somme_notes  += (*\trou[{moy\_matiere * matieres[i].coeff}]{11.5cm}*);
+        somme_coeffs += (*\trou[{matieres[i].coeff}]{7.5cm}*);
     }
 
     if (somme_coeffs == 0.0f) {
         return 0.0f;
     }
-    return (*\trou[{somme\_notes / somme\_coeffs}]{8cm}*);
+    return (*\trou[{somme\_notes / somme\_coeffs}]{9.5cm}*);
 }
 \end{lstlisting}
 
@@ -77,7 +77,7 @@ float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
     \UPSTIquestion{Compléter la fonction \texttt{float moyenne\_matiere(T\_Eleve classe[], int nbEleves, int indiceMatiere)} qui renvoie la moyenne de la classe pour une matière donnée (identifiée par son indice). Pourquoi cette fonction prend-elle \texttt{nbEleves} en paramètre ?}
 
     Comme pour un tableau de structures classique, le tableau \texttt{classe} ne connaît pas lui-même
-    le nombre d'éléments réellement utilisés \trou[(TAILLE\_MAX\_CLASSE est une taille maximale, pas le nombre d'élèves effectivement saisis)]{11cm}.
+    le nombre d'éléments réellement utilisés \trou[(TAILLE\_MAX\_CLASSE est une taille maximale, pas le nombre d'élèves effectivement saisis)]{12.5cm}.
 
     \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={moyenne\_matiere, à compléter}]
 float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
@@ -85,9 +85,9 @@ float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
     float somme = 0.0f;
     int nb_notes_total = 0;
 
-    for (i = 0; i < (*\trou[nbEleves]{5cm}*); i++) {
-        for (k = 0; k < (*\trou[{classe[i].nb\_notes[indiceMatiere]}]{8cm}*); k++) {
-            somme += (*\trou[{classe[i].notes[indiceMatiere][k]}]{8cm}*);
+    for (i = 0; i < (*\trou[nbEleves]{6.5cm}*); i++) {
+        for (k = 0; k < (*\trou[{classe[i].nb\_notes[indiceMatiere]}]{9.5cm}*); k++) {
+            somme += (*\trou[{classe[i].notes[indiceMatiere][k]}]{9.5cm}*);
             nb_notes_total++;
         }
     }
@@ -95,7 +95,7 @@ float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
     if (nb_notes_total == 0) {
         return 0.0f;
     }
-    return (*\trou[{somme / nb\_notes\_total}]{8cm}*);
+    return (*\trou[{somme / nb\_notes\_total}]{9.5cm}*);
 }
 \end{lstlisting}
 
@@ -120,23 +120,23 @@ int main(void) {
     // 2. Saisie des matieres
     for (j = 0; j < NB_MATIERES; j++) {
         printf("Matiere %d\n", j + 1);
-        (*\trou[{matieres[j].nom}]{6cm}*)   = get_string("Nom de la matiere : ");
-        (*\trou[{matieres[j].coeff}]{6cm}*) = get_float("Coefficient : ");
+        (*\trou[{matieres[j].nom}]{7.5cm}*)   = get_string("Nom de la matiere : ");
+        (*\trou[{matieres[j].coeff}]{7.5cm}*) = get_float("Coefficient : ");
     }
     printf("\n");
 
     // 3. Saisie des eleves et de leurs notes
     for (i = 0; i < nbEleves; i++) {
         printf("Eleve %d\n", i + 1);
-        (*\trou[{classe[i].prenom}]{6cm}*) = get_string("Prenom : ");
-        (*\trou[{classe[i].age}]{6cm}*)    = get_int("Age : ");
+        (*\trou[{classe[i].prenom}]{7.5cm}*) = get_string("Prenom : ");
+        (*\trou[{classe[i].age}]{7.5cm}*)    = get_int("Age : ");
 
         for (j = 0; j < NB_MATIERES; j++) {
-            (*\trou[{classe[i].nb\_notes[j]}]{8cm}*) = get_int(
+            (*\trou[{classe[i].nb\_notes[j]}]{9.5cm}*) = get_int(
                 "Nombre de notes en %s : ", matieres[j].nom);
 
             for (k = 0; k < classe[i].nb_notes[j]; k++) {
-                (*\trou[{classe[i].notes[j][k]}]{8cm}*) = get_float(
+                (*\trou[{classe[i].notes[j][k]}]{9.5cm}*) = get_float(
                     "Note %d : ", k + 1);
             }
         }
@@ -145,7 +145,7 @@ int main(void) {
 
     // 4. Affichage des moyennes
     for (i = 0; i < nbEleves; i++) {
-        float m = (*\trou[{moyenne\_eleve(classe[i], matieres)}]{10cm}*);
+        float m = (*\trou[{moyenne\_eleve(classe[i], matieres)}]{11.5cm}*);
         printf("Moyenne de %s = %.2f\n", classe[i].prenom, m);
     }
 
@@ -165,20 +165,20 @@ int i;
 
 for (i = 1; i < nbEleves; i++) {
     m = moyenne_eleve(classe[i], matieres);
-    if ((*\trou[{m > meilleure\_moy}]{8cm}*)) {
+    if ((*\trou[{m > meilleure\_moy}]{9.5cm}*)) {
         meilleure_moy = m;
         indice_meilleur = i;
     }
 }
 
 printf("Meilleur eleve : %s (moyenne = %.2f)\n",
-       (*\trou[{classe[indice\_meilleur].prenom}]{6cm}*), meilleure_moy);
+       (*\trou[{classe[indice\_meilleur].prenom}]{7.5cm}*), meilleure_moy);
 
 float moyennesMatieres[NB_MATIERES];
 int j;
 
 for (j = 0; j < NB_MATIERES; j++) {
-    moyennesMatieres[j] = (*\trou[{moyenne\_matiere(classe, nbEleves, j)}]{12cm}*);
+    moyennesMatieres[j] = (*\trou[{moyenne\_matiere(classe, nbEleves, j)}]{13.5cm}*);
     printf("Moyenne de la classe en %s : %.2f\n",
            matieres[j].nom, moyennesMatieres[j]);
 }
@@ -188,14 +188,14 @@ int indice_pire_matiere = 0;
 float pire_moyenne = moyennesMatieres[0];
 
 for (j = 1; j < NB_MATIERES; j++) {
-    if ((*\trou[{moyennesMatieres[j] < pire\_moyenne}]{10cm}*)) {
+    if ((*\trou[{moyennesMatieres[j] < pire\_moyenne}]{11.5cm}*)) {
         pire_moyenne = moyennesMatieres[j];
         indice_pire_matiere = j;
     }
 }
 
 printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
-       (*\trou[{matieres[indice\_pire\_matiere].nom}]{8cm}*), pire_moyenne);
+       (*\trou[{matieres[indice\_pire\_matiere].nom}]{9.5cm}*), pire_moyenne);
 \end{lstlisting}
 
     Cet ensemble de questions mobilise plusieurs \textbf{structures} (données partagées et individuelles),
