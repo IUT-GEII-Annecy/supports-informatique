@@ -25,26 +25,38 @@ Apres : Arthor (PV: 0, ATQ: 7, DEF: 6)
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Étape 5 — Un combat en un contre un}
-  \textbf{Contexte :} On fait s'affronter deux personnages, tour par tour, jusqu'à ce que l'un
-  des deux soit vaincu (0 PV).
+\begin{UPSTIManipulation}{Étape 5 — Un combat en un contre un, joué par le joueur}
+  \textbf{Contexte :} On fait s'affronter deux personnages, \texttt{p1} (contrôlé par le
+  joueur) et \texttt{p2}, tour par tour, jusqu'à ce que l'un des deux soit vaincu (0 PV). Ce
+  n'est plus une simulation qui se déroule seule : à chaque tour, \textbf{le joueur décide} de
+  l'action de \texttt{p1}.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
     \item Créer deux personnages \texttt{p1} et \texttt{p2}
-    \item Tant qu'aucun des deux n'a 0 PV : \texttt{p1} attaque \texttt{p2}, puis si
-      \texttt{p2} est encore en vie, \texttt{p2} attaque \texttt{p1}
+    \item Tant qu'aucun des deux n'a 0 PV, à chaque tour :
+      \begin{itemize}
+        \item afficher un petit menu au joueur, par exemple \texttt{1. Attaquer}, et lire son
+          choix au clavier (\texttt{scanf("\%d", ...)})
+        \item \texttt{p1} attaque \texttt{p2} si le joueur a choisi d'attaquer
+        \item si \texttt{p2} est encore en vie, \texttt{p2} attaque \texttt{p1} à son tour
+          (cette attaque reste automatique)
+      \end{itemize}
     \item Afficher les PV restants des deux personnages après chaque tour
     \item À la fin du combat, afficher le nom du vainqueur
   \end{itemize}
 
   \textbf{Exemple d'exécution :}
   \begin{lstlisting}[language=bash]
-Tour 1 : Arthor PV=25 / Lysia PV=29
-Tour 2 : Arthor PV=25 / Lysia PV=16
-Tour 3 : Arthor PV=18 / Lysia PV=16
-Tour 4 : Arthor PV=18 / Lysia PV=3
-Tour 5 : Arthor PV=11 / Lysia PV=0
+Tour 1
+1. Attaquer
+Votre choix: 1
+Arthor attaque Lysia. PV: Arthor=25 / Lysia=29
+Lysia attaque Arthor. PV: Arthor=18 / Lysia=29
+Tour 2
+1. Attaquer
+Votre choix: 1
+...
 Vainqueur : Arthor
   \end{lstlisting}
 
@@ -87,17 +99,22 @@ PV totaux de l'equipe: 80
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Étape 7 — Face à plusieurs monstres}
+\begin{UPSTIManipulation}{Étape 7 — Face à plusieurs monstres, choisir sa cible}
   \textbf{Contexte :} L'équipe de héros affronte maintenant un \textbf{groupe} de monstres (et
-  non un seul), représenté lui aussi par un tableau de structures \texttt{Personnage}.
+  non un seul), représenté lui aussi par un tableau de structures \texttt{Personnage}. Puisqu'il
+  y a désormais plusieurs monstres, le joueur doit pouvoir \textbf{choisir lequel attaquer}.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
     \item Constituer un second tableau de 2 personnages représentant les monstres, rempli de la
       même façon que l'équipe de héros
-    \item Afficher le groupe de monstres
-    \item Faire subir à \texttt{equipe[0]} les attaques successives de chaque monstre encore en
-      vie, et afficher son état après chaque attaque
+    \item Afficher le groupe de monstres, en faisant apparaître le \textbf{numéro} de chaque
+      monstre dans le tableau et ses PV (par exemple \texttt{0. Gobelin (PV: 15)})
+    \item Demander au joueur le numéro du monstre qu'il veut attaquer avec \texttt{equipe[0]},
+      lire ce choix au clavier, et \textbf{vérifier} que le monstre choisi est encore vivant
+      (lui redemander un choix sinon)
+    \item Appliquer l'attaque d'\texttt{equipe[0]} sur le monstre choisi, et afficher son état
+      après l'attaque
   \end{itemize}
 
   \textbf{Exemple d'exécution :}
@@ -108,11 +125,11 @@ Lysia (PV: 20, ATQ: 10, DEF: 2)
 Finn (PV: 25, ATQ: 9, DEF: 3)
 
 --- Monstres ---
-Gobelin (PV: 15, ATQ: 5, DEF: 1)
-Orc (PV: 30, ATQ: 8, DEF: 4)
+0. Gobelin (PV: 15)
+1. Orc (PV: 30)
 
-Arthor subit l'attaque de Gobelin : PV restants 30
-Arthor subit l'attaque de Orc : PV restants 22
+Quel monstre attaquer (numero) ? 1
+Arthor attaque Orc : PV restants 23
   \end{lstlisting}
 
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}

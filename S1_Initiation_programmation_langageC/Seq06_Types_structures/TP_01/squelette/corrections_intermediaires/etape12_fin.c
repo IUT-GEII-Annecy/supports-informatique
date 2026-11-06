@@ -21,6 +21,17 @@ typedef struct {
     Stats stats;
 } Personnage;
 
+typedef enum {
+    SOIN,
+    POISON
+} TypeEffet;
+
+typedef struct {
+    char nom[30];
+    TypeEffet effet;
+    int valeur;
+} Potion;
+
 Stats stats_initiales(Classe c)
 {
     Stats s;
@@ -44,6 +55,13 @@ void afficher_equipe(Personnage equipe[], int taille)
     }
 }
 
+void afficher_monstres_numerotes(Personnage monstres[], int taille)
+{
+    for (int i = 0; i < taille; i++) {
+        printf("%d. %s (PV: %d)\n", i, monstres[i].nom, monstres[i].stats.pv);
+    }
+}
+
 Personnage subir_degats(Personnage cible, int degats)
 {
     cible.stats.pv -= degats;
@@ -53,7 +71,26 @@ Personnage subir_degats(Personnage cible, int degats)
     return cible;
 }
 
-// Etape 12 : indice du premier personnage encore vivant dans un tableau
+Personnage appliquer_potion(Personnage cible, Potion p)
+{
+    switch (p.effet) {
+        case SOIN:
+            cible.stats.pv += p.valeur;
+            if (cible.stats.pv > 50) {
+                cible.stats.pv = 50;
+            }
+            break;
+        case POISON:
+            cible.stats.pv -= p.valeur;
+            if (cible.stats.pv < 0) {
+                cible.stats.pv = 0;
+            }
+            break;
+    }
+    return cible;
+}
+
+// Indice du premier personnage encore vivant dans un tableau, -1 si tous vaincus
 int indice_premier_vivant(Personnage groupe[], int taille)
 {
     for (int i = 0; i < taille; i++) {
@@ -62,6 +99,19 @@ int indice_premier_vivant(Personnage groupe[], int taille)
         }
     }
     return -1;
+}
+
+int choisir_cible_vivante(Personnage monstres[], int taille)
+{
+    int choix;
+    for (;;) {
+        printf("Quel monstre attaquer (numero) ? ");
+        scanf("%d", &choix);
+        if (choix >= 0 && choix < taille && monstres[choix].stats.pv > 0) {
+            return choix;
+        }
+        printf("Choix invalide ou monstre deja vaincu, recommencez.\n");
+    }
 }
 
 static Personnage saisir_personnage(const char *etiquette, int indice)
@@ -90,6 +140,8 @@ int main(void)
         monstres[i] = saisir_personnage("Monstre", i);
     }
 
+    Potion potion_de_soin = {"Potion de soin", SOIN, 20};
+
     printf("\n--- Equipe de heros ---\n");
     afficher_equipe(heros, TAILLE_EQUIPE);
     printf("\n--- Monstres ---\n");
@@ -101,20 +153,32 @@ int main(void)
            indice_premier_vivant(monstres, NB_MONSTRES) != -1) {
 
         int ih = indice_premier_vivant(heros, TAILLE_EQUIPE);
-        int im = indice_premier_vivant(monstres, NB_MONSTRES);
 
-        monstres[im] = subir_degats(monstres[im], heros[ih].stats.attaque);
-        printf("Tour %d : %s attaque %s (PV restants: %d)\n",
-               tour, heros[ih].nom, monstres[im].nom, monstres[im].stats.pv);
-        if (monstres[im].stats.pv == 0) {
-            printf("%s est vaincu !\n", monstres[im].nom);
+        printf("--- Tour %d : %s ---\n", tour, heros[ih].nom);
+        printf("0. Monstres: ");
+        afficher_monstres_numerotes(monstres, NB_MONSTRES);
+        printf("1. Attaquer\n");
+        printf("2. Utiliser une potion\n");
+        printf("Votre choix: ");
+        int choix_action;
+        scanf("%d", &choix_action);
+
+        if (choix_action == 2) {
+            heros[ih] = appliquer_potion(heros[ih], potion_de_soin);
+            printf("%s boit %s (effet +%d)\n", heros[ih].nom, potion_de_soin.nom, potion_de_soin.valeur);
+        } else {
+            int im = choisir_cible_vivante(monstres, NB_MONSTRES);
+            monstres[im] = subir_degats(monstres[im], heros[ih].stats.attaque);
+            printf("%s attaque %s (PV restants: %d)\n", heros[ih].nom, monstres[im].nom, monstres[im].stats.pv);
+            if (monstres[im].stats.pv == 0) {
+                printf("%s est vaincu !\n", monstres[im].nom);
+            }
         }
 
-        im = indice_premier_vivant(monstres, NB_MONSTRES);
+        int im = indice_premier_vivant(monstres, NB_MONSTRES);
         if (im != -1) {
             heros[ih] = subir_degats(heros[ih], monstres[im].stats.attaque);
-            printf("Tour %d : %s attaque %s (PV restants: %d)\n",
-                   tour, monstres[im].nom, heros[ih].nom, heros[ih].stats.pv);
+            printf("%s attaque %s (PV restants: %d)\n", monstres[im].nom, heros[ih].nom, heros[ih].stats.pv);
             if (heros[ih].stats.pv == 0) {
                 printf("%s est vaincu !\n", heros[ih].nom);
             }

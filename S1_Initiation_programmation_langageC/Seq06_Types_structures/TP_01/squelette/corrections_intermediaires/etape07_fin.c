@@ -64,6 +64,28 @@ int pv_totaux(Personnage equipe[], int taille)
     return total;
 }
 
+// Etape 7 : afficher la liste des monstres avec leur numero, pour que le joueur choisisse
+void afficher_monstres_numerotes(Personnage monstres[], int taille)
+{
+    for (int i = 0; i < taille; i++) {
+        printf("%d. %s (PV: %d)\n", i, monstres[i].nom, monstres[i].stats.pv);
+    }
+}
+
+// Etape 7 : lecture au clavier d'une cible valide (vivante) parmi les monstres
+int choisir_cible_vivante(Personnage monstres[], int taille)
+{
+    int choix;
+    for (;;) {
+        printf("Quel monstre attaquer (numero) ? ");
+        scanf("%d", &choix);
+        if (choix >= 0 && choix < taille && monstres[choix].stats.pv > 0) {
+            return choix;
+        }
+        printf("Choix invalide ou monstre deja vaincu, recommencez.\n");
+    }
+}
+
 static Personnage saisir_personnage(const char *etiquette, int indice)
 {
     Personnage p;
@@ -78,11 +100,19 @@ static Personnage saisir_personnage(const char *etiquette, int indice)
     return p;
 }
 
+// Renvoie 1 s'il reste au moins un monstre vivant, 0 sinon
+int groupe_vivant(Personnage groupe[], int taille)
+{
+    for (int i = 0; i < taille; i++) {
+        if (groupe[i].stats.pv > 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int main(void)
 {
-    // Etape 5 (rappel, non reutilise directement ici) : combat 1 vs 1 entre deux Personnage,
-    // deja valide a l'etape precedente -- on passe directement a l'equipe complete.
-
     Personnage equipe[TAILLE_EQUIPE];
     for (int i = 0; i < TAILLE_EQUIPE; i++) {
         equipe[i] = saisir_personnage("Personnage", i);
@@ -98,13 +128,22 @@ int main(void)
     printf("PV totaux de l'equipe: %d\n", pv_totaux(equipe, TAILLE_EQUIPE));
 
     printf("\n--- Monstres ---\n");
-    afficher_equipe(monstres, NB_MONSTRES);
+    afficher_monstres_numerotes(monstres, NB_MONSTRES);
 
-    printf("\n");
-    for (int i = 0; i < NB_MONSTRES; i++) {
-        equipe[0] = subir_degats(equipe[0], monstres[i].stats.attaque);
-        printf("%s subit l'attaque de %s : PV restants %d\n",
-               equipe[0].nom, monstres[i].nom, equipe[0].stats.pv);
+    // Le joueur choisit sa cible, tour apres tour, tant qu'il reste un monstre vivant
+    // et que equipe[0] est en vie (l'IA des monstres reste simple : premier vivant riposte)
+    while (groupe_vivant(monstres, NB_MONSTRES) && equipe[0].stats.pv > 0) {
+        printf("\n--- Monstres ---\n");
+        afficher_monstres_numerotes(monstres, NB_MONSTRES);
+
+        int cible = choisir_cible_vivante(monstres, NB_MONSTRES);
+        monstres[cible] = subir_degats(monstres[cible], equipe[0].stats.attaque);
+        printf("%s attaque %s : PV restants %d\n", equipe[0].nom, monstres[cible].nom, monstres[cible].stats.pv);
+
+        if (monstres[cible].stats.pv > 0) {
+            equipe[0] = subir_degats(equipe[0], monstres[cible].stats.attaque);
+            printf("%s subit l'attaque de %s : PV restants %d\n", equipe[0].nom, monstres[cible].nom, equipe[0].stats.pv);
+        }
     }
 
     return 0;

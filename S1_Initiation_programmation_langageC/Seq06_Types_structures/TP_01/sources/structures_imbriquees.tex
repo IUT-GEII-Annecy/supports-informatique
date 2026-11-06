@@ -61,7 +61,8 @@ Apres : Arthor (PV: 35, ATQ: 12, DEF: 6)
 
 \begin{UPSTIManipulation}{Étape 10 — Boire une potion}
   \textbf{Contexte :} On introduit des potions qui produisent des effets différents : soin ou
-  poison.
+  poison. Le joueur doit pouvoir \textbf{décider}, à son tour, d'utiliser une potion plutôt que
+  d'attaquer : ce n'est plus un déclenchement automatique.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
@@ -72,15 +73,20 @@ Apres : Arthor (PV: 35, ATQ: 12, DEF: 6)
         \item soin : augmente les PV, sans dépasser 50
         \item poison : diminue les PV, sans descendre sous 0
       \end{itemize}
-    \item Faire subir des dégâts à un personnage, puis lui faire boire une potion de soin ;
-      afficher sa fiche avant et après la potion
+    \item Faire subir des dégâts à un personnage, puis proposer au joueur un menu à deux choix
+      (par exemple \texttt{1. Attaquer}, \texttt{2. Utiliser une potion}), lu au clavier
+    \item Selon le choix du joueur, soit le personnage attaque (comme à l'étape 5), soit il
+      boit une potion de soin ; afficher sa fiche avant et après l'action choisie
   \end{itemize}
 
   \textbf{Exemple d'exécution :}
   \begin{lstlisting}[language=bash]
-Avant la potion : Arthor (PV: 10, ATQ: 7, DEF: 6)
+Avant l'action : Arthor (PV: 10, ATQ: 7, DEF: 6)
+1. Attaquer
+2. Utiliser une potion
+Votre choix: 2
 Arthor boit une Potion de soin (+20)
-Apres la potion : Arthor (PV: 30, ATQ: 7, DEF: 6)
+Apres l'action : Arthor (PV: 30, ATQ: 7, DEF: 6)
   \end{lstlisting}
 
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}

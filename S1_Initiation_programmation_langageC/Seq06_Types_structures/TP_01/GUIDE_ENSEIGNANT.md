@@ -15,13 +15,17 @@ structure dans une fonction, on utilise systématiquement le patron `x = f(x, ..
 renvoie la valeur modifiée, l'appelant réaffecte) — exactement comme dans le cours.
 
 **Format du TP : un projet filé, pas une collection d'exercices.** Les étudiants travaillent sur
-**un seul fichier**, `jeu_combat.c`, du début à la fin de la séance. Chaque étape ne crée pas un
-nouveau programme : elle **reprend le fichier de l'étape précédente** et l'enrichit (nouveau
-champ, nouvelle structure, nouvelle fonction, nouveau comportement). Chaque énoncé dans le PDF
-liste explicitement ce qui doit être **ajouté** ou **modifié** par rapport à la version
-précédente du fichier, sous forme de puces de type diff. En fin de séance, les étudiants
-rendent un unique fichier `jeu_combat.c` constituant le mini-jeu complet et fonctionnel (après
-l'étape 12).
+**un seul fichier**, `jeu_combat.c`, du début à la fin de la séance : chaque étape enrichit le
+code déjà écrit, sans repartir d'un nouveau programme. Le cahier des charges de chaque étape
+décrit le comportement attendu (de façon de plus en plus ouverte au fil du TP, voir plus bas),
+pas la marche à suivre. En fin de séance, les étudiants rendent un unique fichier
+`jeu_combat.c` constituant le mini-jeu complet et fonctionnel (après l'étape 12).
+
+**Interactivité : un vrai jeu, pas une simulation qui se déroule seule.** À partir de l'étape 5,
+le joueur doit prendre de vraies décisions au clavier (`scanf`) pendant la partie : choisir
+d'attaquer, choisir sa cible parmi plusieurs monstres, décider d'utiliser une potion plutôt que
+d'attaquer. L'IA des monstres reste volontairement simple (attaque automatique) : c'est le
+joueur qui doit avoir des choix à faire, pas le jeu qui s'affiche tout seul.
 
 ## Structure du TP
 
@@ -39,18 +43,20 @@ Le TP est organisé en 4 sections progressives totalisant 14 étapes (13 étapes
 
 ### 2. Attaques et combats (étapes 4-7)
 - 4. `subir_degats` : modifier une structure **sans pointeur** (return + réaffectation), clamp
-- 5. Combat 1 contre 1, boucle jusqu'à élimination
+- 5. Combat 1 contre 1 : le joueur choisit l'action de son personnage à chaque tour via un menu
+  au clavier (première interaction réelle du TP)
 - 6. Équipe (premier tableau de structures `Personnage equipe[]`)
-- 7. **Plusieurs monstres** : un second tableau de structures côté adversaires, l'équipe de
-  héros affronte un **groupe**, pas un monstre isolé
+- 7. **Plusieurs monstres** : un second tableau de structures côté adversaires ; le joueur doit
+  désormais **choisir sa cible** parmi les monstres encore vivants (saisie + validation)
 
 **Concepts clés :** modification via return, tableaux de structures, deux tableaux de structures
-manipulés en parallèle
+manipulés en parallèle, lecture et validation d'un choix utilisateur
 
 ### 3. Enrichir le jeu (étapes 8-11)
 - 8. Trouver l'indice du personnage le plus offensif dans un tableau de structures
 - 9. Inventaire : **nouveau** tableau de structures (`Objet`), butin après combat
-- 10. Potions et effets : `enum TypeEffet` imbriqué dans une structure `Potion`
+- 10. Potions et effets : `enum TypeEffet` imbriqué dans une structure `Potion` ; le joueur
+  choisit, via un menu, entre attaquer et utiliser une potion
 - 11. Classement de l'équipe par dégâts infligés : tri par sélection sur un tableau de structures
 
 **Concepts clés :** recherche d'indice, plusieurs types de structures qui interagissent entre
@@ -59,8 +65,10 @@ eux, enum imbriqué, tri de structures (réinvestissement de la séquence Tablea
 ### 4. Mini-projet final (étapes 12-13)
 - 12. **Capstone** : combat de l'équipe de héros contre le groupe de monstres, jusqu'à
   élimination d'un camp — mobilise tableaux de structures, structures imbriquées, énumérations
-  et fonctions à tableau de structures en paramètre, dans le même fichier. C'est la version
-  finale de `jeu_combat.c`, celle qui est rendue.
+  et fonctions à tableau de structures en paramètre, dans le même fichier, **avec un vrai menu
+  de tour de jeu pour le héros actif** (attaquer avec choix de cible, ou utiliser une potion) ;
+  l'IA des monstres reste automatique. C'est la version finale de `jeu_combat.c`, celle qui est
+  rendue.
 - 12bis. Variante (si le temps le permet) : équiper toute l'équipe de butin avant le combat
 - 13. Bonus ultime (facultatif, sur copie du fichier) : plusieurs vagues de monstres successives
 
@@ -91,9 +99,11 @@ compilables** de `jeu_combat.c` à des points de contrôle de la progression —
 distribuer aux étudiants, elles servent uniquement à l'enseignant pour dépanner ou vérifier
 l'avancement :
 - `etape03_fin.c` — fin de la partie « Fiche de personnage » (structure imbriquée + enum)
-- `etape07_fin.c` — fin de la partie « Attaques et combats » (équipe + plusieurs monstres)
+- `etape07_fin.c` — fin de la partie « Attaques et combats » (équipe + plusieurs monstres,
+  avec menu de choix de cible interactif)
 - `etape11_fin.c` — fin de la partie « Enrichir le jeu » (inventaire, potions, classement)
-- `etape12_fin.c` — mini-jeu complet (capstone)
+- `etape12_fin.c` — mini-jeu complet et interactif (capstone : menu attaquer/potion, choix de
+  cible, IA des monstres automatique)
 
 **Rationale :** un seul fil conducteur de code, cohérent avec le principe de projet filé ; les
 versions intermédiaires permettent à l'enseignant de recaler rapidement un étudiant en
@@ -125,24 +135,36 @@ difficulté sans avoir à relire tout son code.
    - Faire visualiser au tableau pourquoi `subir_degats(heros, 10);` seul (sans réaffectation)
      ne change rien
 
-2. **Étape 6-7 (tableaux de structures)**
+2. **Étape 5 (premier menu joueur)**
+   - C'est la première fois que le joueur prend une décision au clavier pendant la partie
+     (et non plus seulement à la création des personnages) : vérifier que chacun sait lire un
+     entier avec `scanf("%d", ...)` pour un choix de menu
+
+3. **Étape 6-7 (tableaux de structures)**
    - Rappeler le lien avec la séquence Tableaux : `equipe[i].stats.pv` combine indexation et
      accès à un champ
    - Insister sur la nécessité de transmettre la taille en paramètre, comme pour un tableau
      "classique"
-   - L'étape 7 introduit **volontairement** un second tableau de structures (`monstres[]`) tôt
-     dans la progression : ne pas attendre le mini-projet final pour manipuler plusieurs
-     structures en tableau
+   - L'étape 7 introduit un second tableau de structures (`monstres[]`) tôt dans la
+     progression, et demande au joueur de **choisir sa cible** : bien faire valider que l'indice
+     saisi est dans les bornes **et** correspond à un monstre encore vivant avant d'attaquer
+     (sinon redemander la saisie)
 
-3. **Étape 9 (scanf et chaînes)**
+4. **Étape 9 (scanf et chaînes)**
    - Les étudiants ont souvent des problèmes avec `scanf("%s", ...)` pour les noms contenant des
      espaces (non traité ici, les noms sont sans espace) — rappeler `%29s` avec la taille du
      tableau moins 1
 
-4. **Étape 12 (capstone)**
+5. **Étape 10 (menu attaquer/potion)**
+   - Même logique de menu qu'à l'étape 5, avec un choix supplémentaire : insister sur le fait
+     que c'est le joueur qui décide, l'action n'est jamais déclenchée automatiquement
+
+6. **Étape 12 (capstone)**
    - Bien faire identifier, avant de coder, les deux tableaux (`heros[]`, `monstres[]`) et la
      fonction commune `indice_premier_vivant`, réutilisable sur l'un ou l'autre tableau car ce
      sont tous deux des tableaux de `Personnage`
+   - Vérifier que le menu (attaquer/potion) et le choix de cible ne concernent que le
+     **héros actif** côté joueur : les monstres continuent d'attaquer automatiquement
 
 ### Timing suggéré (3h)
 

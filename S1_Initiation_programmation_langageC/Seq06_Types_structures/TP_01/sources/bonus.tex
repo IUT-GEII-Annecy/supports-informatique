@@ -2,19 +2,25 @@
 
 \begin{UPSTIManipulation}{Étape 12 — Capstone : l'équipe contre les monstres}
   \textbf{Contexte :} L'équipe de héros affronte tout le groupe de monstres, jusqu'à
-  l'élimination complète d'un des deux camps.
+  l'élimination complète d'un des deux camps. Cette fois, c'est un vrai combat joué par le
+  joueur : à chaque tour, le héros actif doit avoir une \textbf{décision} à prendre, pas
+  seulement attaquer automatiquement.
 
   \textbf{Cahier des charges :}
   \begin{itemize}
     \item Les deux camps s'affrontent tant qu'il reste au moins un personnage vivant de chaque
       côté
-    \item À chaque tour, un héros vivant attaque un monstre vivant, puis, si un monstre est
-      encore vivant, il attaque un héros vivant à son tour
-    \item Chaque attaque et son résultat (PV restants de la cible) sont affichés
+    \item À chaque tour, le joueur choisit l'action du héros vivant actif : au minimum
+      \textbf{attaquer} (avec choix de la cible parmi les monstres encore vivants, comme à
+      l'étape 7) ou \textbf{utiliser une potion} (comme à l'étape 10) ; c'est à vous de
+      concevoir l'affichage du menu et la lecture du choix
+    \item Les monstres, eux, attaquent automatiquement un héros vivant (pas besoin de menu pour
+      eux : seul le joueur doit avoir des décisions à prendre)
+    \item Chaque action et son résultat (PV restants de la cible) sont affichés
     \item À la fin, le camp vainqueur est annoncé
   \end{itemize}
 
-  \textbf{Exemple d'exécution :}
+  \textbf{Exemple d'exécution (extrait) :}
   \begin{lstlisting}[language=bash]
 --- Equipe de heros ---
 Arthor (PV: 35, ATQ: 7, DEF: 6)
@@ -22,16 +28,16 @@ Lysia (PV: 20, ATQ: 10, DEF: 2)
 Finn (PV: 25, ATQ: 9, DEF: 3)
 
 --- Monstres ---
-Gobelin (PV: 15, ATQ: 5, DEF: 1)
-Orc (PV: 30, ATQ: 8, DEF: 4)
+0. Gobelin (PV: 15)
+1. Orc (PV: 30)
 
-Tour 1 : Arthor attaque Gobelin (PV restants: 8)
-Tour 1 : Gobelin attaque Arthor (PV restants: 30)
-Tour 2 : Arthor attaque Gobelin (PV restants: 1)
-Tour 2 : Gobelin attaque Arthor (PV restants: 25)
-Tour 3 : Arthor attaque Gobelin (PV restants: 0)
-Gobelin est vaincu !
-Tour 4 : Arthor attaque Orc (PV restants: 23)
+Tour de Arthor
+1. Attaquer
+2. Utiliser une potion
+Votre choix: 1
+Quel monstre attaquer (numero) ? 0
+Arthor attaque Gobelin (PV restants: 8)
+Gobelin attaque Arthor (PV restants: 30)
 ...
 Les heros l'emportent !
   \end{lstlisting}
