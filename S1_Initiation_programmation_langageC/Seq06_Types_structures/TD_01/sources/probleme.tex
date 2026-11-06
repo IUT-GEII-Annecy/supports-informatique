@@ -41,9 +41,17 @@ T_Matiere matieres[NB_MATIERES];
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{Compléter la fonction \texttt{float moyenne\_eleve(T\_Eleve e, T\_Matiere matieres[])} qui renvoie la moyenne générale de l'élève, en tenant compte des coefficients de chaque matière.}
+    \UPSTIquestion{Écrire le corps de la fonction \texttt{float moyenne\_eleve(T\_Eleve e, T\_Matiere matieres[])} qui renvoie la moyenne générale de l'élève, en tenant compte des coefficients de chaque matière.}
 
-    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={moyenne\_eleve, à compléter}]
+    \begin{lstlisting}[language=c,caption={Prototype}]
+float moyenne_eleve(T_Eleve e, T_Matiere matieres[]);
+\end{lstlisting}
+
+    \UPSTIquadrillage{7}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{moyenne\_eleve}
+\begin{lstlisting}[language=c,caption={Correction}]
 float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
     int i, k;
     float somme_notes = 0.0f;
@@ -53,41 +61,51 @@ float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
         float moy_matiere = 0.0f;
 
         // Calculer la moyenne pour cette matiere
-        for (k = 0; k < (*\trou[{e.nb\_notes[i]}]{7.5cm}*); k++) {
-            moy_matiere += (*\trou[{e.notes[i][k]}]{7.5cm}*);
+        for (k = 0; k < e.nb_notes[i]; k++) {
+            moy_matiere += e.notes[i][k];
         }
         if (e.nb_notes[i] > 0) {
             moy_matiere /= e.nb_notes[i];
         }
 
         // Ajouter a la moyenne ponderee
-        somme_notes  += (*\trou[{moy\_matiere * matieres[i].coeff}]{11.5cm}*);
-        somme_coeffs += (*\trou[{matieres[i].coeff}]{7.5cm}*);
+        somme_notes  += moy_matiere * matieres[i].coeff;
+        somme_coeffs += matieres[i].coeff;
     }
 
     if (somme_coeffs == 0.0f) {
         return 0.0f;
     }
-    return (*\trou[{somme\_notes / somme\_coeffs}]{9.5cm}*);
+    return somme_notes / somme_coeffs;
 }
 \end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{Compléter la fonction \texttt{float moyenne\_matiere(T\_Eleve classe[], int nbEleves, int indiceMatiere)} qui renvoie la moyenne de la classe pour une matière donnée (identifiée par son indice). Pourquoi cette fonction prend-elle \texttt{nbEleves} en paramètre ?}
+    \UPSTIquestion{Écrire le corps de la fonction \texttt{float moyenne\_matiere(T\_Eleve classe[], int nbEleves, int indiceMatiere)} qui renvoie la moyenne de la classe pour une matière donnée (identifiée par son indice). Pourquoi cette fonction prend-elle \texttt{nbEleves} en paramètre ?}
 
     Comme pour un tableau de structures classique, le tableau \texttt{classe} ne connaît pas lui-même
     le nombre d'éléments réellement utilisés \trou[(TAILLE\_MAX\_CLASSE est une taille maximale, pas le nombre d'élèves effectivement saisis)]{12.5cm}.
 
-    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={moyenne\_matiere, à compléter}]
+    \begin{lstlisting}[language=c,caption={Prototype}]
+float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere);
+\end{lstlisting}
+
+    \UPSTIquadrillage{6}
+
+\begin{UPSTIprofOnlyEnv}
+\begin{UPSTIcorrectionP}{moyenne\_matiere}
+\begin{lstlisting}[language=c,caption={Correction}]
 float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
     int i, k;
     float somme = 0.0f;
     int nb_notes_total = 0;
 
-    for (i = 0; i < (*\trou[nbEleves]{6.5cm}*); i++) {
-        for (k = 0; k < (*\trou[{classe[i].nb\_notes[indiceMatiere]}]{9.5cm}*); k++) {
-            somme += (*\trou[{classe[i].notes[indiceMatiere][k]}]{9.5cm}*);
+    for (i = 0; i < nbEleves; i++) {
+        for (k = 0; k < classe[i].nb_notes[indiceMatiere]; k++) {
+            somme += classe[i].notes[indiceMatiere][k];
             nb_notes_total++;
         }
     }
@@ -95,9 +113,11 @@ float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
     if (nb_notes_total == 0) {
         return 0.0f;
     }
-    return (*\trou[{somme / nb\_notes\_total}]{9.5cm}*);
+    return somme / nb_notes_total;
 }
 \end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIprofOnlyEnv}
 
     % ----------------------------------------------------------------------
 
