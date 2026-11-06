@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 #define TAILLE_EQUIPE 3
-#define NB_MONSTRES 2
 
 typedef struct {
     int pv;
@@ -20,8 +19,16 @@ typedef struct {
     string nom;
     Classe classe;
     Stats stats;
+    int degats_infliges;   // Etape 12
 } Personnage;
 
+// Etape 10 : nouveau type de structure, independant de Personnage
+typedef struct {
+    char nom[30];
+    int bonus_attaque;
+} Objet;
+
+// Etape 11 : enum imbrique dans une structure
 typedef enum {
     SOIN,
     POISON
@@ -56,13 +63,6 @@ void afficher_equipe(Personnage equipe[], int taille)
     }
 }
 
-void afficher_monstres_numerotes(Personnage monstres[], int taille)
-{
-    for (int i = 0; i < taille; i++) {
-        printf("%d. %s (PV: %d)\n", i, monstres[i].nom, monstres[i].stats.pv);
-    }
-}
-
 Personnage subir_degats(Personnage cible, int degats)
 {
     cible.stats.pv -= degats;
@@ -72,6 +72,37 @@ Personnage subir_degats(Personnage cible, int degats)
     return cible;
 }
 
+// Etape 9 : recherche d'indice sur un tableau de structures
+int indice_plus_fort(Personnage equipe[], int taille)
+{
+    int meilleur = 0;
+    for (int i = 1; i < taille; i++) {
+        if (equipe[i].stats.attaque > equipe[meilleur].stats.attaque) {
+            meilleur = i;
+        }
+    }
+    return meilleur;
+}
+
+// Etape 10 : tableau de structures Objet + equipement
+int indice_meilleur_objet(Objet butin[], int taille)
+{
+    int meilleur = 0;
+    for (int i = 1; i < taille; i++) {
+        if (butin[i].bonus_attaque > butin[meilleur].bonus_attaque) {
+            meilleur = i;
+        }
+    }
+    return meilleur;
+}
+
+Personnage equiper(Personnage p, Objet o)
+{
+    p.stats.attaque += o.bonus_attaque;
+    return p;
+}
+
+// Etape 11 : application d'un effet de potion
 Personnage appliquer_potion(Personnage cible, Potion p)
 {
     switch (p.effet) {
@@ -91,100 +122,41 @@ Personnage appliquer_potion(Personnage cible, Potion p)
     return cible;
 }
 
-// Indice du premier personnage encore vivant dans un tableau, -1 si tous vaincus
-int indice_premier_vivant(Personnage groupe[], int taille)
+// Etape 12 : tri par selection sur un tableau de structures
+void trier_par_degats(Personnage equipe[], int taille)
 {
-    for (int i = 0; i < taille; i++) {
-        if (groupe[i].stats.pv > 0) {
-            return i;
+    for (int i = 0; i < taille - 1; i++) {
+        int indice_max = i;
+        for (int j = i + 1; j < taille; j++) {
+            if (equipe[j].degats_infliges > equipe[indice_max].degats_infliges) {
+                indice_max = j;
+            }
+        }
+        if (indice_max != i) {
+            Personnage temp = equipe[i];
+            equipe[i] = equipe[indice_max];
+            equipe[indice_max] = temp;
         }
     }
-    return -1;
-}
-
-int choisir_cible_vivante(Personnage monstres[], int taille)
-{
-    for (;;) {
-        int choix = get_int("Quel monstre attaquer (numero) ? ");
-        if (choix >= 0 && choix < taille && monstres[choix].stats.pv > 0) {
-            return choix;
-        }
-        printf("Choix invalide ou monstre deja vaincu, recommencez.\n");
-    }
-}
-
-static Personnage saisir_personnage(const char *etiquette, int indice)
-{
-    Personnage p;
-    p.nom = get_string("%s %d - Nom: ", etiquette, indice);
-
-    int classe_choisie = get_int("%s %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", etiquette, indice);
-    p.classe = (Classe) classe_choisie;
-    p.stats = stats_initiales(p.classe);
-    return p;
 }
 
 int main(void)
 {
-    Personnage heros[TAILLE_EQUIPE];
+    Personnage equipe[TAILLE_EQUIPE];
     for (int i = 0; i < TAILLE_EQUIPE; i++) {
-        heros[i] = saisir_personnage("Heros", i);
+        equipe[i].nom = get_string("Personnage %d - Nom: ", i);
+        int classe_choisie = get_int("Personnage %d - Classe (0=Guerrier, 1=Mage, 2=Archer): ", i);
+        equipe[i].classe = (Classe) classe_choisie;
+        equipe[i].stats = stats_initiales(equipe[i].classe);
+        equipe[i].degats_infliges = get_int("Personnage %d - Degats infliges: ", i);
     }
 
-    Personnage monstres[NB_MONSTRES];
-    for (int i = 0; i < NB_MONSTRES; i++) {
-        monstres[i] = saisir_personnage("Monstre", i);
-    }
+    printf("\nAttaquant principal : indice %d\n", indice_plus_fort(equipe, TAILLE_EQUIPE));
 
-    Potion potion_de_soin = {"Potion de soin", SOIN, 20};
-
-    printf("\n--- Equipe de heros ---\n");
-    afficher_equipe(heros, TAILLE_EQUIPE);
-    printf("\n--- Monstres ---\n");
-    afficher_equipe(monstres, NB_MONSTRES);
-    printf("\n");
-
-    int tour = 1;
-    while (indice_premier_vivant(heros, TAILLE_EQUIPE) != -1 &&
-           indice_premier_vivant(monstres, NB_MONSTRES) != -1) {
-
-        int ih = indice_premier_vivant(heros, TAILLE_EQUIPE);
-
-        printf("--- Tour %d : %s ---\n", tour, heros[ih].nom);
-        printf("0. Monstres: ");
-        afficher_monstres_numerotes(monstres, NB_MONSTRES);
-        printf("1. Attaquer\n");
-        printf("2. Utiliser une potion\n");
-        int choix_action = get_int("Votre choix: ");
-
-        if (choix_action == 2) {
-            heros[ih] = appliquer_potion(heros[ih], potion_de_soin);
-            printf("%s boit %s (effet +%d)\n", heros[ih].nom, potion_de_soin.nom, potion_de_soin.valeur);
-        } else {
-            int im = choisir_cible_vivante(monstres, NB_MONSTRES);
-            monstres[im] = subir_degats(monstres[im], heros[ih].stats.attaque);
-            printf("%s attaque %s (PV restants: %d)\n", heros[ih].nom, monstres[im].nom, monstres[im].stats.pv);
-            if (monstres[im].stats.pv == 0) {
-                printf("%s est vaincu !\n", monstres[im].nom);
-            }
-        }
-
-        int im = indice_premier_vivant(monstres, NB_MONSTRES);
-        if (im != -1) {
-            heros[ih] = subir_degats(heros[ih], monstres[im].stats.attaque);
-            printf("%s attaque %s (PV restants: %d)\n", monstres[im].nom, heros[ih].nom, heros[ih].stats.pv);
-            if (heros[ih].stats.pv == 0) {
-                printf("%s est vaincu !\n", heros[ih].nom);
-            }
-        }
-
-        tour++;
-    }
-
-    if (indice_premier_vivant(heros, TAILLE_EQUIPE) != -1) {
-        printf("\nLes heros l'emportent !\n");
-    } else {
-        printf("\nLes monstres l'emportent !\n");
+    trier_par_degats(equipe, TAILLE_EQUIPE);
+    printf("\nClassement :\n");
+    for (int i = 0; i < TAILLE_EQUIPE; i++) {
+        printf("%d. %s : %d\n", i + 1, equipe[i].nom, equipe[i].degats_infliges);
     }
 
     return 0;

@@ -1,6 +1,6 @@
 \subsection{Une première attaque}
 
-\begin{UPSTIManipulation}{Étape 4 — Subir des dégâts}
+\begin{UPSTIManipulation}{Étape 5 — Subir des dégâts}
   \textbf{Contexte :} On veut faire subir des dégâts à un personnage, sans jamais faire
   descendre ses PV en dessous de 0.
 
@@ -25,7 +25,7 @@ Apres : Arthor (PV: 0, ATQ: 7, DEF: 6)
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Étape 5 — Un combat en un contre un, joué par le joueur}
+\begin{UPSTIManipulation}{Étape 6 — Un combat en un contre un, joué par le joueur}
   \textbf{Contexte :} On fait s'affronter deux personnages, \texttt{p1} (contrôlé par le
   joueur) et \texttt{p2}, tour par tour, jusqu'à ce que l'un des deux soit vaincu (0 PV). Ce
   n'est plus une simulation qui se déroule seule : à chaque tour, \textbf{le joueur décide} de
@@ -65,7 +65,7 @@ Vainqueur : Arthor
 
 \subsection{Une équipe de héros}
 
-\begin{UPSTIManipulation}{Étape 6 — Constituer une équipe}
+\begin{UPSTIManipulation}{Étape 7 — Constituer une équipe}
   \textbf{Contexte :} Un seul héros, c'est bien, mais une équipe, c'est mieux. On remplace le
   combat 1 contre 1 par la constitution d'une équipe entière.
 
@@ -99,7 +99,7 @@ PV totaux de l'equipe: 80
   \UPSTIetape{Modifier \texttt{jeu\_combat.c} pour respecter le cahier des charges ci-dessus.}
 \end{UPSTIManipulation}
 
-\begin{UPSTIManipulation}{Étape 7 — Face à plusieurs monstres, choisir sa cible}
+\begin{UPSTIManipulation}{Étape 8 — Face à plusieurs monstres, choisir sa cible}
   \textbf{Contexte :} L'équipe de héros affronte maintenant un \textbf{groupe} de monstres (et
   non un seul), représenté lui aussi par un tableau de structures \texttt{Personnage}. Puisqu'il
   y a désormais plusieurs monstres, le joueur doit pouvoir \textbf{choisir lequel attaquer}.

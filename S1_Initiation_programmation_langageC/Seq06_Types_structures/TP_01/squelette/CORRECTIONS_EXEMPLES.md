@@ -46,7 +46,7 @@ int main(void)
 
 ---
 
-## Étape 2 — Stats imbriquées (solution complète)
+## Étape 3 — Stats imbriquées (solution complète)
 
 ```c
 #include <cs50.h>
@@ -90,7 +90,7 @@ int main(void)
 
 ---
 
-## Étape 4 — Subir des dégâts (solution complète)
+## Étape 5 — Subir des dégâts (solution complète)
 
 ```c
 #include <cs50.h>
@@ -169,7 +169,7 @@ int main(void)
 
 ---
 
-## Étape 6 — Équipe (tableau de structures, solution complète)
+## Étape 7 — Équipe (tableau de structures, solution complète)
 
 ```c
 #include <cs50.h>

@@ -38,7 +38,7 @@ void afficher_personnage(Personnage p)
     printf("%s (PV: %d, ATQ: %d, DEF: %d)\n", p.nom, p.stats.pv, p.stats.attaque, p.stats.defense);
 }
 
-// Etape 4 : modifier une structure SANS pointeur -> return + reaffectation
+// Etape 5 : modifier une structure SANS pointeur -> return + reaffectation
 Personnage subir_degats(Personnage cible, int degats)
 {
     cible.stats.pv -= degats;
@@ -48,7 +48,7 @@ Personnage subir_degats(Personnage cible, int degats)
     return cible;
 }
 
-// Etape 6 : fonctions sur un tableau de structures
+// Etape 7 : fonctions sur un tableau de structures
 void afficher_equipe(Personnage equipe[], int taille)
 {
     for (int i = 0; i < taille; i++) {
@@ -65,7 +65,7 @@ int pv_totaux(Personnage equipe[], int taille)
     return total;
 }
 
-// Etape 7 : afficher la liste des monstres avec leur numero, pour que le joueur choisisse
+// Etape 8 : afficher la liste des monstres avec leur numero, pour que le joueur choisisse
 void afficher_monstres_numerotes(Personnage monstres[], int taille)
 {
     for (int i = 0; i < taille; i++) {
@@ -73,7 +73,7 @@ void afficher_monstres_numerotes(Personnage monstres[], int taille)
     }
 }
 
-// Etape 7 : lecture au clavier d'une cible valide (vivante) parmi les monstres
+// Etape 8 : lecture au clavier d'une cible valide (vivante) parmi les monstres
 int choisir_cible_vivante(Personnage monstres[], int taille)
 {
     for (;;) {

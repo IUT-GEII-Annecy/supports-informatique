@@ -1,28 +1,28 @@
 #include <cs50.h>
 #include <stdio.h>
 
-// --- Etape 2 : structure imbriquee ---
+// --- Etape 3 : structure imbriquee ---
 typedef struct {
     int pv;
     int attaque;
     int defense;
 } Stats;
 
-// --- Etape 3 : type enumere ---
+// --- Etape 4 : type enumere ---
 typedef enum {
     GUERRIER,
     MAGE,
     ARCHER
 } Classe;
 
-// --- Etape 1->3 : la structure Personnage s'est enrichie progressivement ---
+// --- Etape 1->4 : la structure Personnage s'est enrichie progressivement ---
 typedef struct {
     string nom;
     Classe classe;
     Stats stats;
 } Personnage;
 
-// Etape 3 : statistiques de depart selon la classe
+// Etape 4 : statistiques de depart selon la classe
 Stats stats_initiales(Classe c)
 {
     Stats s;
@@ -34,7 +34,7 @@ Stats stats_initiales(Classe c)
     return s;
 }
 
-// Etape 2 : affichage de la fiche complete
+// Etape 3 : affichage de la fiche complete
 void afficher_personnage(Personnage p)
 {
     printf("%s (PV: %d, ATQ: %d, DEF: %d)\n", p.nom, p.stats.pv, p.stats.attaque, p.stats.defense);
