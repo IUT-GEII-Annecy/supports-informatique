@@ -24,6 +24,20 @@
                 {\UPSTIcorrection[1]{\ttfamily #1}}{}};%
     }%
 }
+% \trouTexte[reponse]{largeur} : variante de \trou pour une reponse en texte
+% libre (phrase d'explication), pas du code. Contrairement a \trou, la
+% largeur donnee est une largeur FIXE (text width) dans laquelle la reponse
+% est reretournee a la ligne : \trou s'elargit a la largeur naturelle (une
+% seule ligne) du contenu, ce qui deborde de la page des que la reponse est
+% une phrase un peu longue.
+\newcommand{\trouTexte}[2][]{%
+    \tikz[baseline=(trou.base)]{%
+        \node[draw=gray!70, dashed, rounded corners=2pt, inner sep=3pt,
+              text width=#2, align=left, minimum height=2.4em, fill=white,
+              anchor=base] (trou) {\strut\ifnumequal{1}{\UPSTIidVersionDocumentDef}%
+                {\UPSTIcorrection[1]{#1}}{}};%
+    }%
+}
 \newcommand{\UPSTInumeroVersion}{1}
 \newcommand{\UPSTInumero}{\sequence.1}
 \begin{document}

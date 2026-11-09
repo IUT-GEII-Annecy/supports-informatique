@@ -254,7 +254,7 @@ typedef struct {
     \UPSTIquestion{Quel est l'avantage de créer une structure imbriquée plutôt qu'ajouter 3 champs à \texttt{Etudiant} ?}
 
     On regroupe tous les champs liés à l'adresse dans une seule structure \texttt{T\_Adresse}, ce qui permet
-    \trou[de réutiliser T\_Adresse pour d'autres structures (Professeur, Entreprise, etc.) et de faciliter les modifications ultérieures]{14.5cm}.
+    \trouTexte[de réutiliser T\_Adresse pour d'autres structures (Professeur, Entreprise, etc.) et de faciliter les modifications ultérieures]{9cm}.
 
     \UPSTIquestion{Compléter l'accès à la ville d'un étudiant.}
 
@@ -417,7 +417,7 @@ int compter_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville)
 
     \UPSTIquestion{Pourquoi la fonction \texttt{compter\_ville} doit-elle recevoir \texttt{nbEtudiants} en paramètre, en plus du tableau \texttt{promo} ?}
 
-    Parce qu'un tableau \trou[ne connaît pas lui-même le nombre d'éléments réellement utilisés (ici TAILLE\_MAX\_PROMO est une taille maximale, pas forcément le nombre d'étudiants effectivement saisis)]{15cm} :
+    Parce qu'un tableau \trouTexte[ne connaît pas lui-même le nombre d'éléments réellement utilisés (ici TAILLE\_MAX\_PROMO est une taille maximale, pas forcément le nombre d'étudiants effectivement saisis)]{9cm} :
     sans cette information, la fonction ne pourrait pas savoir où arrêter sa boucle.
 \end{UPSTIexercice}
 
