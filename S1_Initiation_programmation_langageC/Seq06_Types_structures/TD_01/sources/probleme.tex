@@ -245,13 +245,23 @@ printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
 
     \begin{itemize}
         \item \textbf{Jeu vidéo} : on veut représenter un \textbf{personnage} dans un petit jeu de
-            rôle. Il a un nom, des points de vie, un ou plusieurs objets dans son inventaire
-            (chaque objet ayant lui-même un nom et un effet), et éventuellement une position dans
-            le monde (coordonnées x, y).
-        \item \textbf{GEII} : on veut représenter une \textbf{mesure effectuée par un capteur} :
-            une valeur mesurée (par ex. une température), l'instant de la mesure (heure, minute,
-            seconde), et des informations sur le capteur lui-même (référence, unité physique de
-            la grandeur mesurée).
+            rôle. Cahier des charges :
+            \begin{itemize}
+                \item un personnage a un nom et des points de vie ;
+                \item il possède un \textbf{inventaire} pouvant contenir plusieurs objets (chaque
+                    objet ayant lui-même un nom et un effet, par ex. « soigne 10 pv ») ;
+                \item on veut aussi connaître sa \textbf{position} dans le monde (coordonnées x, y).
+            \end{itemize}
+        \item \textbf{GEII} : on veut représenter l'\textbf{historique des relevés} d'un capteur
+            dans une chaîne d'acquisition. Cahier des charges :
+            \begin{itemize}
+                \item un capteur est caractérisé par une référence et l'unité physique de la
+                    grandeur qu'il mesure (par ex. \texttt{"degC"}, \texttt{"V"}, \texttt{"bar"}) ;
+                \item un capteur effectue plusieurs \textbf{relevés} au cours du temps : on veut
+                    pouvoir stocker un historique de relevés, pas une seule mesure ;
+                \item chaque relevé associe une valeur mesurée à l'instant de la mesure (heure,
+                    minute, seconde).
+            \end{itemize}
     \end{itemize}
 
     Dans les deux cas, certaines informations décrites ci-dessus vont naturellement ensemble : à
@@ -259,13 +269,15 @@ printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
     (comme on l'a fait pour \texttt{T\_Adresse} dans \texttt{T\_EtudiantAdresse}).
 
     \UPSTIquestion{Proposer et écrire en C le ou les types structurés (\texttt{typedef struct})
-        nécessaires pour le sujet choisi. Vous êtes libre des noms de champs et de leurs types, du
-        nombre de structures (une seule, ou plusieurs imbriquées), et des éventuels tableaux ou
-        constantes utiles (par ex. une taille maximale d'inventaire). Puis, en utilisant ce type,
-        écrire le corps d'\textbf{une} fonction de votre choix qui le manipule (par exemple :
-        afficher un personnage et son inventaire, faire perdre des points de vie, ajouter un objet
-        à l'inventaire ; ou bien afficher une mesure formatée, ou dire si une mesure dépasse un
-        seuil donné). Donner le prototype de votre fonction avant d'écrire son corps.}
+        nécessaires pour le sujet choisi, en respectant le cahier des charges ci-dessus. Vous êtes
+        libre des noms de champs et de leurs types, du nombre de structures (une seule, ou
+        plusieurs imbriquées), et des éventuels tableaux ou constantes utiles (par ex. une taille
+        maximale d'inventaire ou d'historique). Puis, en utilisant ce type, écrire le corps
+        d'\textbf{une} fonction de votre choix qui le manipule (par exemple : afficher un
+        personnage et son inventaire, faire perdre des points de vie, ajouter un objet à
+        l'inventaire ; ou bien ajouter un relevé à l'historique d'un capteur, calculer la moyenne
+        de ses relevés, ou dire si son dernier relevé dépasse un seuil donné). Donner le prototype
+        de votre fonction avant d'écrire son corps.}
 
 \begin{UPSTIeleveOnlyEnv}
     \UPSTIquadrillage{12}
@@ -310,9 +322,12 @@ T_Personnage ajouter_objet(T_Personnage p, T_Objet o) {
 \end{UPSTIcorrectionP}
 
 \begin{UPSTIcorrectionP}{Exemple de solution (GEII)}
-    Exemple pour le sujet GEII, avec une structure imbriquée pour l'horodatage, une autre pour
-    décrire le capteur, et une fonction qui teste un dépassement de seuil.
+    Exemple pour le sujet GEII : une structure imbriquée pour l'horodatage d'un relevé, un tableau
+    de structures pour l'historique des relevés d'un capteur (même principe que l'inventaire côté
+    jeu vidéo), et une fonction qui ajoute un relevé à l'historique.
 \begin{lstlisting}[language=c,caption={Exemple de correction}]
+#define TAILLE_MAX_HISTORIQUE 100
+
 typedef struct {
     int h;
     int m;
@@ -320,18 +335,25 @@ typedef struct {
 } T_Horodatage;
 
 typedef struct {
-    string reference;
-    string unite;       // par ex. "degC", "V", "bar"
-} T_Capteur;
-
-typedef struct {
     float valeur;
     T_Horodatage instant;
-    T_Capteur capteur;
-} T_Mesure;
+} T_Releve;
 
-int depasse_seuil(T_Mesure m, float seuil) {
-    return m.valeur > seuil;
+typedef struct {
+    string reference;
+    string unite;                           // par ex. "degC", "V", "bar"
+    T_Releve historique[TAILLE_MAX_HISTORIQUE];
+    int nbReleves;      // nombre de releves reellement presents dans l'historique
+} T_Capteur;
+
+// Meme logique que ajouter_objet : on renvoie le capteur modifie, que
+// l'appelant doit reaffecter (c = ajouter_releve(c, r);).
+T_Capteur ajouter_releve(T_Capteur c, T_Releve r) {
+    if (c.nbReleves < TAILLE_MAX_HISTORIQUE) {
+        c.historique[c.nbReleves] = r;
+        c.nbReleves++;
+    }
+    return c;
 }
 \end{lstlisting}
 \end{UPSTIcorrectionP}
