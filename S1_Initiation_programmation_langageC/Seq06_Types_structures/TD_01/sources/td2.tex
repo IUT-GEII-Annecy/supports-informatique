@@ -342,9 +342,8 @@ void afficher_niveau(T_EtudiantAdresse e) {
 }
 \end{lstlisting}
 
-    \UPSTIquestion{Écrire le corps de la fonction \texttt{compter\_niveau} qui, comme
-        \texttt{compter\_ville}, compte dans un tableau \texttt{promo} le nombre d'étudiants
-        d'un niveau donné.}
+    \UPSTIquestion{Écrire le corps de la fonction \texttt{compter\_niveau} qui compte dans un
+        tableau \texttt{promo} le nombre d'étudiants d'un niveau donné.}
 
     \begin{lstlisting}[language=c,caption={Prototype}]
 int compter_niveau(T_EtudiantAdresse promo[], int nbEtudiants, T_Niveau niveau);
@@ -399,31 +398,22 @@ for (i = 0; i < nbEtudiants; i++) {
 }
 \end{lstlisting}
 
-    \UPSTIquestion{Écrire le corps de la fonction qui compte combien d'étudiants habitent une
-        ville donnée.}
+    \UPSTIquestion{Sur le même modèle que \texttt{compter\_niveau}, et en réutilisant
+        \texttt{habite\_ville}, compléter le corps de la fonction qui compte combien d'étudiants
+        habitent une ville donnée.}
 
-    \begin{lstlisting}[language=c,caption={Prototype}]
-int compter_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville);
-\end{lstlisting}
-
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{4}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{compter\_ville}
-\begin{lstlisting}[language=c,caption={Correction}]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={compter\_ville, à compléter}]
 int compter_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville) {
     int i, compteur = 0;
 
     for (i = 0; i < nbEtudiants; i++) {
-        if (strcmp(promo[i].adresse.ville, ville) == 0) {
+        if ((*\trou[{habite\_ville(promo[i], ville)}]{9.5cm}*)) {
             compteur++;
         }
     }
     return compteur;
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     \UPSTIquestion{Pourquoi la fonction \texttt{compter\_ville} doit-elle recevoir \texttt{nbEtudiants} en paramètre, en plus du tableau \texttt{promo} ?}
 
@@ -439,39 +429,30 @@ int compter_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville)
     d'une ville donnée}. On réutilise le tableau \texttt{promo} et la fonction \texttt{compter\_ville}
     de l'exercice précédent.
 
-    \UPSTIquestion{Écrire le corps de la fonction \texttt{afficher\_ville} qui affiche le prénom
-        et la moyenne de chaque étudiant d'une ville donnée, et de la fonction
-        \texttt{moyenne\_ville} qui renvoie la moyenne de ces étudiants.}
+    \UPSTIquestion{En réutilisant \texttt{habite\_ville} et \texttt{compter\_ville}, compléter le
+        corps de la fonction \texttt{afficher\_ville} qui affiche le prénom et la moyenne de
+        chaque étudiant d'une ville donnée, et de la fonction \texttt{moyenne\_ville} qui renvoie
+        la moyenne de ces étudiants.}
 
-    \begin{lstlisting}[language=c,caption={Prototypes}]
-void afficher_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville);
-float moyenne_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville);
-\end{lstlisting}
-
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{7}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{afficher\_ville et moyenne\_ville}
-\begin{lstlisting}[language=c,caption={Correction}]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={afficher\_ville et moyenne\_ville, à compléter}]
 void afficher_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville) {
     int i;
 
     for (i = 0; i < nbEtudiants; i++) {
-        if (strcmp(promo[i].adresse.ville, ville) == 0) {
+        if ((*\trou[{habite\_ville(promo[i], ville)}]{9.5cm}*)) {
             printf("%s : %.2f\n", promo[i].prenom, promo[i].moyenne);
         }
     }
 }
 
 float moyenne_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *ville) {
-    int i, nb = 0;
+    int i;
     float somme = 0.0f;
+    int nb = (*\trou[{compter\_ville(promo, nbEtudiants, ville)}]{11.5cm}*);
 
     for (i = 0; i < nbEtudiants; i++) {
-        if (strcmp(promo[i].adresse.ville, ville) == 0) {
+        if (habite_ville(promo[i], ville)) {
             somme += promo[i].moyenne;
-            nb++;
         }
     }
 
@@ -481,7 +462,6 @@ float moyenne_ville(T_EtudiantAdresse promo[], int nbEtudiants, const char *vill
     return somme / nb;
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     \UPSTIquestion{Dans le \texttt{main}, écrire l'appel permettant d'afficher les étudiants de la ville saisie par l'utilisateur, puis leur moyenne.}
 

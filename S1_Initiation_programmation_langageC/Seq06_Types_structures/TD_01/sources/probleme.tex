@@ -41,18 +41,9 @@ T_Matiere matieres[NB_MATIERES];
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{Écrire le corps de la fonction \texttt{float moyenne\_eleve(T\_Eleve e, T\_Matiere matieres[])} qui renvoie la moyenne générale de l'élève, en tenant compte des coefficients de chaque matière.}
+    \UPSTIquestion{Compléter le corps de la fonction \texttt{float moyenne\_eleve(T\_Eleve e, T\_Matiere matieres[])} qui renvoie la moyenne générale de l'élève, en tenant compte des coefficients de chaque matière.}
 
-    \begin{lstlisting}[language=c,caption={Prototype}]
-float moyenne_eleve(T_Eleve e, T_Matiere matieres[]);
-\end{lstlisting}
-
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{7}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{moyenne\_eleve}
-\begin{lstlisting}[language=c,caption={Correction}]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={moyenne\_eleve, à compléter}]
 float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
     int i, k;
     float somme_notes = 0.0f;
@@ -63,54 +54,48 @@ float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
 
         // Calculer la moyenne pour cette matiere
         for (k = 0; k < e.nb_notes[i]; k++) {
-            moy_matiere += e.notes[i][k];
+            (*\trou[{moy\_matiere += e.notes[i][k];}]{9.5cm}*)
         }
         if (e.nb_notes[i] > 0) {
             moy_matiere /= e.nb_notes[i];
         }
 
         // Ajouter a la moyenne ponderee
-        somme_notes  += moy_matiere * matieres[i].coeff;
-        somme_coeffs += matieres[i].coeff;
+        (*\trou[{somme\_notes  += moy\_matiere * matieres[i].coeff;}]{9.5cm}*)
+        (*\trou[{somme\_coeffs += matieres[i].coeff;}]{9.5cm}*)
     }
 
     if (somme_coeffs == 0.0f) {
         return 0.0f;
     }
-    return somme_notes / somme_coeffs;
+    return (*\trou[{somme\_notes / somme\_coeffs;}]{9.5cm}*)
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     % ----------------------------------------------------------------------
-    On se propose d'écrire le corps de la fonction \texttt{float moyenne\_matiere(T\_Eleve classe[], int nbEleves, int indiceMatiere)} qui renvoie la moyenne de la classe pour une matière donnée, identifiée par son indice.
+    On se propose d'écrire la fonction \texttt{float moyenne\_matiere(T\_Eleve classe[], int nbEleves, int indiceMatiere)} qui renvoie la moyenne de la classe pour une matière donnée, identifiée par son indice.
 
-    \UPSTIquestion{Pourquoi cette fonction prend-elle \texttt{nbEleves} en paramètre ?}
+    \UPSTIquestion{\texttt{moyenne\_eleve} n'a pas besoin du nombre de matières en paramètre, alors
+        que \texttt{moyenne\_matiere} a besoin de \texttt{nbEleves}. Pourquoi cette différence ?}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{2}
-\end{UPSTIeleveOnlyEnv}
+    Le nombre de matières par élève est une \trou[constante (NB\_MATIERES), connue à la compilation]{9.5cm},
+    alors que le nombre d'élèves réellement saisis est une \trou[valeur saisie à l'exécution, que le
+    tableau classe ne connaît pas lui-même (TAILLE\_MAX\_CLASSE n'est qu'une taille maximale)]{11.5cm} :
+    sans ce paramètre, la fonction ne saurait pas où arrêter sa boucle.
 
-    \UPSTIquestion{Écrire le corps de cette fonction.}
-    \begin{lstlisting}[language=c]
-float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere)
-\end{lstlisting}
+    \UPSTIquestion{Compléter le corps de \texttt{moyenne\_matiere}, sur le même principe que
+        \texttt{moyenne\_eleve} (accumuler une somme et un nombre de notes, puis diviser).}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{6}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{moyenne\_matiere}
-\begin{lstlisting}[language=c,caption={Correction}]
+    \begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={moyenne\_matiere, à compléter}]
 float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
     int i, k;
     float somme = 0.0f;
     int nb_notes_total = 0;
 
-    for (i = 0; i < nbEleves; i++) {
+    for (i = 0; i < (*\trou[nbEleves]{6.5cm}*); i++) {
         for (k = 0; k < classe[i].nb_notes[indiceMatiere]; k++) {
-            somme += classe[i].notes[indiceMatiere][k];
-            nb_notes_total++;
+            (*\trou[{somme += classe[i].notes[indiceMatiere][k];}]{9.5cm}*)
+            (*\trou[nb\_notes\_total++;]{7.5cm}*)
         }
     }
 
@@ -120,103 +105,80 @@ float moyenne_matiere(T_Eleve classe[], int nbEleves, int indiceMatiere) {
     return somme / nb_notes_total;
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     % ----------------------------------------------------------------------
     On écrit maintenant le \texttt{main}, étape par étape. On dispose d'un tableau
     \texttt{T\_Eleve classe[TAILLE\_MAX\_CLASSE];} et d'un tableau \texttt{T\_Matiere matieres[NB\_MATIERES];}.
 
-    \UPSTIquestion{Écrire le code qui demande le nombre d'élèves réel de la classe (entre \texttt{1} et
+    \UPSTIquestion{Compléter le code qui demande le nombre d'élèves réel de la classe (entre \texttt{1} et
         \texttt{TAILLE\_MAX\_CLASSE}), puis saisit, pour chaque matière du tableau \texttt{matieres}, son nom
         et son coefficient.}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{6}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{Saisie du nombre d'élèves et des matières}
-\begin{lstlisting}[language=c,caption={Correction}]
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Saisie du nombre d'élèves et des matières, à compléter}]
 int nbEleves;
 int j;
 
 // Saisie du nombre d'eleves
 do {
     nbEleves = get_int("Nombre d'eleves (1..%d) : ", TAILLE_MAX_CLASSE);
-} while (nbEleves < 1 || nbEleves > TAILLE_MAX_CLASSE);
+} while ((*\trou[{nbEleves < 1 || nbEleves > TAILLE\_MAX\_CLASSE}]{11.5cm}*));
 
 // Saisie des matieres
 for (j = 0; j < NB_MATIERES; j++) {
     printf("Matiere %d\n", j + 1);
-    matieres[j].nom   = get_string("Nom de la matiere : ");
-    matieres[j].coeff = get_float("Coefficient : ");
+    (*\trou[{matieres[j].nom}]{7.5cm}*)   = get_string("Nom de la matiere : ");
+    (*\trou[{matieres[j].coeff}]{7.5cm}*) = get_float("Coefficient : ");
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{Écrire le code qui, pour chaque élève de la classe (indice \texttt{i} de \texttt{0} à
+    \UPSTIquestion{Compléter le code qui, pour chaque élève de la classe (indice \texttt{i} de \texttt{0} à
         \texttt{nbEleves - 1}), saisit son prénom, son âge, puis pour chaque matière le nombre de notes
         de l'élève dans cette matière et chacune de ces notes.}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{8}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{Saisie d'un élève et de ses notes}
-\begin{lstlisting}[language=c,caption={Correction}]
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Saisie d'un élève et de ses notes, à compléter}]
 int i, j, k;
 
 for (i = 0; i < nbEleves; i++) {
     printf("Eleve %d\n", i + 1);
-    classe[i].prenom = get_string("Prenom : ");
-    classe[i].age    = get_int("Age : ");
+    (*\trou[{classe[i].prenom}]{7.5cm}*) = get_string("Prenom : ");
+    (*\trou[{classe[i].age}]{7.5cm}*)    = get_int("Age : ");
 
     for (j = 0; j < NB_MATIERES; j++) {
-        classe[i].nb_notes[j] = get_int(
+        (*\trou[{classe[i].nb\_notes[j]}]{9.5cm}*) = get_int(
             "Nombre de notes en %s : ", matieres[j].nom);
 
-        for (k = 0; k < classe[i].nb_notes[j]; k++) {
-            classe[i].notes[j][k] = get_float(
+        for (k = 0; k < (*\trou[{classe[i].nb\_notes[j]}]{9.5cm}*); k++) {
+            (*\trou[{classe[i].notes[j][k]}]{9.5cm}*) = get_float(
                 "Note %d : ", k + 1);
         }
     }
     printf("\n");
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{En utilisant \texttt{moyenne\_eleve}, écrire le code qui affiche la moyenne générale de
+    \UPSTIquestion{En utilisant \texttt{moyenne\_eleve}, compléter le code qui affiche la moyenne générale de
         chaque élève de la classe.}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{4}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{Affichage des moyennes}
-\begin{lstlisting}[language=c,caption={Correction}]
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Affichage des moyennes, à compléter}]
 int i;
 
 for (i = 0; i < nbEleves; i++) {
-    float m = moyenne_eleve(classe[i], matieres);
+    float m = (*\trou[{moyenne\_eleve(classe[i], matieres)}]{11.5cm}*);
     printf("Moyenne de %s = %.2f\n", classe[i].prenom, m);
 }
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{En utilisant \texttt{moyenne\_eleve}, écrire le code qui détermine l'élève ayant la
+    \UPSTIquestion{En utilisant \texttt{moyenne\_eleve}, et sur le même principe que la recherche du
+        meilleur étudiant du premier exercice, compléter le code qui détermine l'élève ayant la
         meilleure moyenne générale de la classe, et affiche son prénom et sa moyenne.}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{7}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{Meilleur élève}
-\begin{lstlisting}[language=c,caption={Correction}]
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Meilleur élève, à compléter}]
 int indice_meilleur = 0;
 float meilleure_moy = moyenne_eleve(classe[0], matieres);
 float m;
@@ -224,34 +186,29 @@ int i;
 
 for (i = 1; i < nbEleves; i++) {
     m = moyenne_eleve(classe[i], matieres);
-    if (m > meilleure_moy) {
+    if ((*\trou[{m > meilleure\_moy}]{9.5cm}*)) {
         meilleure_moy = m;
         indice_meilleur = i;
     }
 }
 
 printf("Meilleur eleve : %s (moyenne = %.2f)\n",
-       classe[indice_meilleur].prenom, meilleure_moy);
+       (*\trou[{classe[indice\_meilleur].prenom}]{7.5cm}*), meilleure_moy);
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     % ----------------------------------------------------------------------
 
-    \UPSTIquestion{En utilisant \texttt{moyenne\_matiere}, écrire le code qui calcule et affiche la moyenne
+    \UPSTIquestion{En utilisant \texttt{moyenne\_matiere}, compléter le code qui calcule et affiche la moyenne
         de la classe pour chaque matière, puis détermine et affiche la matière dont la moyenne de classe
-        est la plus faible (matière « à renforcer »).}
+        est la plus faible (matière « à renforcer »). La recherche du minimum se fait exactement comme la
+        recherche du maximum à la question précédente, en inversant le sens de la comparaison.}
 
-\begin{UPSTIeleveOnlyEnv}
-    \UPSTIquadrillage{9}
-\end{UPSTIeleveOnlyEnv}
-
-\begin{UPSTIcorrectionP}{Matière à renforcer}
-\begin{lstlisting}[language=c,caption={Correction}]
+\begin{lstlisting}[language=c,escapeinside={(*}{*)},caption={Matière à renforcer, à compléter}]
 float moyennesMatieres[NB_MATIERES];
 int j;
 
 for (j = 0; j < NB_MATIERES; j++) {
-    moyennesMatieres[j] = moyenne_matiere(classe, nbEleves, j);
+    moyennesMatieres[j] = (*\trou[{moyenne\_matiere(classe, nbEleves, j)}]{13.5cm}*);
     printf("Moyenne de la classe en %s : %.2f\n",
            matieres[j].nom, moyennesMatieres[j]);
 }
@@ -261,16 +218,15 @@ int indice_pire_matiere = 0;
 float pire_moyenne = moyennesMatieres[0];
 
 for (j = 1; j < NB_MATIERES; j++) {
-    if (moyennesMatieres[j] < pire_moyenne) {
+    if ((*\trou[{moyennesMatieres[j] < pire\_moyenne}]{11.5cm}*)) {
         pire_moyenne = moyennesMatieres[j];
         indice_pire_matiere = j;
     }
 }
 
 printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
-       matieres[indice_pire_matiere].nom, pire_moyenne);
+       (*\trou[{matieres[indice\_pire\_matiere].nom}]{9.5cm}*), pire_moyenne);
 \end{lstlisting}
-\end{UPSTIcorrectionP}
 
     Cet ensemble de questions mobilise plusieurs \textbf{structures} (données partagées et individuelles),
     des \textbf{tableaux de structures}, des \textbf{fonctions} qui prennent des structures et des tableaux
