@@ -241,90 +241,43 @@ printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
     \textbf{concevoir soi-même} une structure adaptée à un problème, sans qu'on nous dise quels
     champs utiliser.
 
-    \UPSTIquestion{Choisir \textbf{un seul} des deux sujets suivants.}
+    \UPSTIquestion{Lire le cahier des charges suivant.}
 
+    On veut représenter, dans une chaîne d'acquisition, l'\textbf{historique des relevés} d'un
+    capteur. Cahier des charges :
     \begin{itemize}
-        \item \textbf{Jeu vidéo} : on veut représenter un \textbf{personnage} dans un petit jeu de
-            rôle. Cahier des charges :
-            \begin{itemize}
-                \item un personnage a un nom et des points de vie ;
-                \item il possède un \textbf{inventaire} pouvant contenir plusieurs objets (chaque
-                    objet ayant lui-même un nom et un effet, par ex. « soigne 10 pv ») ;
-                \item on veut aussi connaître sa \textbf{position} dans le monde (coordonnées x, y).
-            \end{itemize}
-        \item \textbf{GEII} : on veut représenter l'\textbf{historique des relevés} d'un capteur
-            dans une chaîne d'acquisition. Cahier des charges :
-            \begin{itemize}
-                \item un capteur est caractérisé par une référence et l'unité physique de la
-                    grandeur qu'il mesure (par ex. \texttt{"degC"}, \texttt{"V"}, \texttt{"bar"}) ;
-                \item un capteur effectue plusieurs \textbf{relevés} au cours du temps : on veut
-                    pouvoir stocker un historique de relevés, pas une seule mesure ;
-                \item chaque relevé associe une valeur mesurée à l'instant de la mesure (heure,
-                    minute, seconde).
-            \end{itemize}
+        \item un capteur est caractérisé par une référence et l'unité physique de la grandeur
+            qu'il mesure (par ex. \texttt{"degC"}, \texttt{"V"}, \texttt{"bar"}) ;
+        \item un capteur effectue plusieurs \textbf{relevés} au cours du temps : on veut pouvoir
+            stocker un \textbf{historique} de relevés (jusqu'à une taille maximale fixée), pas
+            une seule mesure ;
+        \item chaque relevé associe une valeur mesurée à l'instant de la mesure (heure, minute,
+            seconde).
     \end{itemize}
 
-    Dans les deux cas, certaines informations décrites ci-dessus vont naturellement ensemble : à
-    vous d'identifier lesquelles, et de décider si une \textbf{structure imbriquée} est pertinente
-    (comme on l'a fait pour \texttt{T\_Adresse} dans \texttt{T\_EtudiantAdresse}).
+    Certaines de ces informations vont naturellement ensemble : à vous d'identifier lesquelles, et
+    de décider si une \textbf{structure imbriquée} est pertinente (comme on l'a fait pour
+    \texttt{T\_Adresse} dans \texttt{T\_EtudiantAdresse}).
 
     \UPSTIquestion{Proposer et écrire en C le ou les types structurés (\texttt{typedef struct})
-        nécessaires pour le sujet choisi, en respectant le cahier des charges ci-dessus. Vous êtes
-        libre des noms de champs et de leurs types, du nombre de structures (une seule, ou
-        plusieurs imbriquées), et des éventuels tableaux ou constantes utiles (par ex. une taille
-        maximale d'inventaire ou d'historique). Puis, en utilisant ce type, écrire le corps
-        d'\textbf{une} fonction de votre choix qui le manipule (par exemple : afficher un
-        personnage et son inventaire, faire perdre des points de vie, ajouter un objet à
-        l'inventaire ; ou bien ajouter un relevé à l'historique d'un capteur, calculer la moyenne
-        de ses relevés, ou dire si son dernier relevé dépasse un seuil donné). Donner le prototype
-        de votre fonction avant d'écrire son corps.}
+        nécessaires pour respecter le cahier des charges ci-dessus. Vous êtes libre des noms de
+        champs et de leurs types, du nombre de structures (une seule, ou plusieurs imbriquées), et
+        de la constante de taille maximale de l'historique. Puis, en utilisant ce type, écrire le
+        corps de la fonction suivante, dont le prototype est donné :
+        \begin{lstlisting}[language=c,caption={Prototype de la fonction demandée}]
+// Ajoute le releve r a l'historique du capteur c, si la place le permet,
+// et renvoie le capteur mis a jour.
+T_Capteur ajouter_releve(T_Capteur c, T_Releve r);
+        \end{lstlisting}}
 
 \begin{UPSTIeleveOnlyEnv}
     \UPSTIquadrillage{12}
 \end{UPSTIeleveOnlyEnv}
 
-\begin{UPSTIcorrectionP}{Exemple de solution (jeu vidéo)}
+\begin{UPSTIcorrectionP}{Exemple de solution}
     Il n'y a pas de solution unique : voici un exemple cohérent, avec une structure imbriquée pour
-    la position, un tableau de structures pour l'inventaire, et une fonction qui ajoute un objet à
-    l'inventaire.
-\begin{lstlisting}[language=c,caption={Exemple de correction}]
-#define TAILLE_MAX_INVENTAIRE 10
-
-typedef struct {
-    float x;
-    float y;
-} T_Position;
-
-typedef struct {
-    string nom;
-    string effet;      // par ex. "soigne 10 pv", "augmente l'attaque"
-} T_Objet;
-
-typedef struct {
-    string nom;
-    int pv;
-    T_Position position;
-    T_Objet inventaire[TAILLE_MAX_INVENTAIRE];
-    int nbObjets;       // nombre d'objets reellement presents dans l'inventaire
-} T_Personnage;
-
-// La structure n'est pas modifiable par une fonction "classique" sans
-// pointeur : on renvoie le personnage modifie, que l'appelant doit
-// reaffecter (p = ajouter_objet(p, o);).
-T_Personnage ajouter_objet(T_Personnage p, T_Objet o) {
-    if (p.nbObjets < TAILLE_MAX_INVENTAIRE) {
-        p.inventaire[p.nbObjets] = o;
-        p.nbObjets++;
-    }
-    return p;
-}
-\end{lstlisting}
-\end{UPSTIcorrectionP}
-
-\begin{UPSTIcorrectionP}{Exemple de solution (GEII)}
-    Exemple pour le sujet GEII : une structure imbriquée pour l'horodatage d'un relevé, un tableau
-    de structures pour l'historique des relevés d'un capteur (même principe que l'inventaire côté
-    jeu vidéo), et une fonction qui ajoute un relevé à l'historique.
+    l'horodatage d'un relevé, un tableau de structures pour l'historique des relevés du capteur, et
+    la fonction \texttt{ajouter\_releve} demandée.
 \begin{lstlisting}[language=c,caption={Exemple de correction}]
 #define TAILLE_MAX_HISTORIQUE 100
 
@@ -346,8 +299,9 @@ typedef struct {
     int nbReleves;      // nombre de releves reellement presents dans l'historique
 } T_Capteur;
 
-// Meme logique que ajouter_objet : on renvoie le capteur modifie, que
-// l'appelant doit reaffecter (c = ajouter_releve(c, r);).
+// La structure n'est pas modifiable par une fonction "classique" sans
+// pointeur : on renvoie le capteur modifie, que l'appelant doit
+// reaffecter (c = ajouter_releve(c, r);).
 T_Capteur ajouter_releve(T_Capteur c, T_Releve r) {
     if (c.nbReleves < TAILLE_MAX_HISTORIQUE) {
         c.historique[c.nbReleves] = r;
