@@ -233,3 +233,106 @@ printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
     de structures en paramètre, ainsi que des \textbf{boucles imbriquées} et un peu d'algorithmique
     (recherche de max/min).
 \end{UPSTIexercice}
+
+% ==========================================================================
+
+\begin{UPSTIexercice}{Conception libre : à vous de choisir la structure}
+    Jusqu'ici, les champs des structures étaient toujours donnés. On va maintenant
+    \textbf{concevoir soi-même} une structure adaptée à un problème, sans qu'on nous dise quels
+    champs utiliser.
+
+    \UPSTIquestion{Choisir \textbf{un seul} des deux sujets suivants.}
+
+    \begin{itemize}
+        \item \textbf{Jeu vidéo} : on veut représenter un \textbf{personnage} dans un petit jeu de
+            rôle. Il a un nom, des points de vie, un ou plusieurs objets dans son inventaire
+            (chaque objet ayant lui-même un nom et un effet), et éventuellement une position dans
+            le monde (coordonnées x, y).
+        \item \textbf{GEII} : on veut représenter une \textbf{mesure effectuée par un capteur} :
+            une valeur mesurée (par ex. une température), l'instant de la mesure (heure, minute,
+            seconde), et des informations sur le capteur lui-même (référence, unité physique de
+            la grandeur mesurée).
+    \end{itemize}
+
+    Dans les deux cas, certaines informations décrites ci-dessus vont naturellement ensemble : à
+    vous d'identifier lesquelles, et de décider si une \textbf{structure imbriquée} est pertinente
+    (comme on l'a fait pour \texttt{T\_Adresse} dans \texttt{T\_EtudiantAdresse}).
+
+    \UPSTIquestion{Proposer et écrire en C le ou les types structurés (\texttt{typedef struct})
+        nécessaires pour le sujet choisi. Vous êtes libre des noms de champs et de leurs types, du
+        nombre de structures (une seule, ou plusieurs imbriquées), et des éventuels tableaux ou
+        constantes utiles (par ex. une taille maximale d'inventaire). Puis, en utilisant ce type,
+        écrire le corps d'\textbf{une} fonction de votre choix qui le manipule (par exemple :
+        afficher un personnage et son inventaire, faire perdre des points de vie, ajouter un objet
+        à l'inventaire ; ou bien afficher une mesure formatée, ou dire si une mesure dépasse un
+        seuil donné). Donner le prototype de votre fonction avant d'écrire son corps.}
+
+\begin{UPSTIeleveOnlyEnv}
+    \UPSTIquadrillage{12}
+\end{UPSTIeleveOnlyEnv}
+
+\begin{UPSTIcorrectionP}{Exemple de solution (jeu vidéo)}
+    Il n'y a pas de solution unique : voici un exemple cohérent, avec une structure imbriquée pour
+    la position, un tableau de structures pour l'inventaire, et une fonction qui ajoute un objet à
+    l'inventaire.
+\begin{lstlisting}[language=c,caption={Exemple de correction}]
+#define TAILLE_MAX_INVENTAIRE 10
+
+typedef struct {
+    float x;
+    float y;
+} T_Position;
+
+typedef struct {
+    string nom;
+    string effet;      // par ex. "soigne 10 pv", "augmente l'attaque"
+} T_Objet;
+
+typedef struct {
+    string nom;
+    int pv;
+    T_Position position;
+    T_Objet inventaire[TAILLE_MAX_INVENTAIRE];
+    int nbObjets;       // nombre d'objets reellement presents dans l'inventaire
+} T_Personnage;
+
+// La structure n'est pas modifiable par une fonction "classique" sans
+// pointeur : on renvoie le personnage modifie, que l'appelant doit
+// reaffecter (p = ajouter_objet(p, o);).
+T_Personnage ajouter_objet(T_Personnage p, T_Objet o) {
+    if (p.nbObjets < TAILLE_MAX_INVENTAIRE) {
+        p.inventaire[p.nbObjets] = o;
+        p.nbObjets++;
+    }
+    return p;
+}
+\end{lstlisting}
+\end{UPSTIcorrectionP}
+
+\begin{UPSTIcorrectionP}{Exemple de solution (GEII)}
+    Exemple pour le sujet GEII, avec une structure imbriquée pour l'horodatage, une autre pour
+    décrire le capteur, et une fonction qui teste un dépassement de seuil.
+\begin{lstlisting}[language=c,caption={Exemple de correction}]
+typedef struct {
+    int h;
+    int m;
+    int s;
+} T_Horodatage;
+
+typedef struct {
+    string reference;
+    string unite;       // par ex. "degC", "V", "bar"
+} T_Capteur;
+
+typedef struct {
+    float valeur;
+    T_Horodatage instant;
+    T_Capteur capteur;
+} T_Mesure;
+
+int depasse_seuil(T_Mesure m, float seuil) {
+    return m.valeur > seuil;
+}
+\end{lstlisting}
+\end{UPSTIcorrectionP}
+\end{UPSTIexercice}
