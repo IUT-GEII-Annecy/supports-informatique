@@ -237,12 +237,6 @@ printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
 % ==========================================================================
 
 \begin{UPSTIexercice}{Conception libre : à vous de choisir la structure}
-    Jusqu'ici, les champs des structures étaient toujours donnés. On va maintenant
-    \textbf{concevoir soi-même} une structure adaptée à un problème, sans qu'on nous dise quels
-    champs utiliser.
-
-    \UPSTIquestion{Lire le cahier des charges suivant.}
-
     On veut représenter, dans une chaîne d'acquisition, l'\textbf{historique des relevés} d'un
     capteur. Cahier des charges :
     \begin{itemize}
@@ -255,20 +249,17 @@ printf("Matiere a renforcer : %s (moyenne = %.2f)\n",
             seconde).
     \end{itemize}
 
+
     Certaines de ces informations vont naturellement ensemble : à vous d'identifier lesquelles, et
     de décider si une \textbf{structure imbriquée} est pertinente (comme on l'a fait pour
     \texttt{T\_Adresse} dans \texttt{T\_EtudiantAdresse}).
 
     \UPSTIquestion{Proposer et écrire en C le ou les types structurés (\texttt{typedef struct})
         nécessaires pour respecter le cahier des charges ci-dessus. Vous êtes libre des noms de
-        champs et de leurs types, du nombre de structures (une seule, ou plusieurs imbriquées), et
-        de la constante de taille maximale de l'historique. Puis, en utilisant ce type, écrire le
-        corps de la fonction suivante, dont le prototype est donné :
-        \begin{lstlisting}[language=c,caption={Prototype de la fonction demandée}]
-// Ajoute le releve r a l'historique du capteur c, si la place le permet,
-// et renvoie le capteur mis a jour.
-T_Capteur ajouter_releve(T_Capteur c, T_Releve r);
-        \end{lstlisting}}
+        champs et de leurs types, du nombre de structures (une seule, ou plusieurs imbriquées), etc.}
+
+    \UPSTIquestion{Écrire une fonction qui permet d'ajouter un relevé à l'historique d'un capteur. Cette fonction prend en paramètre un
+        capteur et un relevé, et renvoie le capteur modifié (avec le relevé ajouté à l'historique).}
 
 \begin{UPSTIeleveOnlyEnv}
     \UPSTIquadrillage{12}
