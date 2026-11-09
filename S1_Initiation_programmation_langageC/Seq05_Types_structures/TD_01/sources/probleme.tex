@@ -78,9 +78,8 @@ float moyenne_eleve(T_Eleve e, T_Matiere matieres[]) {
     \UPSTIquestion{\texttt{moyenne\_eleve} n'a pas besoin du nombre de matières en paramètre, alors
         que \texttt{moyenne\_matiere} a besoin de \texttt{nbEleves}. Pourquoi cette différence ?}
 
-    Le nombre de matières par élève est une \trouTexte[constante (NB\_MATIERES), connue à la compilation]{6cm},
-    alors que le nombre d'élèves réellement saisis est une \trouTexte[valeur saisie à l'exécution, que le
-    tableau classe ne connaît pas lui-même (TAILLE\_MAX\_CLASSE n'est qu'une taille maximale)]{9cm} :
+    Le nombre de matières par élève est une \trouTexte[constante connue à la compilation]{7cm},
+    alors que le nombre d'élèves réellement saisis est une \trouTexte[valeur saisie à l'exécution]{6cm} :
     sans ce paramètre, la fonction ne saurait pas où arrêter sa boucle.
 
     \UPSTIquestion{Compléter le corps de \texttt{moyenne\_matiere}, sur le même principe que
